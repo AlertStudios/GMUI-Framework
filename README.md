@@ -1,8 +1,11 @@
 #GMUI-Framework
 ##The Best Programmable Interface for Game Maker
 **WARNING: In Alpha Release! Expect rapid changes!!**
+
 **WARNING: Currently only supports GM8, but will be ported to GM:Studio shortly!**
+
 <b>License:</b> GPL v3.0 (http://www.gnu.org/licenses/gpl-3.0.html)
+
 ##Overview
 GMUI allows you to programmatically create all of your interface controls through GML, and control them through script calls included in the framework. This allows you to structure and control your menus and even game controls without going crazy!
 
@@ -18,14 +21,20 @@ And turns it into this:(image here)
 
 ###Getting Started
 You must initialize the GMUI system in order to create grids:
+
 `GMUI_Init();`
+
 After GMUI is initialized, you may create an object instance that will control your grid:
+
 `instance_create(0,0,GMUI);`
 
 Your object (E.g. GMUI) will need to call two commands in two events.
 CREATE EVENT:
+
 `newGMUI = GMUI_Create("MyGrid",16,0); // Grid Name, Cell Width, Cell Height`
+
 DRAW EVENT:
+
 `GMUI_GridDraw();`
 
 Now your Grid is ready to be used, but now we must make our layout!
@@ -119,17 +128,25 @@ If you pass an object as the type instead of one of the built-in types, it will 
 
 ####Control Settings
 You can call these scripts to change the control to the way you need them:
+
 `GMUI_ControlSetStyle(Background Color, Border color, Hover color, hover border/rect, border alpha, Select color, Select alpha, show cursor)`
+
 `GMUI_ControlSetStyle(Background Color, Border color, Hover color, hover border/rect, border alpha, font, font color, font align)`
+
 `GMUI_ControlSetAttributes(max string length(or 0 for none), max decimal length (if applicable), min value, max value, )`
+
 `GMUI_ControlSetPositioning( relative x, relative y, actual width, actual height )`
+
 `GMUI_ControlSetPicker(picker width, picker height, picker direction, picker_right/up sprite, picker_left/down sprite)`
+
 `GMUI_ControlSetButton(Text in button or "" , graphic inside button or -1 , sprite to replace drawn button or -1, font alignment or -1, text color on hover or -1)`
+
 `GMUI_ControlSetInitValue(value)`
 More will come in the near future with more controls and options.
 
 ####The Control Object
 The object used for the control must make one call in the **Draw** event:
+
 `GMUI_ControlDraw(true); // True will actually draw the control, as opposed to only running required tasks.`
 
 ###GMUI_SetLayerDepths
