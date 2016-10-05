@@ -2,8 +2,6 @@
 ##The Best Programmable Interface for Game Maker
 **WARNING: In Alpha Release! Expect rapid changes!!**
 
-**WARNING: Currently only supports GM8, but will be ported to GM:Studio shortly!**
-
 <b>License:</b> GPL v3.0 (http://www.gnu.org/licenses/gpl-3.0.html)
 
 ##Overview
