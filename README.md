@@ -176,3 +176,6 @@ There are a number of features still left to implement, including:
 - List Areas
 - Selection list control
 - Screen transitions (of the interface)
+
+##Known issues:
+- Formatting on the decimal field in the Studio version is not working
