@@ -13,6 +13,7 @@ Currently, the framework typcially only handles input fields and buttons, but so
 
 ##How does it work?
 GMUI takes this code from the Form script, and takes care of the rest:
+
 ![GMUI_Form_Code](docs/GMUI_Form_Code.png)
 
 And turns it into this:
@@ -43,6 +44,7 @@ Now your Grid is ready to be used, but now we must make our layout!
 ##Creating The Grid (GM8)
 *This may change with GM:Studio*
 The folder structure contains all of the scripts and separates the internal commands from the ones that need to be modified, as shown here:
+
 ![GMUI_Structure](docs/GMUI_Structure.png)
 ###GMUI_Settings
 This script contains some values you can adjust for your grid. This includes the object used  as the controls, specified in the script:
