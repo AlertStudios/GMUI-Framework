@@ -1,5 +1,6 @@
-/// Is control of name hidden
-// argument0 is the string of the key (control)
+///GMUI_ControlIsHidden("ControlName")
+///Is control of name hidden
+// "ControlName" is the string of the key
 
 with (GMUII()) {
     // Retrieve control from the reference map

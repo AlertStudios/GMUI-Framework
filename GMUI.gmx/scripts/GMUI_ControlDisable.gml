@@ -1,5 +1,6 @@
+///GMUI_ControlDisable("ControlName", Disable?)
 /// Disable or enable a control
-// argument0 is the string of the key (control)
+// "ControlName" is the string of the key
 // argument1 is to disable (1) or enable (0)
 
 with (GMUII()) {

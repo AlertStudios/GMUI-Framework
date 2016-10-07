@@ -1,6 +1,6 @@
-/// Modifies keyboard string to be acceptable for the control. Typcially called on a keypress.
+///GMUI_ControlFilterInput(Control Type, Input String - keyboard_string)
+///Modifies keyboard string to be acceptable for the control. Typcially called on a keypress.
 
-// GMUI_ControlFilterInput(Control Type, Input String - keyboard_string)
 // Returns: new input string
 
 var filter, CT, ks;

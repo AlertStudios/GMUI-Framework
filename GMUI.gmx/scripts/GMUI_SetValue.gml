@@ -1,7 +1,6 @@
-/// Set the value of a control back to use in user code
-// argument0 is the string of the id key
-// argument1 is the value to set
-// argument2 is the type of value (string(0), integer(1), decimal(2))
+///GMUI_SetValue("ControlName", value, value type - string:0, integer:1, decimal:2)
+///Set the value of a control back to use in user code
+// "ControlName" is the string of the id key
 
 with (GMUII())
 {

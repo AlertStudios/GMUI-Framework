@@ -1,5 +1,5 @@
+/// GMUI_Actions("control name")
 /// Specify the actions performed when a control is clicked, if it has an action ability
-// GMUI_Actions("control name")
 // Controls with actions: button, textbutton, 
 
 switch (argument0)

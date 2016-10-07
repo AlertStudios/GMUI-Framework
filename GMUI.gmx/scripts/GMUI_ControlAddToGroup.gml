@@ -1,5 +1,5 @@
-/// Adds control to a group if it exists in the layer
-// GMUI_ControlAddToGroup(group number)
+///GMUI_ControlAddToGroup(group number)
+///Adds control to a group if it exists in the layer
 
 var _Group, _Layer;
 _Group = argument0;

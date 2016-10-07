@@ -1,5 +1,6 @@
-/// Checks to see if the mouse is in the adjusted region of the control (true/false)
-// GMUI_MouseInAdjustedRegion(Control Object, mouse x, mouse y)
+///GMUI_MouseInAdjustedRegion(Control Object, mouse x, mouse y)
+///Checks to see if the mouse is in the adjusted region of the control (true/false)
+
 
 var _Control, _MX, _MY, _CW, _CH;
 _Control = argument0;

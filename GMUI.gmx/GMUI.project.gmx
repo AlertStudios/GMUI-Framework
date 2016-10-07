@@ -85,15 +85,17 @@
         <script>scripts\GMUII.gml</script>
         <script>scripts\GMUIid.gml</script>
         <script>scripts\GMUI_StudioCheckDefined.gml</script>
-        <scripts name="GMUI_ASscripts">
-          <script>scripts\hsv.gml</script>
-          <script>scripts\rgb.gml</script>
-          <script>scripts\color_alpha.gml</script>
-          <script>scripts\align.gml</script>
-          <script>scripts\minmax.gml</script>
-          <script>scripts\easeExpOut.gml</script>
-          <script>scripts\easeBounceOut.gml</script>
-          <script>scripts\easeElasticOut.gml</script>
+        <scripts name="GMUI_public">
+          <scripts name="GMUI_ASscripts">
+            <script>scripts\rgb.gml</script>
+            <script>scripts\hsv.gml</script>
+            <script>scripts\color_alpha.gml</script>
+            <script>scripts\align.gml</script>
+            <script>scripts\minmax.gml</script>
+            <script>scripts\easeExpOut.gml</script>
+            <script>scripts\easeBounceOut.gml</script>
+            <script>scripts\easeElasticOut.gml</script>
+          </scripts>
         </scripts>
       </scripts>
     </scripts>

@@ -1,4 +1,5 @@
-/// Call creation of the grid interfaces and variables
+///GMUI_Create("OptionalName", cell width, cell height)
+///Call creation of the grid interfaces and variables
 
 // Create resizable method for window?
 

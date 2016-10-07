@@ -1,5 +1,5 @@
-/// Adjusts grid for all layers of the GMUI instance
-// GMUI_GridAdjust(cells wide , cells high)
+///GMUI_GridAdjust(cells wide , cells high)
+///Adjusts grid for all layers of the GMUI instance
 
 var layer;
 for(i=0;i<ds_list_size((GMUII()).GMUI_gridlist);i+=1) {

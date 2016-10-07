@@ -1,5 +1,5 @@
-/// Set the relative positioning and sizing of the control within its cell
-// GMUI_ControlSetPositioning( relative x, relative y, actual width, actual height )
+///GMUI_ControlSetPositioning( relative x, relative y, actual width, actual height )
+///Set the relative positioning and sizing of the control within its cell
 
 if (!GMUI_IsControl() && id != GMUII())
 {

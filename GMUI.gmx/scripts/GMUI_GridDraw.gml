@@ -1,4 +1,5 @@
-/// Actions done to operate the grid, executed by the GMUI object in the draw event
+///GMUI_GridDraw()
+///Actions done to operate the grid, executed by the GMUI object in the draw event
 
 
 // Count down initial disable before executing actions

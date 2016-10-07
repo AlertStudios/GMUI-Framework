@@ -1,5 +1,6 @@
-/// Is control of name disabled
-// argument0 is the string of the key (control)
+///GMUI_ControlIsDisabled("ControlName")
+///Is control of name disabled
+// "ControlName" is the string of the key
 
 with (GMUII()) {
     // Retrieve control from the reference map

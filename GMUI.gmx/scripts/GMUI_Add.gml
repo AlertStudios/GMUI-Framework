@@ -1,6 +1,5 @@
-/// Adds a component(instance) to the GMUI grid 
-// GMUI_Add("Name", "Type String", cell# x, cell# y, cells wide (min 1), cells high (min 1), 
-//                  Layer**, Anchor***)
+///GMUI_Add("Name", "Type String", cell# x, cell# y, cells wide min. 1, cells high min. 1, Layer, Anchor)
+///Adds a component(instance) to the GMUI grid 
 
 var _Layer,_Anchor,_CellX,_CellY;
 _Layer = argument6;

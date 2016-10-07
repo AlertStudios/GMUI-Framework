@@ -1,5 +1,6 @@
-/// Hide all of the controls within the specified group
-//GMUI_GroupHide(group number, layer number, Hide(1) or show(0))
+///GMUI_GroupHide(group number, layer number, Hide(1) or show(0))
+///Hide all of the controls within the specified group
+
 
 var _Group, _Layer, _Hide, i, ctrl;
 _Group = argument0;

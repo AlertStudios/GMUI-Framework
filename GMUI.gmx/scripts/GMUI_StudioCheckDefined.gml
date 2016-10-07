@@ -1,4 +1,5 @@
-/// Returns if the argument is defined or not (GM:Studio)
+///GMUI_StudioCheckDefined(val)
+///Returns if the argument is defined or not (GM:Studio)
 
 var a0; a0 = argument0;
 

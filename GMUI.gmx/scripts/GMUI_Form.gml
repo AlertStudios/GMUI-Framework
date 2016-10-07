@@ -101,6 +101,6 @@ switch (OptionalInterfaceName) {
             // (Example:) Minor adjustment so that the control isnt cut off
             GMUI_ControlSetPositioning(-1,0,0,0);
         }
-        
+
     break;
 }

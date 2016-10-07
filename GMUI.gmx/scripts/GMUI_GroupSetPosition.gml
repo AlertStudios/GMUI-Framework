@@ -1,5 +1,5 @@
-/// Change the position of the group (and all of the controls inside it)
-// GMUI_GroupSetPosition(Layer Number, Group Number, Cell X, Cell Y, X Adjustment, Y Adjustment)
+///GMUI_GroupSetPosition(Layer Number, Group Number, Cell X, Cell Y, X Adjustment, Y Adjustment)
+///Change the position of the group (and all of the controls inside it)
 
 // Arguments
 var _LayerNumber,_GroupNumber,_CellX,_CellY,_AdjustmentX,_AdjustmentY, ctrl;

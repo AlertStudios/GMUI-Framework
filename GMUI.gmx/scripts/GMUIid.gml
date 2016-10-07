@@ -1,5 +1,5 @@
-/// Returns the GMUI object instance with the given GMUI number and sets current grid ref to it
-// GMUIid(number)
+///GMUIid(number)
+///Returns the GMUI object instance with the given GMUI number and sets current grid ref to it
 // Usage: with (GMUIid(1)) { do something; }
 // Alternate Usage: if (GMUIid(1)) { call GMUI commands; }
 

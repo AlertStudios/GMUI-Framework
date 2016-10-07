@@ -1,5 +1,5 @@
-/// Checks that the group number given exists in the layer in GMUI
-// GMUI_GroupExists(Layer Number, Group Number)
+///GMUI_GroupExists(Layer Number, Group Number)
+///Checks that the group number given exists in the layer in GMUI
 
 if (!is_real(argument0))
     return false;
