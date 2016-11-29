@@ -1,6 +1,6 @@
 #GMUI-Framework
 ##The Best Programmable Interface for Game Maker
-**WARNING: In Alpha Release! Expect rapid changes!!**
+**WARNING: In Alpha Release! Expect rapid changes!!** - [View the Changelog](wiki)
 
 <b>License:</b> GPL v3.0 (http://www.gnu.org/licenses/gpl-3.0.html)
 
@@ -43,7 +43,7 @@ Now your Grid is ready to be used, but now we must make our layout!
 *This may change with GM:Studio*
 The folder structure contains all of the scripts and separates the internal commands from the ones that need to be modified, as shown here:
 
-![GMUI_Structure](docs/GMUI_Structure.png)
+![GMUI_Structure](docs/GMUI_Structure_v0.0.2.png)
 ###GMUI_Settings
 This script contains some values you can adjust for your grid. This includes the object used  as the controls, specified in the script:
 `GMUI_controlobject = GMUI_control;`
@@ -160,6 +160,17 @@ All of the controls need to have default values if they are not defined. This sc
 
 ###GMUI_DrawDebug
 This is a debugging script used to show any GMUI errors, show the grid lines, and the boundaries of groups. This may help to check to see that everything was set correctly. But realistically may only be used in a *(hint: menu creation tool)* possible new tool to design interfaces.
+
+##Dependency Scripts
+There are a few scripts that are used as shorthand calls to make it easier to develop with than using the long Game Maker functions. They are located in the GMUI -> GMUI_DeveloperCalls -> GMUI_Shortcuts folder:
+* hsv - return color by hue, saturation, value
+* rgb - return color by red, green, blue values
+* color_alpha - set the color and alpha
+* align - set the horizontal and vertical align
+* minmax - take an original value and return it within the minimum and maximum values provided
+
+##Extra Files
+This repository contains an output script from GM8.1 that contains all of the scripts within it, and also has an XML configuration for it. This configuration file can be used by the [GMLScriptExploder tool](https://bitbucket.org/asmarkis/gmlscriptexploder).
 
 ##Demo
 You can see a working demo here:
