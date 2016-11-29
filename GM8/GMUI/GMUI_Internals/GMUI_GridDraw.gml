@@ -1,4 +1,5 @@
 #define GMUI_GridDraw
+///GMUI_GridDraw()
 /// Actions done to operate the grid, executed by the GMUI object in the draw event
 
 
@@ -17,13 +18,16 @@ if (GMUI_GridEnabled())
     if (MX != mouse_px || MY != mouse_py)
     {
         // Get the mouse position on the current top layer visible:
-        var mouseHor,mouseVert;
+        var mouseHor,mouseVert,ctrlObject;
         mouseHor = GMUI_GridGetMouseCellX(MX);
         mouseVert = GMUI_GridGetMouseCellY(MY);
 
         // Find if there is a control at that position
-        ctrlObject = ds_grid_get(GMUI_grid[UILayer],mouseHor,mouseVert);
-        if (ctrlObject != 0)
+        ctrlObject = 0;
+        if (mouseHor >= GMUI_grid_x[UILayer] && mouseVert >= GMUI_grid_y[UILayer] && mouseHor < GMUI_grid_w[UILayer] && mouseVert < GMUI_grid_h[UILayer])
+            ctrlObject = ds_grid_get(GMUI_grid[UILayer],mouseHor+GMUI_grid_x[UILayer],mouseVert+GMUI_grid_y[UILayer]);
+            
+        if (ctrlObject != 0 && is_real(ctrlObject))
         {
             // Found object number, do checks before assigning hovering or selected flag
             if (instance_exists(ctrlObject))
@@ -117,7 +121,7 @@ if (GMUI_GridEnabled())
                     else
                     {
                         // Control buttons clicked
-                        GMUI_Actions(ctrlObject.valueName);
+                        GMUI_ControlActionScript(ctrlObject);
                     }
                 }
             }

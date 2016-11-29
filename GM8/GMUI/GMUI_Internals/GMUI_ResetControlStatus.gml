@@ -1,8 +1,8 @@
 #define GMUI_ResetControlStatus
+///GMUI_GridStep ("Hovering" / "Selected", GridID)
 /// Resets the hovering or selected values of the controls
-// GMUI_GridStep ("Hovering" / "Selected", GridID)
 
-var a0,ff,ffo; a0 = string(argument0);
+var a0,ff,ffo,m,ms; a0 = string(argument0);
 
 if (string_lower(a0) == "selected" || a0 == "1")
 {
@@ -15,13 +15,18 @@ if (string_lower(a0) == "selected" || a0 == "1")
         // Set all controls' selected variable to false and find previous selection if there is one
         PreviousSelectedControl = -1;
         
-        while(string(ff) != "0")
-        {
-            ffo = ds_map_find_value((GMUII()).GMUI_map,ff);
-            if ((ffo).Selected)
-                PreviousSelectedControl = ffo;
-            (ffo).Selected = 0;
-            (ffo).DoubleSelected = 0;
+        ms = ds_map_size((GMUII()).GMUI_map);
+        for (m=0; m < ms; m+=1) {
+            if (string(ff) != "0" && GMUI_StudioCheckDefined(ff)) {
+                ffo = ds_map_find_value((GMUII()).GMUI_map,ff);
+                if (GMUI_StudioCheckDefined(ffo)) {
+                    if ((ffo).Selected)
+                        PreviousSelectedControl = ffo;
+                    (ffo).Selected = 0;
+                    (ffo).DoubleSelected = 0;
+                }
+            }
+            
             ff = ds_map_find_next((GMUII()).GMUI_map,ff);
         }
     }
@@ -39,11 +44,16 @@ else
     else
     {
         // Set all controls' hover variable to false
-        while(string(ff) != "0")
-        {
-            ffo = ds_map_find_value((GMUII()).GMUI_map,ff);
-            (ffo).Hovering = 0;
-            (ffo).HoveringDirection = 0;
+        ms = ds_map_size((GMUII()).GMUI_map);
+        for (m=0; m < ms; m+=1) {
+            if (string(ff) != "0" && GMUI_StudioCheckDefined(ff)) {
+                ffo = ds_map_find_value((GMUII()).GMUI_map,ff);
+                if (GMUI_StudioCheckDefined(ffo)) {
+                    (ffo).Hovering = 0;
+                    (ffo).HoveringDirection = 0;
+                }
+            }
+            
             ff = ds_map_find_next((GMUII()).GMUI_map,ff);
         }
     }

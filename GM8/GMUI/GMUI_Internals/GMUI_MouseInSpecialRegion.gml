@@ -1,6 +1,6 @@
 #define GMUI_MouseInSpecialRegion
+///GMUI_MouseInAdjustedSpecialRegion(Control Object, mouse x, mouse y)
 /// Returns direction if mouse is in the adjusted region of the control
-// GMUI_MouseInAdjustedSpecialRegion(Control Object, mouse x, mouse y)
 
 var _Control, _MX, _MY, _D, _CW, _CH, sizingW, sizingH;
 _Control = argument0;
@@ -10,7 +10,7 @@ sizingW = 0;
 sizingH = 0;
 
 // Check region of control if valid cotrol
-if (!GMUI_IsControlID(_Control) && id != global.GMUIiid)
+if (!GMUI_IsControlID(_Control) && id != GMUII())
 {
     GMUI_ThrowError("Invalid control for GMUI_MouseInSpecialRegion");
     return global.GMUIHoveringDirection_None;

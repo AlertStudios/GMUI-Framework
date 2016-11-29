@@ -1,4 +1,4 @@
-///GMUI_Create("OptionalName", cell width, cell height)
+///GMUI_Create(
 ///Call creation of the grid interfaces and variables
 
 // Create resizable method for window?
@@ -121,7 +121,7 @@ GMUI_groupRelativeCellY[0,0] = 0;
 GMUI_groupAnchor[0,0] = global.GMUIAnchorTopLeft;
 
 // Call the form code to create the interface
-GMUI_Form(argument0);
+GMUI_SetForm(argument0);
 GMUI_GridSetRegions();
 
 // Upon success, give the GMUI id back

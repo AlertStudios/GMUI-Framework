@@ -1,5 +1,5 @@
 ///GMUI_MouseInAdjustedSpecialRegion(Control Object, mouse x, mouse y)
-///Returns direction if mouse is in the adjusted region of the control
+/// Returns direction if mouse is in the adjusted region of the control
 
 var _Control, _MX, _MY, _D, _CW, _CH, sizingW, sizingH;
 _Control = argument0;

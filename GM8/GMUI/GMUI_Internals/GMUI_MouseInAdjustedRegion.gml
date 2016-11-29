@@ -1,6 +1,6 @@
 #define GMUI_MouseInAdjustedRegion
+///GMUI_MouseInAdjustedRegion(Control Object, mouse x, mouse y)
 /// Checks to see if the mouse is in the adjusted region of the control (true/false)
-// GMUI_MouseInAdjustedRegion(Control Object, mouse x, mouse y)
 
 var _Control, _MX, _MY, _CW, _CH;
 _Control = argument0;
@@ -8,7 +8,7 @@ _MX = argument1;
 _MY = argument2;
 
 // Check region of control if valid cotrol
-if (!GMUI_IsControlID(_Control) && id != global.GMUIiid)
+if (!GMUI_IsControlID(_Control) && id != GMUII())
 {
     GMUI_ThrowError("Invalid control for GMUI_MouseInAdjustedRegion");
     return false;

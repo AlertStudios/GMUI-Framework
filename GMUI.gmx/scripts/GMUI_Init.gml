@@ -1,4 +1,4 @@
-/// Call this initialization script before creating any GMUI interfaces
+///GMUI_Init() Call this initialization script before creating any GMUI interfaces
 //
 // !WARNING! MODIFYING THE GMUI SCRIPTS CAN BREAK FUNCTIONALITY AND CAUSE ERRORS! TRY TO EDIT THE OBJECTS INSTEAD!
 //
@@ -40,3 +40,10 @@ global.GMUIHoveringDirection_Down = 4;
 global.GMUIDirectionTypeHorizontal = 0;
 global.GMUIDirectionTypeVertical = 1;
 global.GMUIDirectionTypeSideVertical = 2;
+
+// Control datatypes
+global.GMUIDataTypeString = 0;
+global.GMUIDataTypeInteger = 1;
+global.GMUIDataTypeDecimal = 2;
+global.GMUIDataTypeButton = 3;
+

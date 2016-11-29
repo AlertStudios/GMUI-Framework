@@ -1,4 +1,4 @@
-/// Sets the default values for all controls if they are not specified in GMUI_Form
+///GMUI_SetControlDefaults() Sets the default values for all controls if they are not specified in GMUI_Form
 
 // ! NOTE ! These values must pass validation or else errors will occur!
 

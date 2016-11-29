@@ -1,7 +1,6 @@
 #define GMUI_GridSelect
+///GMUI_GridSelect(control object)
 /// Selects a control object from the grid (Called by GMUI_GridStep)
-
-// GMUI_GridSelect(control object)
 
 
 // Set the keyboard string to the value string

@@ -1,5 +1,4 @@
-///GMUI_GridSetRegions()
-///Set the control regions for all layers
+/// Set the control regions for all layers
 
 // Cycle through each grid layer to set region
 var i,l;

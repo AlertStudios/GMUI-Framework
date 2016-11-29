@@ -1,5 +1,5 @@
+///easeBounceOut(t,b,c,d) where t is current time, b is start value, c is change in value, and d is duration
 /// Bounce Ease for moving controls smoothly
-// easeBounceOut(t,b,c,d) where t is current time, b is start value, c is change in value, and d is duration
 
 var t,_b,_c,_d;
 

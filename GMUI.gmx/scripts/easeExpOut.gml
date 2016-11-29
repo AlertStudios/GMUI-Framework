@@ -1,5 +1,5 @@
-/// Exponential Ease for moving controls smoothly
-// easeExpOut(t,b,c,d) where t is current time, b is start value, c is change in value, and d is duration
+///easeExpOut(t,b,c,d) where t is current time, b is start value, c is change in value, and d is duration
+///Exponential Ease for moving controls smoothly
 
 var _t,_b,_c,_d;
 

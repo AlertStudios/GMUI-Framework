@@ -1,5 +1,5 @@
 ///GMUI_GridDraw()
-///Actions done to operate the grid, executed by the GMUI object in the draw event
+/// Actions done to operate the grid, executed by the GMUI object in the draw event
 
 
 // Count down initial disable before executing actions
@@ -120,7 +120,7 @@ if (GMUI_GridEnabled())
                     else
                     {
                         // Control buttons clicked
-                        GMUI_Actions(ctrlObject.valueName);
+                        GMUI_ControlActionScript(ctrlObject);
                     }
                 }
             }

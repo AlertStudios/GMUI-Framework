@@ -1,7 +1,7 @@
 #define GMUI_ControlInit
+///GMUI_ControlInit(control object to instantiate)
 /// Initialize the values to use with a GMUI control
 // These values are controlled by the GMUI controller, and if commented, they are actually intialized by the Add script.
-// GMUI_ControlInit(control object to instantiate)
 
 var i; i = argument0;
 
@@ -10,9 +10,15 @@ if (!instance_exists(i))
 
 i.Hovering = 0;
 i.Selected = 0;
+i.DoubleSelected = 0;
+
 i.ControlType = "";
 i.ControlInput = 1;
-i.DoubleSelected = 0;
+i.ControlDataType = global.GMUIDataTypeString; // Default (0)
+
+// Redundant based on the datatype
+i.ControlIsNumeric = false;
+i.ControlIsString = true;
 
 // For specific controls
 i.checkMouseX = 0;
@@ -27,6 +33,9 @@ i.Hidden = 0;
 
 // NonClickable may be used when a control is moving, for instance. It does not show disabled, but will not register a click
 i.NonClickable = 0;
+
+// Custom Action
+i.ActionScript = -1;
 
 // All of these values are set when added ::
 

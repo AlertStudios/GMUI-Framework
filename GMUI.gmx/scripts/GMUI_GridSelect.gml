@@ -1,5 +1,5 @@
 ///GMUI_GridSelect(control object)
-///Selects a control object from the grid (Called by GMUI_GridStep)
+/// Selects a control object from the grid (Called by GMUI_GridStep)
 
 
 // Set the keyboard string to the value string

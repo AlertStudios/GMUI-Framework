@@ -6,7 +6,8 @@
 if (
 argument0 == global.GMUIAnchorLeft || argument0 == global.GMUIAnchorTopLeft || argument0 == global.GMUIAnchorBottomLeft || 
 argument0 == global.GMUIAnchorTopRight || argument0 == global.GMUIAnchorRight || argument0 == global.GMUIAnchorBottomRight
-) {
+)
+{
     if (argument1 < 0 || argument1 > argument3 - 1)
         return false;
 }
@@ -17,7 +18,8 @@ argument0 == global.GMUIAnchorTopRight || argument0 == global.GMUIAnchorRight ||
 if (
 argument0 == global.GMUIAnchorTopLeft || argument0 == global.GMUIAnchorTopRight || argument0 == global.GMUIAnchorTop || 
 argument0 == global.GMUIAnchorBottomLeft || argument0 == global.GMUIAnchorBottomRight || argument0 == global.GMUIAnchorBottom
-) {
+)
+{
     if (argument2 < 0 || argument2 > argument4 - 1)
         return false;
 }

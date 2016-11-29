@@ -1,6 +1,5 @@
 ///GMUI_SetValue("ControlName", value, value type - string:0, integer:1, decimal:2)
 ///Set the value of a control back to use in user code
-// "ControlName" is the string of the id key
 
 with (GMUII())
 {
@@ -20,7 +19,7 @@ with (GMUII())
         (control).value = minmax(round(real(argument1)),(control).ControlMinValue,(control).ControlMaxValue);
         (control).valueString = string((control).value);
     }
-    else if (a2 == "2" || string_lower(a2) == "decimal")
+    else if (a2 == "2" || string_lower(a2) == "double")
     {
         (control).value = minmax(real(argument1),(control).ControlMinValue,(control).ControlMaxValue);
         // Remove any trailing zeros if option is turned on, otherwise use simple format

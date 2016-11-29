@@ -1,5 +1,5 @@
 ///GMUI_GridEnabled()
-///Returns if the entire grid is enabled to be used
+/// Returns if the entire grid is enabled to be used
 
 if (InitialDisable > 0)
 {

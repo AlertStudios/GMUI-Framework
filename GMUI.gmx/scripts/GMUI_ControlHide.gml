@@ -1,6 +1,5 @@
 ///GMUI_ControlHide("ControlName", Hide?)
 ///Hide or show a control
-// "ControlName" is the string of the key
 // argument1 is to hide (1) or show (0)
 
 with (GMUII()) {

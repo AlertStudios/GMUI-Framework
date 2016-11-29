@@ -1,5 +1,5 @@
-/// Elastic Ease for moving controls smoothly
-// easeElasticOut(t,b,c,d) where t is current time, b is start value, c is change in value, and d is duration
+///easeElasticOut(t,b,c,d) where t is current time, b is start value, c is change in value, and d is duration
+///Elastic Ease for moving controls smoothly
 
 var _t,_b,_c,_d, _p,_s;
 _t = argument0;

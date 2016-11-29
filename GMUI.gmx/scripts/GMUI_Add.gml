@@ -1,5 +1,5 @@
-///GMUI_Add("Name", "Type String", cell# x, cell# y, cells wide min. 1, cells high min. 1, Layer, Anchor)
-///Adds a component(instance) to the GMUI grid 
+///GMUI_Add("Name", "Type String", cell# x, cell# y, cells wide (min 1), cells high (min 1), Layer**, Anchor***)
+///Adds a component(instance) to the GMUI grid
 
 var _Layer,_Anchor,_CellX,_CellY;
 _Layer = argument6;
@@ -34,31 +34,9 @@ if (ds_map_exists((GMUII()).GMUI_map,argument0)) {
 
 
 // Check for type and either reference provided instance or create a new one. MUST BE A VALID TYPE
-var thetype,thecontrol,isinput,isbutton;isinput=0;isbutton=0;
-if (is_string(argument1)) {
-    thetype = string_lower(string_replace(argument1," ",""));
-    switch (thetype) {
-        case "textint":
-        case "textdecimal":
-        case "textstring":
-        case "intpicker":
-        case "doublepicker":
-            isinput = 1; // Input fields = 1;
-            break;
-        case "button":
-        case "textbutton":
-            isbutton=1;
-        case "slider":
-        case "dropdown":
-            // valid
-        break;
-        default:
-            // invalid
-            thetype = "invalid";
-        break;
-    }
-    
-    thecontrol = instance_create(0,0,(GMUII()).GMUI_controlobject); // Default is: GMUI_control
+var thetype,thecontrol;
+if (is_string(argument1)) {  
+    thecontrol = instance_create(0,0,(GMUII()).GMUI_controlobject); // Default is: GMUI_control , set in GMUI_Settings(...)
 }
 else {
     thecontrol = instance_create(0,0,argument1);
@@ -74,9 +52,8 @@ else
 ds_list_add((GMUII()).GMUI_controlList,thecontrol);
 
 // Set up control vars
+thetype = GMUI_ControlSetType(thecontrol,string(argument1));
 thecontrol.valueName = argument0;
-thecontrol.ControlType = thetype;
-thecontrol.ControlInput = isinput;
 thecontrol.CellWide = argument4;
 thecontrol.CellHigh = argument5;
 thecontrol.Layer = _Layer;
@@ -125,8 +102,10 @@ GMUI_ControlSetDefaultPicker(thecontrol);
 // Set the default button properties (set from the gmui controller)
 GMUI_ControlSetDefaultButton(thecontrol);
 
-// Override defaults for specific controls (Avoid defaults conflicts)
-if (isbutton) {
+// Override defaults for specific controls (Avoid defaults conflicts):
+
+// Button style override
+if (GMUI_GetDataType(thetype) == global.GMUIDataTypeButton) {
     thecontrol.ControlFontAlign = fa_center;
     thecontrol.ControlShowCursor = false;
 }

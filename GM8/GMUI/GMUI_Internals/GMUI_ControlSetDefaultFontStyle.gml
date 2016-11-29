@@ -1,6 +1,6 @@
 #define GMUI_ControlSetDefaultFontStyle
+///GMUI_ControlSetDefaultStyle(id)
 /// Get the default style values from the grid controller
-//GMUI_ControlSetDefaultStyle(id)
 
 if (!instance_exists(argument0))
 {

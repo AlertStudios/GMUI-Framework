@@ -1,6 +1,7 @@
 #define GMUI_GetAnchoredCellX
+///GMUI_GetAnchoredCellX(GMUII, Layer, Cell X given, Anchor Type)
 /// Returns the new X cell position in the grid based on the anchoring
-// GMUI_GetAnchoredCellX(GMUII, Layer, Cell X given, Anchor Type)
+
 
 // Width of a GMUI grid is usually: ds_grid_width((GMUII()).GMUI_grid[Layer]);
 

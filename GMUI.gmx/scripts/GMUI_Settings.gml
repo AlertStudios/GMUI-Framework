@@ -1,4 +1,4 @@
-/// Settings for GMUI - Do not delete! Modify to fit your preferences
+///GMUI_Settings Settings for GMUI - Do not delete! Modify to fit your preferences
 // Called from the initialization of each GMUI interface
 
 
@@ -22,12 +22,14 @@ GMUIEnableEnterKey = true;              // Enter key will deselect the control
 // Enable setting debug data for testing
 DebugData = false;
 
+// Show a pop-up of the GMUI error message when it happens
+PopUpGMUIError = false;
 
 
 
 // Argument can be used optionally for different GMUI instances
 var OptionalInterfaceName; OptionalInterfaceName = argument0;
-if (OptionalInterfaceName == "") {
+if (script_exists(OptionalInterfaceName)) {
     // Do Something
 }
 

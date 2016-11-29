@@ -1,4 +1,3 @@
-///hsv(hue,saturation,luminosity)
-///Shortcut for making an hsv based color
+///hsv(hue, saturation, value) Shortcut for making an hsv based color
 return make_color_hsv(argument0,argument1,argument2);
 

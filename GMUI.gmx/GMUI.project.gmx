@@ -15,42 +15,80 @@
   <paths name="paths"/>
   <scripts name="scripts">
     <scripts name="GMUI">
-      <script>scripts\GMUI_Form.gml</script>
-      <script>scripts\GMUI_Actions.gml</script>
-      <script>scripts\GMUI_Settings.gml</script>
-      <script>scripts\GMUI_SetLayerDepths.gml</script>
-      <script>scripts\GMUI_SetControlDefaults.gml</script>
-      <script>scripts\GMUI_DrawDebug.gml</script>
-      <scripts name="GMUI_Internals">
+      <scripts name="My Interfaces">
+        <script>scripts\_Test_Form.gml</script>
+      </scripts>
+      <scripts name="My Actions">
+        <script>scripts\_Test_Button.gml</script>
+        <script>scripts\_Debug_Button.gml</script>
+        <script>scripts\_Disable_Button.gml</script>
+        <script>scripts\_Hide_Button.gml</script>
+        <script>scripts\_Move_Button.gml</script>
+        <script>scripts\_Exit_Button.gml</script>
+      </scripts>
+      <scripts name="GMUI_DeveloperConfigs">
+        <script>scripts\GMUI_SetControlDefaults.gml</script>
+        <script>scripts\GMUI_SetLayerDepths.gml</script>
+        <script>scripts\GMUI_Settings.gml</script>
+      </scripts>
+      <scripts name="GMUI_DeveloperCalls">
+        <scripts name="GMUI_Effects">
+          <script>scripts\easeExpOut.gml</script>
+          <script>scripts\easeBounceOut.gml</script>
+          <script>scripts\easeElasticOut.gml</script>
+        </scripts>
+        <scripts name="GMUI_Shortcuts">
+          <script>scripts\rgb.gml</script>
+          <script>scripts\hsv.gml</script>
+          <script>scripts\color_alpha.gml</script>
+          <script>scripts\align.gml</script>
+          <script>scripts\minmax.gml</script>
+        </scripts>
         <script>scripts\GMUI_Init.gml</script>
         <script>scripts\GMUI_Create.gml</script>
+        <script>scripts\GMUI_SetForm.gml</script>
         <script>scripts\GMUI_Add.gml</script>
         <script>scripts\GMUI_AddLabel.gml</script>
         <script>scripts\GMUI_AddLayer.gml</script>
-        <script>scripts\GMUI_LayerExists.gml</script>
         <script>scripts\GMUI_SwitchLayer.gml</script>
         <script>scripts\GMUI_CreateGroup.gml</script>
         <script>scripts\GMUI_ControlAddToGroup.gml</script>
-        <script>scripts\GMUI_GroupExists.gml</script>
         <script>scripts\GMUI_GroupSetSize.gml</script>
         <script>scripts\GMUI_GroupSetPosition.gml</script>
-        <script>scripts\GMUI_GroupPositionControls.gml</script>
         <script>scripts\GMUI_GroupHide.gml</script>
-        <script>scripts\GMUI_ControlInit.gml</script>
-        <script>scripts\GMUI_ControlFilterInput.gml</script>
-        <script>scripts\GMUI_ControlDraw.gml</script>
         <script>scripts\GMUI_ControlSetStyle.gml</script>
         <script>scripts\GMUI_ControlSetFontStyle.gml</script>
         <script>scripts\GMUI_ControlSetAttributes.gml</script>
         <script>scripts\GMUI_ControlSetPositioning.gml</script>
         <script>scripts\GMUI_ControlSetPicker.gml</script>
         <script>scripts\GMUI_ControlSetButton.gml</script>
+        <script>scripts\GMUI_ControlSetButtonAction.gml</script>
+        <script>scripts\GMUI_GetValue.gml</script>
+        <script>scripts\GMUI_GetValueString.gml</script>
+        <script>scripts\GMUI_SetValue.gml</script>
+        <script>scripts\GMUI_GetControl.gml</script>
+        <script>scripts\GMUI_ControlDisable.gml</script>
+        <script>scripts\GMUI_ControlIsDisabled.gml</script>
+        <script>scripts\GMUI_ControlHide.gml</script>
+        <script>scripts\GMUI_ControlIsHidden.gml</script>
+        <script>scripts\GMUI_DrawDebug.gml</script>
+      </scripts>
+      <scripts name="GMUI_Internals">
+        <script>scripts\GMUI_LayerExists.gml</script>
+        <script>scripts\GMUI_GroupExists.gml</script>
+        <script>scripts\GMUI_GroupPositionControls.gml</script>
+        <script>scripts\GMUI_ControlInit.gml</script>
+        <script>scripts\GMUI_ControlFilterInput.gml</script>
+        <script>scripts\GMUI_ControlDraw.gml</script>
+        <script>scripts\GMUI_ControlActionScript.gml</script>
         <script>scripts\GMUI_ControlSetInitValue.gml</script>
         <script>scripts\GMUI_ControlSetDefaultStyle.gml</script>
         <script>scripts\GMUI_ControlSetDefaultFontStyle.gml</script>
         <script>scripts\GMUI_ControlSetDefaultAttributes.gml</script>
         <script>scripts\GMUI_ControlSetDefaultPicker.gml</script>
         <script>scripts\GMUI_ControlSetDefaultButton.gml</script>
+        <script>scripts\GMUI_ControlSetType.gml</script>
+        <script>scripts\GMUI_GetDataType.gml</script>
         <script>scripts\GMUI_IsControl.gml</script>
         <script>scripts\GMUI_IsControlID.gml</script>
         <script>scripts\GMUI_GridEnabled.gml</script>
@@ -66,14 +104,6 @@
         <script>scripts\GMUI_GridGetMouseCellY.gml</script>
         <script>scripts\GMUI_MouseInAdjustedRegion.gml</script>
         <script>scripts\GMUI_MouseInSpecialRegion.gml</script>
-        <script>scripts\GMUI_GetValue.gml</script>
-        <script>scripts\GMUI_GetValueString.gml</script>
-        <script>scripts\GMUI_SetValue.gml</script>
-        <script>scripts\GMUI_GetControl.gml</script>
-        <script>scripts\GMUI_ControlDisable.gml</script>
-        <script>scripts\GMUI_ControlIsDisabled.gml</script>
-        <script>scripts\GMUI_ControlHide.gml</script>
-        <script>scripts\GMUI_ControlIsHidden.gml</script>
         <script>scripts\GMUI_CellGetActualX.gml</script>
         <script>scripts\GMUI_CellGetActualY.gml</script>
         <script>scripts\GMUI_GetAnchoredCellX.gml</script>
@@ -85,18 +115,6 @@
         <script>scripts\GMUII.gml</script>
         <script>scripts\GMUIid.gml</script>
         <script>scripts\GMUI_StudioCheckDefined.gml</script>
-        <scripts name="GMUI_public">
-          <scripts name="GMUI_ASscripts">
-            <script>scripts\rgb.gml</script>
-            <script>scripts\hsv.gml</script>
-            <script>scripts\color_alpha.gml</script>
-            <script>scripts\align.gml</script>
-            <script>scripts\minmax.gml</script>
-            <script>scripts\easeExpOut.gml</script>
-            <script>scripts\easeBounceOut.gml</script>
-            <script>scripts\easeElasticOut.gml</script>
-          </scripts>
-        </scripts>
       </scripts>
     </scripts>
   </scripts>

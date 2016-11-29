@@ -1,5 +1,5 @@
 ///GMUI_LayerExists(Layer Number)
-///Checks that the layer number given exists in GMUI
+/// Checks that the layer number given exists in GMUI
 
 if (!is_real(argument0))
     return false;

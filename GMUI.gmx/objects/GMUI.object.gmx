@@ -38,7 +38,7 @@
 // YOU CAN ONLY CREATE ONE GMUI PER INSTANCE
 
 // Call initiation script with name and cell size of 16 (or use 0 for default size). Returns the GMUI id.
-newGMUI = GMUI_Create("MyGrid",16,0);
+newGMUI = GMUI_Create(_Test_Form,16,0);
 
 // GMUI_Init calls the script GMUI_Form() to add controls to the interface, 
 // but you may add functions by any object if you like.

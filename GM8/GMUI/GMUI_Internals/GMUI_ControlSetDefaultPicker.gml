@@ -1,6 +1,6 @@
 #define GMUI_ControlSetDefaultPicker
+///GMUI_ControlSetDefaultPicker(id)
 /// Set the default attributes of the control from the controller
-//GMUI_ControlSetDefaultPicker(id)
 
 if (!instance_exists(argument0))
 {

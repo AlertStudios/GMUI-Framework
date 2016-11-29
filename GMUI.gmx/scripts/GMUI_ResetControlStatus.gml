@@ -1,5 +1,5 @@
-///GMUI_ResetControlStatus("Hovering" / "Selected")
-///Resets the hovering or selected values of the controls
+///GMUI_GridStep ("Hovering" / "Selected", GridID)
+/// Resets the hovering or selected values of the controls
 
 var a0,ff,ffo,m,ms; a0 = string(argument0);
 

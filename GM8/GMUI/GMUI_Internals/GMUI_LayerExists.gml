@@ -1,6 +1,6 @@
 #define GMUI_LayerExists
+///GMUI_LayerExists(Layer Number)
 /// Checks that the layer number given exists in GMUI
-// GMUI_LayerExists(Layer Number)
 
 if (!is_real(argument0))
     return false;

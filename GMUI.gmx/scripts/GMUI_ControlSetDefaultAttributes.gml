@@ -1,6 +1,5 @@
 ///GMUI_ControlSetDefaultAttributes(id)
-///Set the default attributes of the control from the controller
-
+/// Set the default attributes of the control from the controller
 
 if (!instance_exists(argument0))
 {

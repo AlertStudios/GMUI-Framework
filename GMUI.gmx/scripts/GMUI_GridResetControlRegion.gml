@@ -1,5 +1,5 @@
 ///GMUI_GridResetControlRegion(Layer, previous CellX, previous CellY, Cell Width, Cell Height, control id)
-///Resets any control values in the control's previous region
+/// Resets any control values in the control's previous region
 
 
 var _Layer, _pCellX, _pCellY, _CellW, _CellH, _CtrlId;

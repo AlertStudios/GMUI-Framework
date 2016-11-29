@@ -1,6 +1,6 @@
 #define GMUI_ControlSetDefaultButton
+///GMUI_ControlSetDefaultButton(id)
 /// Set the default attributes of the control from the controller
-//GMUI_ControlSetDefaultButton(id)
 
 if (!instance_exists(argument0))
 {
