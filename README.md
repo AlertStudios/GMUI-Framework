@@ -1,6 +1,6 @@
 #GMUI-Framework
 ##The Best Programmable Interface for Game Maker
-**WARNING: In Alpha Release! Expect rapid changes!!** - [View the Changelog](/wiki/Changelog)
+**WARNING: In Alpha Release! Expect rapid changes!!** - [View the Changelog](../../wiki/Changelog)
 
 <b>License:</b> GPL v3.0 (http://www.gnu.org/licenses/gpl-3.0.html)
 
