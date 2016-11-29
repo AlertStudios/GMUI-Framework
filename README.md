@@ -1,6 +1,6 @@
 #GMUI-Framework
 ##The Best Programmable Interface for Game Maker
-**WARNING: In Alpha Release! Expect rapid changes!!** - [View the Changelog](wiki)
+**WARNING: In Alpha Release! Expect rapid changes!!** - [View the Changelog](/wiki/Changelog)
 
 <b>License:</b> GPL v3.0 (http://www.gnu.org/licenses/gpl-3.0.html)
 
@@ -31,7 +31,7 @@ After GMUI is initialized, you may create an object instance that will control y
 Your object (E.g. GMUI) will need to call two commands in two events.
 CREATE EVENT:
 
-`newGMUI = GMUI_Create("MyGrid",16,0); // Grid Name, Cell Width, Cell Height`
+`newGMUI = GMUI_Create(MyGridScriptName,16,0); // Name of Script that defines interface, Cell Width, Cell Height`
 
 DRAW EVENT:
 
@@ -49,13 +49,11 @@ This script contains some values you can adjust for your grid. This includes the
 `GMUI_controlobject = GMUI_control;`
 
 
-###GMUI_Form
-Form is where you design your grid. There are a number of scripts to use to design your game's menus. It also has an argument passed in which you can optionally use to design multiple grids based on the name of the grid.
+###My Interfaces
+This folder was created as a place to put your interface script files. There are a number of scripts calls (in the GMUI_DeveloperCalls folder) to use to design your game's menus. When creating a new interface, first create a script that specifies the controls to create, then specify that script name as an argument when creating the interface. For example, this is used for calling the interface in the demo:
 
 ```
-// If using multiple grids, you can switch between interfaces (optional):
-switch (OptionalInterfaceName) {
-    case "MyGrid": // Controls for MyGrid
+newGMUI = GMUI_Create(_Test_Form,16,0);
 ```
 
 ####Layers
