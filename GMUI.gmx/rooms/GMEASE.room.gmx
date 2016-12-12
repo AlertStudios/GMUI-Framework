@@ -52,6 +52,8 @@
   </views>
   <instances>
     <instance objName="CREATOR" x="0" y="0" name="inst_2CDE27AD" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="testmenu" x="416" y="368" name="inst_93F61EB5" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="testmoving" x="416" y="96" name="inst_E137B388" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
   </instances>
   <tiles/>
   <PhysicsWorld>0</PhysicsWorld>

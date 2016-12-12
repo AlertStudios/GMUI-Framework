@@ -56,11 +56,18 @@ if (GMUI_GridEnabled())
                             else
                                 ctrlObject.Hovering = 1;
                         }
-                        else
+                        else {
                             ctrlObject.Hovering = 1;
+                        }
+                        
+                        // Set the hovering control and execute optional hover action if set
+                        HoveringControl = ctrlObject;
+                        
+                        if (GMUI_IsScript(ctrlObject.HoverActionScript)) {
+                            script_execute(ctrlObject.HoverActionScript);
+                        }
                     }
                     
-                    HoveringControl = ctrlObject;
                 }
                 
             }

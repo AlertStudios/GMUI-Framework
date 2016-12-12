@@ -1,4 +1,4 @@
-﻿///GMUI_GetDataType("Control Type")
+///GMUI_GetDataType("Control Type")
 ///Takes the control type and returns the data type it is
 // Datatypes are defined in GMUI_Init()
 
@@ -15,11 +15,14 @@ switch (_controlType) {
         return global.GMUIDataTypeDecimal;
         break;
     case "textstring":
+    case "label":
         return global.GMUIDataTypeString;
         break;
     case "button":
     case "textbutton":
         return global.GMUIDataTypeButton;
         break;
+    default:
+        return -1;
+        break;
 }
-

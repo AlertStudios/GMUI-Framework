@@ -13,16 +13,16 @@ if (!GMUI_IsControlID(_Control) && id != GMUII())
     return false;
 }
 
-// Get the proper width/height of the cell
+// Get the proper width/height of the cell (using cellsize functions)
 if ((_Control).ActualW != 0)
     _CW = (_Control).ActualW;
 else
-    _CW = (_Control).CellWide * ((GMUII()).cellsize);
+    _CW = GMUI_CellGetActualX((_Control).CellWide);
 
-if ((_Control).ActualY != 0)
+if ((_Control).ActualH != 0)
     _CH = (_Control).ActualH;
 else
-    _CH = (_Control).CellHigh * ((GMUII()).cellsize_h);
+    _CH = GMUI_CellGetActualY((_Control).CellHigh);
     
 // Check if coordinates are inside the adjusted control based on what adjustments are set
 if ((_MX >= (_Control).ActualX + (_Control).RelativeX && _MX <= (_Control).ActualX + (_Control).RelativeX + _CW) &&

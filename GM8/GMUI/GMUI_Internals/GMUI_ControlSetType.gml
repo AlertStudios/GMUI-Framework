@@ -2,8 +2,8 @@
 ///GMUI_ControlSetType("Control Type")
 ///Set the type variables based on the control the developer wants to make
 
-var IID,            _type,              isinput,    _getType;
-    IID=argument0;  _type=argument1;    isinput=0;  _getType=0;
+var IID,            _type,              isinput,    ispicker,   _getType;
+    IID=argument0;  _type=argument1;    isinput=0;  ispicker=0; _getType=0;
 
 if (!GMUI_IsControlID(IID) && IID != GMUII()) {
     GMUI_ThrowError("Invalid control for GMUI_ControlSetType");
@@ -16,27 +16,36 @@ _type = string_lower(string_replace(_type," ",""));
 
 // Set if input, or button, or etc 
 switch (_type) {
+    case "intpicker":
+    case "doublepicker":
+        ispicker = 1;
+        
     case "textint":
     case "textdecimal":
     case "textstring":
-    case "intpicker":
-    case "doublepicker":
-        isinput = 1; // Input fields = 1;
+        isinput = 1;
+        
         break;
     case "button":
     case "textbutton":
+        
+        
+        break;
     case "slider":
+    case "label":
     case "dropdown":
-        // valid
-    break;
+        
+        break;
     default:
         // no match; override to show invalid:
         _type = "invalid";
-    break;
+        
+        break;
 }
 
 (IID).ControlType = _type;
 (IID).ControlInput = isinput;
+(IID).ControlPicker = ispicker;
 
 
 // Set the data type

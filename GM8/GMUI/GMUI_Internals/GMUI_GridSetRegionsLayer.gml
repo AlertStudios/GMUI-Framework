@@ -9,7 +9,7 @@ _Grid = (GMUII()).GMUI_grid[_Layer];
 ds_grid_clear(_Grid,0);
 
 // Loop through all controls in the layer
-var i,ctrl;
+var i,ctrl,_CX2,_CY2;
 for(i=0;i<ds_list_size((GMUII()).GMUI_controlList);i+=1) {
     // Get control value
     ctrl = ds_list_find_value((GMUII()).GMUI_controlList,i);
@@ -19,7 +19,9 @@ for(i=0;i<ds_list_size((GMUII()).GMUI_controlList);i+=1) {
     }
     else if ((ctrl).Layer == _Layer) {
         // Map the control to the grid[layer#] - Warning: This will overwrite any existing instance values (overlapping)
-        ds_grid_set_region(_Grid,(ctrl).CellX,(ctrl).CellY,(ctrl).CellX+(ctrl).CellWide-1,(ctrl).CellY+(ctrl).CellHigh-1,ctrl);
+        _CX2 = (ctrl).CellX+(ctrl).CellWide-1+ceil((ctrl).RelativeX / (GMUII()).cellsize);
+        _CY2 = (ctrl).CellY+(ctrl).CellHigh-1+ceil((ctrl).RelativeY / (GMUII()).cellsize_h);
+        ds_grid_set_region(_Grid,(ctrl).CellX,(ctrl).CellY,_CX2,_CY2,ctrl);
     }
     
 }

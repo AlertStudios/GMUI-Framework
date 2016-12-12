@@ -10,6 +10,8 @@ var layer;
     GMUI_GroupSetSize(1,    18,4,   layer);
     // Left side group
     GMUI_CreateGroup(2,     2,3,    layer, global.GMUIAnchorTopLeft);
+    // Object click group test
+    GMUI_CreateGroup(3,     0,0,    layer, global.GMUIAnchorTopLeft);
     
     with (GMUI_Add("Test1","textstring",            1,0,    16,2,   layer, global.GMUIAnchorTopLeft)) {
         GMUI_ControlSetAttributes(20,0,0,0);
@@ -47,7 +49,7 @@ var layer;
         GMUI_ControlSetStyle(-1, -1, c_gray, 1, 0.85, -1, -1, -1, -1, -1);
     }
     
-    with (GMUI_Add("DisableButton", "textbutton",      8,3,    5,3,    layer, global.GMUIAnchorBottomLeft)) {
+    with (GMUI_Add("DisableButton", "textbutton",   8,3,    5,3,    layer, global.GMUIAnchorBottomLeft)) {
         GMUI_ControlSetButtonAction(_Disable_Button);
         GMUI_ControlSetButton("Disable"+chr(13)+"Test",-1,-1,-1,-1);
     }
@@ -59,7 +61,7 @@ var layer;
     
     with (GMUI_Add("MoveButton", "textbutton",      22,3,    6,3,    layer, global.GMUIAnchorBottomLeft)) {
         GMUI_ControlSetButtonAction(_Move_Button);
-        GMUI_ControlSetButton("Bump"+chr(13)+"Group",-1,-1,-1,-1);
+        GMUI_ControlSetButton("Move"+chr(13)+"Group",-1,-1,-1,-1);
     }
     
     with (GMUI_Add("ExitButton", "textbutton",      0,0,    1,1,     layer, global.GMUIAnchorTopRight)) {
@@ -68,3 +70,14 @@ var layer;
         // (Example:) Minor adjustment so that the control isnt cut off by the room
         GMUI_ControlSetPositioning(-1,0,0,0);
     }
+    
+    with (GMUI_Add("MenuInt", "intpicker",          0,0,    3,2,    layer, global.GMUIAnchorTopLeft)) {
+        GMUI_ControlSetAttributes(0,0,0,9);
+        GMUI_ControlSetInitValue(0);
+        GMUI_ControlAddToGroup(3);
+        GMUI_GroupHide(3,layer,true);
+    }
+    with (GMUI_Add("MenuIntInstructions", "label",  20,21,  12,2,   layer, global.GMUIAnchorTopLeft)) {
+        GMUI_ControlSetInitValue("Click square to open sub menu");
+    }
+    

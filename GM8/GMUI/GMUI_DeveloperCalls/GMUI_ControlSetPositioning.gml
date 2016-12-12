@@ -12,9 +12,9 @@ if (!GMUI_IsControl() && id != GMUII())
 ActualW = argument2;
 ActualH = argument3;
 
-// Relative position is used if the boundary box should be adjusted
-RelativeX = argument0;
-RelativeY = argument1;
+// Relative position is used if the boundary box should be adjusted, must be < cell size
+RelativeX = min(argument0,(GMUII()).cellsize - 1);
+RelativeY = min(argument1,(GMUII()).cellsize_h - 1);
 
 // Store that this object has an adjusted position
 if (ActualW != 0 || ActualH != 0 || RelativeX != 0 || RelativeY != 0)

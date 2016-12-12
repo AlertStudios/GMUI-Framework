@@ -5,12 +5,6 @@
 // TEMPORARY SOLUTION??:
 if (Hidden) return false;
 
-// Extra drawing:
-if (Hovering)
-{
-}
-
-
 // STEP actions:
 if (Selected) {
     // Filter keyboard string to type of input allowed
@@ -67,17 +61,17 @@ if (valueChangeDetected) {
     // This may need some checks on if it should be allowed to set value... we'll see
                 
     // String form of the data type
-    var DataType;
-    if (ControlDataType == global.GMUIDataTypeInteger) {
-        DataType = "integer";
-    }
-    else if (ControlDataType == global.GMUIDataTypeDecimal) {
-        DataType = "double";
-    }
-    else {
-        DataType = "string";
-    }
-    GMUI_SetValue(valueName,value,DataType);
+    //var DataType;
+    //if (ControlDataType == global.GMUIDataTypeInteger) {
+    //    DataType = "integer";
+    //}
+    //else if (ControlDataType == global.GMUIDataTypeDecimal) {
+    //    DataType = "double";
+    //}
+    //else {
+    //    DataType = "string";
+    //}
+    GMUI_SetValue(valueName,value,ControlDataType);
     
     //Reset
     valueChangeDetected = 0;
@@ -99,28 +93,30 @@ if (argument0 == true) {
     if (ActualW > 0)
         cwx = cx + ActualW;
     else
-        cwx = cx + ((GMUII()).cellsize * CellWide);
+        cwx = cx + GMUI_CellGetActualX(CellWide);
     if (ActualH > 0)
         chy = cy + ActualH;
     else
-        chy = cy + ((GMUII()).cellsize * CellHigh);
+        chy = cy + GMUI_CellGetActualY(CellHigh);
     
-    // Background
-    color_alpha(ControlBackgroundColor,ControlBackgroundAlpha);
-    draw_rectangle(cx, cy, cwx, chy, 0);
-    
-    // Border
-    color_alpha(ControlBorderColor,ControlBackgroundAlpha);
-    draw_rectangle(cx, cy, cwx, chy, 1);
+    if (ControlInput || ControlDataType == global.GMUIDataTypeButton) {
+        // Background
+        color_alpha(ControlBackgroundColor,ControlBackgroundAlpha);
+        draw_rectangle(cx, cy, cwx, chy, 0);
+        
+        // Border
+        color_alpha(ControlBorderColor,ControlBackgroundAlpha);
+        draw_rectangle(cx, cy, cwx, chy, 1);
     
 
-    if (Hovering || Selected) {
-        // Draw the hovering effect
-        if (!Selected)
-            color_alpha(ControlHoverColor,ControlHoverAlpha);
-        else
-            color_alpha(ControlSelectColor,ControlSelectAlpha);
-        draw_rectangle(cx+1,cy+1,cwx-1,chy-1, ControlHoverBorder);
+        if (Hovering || Selected) {
+            // Draw the hovering effect
+            if (!Selected)
+                color_alpha(ControlHoverColor,ControlHoverAlpha);
+            else
+                color_alpha(ControlSelectColor,ControlSelectAlpha);
+            draw_rectangle(cx+1,cy+1,cwx-1,chy-1, ControlHoverBorder);
+        }
     }
     
     if (DoubleSelected && ControlInput) {
@@ -130,8 +126,8 @@ if (argument0 == true) {
     }
     
     // Draw special features for the other types
-    // Integer Picker
-    if (ControlType == "intpicker") {
+    // Picker types (integer, double, etc)
+    if (ControlPicker) {
         // draw arrows (origin should be on the right and to the corner it is placed at)
         // Top arrow and bottom arrow
         draw_sprite(ControlPickerSpriteRightOrUp,0,cwx-2,cy+2);
@@ -160,8 +156,11 @@ if (argument0 == true) {
         else
             Text = valueString;
     }
-    else if (ControlType == "textbutton") {
+    else if (ControlDataType == global.GMUIDataTypeButton) {
         Text = ControlButtonText;
+    }
+    else if (ControlDataType == global.GMUIDataTypeString) {
+        Text = valueString;
     }
     else
         Text = "";
@@ -187,7 +186,7 @@ if (argument0 == true) {
     align(ControlFontAlign,ControlFontAlignV);
     
     // Specific controls may override display
-    if (ControlType == "textbutton" && ControlButtonTextHoveringOn && Hovering)
+    if (ControlDataType == global.GMUIDataTypeButton && ControlButtonTextHoveringOn && Hovering)
         color_alpha(ControlButtonTextHoverColor,ControlFontAlpha);
     else
         color_alpha(ControlFontColor,ControlFontAlpha);

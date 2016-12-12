@@ -58,11 +58,11 @@ else if (_D == global.GMUIDirectionTypeSideVertical)
 {
     if ((_MY >= (_Control).ActualY + (_Control).RelativeY) && 
         (_MY <= (_Control).ActualY + (_Control).RelativeY + sizingH) &&
-        (_MX >= (_Control).ActualX + _CW - sizingW))
+        (_MX >= (_Control).ActualX + (_Control).RelativeX + _CW - sizingW))
         return global.GMUIHoveringDirection_Up;
     else if ((_MY >= (_Control).ActualY + (_Control).RelativeY + _CH - sizingH) &&
         (_MY <= (_Control).ActualY + (_Control).RelativeY + _CH) &&
-        (_MX >= (_Control).ActualX + _CW - sizingW))
+        (_MX >= (_Control).ActualX + (_Control).RelativeX + _CW - sizingW))
     return global.GMUIHoveringDirection_Down;
 }
 

@@ -31,7 +31,7 @@ After GMUI is initialized, you may create an object instance that will control y
 Your object (E.g. GMUI) will need to call two commands in two events.
 CREATE EVENT:
 
-`newGMUI = GMUI_Create(MyGridScriptName,16,0); // Name of Script that defines interface, Cell Width, Cell Height`
+`newGMUI = GMUI_Create(MyGridScriptName,16,0); // Script that defines interface, Cell Width, Cell Height`
 
 DRAW EVENT:
 
@@ -179,10 +179,12 @@ There are a number of features still left to implement, including:
 - Pop-ups
 - Menus
 - Tooltips
-- Plain text labels
 - List Areas
 - Selection list control
 - Screen transitions (of the interface)
+- Control & Group animations
 
 ##Known issues:
 - Formatting on the decimal field in the Studio version is not working
+- Some bugs with different cell height size than width
+- 

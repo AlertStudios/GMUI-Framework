@@ -16,11 +16,15 @@ switch (_controlType) {
         return global.GMUIDataTypeDecimal;
         break;
     case "textstring":
+    case "label":
         return global.GMUIDataTypeString;
         break;
     case "button":
     case "textbutton":
         return global.GMUIDataTypeButton;
+        break;
+    default:
+        return -1;
         break;
 }
 

@@ -4,6 +4,7 @@
     <folder folderName="GMUI">
       <folders>
         <folder folderName="GMUI_DeveloperCalls">
+          <file>GMUIself.gml</file>
           <file>GMUI_Add.gml</file>
           <file>GMUI_AddLabel.gml</file>
           <file>GMUI_AddLayer.gml</file>
@@ -16,10 +17,13 @@
           <file>GMUI_ControlSetButton.gml</file>
           <file>GMUI_ControlSetButtonAction.gml</file>
           <file>GMUI_ControlSetFontStyle.gml</file>
+          <file>GMUI_ControlSetHoverAction.gml</file>
           <file>GMUI_ControlSetInitValue.gml</file>
           <file>GMUI_ControlSetPicker.gml</file>
           <file>GMUI_ControlSetPositioning.gml</file>
+          <file>GMUI_ControlSetSelectingAction.gml</file>
           <file>GMUI_ControlSetStyle.gml</file>
+          <file>GMUI_ControlSetValueChangedAction.gml</file>
           <file>GMUI_Create.gml</file>
           <file>GMUI_CreateGroup.gml</file>
           <file>GMUI_DrawDebug.gml</file>
@@ -28,11 +32,15 @@
           <file>GMUI_GetValueString.gml</file>
           <file>GMUI_GroupHide.gml</file>
           <file>GMUI_GroupSetPosition.gml</file>
+          <file>GMUI_GroupSetPositionActual.gml</file>
           <file>GMUI_GroupSetSize.gml</file>
           <file>GMUI_Init.gml</file>
           <file>GMUI_SetForm.gml</file>
           <file>GMUI_SetValue.gml</file>
           <file>GMUI_SwitchLayer.gml</file>
+          <file>GMUI_TypeDecimal.gml</file>
+          <file>GMUI_TypeInt.gml</file>
+          <file>GMUI_TypeString.gml</file>
           <folders>
             <folder folderName="GMUI_Effects">
               <file>easeBounceOut.gml</file>
@@ -87,11 +95,14 @@
           <file>GMUI_GridSetRegionsLayer.gml</file>
           <file>GMUI_GroupExists.gml</file>
           <file>GMUI_GroupPositionControls.gml</file>
+          <file>GMUI_GroupSetPositionAnchored.gml</file>
           <file>GMUI_IsControl.gml</file>
           <file>GMUI_IsControlID.gml</file>
+          <file>GMUI_IsScript.gml</file>
           <file>GMUI_LastError.gml</file>
           <file>GMUI_LayerExists.gml</file>
           <file>GMUI_MouseInAdjustedRegion.gml</file>
+          <file>GMUI_MouseInGroupRegion.gml</file>
           <file>GMUI_MouseInSpecialRegion.gml</file>
           <file>GMUI_ResetControlStatus.gml</file>
           <file>GMUI_StudioCheckDefined.gml</file>

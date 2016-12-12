@@ -1,11 +1,12 @@
 ///GMUI_SetValue("ControlName", value, value type - string:0, integer:1, decimal:2)
-///Set the value of a control back to use in user code
+///Set the value of a control to GMUI to reference in user code (GMUI_GetValue)
 
 with (GMUII())
 {
     // Retrieve control from the reference map
-    var control,a2,c;
+    var control,a2,c,_invalid;
     control = ds_map_find_value(GMUI_map,argument0);
+    _invalid = false;
     
     a2 = string(argument2);
     // If integer or decimal, we will need to do some work to convert the string to an acceptable format
@@ -45,5 +46,11 @@ with (GMUII())
     else
     {
         GMUI_ThrowError("Unknown value type for GMUI_SetValue()");
+        _invalid = true;
+    }
+    
+    // If a value was set and a script is assigned to value change, execute it
+    if (!_invalid && GMUI_IsScript((control).ValueChangedActionScript)) {
+        script_execute((control).ValueChangedActionScript);
     }
 }

@@ -44,39 +44,47 @@
           <script>scripts\align.gml</script>
           <script>scripts\minmax.gml</script>
         </scripts>
-        <script>scripts\GMUI_Init.gml</script>
-        <script>scripts\GMUI_Create.gml</script>
-        <script>scripts\GMUI_SetForm.gml</script>
         <script>scripts\GMUI_Add.gml</script>
         <script>scripts\GMUI_AddLabel.gml</script>
         <script>scripts\GMUI_AddLayer.gml</script>
-        <script>scripts\GMUI_SwitchLayer.gml</script>
+        <script>scripts\GMUI_Create.gml</script>
         <script>scripts\GMUI_CreateGroup.gml</script>
         <script>scripts\GMUI_ControlAddToGroup.gml</script>
-        <script>scripts\GMUI_GroupSetSize.gml</script>
-        <script>scripts\GMUI_GroupSetPosition.gml</script>
-        <script>scripts\GMUI_GroupHide.gml</script>
-        <script>scripts\GMUI_ControlSetStyle.gml</script>
-        <script>scripts\GMUI_ControlSetFontStyle.gml</script>
+        <script>scripts\GMUI_ControlDisable.gml</script>
+        <script>scripts\GMUI_ControlHide.gml</script>
+        <script>scripts\GMUI_ControlIsDisabled.gml</script>
+        <script>scripts\GMUI_ControlIsHidden.gml</script>
         <script>scripts\GMUI_ControlSetAttributes.gml</script>
-        <script>scripts\GMUI_ControlSetPositioning.gml</script>
-        <script>scripts\GMUI_ControlSetPicker.gml</script>
         <script>scripts\GMUI_ControlSetButton.gml</script>
         <script>scripts\GMUI_ControlSetButtonAction.gml</script>
+        <script>scripts\GMUI_ControlSetFontStyle.gml</script>
+        <script>scripts\GMUI_ControlSetHoverAction.gml</script>
+        <script>scripts\GMUI_ControlSetPicker.gml</script>
+        <script>scripts\GMUI_ControlSetPositioning.gml</script>
+        <script>scripts\GMUI_ControlSetSelectingAction.gml</script>
+        <script>scripts\GMUI_ControlSetStyle.gml</script>
+        <script>scripts\GMUI_DrawDebug.gml</script>
+        <script>scripts\GMUI_GetControl.gml</script>
         <script>scripts\GMUI_GetValue.gml</script>
         <script>scripts\GMUI_GetValueString.gml</script>
+        <script>scripts\GMUI_GroupSetSize.gml</script>
+        <script>scripts\GMUI_GroupHide.gml</script>
+        <script>scripts\GMUI_GroupSetPosition.gml</script>
+        <script>scripts\GMUI_GroupSetPositionActual.gml</script>
+        <script>scripts\GMUI_Init.gml</script>
+        <script>scripts\GMUI_MouseInGroupRegion.gml</script>
+        <script>scripts\GMUI_SetForm.gml</script>
         <script>scripts\GMUI_SetValue.gml</script>
-        <script>scripts\GMUI_GetControl.gml</script>
-        <script>scripts\GMUI_ControlDisable.gml</script>
-        <script>scripts\GMUI_ControlIsDisabled.gml</script>
-        <script>scripts\GMUI_ControlHide.gml</script>
-        <script>scripts\GMUI_ControlIsHidden.gml</script>
-        <script>scripts\GMUI_DrawDebug.gml</script>
+        <script>scripts\GMUI_SwitchLayer.gml</script>
+        <script>scripts\GMUI_TypeDecimal.gml</script>
+        <script>scripts\GMUI_TypeInt.gml</script>
+        <script>scripts\GMUI_TypeString.gml</script>
+        <script>scripts\GMUIid.gml</script>
+        <script>scripts\GMUIself.gml</script>
       </scripts>
       <scripts name="GMUI_Internals">
-        <script>scripts\GMUI_LayerExists.gml</script>
-        <script>scripts\GMUI_GroupExists.gml</script>
-        <script>scripts\GMUI_GroupPositionControls.gml</script>
+        <script>scripts\GMUI_CellGetActualX.gml</script>
+        <script>scripts\GMUI_CellGetActualY.gml</script>
         <script>scripts\GMUI_ControlInit.gml</script>
         <script>scripts\GMUI_ControlFilterInput.gml</script>
         <script>scripts\GMUI_ControlDraw.gml</script>
@@ -88,9 +96,9 @@
         <script>scripts\GMUI_ControlSetDefaultPicker.gml</script>
         <script>scripts\GMUI_ControlSetDefaultButton.gml</script>
         <script>scripts\GMUI_ControlSetType.gml</script>
+        <script>scripts\GMUI_GetAnchoredCellX.gml</script>
+        <script>scripts\GMUI_GetAnchoredCellY.gml</script>
         <script>scripts\GMUI_GetDataType.gml</script>
-        <script>scripts\GMUI_IsControl.gml</script>
-        <script>scripts\GMUI_IsControlID.gml</script>
         <script>scripts\GMUI_GridEnabled.gml</script>
         <script>scripts\GMUI_GridDraw.gml</script>
         <script>scripts\GMUI_GridSelect.gml</script>
@@ -102,19 +110,21 @@
         <script>scripts\GMUI_GridNextControl.gml</script>
         <script>scripts\GMUI_GridGetMouseCellX.gml</script>
         <script>scripts\GMUI_GridGetMouseCellY.gml</script>
+        <script>scripts\GMUI_GroupExists.gml</script>
+        <script>scripts\GMUI_GroupPositionControls.gml</script>
+        <script>scripts\GMUI_GroupSetPositionAnchored.gml</script>
+        <script>scripts\GMUI_IsControl.gml</script>
+        <script>scripts\GMUI_IsControlID.gml</script>
+        <script>scripts\GMUI_IsScript.gml</script>
+        <script>scripts\GMUI_LastError.gml</script>
+        <script>scripts\GMUI_LayerExists.gml</script>
         <script>scripts\GMUI_MouseInAdjustedRegion.gml</script>
         <script>scripts\GMUI_MouseInSpecialRegion.gml</script>
-        <script>scripts\GMUI_CellGetActualX.gml</script>
-        <script>scripts\GMUI_CellGetActualY.gml</script>
-        <script>scripts\GMUI_GetAnchoredCellX.gml</script>
-        <script>scripts\GMUI_GetAnchoredCellY.gml</script>
-        <script>scripts\GMUI_ThrowError.gml</script>
-        <script>scripts\GMUI_LastError.gml</script>
         <script>scripts\GMUI_ResetControlStatus.gml</script>
+        <script>scripts\GMUI_StudioCheckDefined.gml</script>
+        <script>scripts\GMUI_ThrowError.gml</script>
         <script>scripts\GMUI_ValidCellBounds.gml</script>
         <script>scripts\GMUII.gml</script>
-        <script>scripts\GMUIid.gml</script>
-        <script>scripts\GMUI_StudioCheckDefined.gml</script>
       </scripts>
     </scripts>
   </scripts>
@@ -134,6 +144,8 @@
       <object>objects\o</object>
       <object>objects\o2</object>
       <object>objects\o3</object>
+      <object>objects\testmoving</object>
+      <object>objects\testmenu</object>
     </objects>
   </objects>
   <rooms name="rooms">

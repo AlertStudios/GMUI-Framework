@@ -13,12 +13,13 @@ i.Selected = 0;
 i.DoubleSelected = 0;
 
 i.ControlType = "";
-i.ControlInput = 1;
 i.ControlDataType = global.GMUIDataTypeString; // Default (0)
 
 // Redundant based on the datatype
 i.ControlIsNumeric = false;
 i.ControlIsString = true;
+i.ControlInput = true;
+i.ControlPicker = false;
 
 // For specific controls
 i.checkMouseX = 0;
@@ -34,8 +35,11 @@ i.Hidden = 0;
 // NonClickable may be used when a control is moving, for instance. It does not show disabled, but will not register a click
 i.NonClickable = 0;
 
-// Custom Action
+// Custom Actions
 i.ActionScript = -1;
+i.HoverActionScript = -1;
+i.SelectingActionScript = -1;
+i.ValueChangedActionScript = -1;
 
 // All of these values are set when added ::
 
