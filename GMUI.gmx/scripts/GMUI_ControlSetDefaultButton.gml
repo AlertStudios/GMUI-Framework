@@ -12,7 +12,6 @@ with (argument0)
     GMUI_ControlSetButton(
     (GMUII()).ControlButtonText,
     (GMUII()).ControlButtonGraphic,
-    (GMUII()).ControlButtonReplaceImage,
     (GMUII()).ControlFontAlign,
     (GMUII()).ControlButtonTextHoverColor
     );

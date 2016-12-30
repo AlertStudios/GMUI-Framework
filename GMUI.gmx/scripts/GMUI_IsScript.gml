@@ -14,4 +14,3 @@ if (is_real(_ScrVar)) {
 }
 
 return false;
-

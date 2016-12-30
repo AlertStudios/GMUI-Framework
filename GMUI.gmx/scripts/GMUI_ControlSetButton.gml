@@ -1,9 +1,9 @@
-///GMUI_ControlSetButton(Text in button or "" , graphic inside button or -1 , sprite to replace drawn button or -1, font alignment or -1, text color on hover or -1)
+///GMUI_ControlSetButton(Text in button or "" , graphic inside button or -1 , font alignment or -1, text color on hover or -1)
 ///Set the picker values of the control (to override the defaults)
 
 if (!GMUI_IsControl() && id != GMUII())
 {
-    GMUI_ThrowError("Invalid control for GMUI_ControlSetButton");
+    GMUI_ThrowErrorDetailed("Invalid control","GMUI_ControlSetButton");
     return false;
 }
 
@@ -13,20 +13,15 @@ if (!GMUI_IsControl() && id != GMUII())
         ControlButtonGraphic = argument1;
     else
         ControlButtonGraphic = -1;
-        
-    if (sprite_exists(argument2))
-        ControlButtonReplaceImage = argument2;
-    else
-        ControlButtonReplaceImage = -1;
     
     // Uses same alignment as set in font style
-    if (argument3 != -1)
-        ControlFontAlign = argument3;
+    if (argument2 != -1)
+        ControlFontAlign = argument2;
         
-    if (argument4 != -1)
+    if (argument3 != -1)
     {
         ControlButtonTextHoveringOn = true;
-        ControlButtonTextHoverColor = argument4;
+        ControlButtonTextHoverColor = argument3;
     }
     else
     {

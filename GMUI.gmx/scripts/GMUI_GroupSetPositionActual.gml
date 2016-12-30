@@ -28,8 +28,7 @@ if (!GMUI_GroupExists(_LayerNumber,_GroupNumber)) {
 }
 
 _adjx = _xcord - GMUI_CellGetActualX(GMUI_GridGetMouseCellX(_xcord));
-_adjy = _ycord - GMUI_CellGetActualY(GMUI_GridGetMouseCellX(_ycord));
+_adjy = _ycord - GMUI_CellGetActualY(GMUI_GridGetMouseCellY(_ycord));
 
 // Set position by default anchor (topleft), and adjustment to the given coordinates
 GMUI_GroupSetPositionAnchored(_LayerNumber,_GroupNumber,GMUI_GridGetMouseCellX(_xcord),GMUI_GridGetMouseCellY(_ycord),_adjx,_adjy,0);
-

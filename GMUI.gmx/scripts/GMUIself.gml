@@ -20,4 +20,3 @@ if (_gmuii > -1) {
 }
 
 return -1;
-

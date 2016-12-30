@@ -82,9 +82,8 @@ if (valueChangeDetected) {
 // DRAW //
 
 if (argument0 == true) {
-    // Draw the control
     // Cell x,y and Cell width/height x,y
-    var cx, cy, cwx, chy;
+    var cx, cy, cwx, chy, padx;
     //cx = (GMUII()).cellsize * CellX + RelativeX;
     //cy = (GMUII()).cellsize_h * CellY + RelativeY;
     cx = ActualX + RelativeX;
@@ -98,24 +97,38 @@ if (argument0 == true) {
         chy = cy + ActualH;
     else
         chy = cy + GMUI_CellGetActualY(CellHigh);
-    
-    if (ControlInput || ControlDataType == global.GMUIDataTypeButton) {
-        // Background
-        color_alpha(ControlBackgroundColor,ControlBackgroundAlpha);
-        draw_rectangle(cx, cy, cwx, chy, 0);
         
-        // Border
-        color_alpha(ControlBorderColor,ControlBackgroundAlpha);
-        draw_rectangle(cx, cy, cwx, chy, 1);
+    padx = 4;
     
-
-        if (Hovering || Selected) {
-            // Draw the hovering effect
-            if (!Selected)
-                color_alpha(ControlHoverColor,ControlHoverAlpha);
-            else
-                color_alpha(ControlSelectColor,ControlSelectAlpha);
-            draw_rectangle(cx+1,cy+1,cwx-1,chy-1, ControlHoverBorder);
+        
+    // Start drawing the control
+    if (ControlInput || ControlDataType == global.GMUIDataTypeButton) {
+        if (sprite_exists(ControlGraphic)) {
+            // Sprite has been substituted for the default drawing
+            var subi; subi = ControlGraphicIndex;
+            if (Hovering) subi = ControlGraphicHoveringIndex;
+            if (Selected) subi = ControlGraphicSelectedIndex;
+            
+            draw_sprite_ext(ControlGraphic,subi,cx,cy,ControlGraphicXScale,ControlGraphicYScale,ControlGraphicRotation,ControlGraphicColor,ControlGraphicAlpha);
+        }
+        else {
+            // Background
+            color_alpha(ControlBackgroundColor,ControlBackgroundAlpha);
+            draw_rectangle(cx, cy, cwx, chy, 0);
+            
+            // Border
+            color_alpha(ControlBorderColor,ControlBackgroundAlpha);
+            draw_rectangle(cx, cy, cwx, chy, 1);
+        
+    
+            if (Hovering || Selected) {
+                // Draw the hovering effect
+                if (!Selected)
+                    color_alpha(ControlHoverColor,ControlHoverAlpha);
+                else
+                    color_alpha(ControlSelectColor,ControlSelectAlpha);
+                draw_rectangle(cx+1,cy+1,cwx-1,chy-1, ControlHoverBorder);
+            }
         }
     }
     
@@ -166,14 +179,14 @@ if (argument0 == true) {
         Text = "";
     
     // Default is for fa_left:
-    dtx = cx + 4;    
+    dtx = cx + padx;    
     if (ControlFontAlign == fa_center)
         dtx = cx+(cwx-cx)/2;
     else if (ControlFontAlign == fa_right)
-        dtx = cwx - 4;
+        dtx = cwx - padx;
     else if (ControlFontAlign != fa_left) {
         ControlFontAlign = (GMUII()).ControlFontAlign;
-        GMUI_ThrowError("Invalid font align in GMUI_ControlDraw");
+        GMUI_ThrowErrorDetailed("Invalid font align","GMUI_ControlDraw");
     }
     
     if (ActualH > 0)
@@ -195,7 +208,15 @@ if (argument0 == true) {
     if (Disabled)
         draw_set_alpha(ControlFontAlpha / 2);
         
+    // Button with graphic inside
+    if (ControlDataType == global.GMUIDataTypeButton) {
+        if (sprite_exists(ControlButtonGraphic)) {
+            draw_sprite(ControlButtonGraphic,0,dtx, cy + midHeight);
+            dtx += sprite_get_width(ControlButtonGraphic) + padx;
+        }
+    }
     
+    // Draw value string or button text
     if (ControlShowCursor && Selected && !DoubleSelected)
         Text = Text + "|";
     draw_text(dtx, cy + midHeight,Text);

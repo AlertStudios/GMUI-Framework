@@ -1,7 +1,8 @@
 ///GMUI_Add("Name", "Type String", cell# x, cell# y, cells wide (min 1), cells high (min 1), Layer**, Anchor***)
 ///Adds a component(instance) to the GMUI grid
 
-var _Layer,_Anchor,_CellX,_CellY;
+var SCRIPT,_Layer,_Anchor,_CellX,_CellY;
+SCRIPT = "GMUI_Add";
 _Layer = argument6;
 _Anchor = argument7;
 _CellX = argument2;
@@ -9,7 +10,7 @@ _CellY = argument3;
 
 // Check that the layer exists first
 if (!GMUI_LayerExists(_Layer)) {
-    GMUI_ThrowError("The layer does not exist. GMUI_Add('" + string(argument0) + "',...");
+    GMUI_ThrowErrorDetailed("The layer does not exist for " + string(argument0),SCRIPT);
     return -1;
 }
 
@@ -21,14 +22,14 @@ gridW = ds_grid_width((GMUII()).GMUI_grid[_Layer]);
 gridH = ds_grid_height((GMUII()).GMUI_grid[_Layer]);
 
 if (!GMUI_ValidCellBounds(_Anchor,_CellX,_CellY,gridW,gridH)) {
-    GMUI_ThrowError("Cell values out of bounds. GMUI_Add('" + string(argument0) + "'," + string(argument1) + "," + string(_CellX) + "...");
+    GMUI_ThrowErrorDetailed("Cell values out of bounds for " + string(argument0) + " (" + string(argument1) + "," + string(_CellX) + ",...",SCRIPT);
     return -1;
 }
 
 
 // Check that it hasn't already been created
 if (ds_map_exists((GMUII()).GMUI_map,argument0)) {
-    GMUI_ThrowError("The control name has already been defined. GMUI_Add('" + string(argument0) + "',...");
+    GMUI_ThrowErrorDetailed("The control name has already been defined for '" + string(argument0) + "'",SCRIPT);
     return -1;
 }
 
@@ -86,20 +87,24 @@ thecontrol.ActualY = GMUI_CellGetActualY(thecontrol.CellY);
 ds_map_add((GMUII()).GMUI_map,argument0,thecontrol);
 
 
+// SET ALL DEFAULTS (set from the gmui controller):
 
-// Set the default style properties (set from the gmui controller)
+// Set the default style properties
 GMUI_ControlSetDefaultStyle(thecontrol);
 
-// Set the default font style properties (set from the gmui controller)
+// Set the default optional sprite override vars
+GMUI_ControlSetDefaultSprite(thecontrol);
+
+// Set the default font style properties
 GMUI_ControlSetDefaultFontStyle(thecontrol);
 
-// Set the default attribute properies (set from the gmui controller)
+// Set the default attribute properies
 GMUI_ControlSetDefaultAttributes(thecontrol);
 
-// Set the default picker properties (set from the gmui controller)
+// Set the default picker properties
 GMUI_ControlSetDefaultPicker(thecontrol);
 
-// Set the default button properties (set from the gmui controller)
+// Set the default button properties
 GMUI_ControlSetDefaultButton(thecontrol);
 
 // Override defaults for specific controls (Avoid defaults conflicts):

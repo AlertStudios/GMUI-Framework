@@ -9,6 +9,9 @@
     <sprites name="GMUI">
       <sprite>sprites\GMUIspr_arrow</sprite>
       <sprite>sprites\GMUIspr_arrowup</sprite>
+      <sprite>sprites\GMUIspr_move</sprite>
+      <sprite>sprites\GMUIspr_switch</sprite>
+      <sprite>sprites\GMUIspr_input</sprite>
     </sprites>
   </sprites>
   <backgrounds name="background"/>
@@ -19,12 +22,13 @@
         <script>scripts\_Test_Form.gml</script>
       </scripts>
       <scripts name="My Actions">
-        <script>scripts\_Test_Button.gml</script>
         <script>scripts\_Debug_Button.gml</script>
         <script>scripts\_Disable_Button.gml</script>
+        <script>scripts\_Exit_Button.gml</script>
         <script>scripts\_Hide_Button.gml</script>
         <script>scripts\_Move_Button.gml</script>
-        <script>scripts\_Exit_Button.gml</script>
+        <script>scripts\_Switch_Button.gml</script>
+        <script>scripts\_Test_Button.gml</script>
       </scripts>
       <scripts name="GMUI_DeveloperConfigs">
         <script>scripts\GMUI_SetControlDefaults.gml</script>
@@ -75,12 +79,14 @@
         <script>scripts\GMUI_MouseInGroupRegion.gml</script>
         <script>scripts\GMUI_SetForm.gml</script>
         <script>scripts\GMUI_SetValue.gml</script>
-        <script>scripts\GMUI_SwitchLayer.gml</script>
+        <script>scripts\GMUI_SwitchToLayer.gml</script>
         <script>scripts\GMUI_TypeDecimal.gml</script>
         <script>scripts\GMUI_TypeInt.gml</script>
         <script>scripts\GMUI_TypeString.gml</script>
         <script>scripts\GMUIid.gml</script>
         <script>scripts\GMUIself.gml</script>
+        <script>scripts\GMUI_ControlSetSprite.gml</script>
+        <script>scripts\GMUI_ControlSetSpriteExt.gml</script>
       </scripts>
       <scripts name="GMUI_Internals">
         <script>scripts\GMUI_CellGetActualX.gml</script>
@@ -90,11 +96,12 @@
         <script>scripts\GMUI_ControlDraw.gml</script>
         <script>scripts\GMUI_ControlActionScript.gml</script>
         <script>scripts\GMUI_ControlSetInitValue.gml</script>
-        <script>scripts\GMUI_ControlSetDefaultStyle.gml</script>
-        <script>scripts\GMUI_ControlSetDefaultFontStyle.gml</script>
         <script>scripts\GMUI_ControlSetDefaultAttributes.gml</script>
-        <script>scripts\GMUI_ControlSetDefaultPicker.gml</script>
         <script>scripts\GMUI_ControlSetDefaultButton.gml</script>
+        <script>scripts\GMUI_ControlSetDefaultFontStyle.gml</script>
+        <script>scripts\GMUI_ControlSetDefaultPicker.gml</script>
+        <script>scripts\GMUI_ControlSetDefaultSprite.gml</script>
+        <script>scripts\GMUI_ControlSetDefaultStyle.gml</script>
         <script>scripts\GMUI_ControlSetType.gml</script>
         <script>scripts\GMUI_GetAnchoredCellX.gml</script>
         <script>scripts\GMUI_GetAnchoredCellY.gml</script>
@@ -123,6 +130,7 @@
         <script>scripts\GMUI_ResetControlStatus.gml</script>
         <script>scripts\GMUI_StudioCheckDefined.gml</script>
         <script>scripts\GMUI_ThrowError.gml</script>
+        <script>scripts\GMUI_ThrowErrorDetailed.gml</script>
         <script>scripts\GMUI_ValidCellBounds.gml</script>
         <script>scripts\GMUII.gml</script>
       </scripts>

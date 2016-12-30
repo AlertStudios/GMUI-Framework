@@ -15,8 +15,7 @@ if (GMUI_GridEnabled())
     inRegion = false;
     
     // Check if the mouse has moved before checking for any changed selections
-    if (MX != mouse_px || MY != mouse_py)
-    {
+    if (MX != mouse_px || MY != mouse_py) {
         // Get the mouse position on the current top layer visible:
         var mouseHor,mouseVert,ctrlObject;
         mouseHor = GMUI_GridGetMouseCellX(MX);
@@ -27,25 +26,21 @@ if (GMUI_GridEnabled())
         if (mouseHor >= GMUI_grid_x[UILayer] && mouseVert >= GMUI_grid_y[UILayer] && mouseHor < GMUI_grid_w[UILayer] && mouseVert < GMUI_grid_h[UILayer])
             ctrlObject = ds_grid_get(GMUI_grid[UILayer],mouseHor+GMUI_grid_x[UILayer],mouseVert+GMUI_grid_y[UILayer]);
             
-        if (ctrlObject != 0 && is_real(ctrlObject))
-        {
+        if (ctrlObject != 0 && is_real(ctrlObject)) {
             // Found object number, do checks before assigning hovering or selected flag
-            if (instance_exists(ctrlObject))
-            {
+            if (instance_exists(ctrlObject)) {
+            
                 if (DebugData) TestHoverObject = ctrlObject;
-                if (ctrlObject != previousHoveringControl && !ctrlObject.Disabled && !ctrlObject.NonClickable)
-                {
+                if (ctrlObject != previousHoveringControl && !ctrlObject.Disabled && !ctrlObject.NonClickable) {
                     GMUI_ResetControlStatus("Hovering");
-                    if (ctrlObject.IsAdjusted)
-                    {
+                    if (ctrlObject.IsAdjusted) {
                         if (GMUI_MouseInAdjustedRegion(ctrlObject,MX,MY))
                             inRegion = true;
                     }
                     else
                         inRegion = true;
                     
-                    if (inRegion)
-                    {
+                    if (inRegion) {
                         // The int picker has a region on the right side for up/down
                         if (ctrlObject.ControlType == "intpicker")
                         {
@@ -74,8 +69,7 @@ if (GMUI_GridEnabled())
             else
                 GMUI_ThrowError("Instance recorded is not a control object or no longer exists @ GMUI_GridStep : " + string(ctrlObject));
         }
-        else if (HoveringControl != -1)
-        {
+        else if (HoveringControl != -1) {
             GMUI_ResetControlStatus("Hovering");
             if (DebugData) TestHoverObject = -1;
         }
@@ -87,8 +81,7 @@ if (GMUI_GridEnabled())
     }
     
     // Mouse click on grid
-    if (mouse_check_button_pressed(mb_left))
-    {
+    if (mouse_check_button_pressed(mb_left)) {
         GMUI_ResetControlStatus("Selected");
     
         // Get the mouse position on the current top layer visible:
@@ -97,17 +90,12 @@ if (GMUI_GridEnabled())
         mouseVert = GMUI_GridGetMouseCellY(MY);
         // Find if there is a control at that position
         ctrlObject = ds_grid_get(GMUI_grid[UILayer],mouseHor,mouseVert);
-        if (ctrlObject != 0)
-        {
-            if (instance_exists(ctrlObject))
-            {
-                if ((!ctrlObject.Disabled) && (!ctrlObject.NonClickable) && (!ctrlObject.Hidden))
-                {
+        if (ctrlObject != 0) {
+            if (instance_exists(ctrlObject)) {
+                if ((!ctrlObject.Disabled) && (!ctrlObject.NonClickable) && (!ctrlObject.Hidden)) {
                     // Switch between special types, general input types, and other controls
-                    if (ctrlObject.ControlType == "intpicker")
-                    {
-                        switch (ctrlObject.HoveringDirection)
-                        {
+                    if (ctrlObject.ControlType == "intpicker") {
+                        switch (ctrlObject.HoveringDirection) {
                             case global.GMUIHoveringDirection_Up:
                             case global.GMUIHoveringDirection_Right:
                                 GMUI_SetValue(ctrlObject.valueName,ctrlObject.value + 1,"integer");
@@ -121,12 +109,10 @@ if (GMUI_GridEnabled())
                                 break;
                         }
                     }
-                    else if (ctrlObject.ControlInput)
-                    {
+                    else if (ctrlObject.ControlInput) {
                         GMUI_GridSelect(ctrlObject);
                     }
-                    else
-                    {
+                    else if (ctrlObject.ActionScript != -1) {
                         // Control buttons clicked
                         GMUI_ControlActionScript(ctrlObject);
                     }
@@ -136,14 +122,11 @@ if (GMUI_GridEnabled())
     }
     
     // Any key event will trigger a set value on a selected control in GMUI_ControlDraw, so here    ..
-    if (SelectedControl != -1)
-    {
-        if (keyboard_check_pressed(vk_tab))
-        {
+    if (SelectedControl != -1) {
+        if (keyboard_check_pressed(vk_tab)) {
             GMUI_GridNextControl();
         }
-        else if (keyboard_check_pressed(vk_enter))
-        {
+        else if (keyboard_check_pressed(vk_enter)) {
             GMUI_ResetControlStatus("Selected");
         }
     }

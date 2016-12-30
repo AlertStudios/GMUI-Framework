@@ -2,4 +2,3 @@
 ///Returns the decimal data type
 
 return global.GMUIDataTypeDecimal;
-

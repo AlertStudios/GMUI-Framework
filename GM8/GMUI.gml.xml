@@ -22,6 +22,8 @@
           <file>GMUI_ControlSetPicker.gml</file>
           <file>GMUI_ControlSetPositioning.gml</file>
           <file>GMUI_ControlSetSelectingAction.gml</file>
+          <file>GMUI_ControlSetSprite.gml</file>
+          <file>GMUI_ControlSetSpriteExt.gml</file>
           <file>GMUI_ControlSetStyle.gml</file>
           <file>GMUI_ControlSetValueChangedAction.gml</file>
           <file>GMUI_Create.gml</file>
@@ -37,7 +39,7 @@
           <file>GMUI_Init.gml</file>
           <file>GMUI_SetForm.gml</file>
           <file>GMUI_SetValue.gml</file>
-          <file>GMUI_SwitchLayer.gml</file>
+          <file>GMUI_SwitchToLayer.gml</file>
           <file>GMUI_TypeDecimal.gml</file>
           <file>GMUI_TypeInt.gml</file>
           <file>GMUI_TypeString.gml</file>
@@ -77,6 +79,7 @@
           <file>GMUI_ControlSetDefaultButton.gml</file>
           <file>GMUI_ControlSetDefaultFontStyle.gml</file>
           <file>GMUI_ControlSetDefaultPicker.gml</file>
+          <file>GMUI_ControlSetDefaultSprite.gml</file>
           <file>GMUI_ControlSetDefaultStyle.gml</file>
           <file>GMUI_ControlSetType.gml</file>
           <file>GMUI_GetAnchoredCellX.gml</file>
@@ -107,6 +110,7 @@
           <file>GMUI_ResetControlStatus.gml</file>
           <file>GMUI_StudioCheckDefined.gml</file>
           <file>GMUI_ThrowError.gml</file>
+          <file>GMUI_ThrowErrorDetailed.gml</file>
           <file>GMUI_ValidCellBounds.gml</file>
           <folders />
         </folder>
@@ -116,6 +120,7 @@
           <file>_Exit_Button.gml</file>
           <file>_Hide_Button.gml</file>
           <file>_Move_Button.gml</file>
+          <file>_Switch_Button.gml</file>
           <file>_Test_Button.gml</file>
           <folders />
         </folder>

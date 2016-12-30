@@ -2,18 +2,19 @@
 ///GMUI_MouseInGroupRegion(group number, layer number)
 ///Returns if the mouse is in the bounds of the group
 
-var _Group, _Layer, _mouseCellX, _mouseCellY;
+var SCRIPT,_Group, _Layer, _mouseCellX, _mouseCellY;
+SCRIPT = "GMUI_MouseInGroupRegion";
 _Group = argument0;
 _Layer = argument1;
 
 // Check the parameters
 if (!GMUI_LayerExists(_Layer)) {
-    GMUI_ThrowError("Layer " + string(_Layer) + " doesn't exist. GMUI_GroupSetPosition");
+    GMUI_ThrowErrorDetailed("Layer " + string(_Layer) + " doesn't exist",SCRIPT);
     return false;
 }
 
 if (!GMUI_GroupExists(_Layer,_Group)) {
-    GMUI_ThrowError("Group " + string(_Group) + " doesn't exist on layer " + string(_Layer) + ". GMUI_GroupSetPosition");
+    GMUI_ThrowErrorDetailed("Group " + string(_Group) + " doesn't exist on layer " + string(_Layer),SCRIPT);
     return false;
 }
 

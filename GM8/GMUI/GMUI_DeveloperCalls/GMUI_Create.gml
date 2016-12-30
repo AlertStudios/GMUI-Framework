@@ -71,14 +71,10 @@ persistence = persistent;
 
 
 // Grid setup (New layers will have their own grids)
-GMUI_grid_x[0] = 0;
-GMUI_grid_y[0] = 0;
-GMUI_grid_w[0] = ceil(room_width/cellsize);
-GMUI_grid_h[0] = ceil(room_height/cellsize_h);
-GMUI_grid[0] = ds_grid_create(GMUI_grid_w[0],GMUI_grid_h[0]);
-
 GMUI_gridlist = ds_list_create();
-ds_list_add(GMUI_gridlist,0);
+
+GMUI_AddLayer(0,0,0);
+
 
 // Error management (DEBUG)
 GMUI_Error[0] = "";
@@ -103,11 +99,12 @@ SelectedControl = -1;
 PreviousSelectedControl = -1;
 
 
-// Grouping variables
+// Grouping variables (handled in GMUI_AddLayer())
 // List of groups per layer [layer number; default 0]
-GMUI_groupList[0] = ds_list_create();
+//GMUI_groupList[0] = ds_list_create();
 // List of controls per group [layer number, group number]
-GMUI_groupControlList = ds_list_create();
+//GMUI_groupControlList[0,0] = ds_list_create();
+
 //Positioning
 GMUI_groupCellX[0,0] = 0;
 GMUI_groupCellY[0,0] = 0;

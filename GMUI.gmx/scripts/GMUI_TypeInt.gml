@@ -2,4 +2,3 @@
 ///Returns the integer data type
 
 return global.GMUIDataTypeInteger;
-

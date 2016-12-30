@@ -11,6 +11,9 @@ GMUI_ControlSetStyle(
     rgb(40,40,40),0.1,rgb(240,140,40),0.3,
     true
     );
+    
+// Default sprite options
+GMUI_ControlSetSpriteExt(-1,0,0,0,1,1,c_white,1);
 
 // Default font style (font, font color, font align)
 GMUI_ControlSetFontStyle(fontNumeric,rgb(42,42,42), fa_left);
@@ -32,6 +35,6 @@ GMUI_ControlSetPicker(
 
 
 // Text Button control (Text or "", graphic in button or -1, button image sprite or -1, text alignment, hover color or -1)
-GMUI_ControlSetButton("Button", -1, -1, -1, -1);
+GMUI_ControlSetButton("", -1, -1, -1);
     
 

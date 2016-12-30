@@ -19,11 +19,17 @@ ds_list_add((GMUII()).GMUI_gridlist,floor(_Layer));
 
 // Add a group list to the layer in case its used
 (GMUII()).GMUI_groupList[_Layer] = ds_list_create();
+(GMUII()).GMUI_groupControlList[_Layer,0] = ds_list_create();
+
+//Default
+(GMUII()).GMUI_grid_w[_Layer] = ceil(room_width/(GMUII()).cellsize);
+(GMUII()).GMUI_grid_h[_Layer] = ceil(room_height/(GMUII()).cellsize_h);
 
 // Assign
-(GMUII()).GMUI_grid[_Layer] = ds_grid_create(ceil(room_width/(GMUII()).cellsize),ceil(room_height/(GMUII()).cellsize_h));
+(GMUII()).GMUI_grid[_Layer] = ds_grid_create((GMUII()).GMUI_grid_w[_Layer],(GMUII()).GMUI_grid_h[_Layer]);
 (GMUII()).GMUI_grid_x[_Layer] = argument1;
 (GMUII()).GMUI_grid_y[_Layer] = argument2;
+
 
 if ((GMUII()).UILayerTop < _Layer)
     (GMUII()).UILayerTop = _Layer;

@@ -48,7 +48,7 @@ for(i=0;i<ds_list_size((GMUII()).GMUI_groupControlList[_LayerNumber,_GroupNumber
     
     if (!instance_exists(ctrl))
     {
-        GMUI_ThrowError("Control no longer exists. GMUI_GroupSetPosition(" + _LayerNumber + "," + _GroupNumber + ")");
+        GMUI_ThrowError("Control no longer exists. GMUI_GroupSetPositionAnchored(" + _LayerNumber + "," + _GroupNumber + ")");
     }
     else {
         var pCellX,pCellY,groupWidth;
@@ -76,5 +76,4 @@ for(i=0;i<ds_list_size((GMUII()).GMUI_groupControlList[_LayerNumber,_GroupNumber
 
 // Reset all control regions for the layer
 GMUI_GridSetRegionsLayer(_LayerNumber);
-
 

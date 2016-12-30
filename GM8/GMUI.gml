@@ -12,12 +12,16 @@ var layer;
     // Left side group
     GMUI_CreateGroup(2,     2,3,    layer, global.GMUIAnchorTopLeft);
     // Object click group test
-    GMUI_CreateGroup(3,     0,0,    layer, global.GMUIAnchorTopLeft);
+    GMUI_AddLayer(1,0,0);
+    GMUI_CreateGroup(3,     0,0,    1, global.GMUIAnchorTopLeft);
+    
+    //GMUI_CreateGroup(1, 20,3, layer, global.GMUIAnchorTopRight);
     
     with (GMUI_Add("Test1","textstring",            1,0,    16,2,   layer, global.GMUIAnchorTopLeft)) {
         GMUI_ControlSetAttributes(20,0,0,0);
         GMUI_ControlSetInitValue("Select");
         GMUI_ControlAddToGroup(1);
+        GMUI_ControlSetSprite(GMUIspr_input,0,1,0);
     }
     
     with (GMUI_Add("Test2", "textint",              0,0,    10,2,   layer, global.GMUIAnchorTopLeft)) {
@@ -31,52 +35,63 @@ var layer;
         GMUI_ControlAddToGroup(2);
     }
     
-    with (GMUI_Add("Test4", "intpicker",            0,6,   10,2,   layer, global.GMUIAnchorTopLeft)) {
+    with (GMUI_Add("Test4", "intpicker",            0,6,    10,2,   layer, global.GMUIAnchorTopLeft)) {
         GMUI_ControlSetAttributes(0,0,-20,20);
         GMUI_ControlSetInitValue(-1);
         GMUI_ControlAddToGroup(2);
     }
     
-    with (GMUI_Add("TestButton", "textbutton",      3,9,   5,3,    layer, global.GMUIAnchorTopLeft)) {
+    with (GMUI_Add("TestButton", "textbutton",      3,9,    5,3,    layer, global.GMUIAnchorTopLeft)) {
         GMUI_ControlSetButtonAction(_Test_Button);
-        GMUI_ControlSetButton("Test!", -1, -1, -1, -1);
+        GMUI_ControlSetButton("Test!", -1, -1, -1);
         GMUI_ControlSetStyle(-1, -1, c_red, 1, 0.85, -1, -1, -1, -1, -1);
         GMUI_ControlAddToGroup(2);
     }
     
     with (GMUI_Add("DebugButton", "textbutton",     1,3,    5,3,    layer, global.GMUIAnchorBottomLeft)) {
         GMUI_ControlSetButtonAction(_Debug_Button);
-        GMUI_ControlSetButton("Debug", -1, -1, -1, -1);
+        GMUI_ControlSetButton("Debug", -1, -1, -1);
         GMUI_ControlSetStyle(-1, -1, c_gray, 1, 0.85, -1, -1, -1, -1, -1);
     }
     
     with (GMUI_Add("DisableButton", "textbutton",   8,3,    5,3,    layer, global.GMUIAnchorBottomLeft)) {
         GMUI_ControlSetButtonAction(_Disable_Button);
-        GMUI_ControlSetButton("Disable"+chr(13)+"Test",-1,-1,-1,-1);
+        GMUI_ControlSetButton("Disable"+chr(13)+"Test",-1,-1,-1);
     }
     
-    with (GMUI_Add("HideButton", "textbutton",      15,3,    5,3,    layer, global.GMUIAnchorBottomLeft)) {
+    with (GMUI_Add("HideButton", "textbutton",      15,3,   5,3,    layer, global.GMUIAnchorBottomLeft)) {
         GMUI_ControlSetButtonAction(_Hide_Button);
-        GMUI_ControlSetButton("Hide"+chr(13)+"Group",-1,-1,-1,-1);
+        GMUI_ControlSetButton("Hide"+chr(13)+"Group",-1,-1,-1);
     }
     
-    with (GMUI_Add("MoveButton", "textbutton",      22,3,    6,3,    layer, global.GMUIAnchorBottomLeft)) {
+    with (GMUI_Add("MoveButton", "textbutton",      22,3,   6,3,    layer, global.GMUIAnchorBottomLeft)) {
         GMUI_ControlSetButtonAction(_Move_Button);
-        GMUI_ControlSetButton("Move"+chr(13)+"Group",-1,-1,-1,-1);
+        GMUI_ControlSetButton("Move"+chr(13)+"Group",-1,-1,-1);
+    }
+    
+    with (GMUI_Add("MoveButton2", "button",         18,0,   2,2,    layer, global.GMUIAnchorTopLeft)) {
+        GMUI_ControlSetButtonAction(_Move_Button);
+        GMUI_ControlSetButton("", GMUIspr_move, -1, -1);
+        GMUI_ControlAddToGroup(1);
+    }
+    
+    with (GMUI_Add("SwitchButton", "button",        -2,16,  4,2,    layer, global.GMUIAnchorTop)) {
+        GMUI_ControlSetButtonAction(_Switch_Button);
+        GMUI_ControlSetSprite(GMUIspr_switch,0,1,0);
     }
     
     with (GMUI_Add("ExitButton", "textbutton",      0,0,    1,1,     layer, global.GMUIAnchorTopRight)) {
         GMUI_ControlSetButtonAction(_Exit_Button);
-        GMUI_ControlSetButton("x", -1, -1, -1, -1);
+        GMUI_ControlSetButton("x", -1, -1, -1);
         // (Example:) Minor adjustment so that the control isnt cut off by the room
         GMUI_ControlSetPositioning(-1,0,0,0);
     }
     
-    with (GMUI_Add("MenuInt", "intpicker",          0,0,    3,2,    layer, global.GMUIAnchorTopLeft)) {
+    with (GMUI_Add("MenuInt", "intpicker",          0,0,    3,2,    1, global.GMUIAnchorTopLeft)) {
         GMUI_ControlSetAttributes(0,0,0,9);
         GMUI_ControlSetInitValue(0);
         GMUI_ControlAddToGroup(3);
-        GMUI_GroupHide(3,layer,true);
+        GMUI_GroupHide(3,1,true);
     }
     with (GMUI_Add("MenuIntInstructions", "label",  20,21,  12,2,   layer, global.GMUIAnchorTopLeft)) {
         GMUI_ControlSetInitValue("Click square to open sub menu");
@@ -108,6 +123,11 @@ else
 #define _Disable_Button
 GMUI_ControlDisable("TestButton",1-GMUI_ControlIsDisabled("TestButton"));
 
+#define _Switch_Button
+//switch
+
+show_message("Motion tweening is coming soon");
+
 #define _Hide_Button
 GMUI_GroupHide(2, 0, 1-GMUI_ControlIsHidden("TestButton"));
 
@@ -120,12 +140,12 @@ if (MyButton >= 0)
     MyButtonText = MyButton.ControlButtonText;
     
 if (MyButtonText == "Move"+chr(13)+"Group") {
-    with (MyButton) GMUI_ControlSetButton("Return"+chr(13)+"Group",-1,-1,-1,-1);
+    with (MyButton) GMUI_ControlSetButton("Return"+chr(13)+"Group",-1,-1,-1);
     // Object is handling the group position here
     testmoving.moving = 1;
 }
 else {
-    with (MyButton) GMUI_ControlSetButton("Move"+chr(13)+"Group",-1,-1,-1,-1);
+    with (MyButton) GMUI_ControlSetButton("Move"+chr(13)+"Group",-1,-1,-1);
     testmoving.moving = 0;
     // Return the group to where it was
     GMUI_GroupSetPosition(0,1,20,3,0,0);
@@ -147,6 +167,9 @@ GMUI_ControlSetStyle(
     rgb(40,40,40),0.1,rgb(240,140,40),0.3,
     true
     );
+    
+// Default sprite options
+GMUI_ControlSetSpriteExt(-1,0,0,0,1,1,c_white,1);
 
 // Default font style (font, font color, font align)
 GMUI_ControlSetFontStyle(fontNumeric,rgb(42,42,42), fa_left);
@@ -168,7 +191,7 @@ GMUI_ControlSetPicker(
 
 
 // Text Button control (Text or "", graphic in button or -1, button image sprite or -1, text alignment, hover color or -1)
-GMUI_ControlSetButton("Button", -1, -1, -1, -1);
+GMUI_ControlSetButton("", -1, -1, -1);
     
 
 #define GMUI_SetLayerDepths
@@ -329,7 +352,8 @@ else
 ///GMUI_Add("Name", "Type String", cell# x, cell# y, cells wide (min 1), cells high (min 1), Layer**, Anchor***)
 ///Adds a component(instance) to the GMUI grid
 
-var _Layer,_Anchor,_CellX,_CellY;
+var SCRIPT,_Layer,_Anchor,_CellX,_CellY;
+SCRIPT = "GMUI_Add";
 _Layer = argument6;
 _Anchor = argument7;
 _CellX = argument2;
@@ -337,7 +361,7 @@ _CellY = argument3;
 
 // Check that the layer exists first
 if (!GMUI_LayerExists(_Layer)) {
-    GMUI_ThrowError("The layer does not exist. GMUI_Add('" + string(argument0) + "',...");
+    GMUI_ThrowErrorDetailed("The layer does not exist for " + string(argument0),SCRIPT);
     return -1;
 }
 
@@ -349,14 +373,14 @@ gridW = ds_grid_width((GMUII()).GMUI_grid[_Layer]);
 gridH = ds_grid_height((GMUII()).GMUI_grid[_Layer]);
 
 if (!GMUI_ValidCellBounds(_Anchor,_CellX,_CellY,gridW,gridH)) {
-    GMUI_ThrowError("Cell values out of bounds. GMUI_Add('" + string(argument0) + "'," + string(argument1) + "," + string(_CellX) + "...");
+    GMUI_ThrowErrorDetailed("Cell values out of bounds for " + string(argument0) + " (" + string(argument1) + "," + string(_CellX) + ",...",SCRIPT);
     return -1;
 }
 
 
 // Check that it hasn't already been created
 if (ds_map_exists((GMUII()).GMUI_map,argument0)) {
-    GMUI_ThrowError("The control name has already been defined. GMUI_Add('" + string(argument0) + "',...");
+    GMUI_ThrowErrorDetailed("The control name has already been defined for '" + string(argument0) + "'",SCRIPT);
     return -1;
 }
 
@@ -414,20 +438,24 @@ thecontrol.ActualY = GMUI_CellGetActualY(thecontrol.CellY);
 ds_map_add((GMUII()).GMUI_map,argument0,thecontrol);
 
 
+// SET ALL DEFAULTS (set from the gmui controller):
 
-// Set the default style properties (set from the gmui controller)
+// Set the default style properties
 GMUI_ControlSetDefaultStyle(thecontrol);
 
-// Set the default font style properties (set from the gmui controller)
+// Set the default optional sprite override vars
+GMUI_ControlSetDefaultSprite(thecontrol);
+
+// Set the default font style properties
 GMUI_ControlSetDefaultFontStyle(thecontrol);
 
-// Set the default attribute properies (set from the gmui controller)
+// Set the default attribute properies
 GMUI_ControlSetDefaultAttributes(thecontrol);
 
-// Set the default picker properties (set from the gmui controller)
+// Set the default picker properties
 GMUI_ControlSetDefaultPicker(thecontrol);
 
-// Set the default button properties (set from the gmui controller)
+// Set the default button properties
 GMUI_ControlSetDefaultButton(thecontrol);
 
 // Override defaults for specific controls (Avoid defaults conflicts):
@@ -470,11 +498,17 @@ ds_list_add((GMUII()).GMUI_gridlist,floor(_Layer));
 
 // Add a group list to the layer in case its used
 (GMUII()).GMUI_groupList[_Layer] = ds_list_create();
+(GMUII()).GMUI_groupControlList[_Layer,0] = ds_list_create();
+
+//Default
+(GMUII()).GMUI_grid_w[_Layer] = ceil(room_width/(GMUII()).cellsize);
+(GMUII()).GMUI_grid_h[_Layer] = ceil(room_height/(GMUII()).cellsize_h);
 
 // Assign
-(GMUII()).GMUI_grid[_Layer] = ds_grid_create(ceil(room_width/(GMUII()).cellsize),ceil(room_height/(GMUII()).cellsize_h));
+(GMUII()).GMUI_grid[_Layer] = ds_grid_create((GMUII()).GMUI_grid_w[_Layer],(GMUII()).GMUI_grid_h[_Layer]);
 (GMUII()).GMUI_grid_x[_Layer] = argument1;
 (GMUII()).GMUI_grid_y[_Layer] = argument2;
+
 
 if ((GMUII()).UILayerTop < _Layer)
     (GMUII()).UILayerTop = _Layer;
@@ -485,33 +519,41 @@ return true;
 ///GMUI_ControlAddToGroup(group number)
 ///Adds control to a group if it exists in the layer
 
-var _Group, _Layer;
+var SCRIPT,_Group, _Layer;
+SCRIPT = "GMUI_ControlAddToGroup";
 _Group = argument0;
-// Layer value exists in the control
-_Layer = Layer;
 
 // Must be control
 if (!GMUI_IsControl()) {
-    GMUI_ThrowError("Invalid control for GMUI_ControlAddToGroup");
+    GMUI_ThrowErrorDetailed("Invalid control",SCRIPT);
     return false;
 }
 
 // Validate
 if (!is_real(_Group)) {
-    GMUI_ThrowError("Invalid group for GMUI_ControlAddToGroup");
+    GMUI_ThrowErrorDetailed("Invalid group",SCRIPT);
     return false;
 }
 if (_Group <= 0) {
-    GMUI_ThrowError("Invalid group for GMUI_ControlAddToGroup");
+    GMUI_ThrowErrorDetailed("Invalid group",SCRIPT);
     return false;
 }
     
 // Control must have a layer that exists (should always be the case)
+// Layer value exists in the control
+_Layer = Layer;
 if (!GMUI_LayerExists(_Layer)) {
-    GMUI_ThrowError("Control in layer that doesn't exist: " + string(id) + ". GMUI_ControlAddToGroup");
+    GMUI_ThrowErrorDetailed("Control in layer that doesn't exist: " + string(id),SCRIPT);
     return false;
 }
-    
+
+if (!GMUI_GroupExists(_Layer,_Group)) {
+    GMUI_ThrowErrorDetailed("Group "+string(_Group)+" doesn't exist for adding control: " + string(id),SCRIPT);
+    return false;
+}
+
+
+
 
 // Add control to group's control list and assign to control
 ds_list_add((GMUII()).GMUI_groupControlList[_Layer,_Group],id);
@@ -623,12 +665,12 @@ return true;
     
 
 #define GMUI_ControlSetButton
-///GMUI_ControlSetButton(Text in button or "" , graphic inside button or -1 , sprite to replace drawn button or -1, font alignment or -1, text color on hover or -1)
+///GMUI_ControlSetButton(Text in button or "" , graphic inside button or -1 , font alignment or -1, text color on hover or -1)
 ///Set the picker values of the control (to override the defaults)
 
 if (!GMUI_IsControl() && id != GMUII())
 {
-    GMUI_ThrowError("Invalid control for GMUI_ControlSetButton");
+    GMUI_ThrowErrorDetailed("Invalid control","GMUI_ControlSetButton");
     return false;
 }
 
@@ -638,20 +680,15 @@ if (!GMUI_IsControl() && id != GMUII())
         ControlButtonGraphic = argument1;
     else
         ControlButtonGraphic = -1;
-        
-    if (sprite_exists(argument2))
-        ControlButtonReplaceImage = argument2;
-    else
-        ControlButtonReplaceImage = -1;
     
     // Uses same alignment as set in font style
-    if (argument3 != -1)
-        ControlFontAlign = argument3;
+    if (argument2 != -1)
+        ControlFontAlign = argument2;
         
-    if (argument4 != -1)
+    if (argument3 != -1)
     {
         ControlButtonTextHoveringOn = true;
-        ControlButtonTextHoverColor = argument4;
+        ControlButtonTextHoverColor = argument3;
     }
     else
     {
@@ -807,6 +844,92 @@ else {
 return false;
     
 
+#define GMUI_ControlSetSprite
+///GMUI_ControlSetSprite(sprite, subimage, hover subimage, selected subimage)
+///Replace the control drawing with a sprite instead
+
+if (!GMUI_IsControl() && id != GMUII())
+{
+    GMUI_ThrowErrorDetailed("Invalid control","GMUI_ControlSetSprite");
+    return false;
+}
+    
+    if (sprite_exists(argument0))
+        ControlGraphic = argument0;
+    else
+        ControlGraphic = -1;
+    
+    if (is_real(argument1))
+        ControlGraphicIndex = argument1;
+    else
+        ControlGraphicIndex = 0;
+        
+    if (is_real(argument2))
+        ControlGraphicHoveringIndex = argument2;
+    else
+        ControlGraphicHoveringIndex = 0;
+        
+    if (is_real(argument3))
+        ControlGraphicSelectedIndex = argument3;
+    else
+        ControlGraphicSelectedIndex = 0;
+
+return true;
+
+
+#define GMUI_ControlSetSpriteExt
+///GMUI_ControlSetSpriteExt(sprite, subimage, hover subimage, selected subimage, xscale, yscale, color, alpha)
+///Replace the control drawing with a sprite with extra parameters
+
+if (!GMUI_IsControl() && id != GMUII())
+{
+    GMUI_ThrowErrorDetailed("Invalid control","GMUI_ControlSetSpriteExt");
+    return false;
+}
+    
+    if (sprite_exists(argument0))
+        ControlGraphic = argument0;
+    else
+        ControlGraphic = -1;
+    
+    if (is_real(argument1))
+        ControlGraphicIndex = argument1;
+    else
+        ControlGraphicIndex = 0;
+        
+    if (is_real(argument2))
+        ControlGraphicHoveringIndex = argument2;
+    else
+        ControlGraphicHoveringIndex = 0;
+        
+    if (is_real(argument3))
+        ControlGraphicSelectedIndex = argument3;
+    else
+        ControlGraphicSelectedIndex = 0;
+        
+    if (is_real(argument4))
+        ControlGraphicXScale = argument4;
+    else
+        ControlGraphicXScale = 1;
+    
+    if (is_real(argument5))
+        ControlGraphicYScale = argument5;
+    else
+        ControlGraphicYScale = 1;
+        
+    if (is_real(argument6))
+        ControlGraphicColor = argument6;
+    else
+        ControlGraphicColor = c_white;
+    
+    if (is_real(argument7))
+        ControlGraphicAlpha = argument7;
+    else
+        ControlGraphicAlpha = 1;
+        
+
+return true;
+
 #define GMUI_ControlSetValueChangedAction
 ///GMUI_ControlSetValueChangedAction(Action Script)
 ///On changed value, execute script (can also draw)
@@ -940,14 +1063,10 @@ persistence = persistent;
 
 
 // Grid setup (New layers will have their own grids)
-GMUI_grid_x[0] = 0;
-GMUI_grid_y[0] = 0;
-GMUI_grid_w[0] = ceil(room_width/cellsize);
-GMUI_grid_h[0] = ceil(room_height/cellsize_h);
-GMUI_grid[0] = ds_grid_create(GMUI_grid_w[0],GMUI_grid_h[0]);
-
 GMUI_gridlist = ds_list_create();
-ds_list_add(GMUI_gridlist,0);
+
+GMUI_AddLayer(0,0,0);
+
 
 // Error management (DEBUG)
 GMUI_Error[0] = "";
@@ -972,11 +1091,12 @@ SelectedControl = -1;
 PreviousSelectedControl = -1;
 
 
-// Grouping variables
+// Grouping variables (handled in GMUI_AddLayer())
 // List of groups per layer [layer number; default 0]
-GMUI_groupList[0] = ds_list_create();
+//GMUI_groupList[0] = ds_list_create();
 // List of controls per group [layer number, group number]
-GMUI_groupControlList = ds_list_create();
+//GMUI_groupControlList[0,0] = ds_list_create();
+
 //Positioning
 GMUI_groupCellX[0,0] = 0;
 GMUI_groupCellY[0,0] = 0;
@@ -1169,7 +1289,8 @@ for(i=0;i<ds_list_size((GMUII()).GMUI_groupControlList[_Layer,_Group]);i+=1) {
 ///Change the position of the group (and all of the controls inside it)
 
 // Arguments
-var _LayerNumber,_GroupNumber,_CellX,_CellY,_AdjustmentX,_AdjustmentY, ctrl;
+var SCRIPT,_LayerNumber,_GroupNumber,_CellX,_CellY,_AdjustmentX,_AdjustmentY, ctrl;
+SCRIPT = "GMUI_GroupSetPosition";
 _LayerNumber = argument0;
 _GroupNumber = argument1;
 _CellX = argument2;
@@ -1179,22 +1300,22 @@ _AdjustmentY = argument5;
 
 // Validate
 if (!is_real(_GroupNumber) || !is_real(_LayerNumber) || !is_real(_CellX) || !is_real(_CellY)) {
-    GMUI_ThrowError("Invalid parameters for GMUI_GroupSetPosition");
+    GMUI_ThrowErrorDetailed("Invalid parameters",SCRIPT);
     return false;
 }
 
 if (_GroupNumber <= 0) {
-    GMUI_ThrowError("Group number must be greater than 0");
+    GMUI_ThrowErrorDetailed("Group number must be greater than 0",SCRIPT);
     return false;
 }
 
 if (!GMUI_LayerExists(_LayerNumber)) {
-    GMUI_ThrowError("Layer " + string(_LayerNumber) + " doesn't exist. GMUI_GroupSetPosition");
+    GMUI_ThrowErrorDetailed("Layer " + string(_LayerNumber) + " doesn't exist",SCRIPT);
     return false;
 }
 
 if (!GMUI_GroupExists(_LayerNumber,_GroupNumber)) {
-    GMUI_ThrowError("Group " + string(_GroupNumber) + " doesn't exist on layer " + string(_LayerNumber) + ". GMUI_GroupSetPosition");
+    GMUI_ThrowErrorDetailed("Group " + string(_GroupNumber) + " doesn't exist on layer " + string(_LayerNumber),SCRIPT);
     return false;
 }
 
@@ -1232,7 +1353,7 @@ if (!GMUI_GroupExists(_LayerNumber,_GroupNumber)) {
 }
 
 _adjx = _xcord - GMUI_CellGetActualX(GMUI_GridGetMouseCellX(_xcord));
-_adjy = _ycord - GMUI_CellGetActualY(GMUI_GridGetMouseCellX(_ycord));
+_adjy = _ycord - GMUI_CellGetActualY(GMUI_GridGetMouseCellY(_ycord));
 
 // Set position by default anchor (topleft), and adjustment to the given coordinates
 GMUI_GroupSetPositionAnchored(_LayerNumber,_GroupNumber,GMUI_GridGetMouseCellX(_xcord),GMUI_GridGetMouseCellY(_ycord),_adjx,_adjy,0);
@@ -1305,18 +1426,19 @@ global.GMUIDataTypeButton = 3;
 ///GMUI_MouseInGroupRegion(group number, layer number)
 ///Returns if the mouse is in the bounds of the group
 
-var _Group, _Layer, _mouseCellX, _mouseCellY;
+var SCRIPT,_Group, _Layer, _mouseCellX, _mouseCellY;
+SCRIPT = "GMUI_MouseInGroupRegion";
 _Group = argument0;
 _Layer = argument1;
 
 // Check the parameters
 if (!GMUI_LayerExists(_Layer)) {
-    GMUI_ThrowError("Layer " + string(_Layer) + " doesn't exist. GMUI_GroupSetPosition");
+    GMUI_ThrowErrorDetailed("Layer " + string(_Layer) + " doesn't exist",SCRIPT);
     return false;
 }
 
 if (!GMUI_GroupExists(_Layer,_Group)) {
-    GMUI_ThrowError("Group " + string(_Group) + " doesn't exist on layer " + string(_Layer) + ". GMUI_GroupSetPosition");
+    GMUI_ThrowErrorDetailed("Group " + string(_Group) + " doesn't exist on layer " + string(_Layer),SCRIPT);
     return false;
 }
 
@@ -1436,12 +1558,30 @@ if (is_real(OptionalInterfaceName)) {
     }
 }
 
-#define GMUI_SwitchLayer
-/// Switches the layer to the top-most visible layer
+#define GMUI_SwitchToLayer
+///GMUI_SwitchToLayer(Layer number)
+///Switches the active layer
 
-//
+// Arguments
+var SCRIPT,_LayerNumber;
+SCRIPT = "GMUI_SwitchToLayer";
+_LayerNumber = argument0;
 
-// Disable hovering and selection on all controls
+// Validate
+if (!is_real(_LayerNumber)) {
+    GMUI_ThrowErrorDetailed("Invalid parameter",SCRIPT);
+    return false;
+}
+
+if (!GMUI_LayerExists(_LayerNumber)) {
+    GMUI_ThrowErrorDetailed("Layer " + string(_LayerNumber) + " doesn't exist",SCRIPT);
+    return false;
+}
+
+(GMUII()).UILayer = _LayerNumber;
+
+
+// .... Disable hovering and selection on all controls
 
 #define GMUI_TypeDecimal
 ///GMUI_TypeDecimal()
@@ -1504,37 +1644,266 @@ if (_gmuii > -1) {
 
 return -1;
 
-#define GMUI_LayerExists
-///GMUI_LayerExists(Layer Number)
-/// Checks that the layer number given exists in GMUI
+#define GMUI_CellGetActualX
+///GMUI_CellGetActualX(X Cell #);
+/// Internal: Return the actual X of the cell number
 
-if (!is_real(argument0))
+return argument0 * ((GMUII()).cellsize);
+
+#define GMUI_CellGetActualY
+///GMUI_CellGetActualY(Y Cell #);
+/// Internal: Return the actual Y of the cell number
+
+return argument0 * ((GMUII()).cellsize_h);
+
+#define GMUI_ControlActionScript
+///GMUI_ControlActionScript(control object) Runs the script assigned to the control, if there is one
+
+if (!GMUI_IsControlID(argument0))
+{
+    GMUI_ThrowError("Invalid control for GMUI_ActionScript");
     return false;
+}
 
-var L;L = floor(argument0);
+if ((argument0).ActionScript == -1) {
+    GMUI_ThrowError("Action for " + (argument0).valueName +" not implemented");
+}
+else if (!script_exists((argument0).ActionScript)) {
+    GMUI_ThrowError("Invalid script assigned to " + (argument0).valueName + " : " + string((argument0).ActionScript));
+}
+else {
+    script_execute((argument0).ActionScript);
+    return true;
+}
 
-return (ds_list_find_index((GMUII()).GMUI_gridlist,L) != -1);
+return false;
+
+#define GMUI_ControlDraw
+///GMUI_ControlDraw(Draw the control [bool])
+/// The actions done per step for a control added to the grid, along with drawing things
 
 
-#define GMUI_GroupExists
-///GMUI_GroupExists(Layer Number, Group Number)
-///Checks that the group number given exists in the layer in GMUI
+// TEMPORARY SOLUTION??:
+if (Hidden) return false;
 
-if (!is_real(argument0))
-    return false;
+// STEP actions:
+if (Selected) {
+    // Filter keyboard string to type of input allowed
+    if (ControlInput && (keyboard_lastkey > 20 || keyboard_lastkey == vk_backspace)) {
+        if (keyboard_check(vk_anykey)) {
+            //If 'Overwriting', then reset back to just selected
+            if (DoubleSelected) {
+                if (string_length(keyboard_string) > 0 && string_length(GMUI_ControlFilterInput(ControlType,keyboard_lastchar)) > 0)
+                    keyboard_string = string_copy(keyboard_string,string_length(keyboard_string),1);
+                else
+                    keyboard_string = "";
+                    
+                DoubleSelected = false;
+            }
+            else {
+                // On keypress, sanitize input per the type
+                keyboard_string = GMUI_ControlFilterInput(ControlType,keyboard_string);
+                
+                // Max characters allowed for the control's string
+                if (ControlMaxStringLength > 0)
+                    keyboard_string = string_copy(keyboard_string,1,ControlMaxStringLength);
+            }
+        }
+        
+        // Only does assignment of the value once the key is released
+        if (keyboard_check_released(vk_anykey)) {
+            // On release, we need to filter again incase somebody "fat-fingers" multiple keys fast enough to miss the first filter.. interesting.
+            keyboard_string = GMUI_ControlFilterInput(ControlType,keyboard_string);
+            
+            // Assign keyboard string as the value string
+            valueString = keyboard_string;
+            
+            if (ControlIsNumeric) {
+                // As long as the string is valid, assign stripped zeros to value string, and then assign value
+                if (valueString != "." && valueString != "-") {
+                    valueString = keyboard_string;
+                    value = real(valueString);
+                    if (ControlDataType == global.GMUIDataTypeInteger) {
+                        value = round(value);
+                    }
+                    
+                    // Found the change!
+                    valueChangeDetected = 1;
+                }
+            }
+            else if (ControlIsString) {
+                value = valueString;
+            }
+        }
+    }
+}
+
+if (valueChangeDetected) {
+    // This may need some checks on if it should be allowed to set value... we'll see
+                
+    // String form of the data type
+    //var DataType;
+    //if (ControlDataType == global.GMUIDataTypeInteger) {
+    //    DataType = "integer";
+    //}
+    //else if (ControlDataType == global.GMUIDataTypeDecimal) {
+    //    DataType = "double";
+    //}
+    //else {
+    //    DataType = "string";
+    //}
+    GMUI_SetValue(valueName,value,ControlDataType);
     
-if (!is_real(argument0))
-    return false;
+    //Reset
+    valueChangeDetected = 0;
+}
 
-var L,G;
-L = floor(argument0);
-G = floor(argument1);
 
-return (ds_list_find_index((GMUII()).GMUI_groupList[L],G) != -1);
 
-#define GMUI_GroupPositionControls
-/// Internal: Re-position the controls of the group, or a specific one
-// GMUI_GroupPositionControls(
+// DRAW //
+
+if (argument0 == true) {
+    // Cell x,y and Cell width/height x,y
+    var cx, cy, cwx, chy, padx;
+    //cx = (GMUII()).cellsize * CellX + RelativeX;
+    //cy = (GMUII()).cellsize_h * CellY + RelativeY;
+    cx = ActualX + RelativeX;
+    cy = ActualY + RelativeY;
+    
+    if (ActualW > 0)
+        cwx = cx + ActualW;
+    else
+        cwx = cx + GMUI_CellGetActualX(CellWide);
+    if (ActualH > 0)
+        chy = cy + ActualH;
+    else
+        chy = cy + GMUI_CellGetActualY(CellHigh);
+        
+    padx = 4;
+    
+        
+    // Start drawing the control
+    if (ControlInput || ControlDataType == global.GMUIDataTypeButton) {
+        if (sprite_exists(ControlGraphic)) {
+            // Sprite has been substituted for the default drawing
+            var subi; subi = ControlGraphicIndex;
+            if (Hovering) subi = ControlGraphicHoveringIndex;
+            if (Selected) subi = ControlGraphicSelectedIndex;
+            
+            draw_sprite_ext(ControlGraphic,subi,cx,cy,ControlGraphicXScale,ControlGraphicYScale,ControlGraphicRotation,ControlGraphicColor,ControlGraphicAlpha);
+        }
+        else {
+            // Background
+            color_alpha(ControlBackgroundColor,ControlBackgroundAlpha);
+            draw_rectangle(cx, cy, cwx, chy, 0);
+            
+            // Border
+            color_alpha(ControlBorderColor,ControlBackgroundAlpha);
+            draw_rectangle(cx, cy, cwx, chy, 1);
+        
+    
+            if (Hovering || Selected) {
+                // Draw the hovering effect
+                if (!Selected)
+                    color_alpha(ControlHoverColor,ControlHoverAlpha);
+                else
+                    color_alpha(ControlSelectColor,ControlSelectAlpha);
+                draw_rectangle(cx+1,cy+1,cwx-1,chy-1, ControlHoverBorder);
+            }
+        }
+    }
+    
+    if (DoubleSelected && ControlInput) {
+        // Draw 'Overwrite' affect
+        color_alpha(ControlOverwriteColor,ControlOverwriteAlpha);
+        draw_rectangle(cx+2,cy+2,cwx-2,chy-2,0);
+    }
+    
+    // Draw special features for the other types
+    // Picker types (integer, double, etc)
+    if (ControlPicker) {
+        // draw arrows (origin should be on the right and to the corner it is placed at)
+        // Top arrow and bottom arrow
+        draw_sprite(ControlPickerSpriteRightOrUp,0,cwx-2,cy+2);
+        draw_sprite(ControlPickerSpriteLeftOrDown,0,cwx-2,chy-2);
+        
+        if (ControlPickerDirection == global.GMUIDirectionTypeSideVertical) {
+            color_alpha(ControlHoverColor,ControlHoverAlpha);
+            switch (HoveringDirection) {
+                case global.GMUIHoveringDirection_Up:
+                    draw_rectangle(cwx-2-ControlPickerWidth,cy,cwx-1,cy+(chy-cy)/2,0);
+                    break;
+                case global.GMUIHoveringDirection_Down:
+                    draw_rectangle(cwx-2-ControlPickerWidth,chy-(chy-cy)/2,cwx-1,chy,0);
+                    break;
+            }
+        }
+        
+    }
+    
+    
+    // Draw the text inside of the keyboard string or value
+    var Text, dtx, midHeight;
+    if (ControlInput) {
+        if (Selected)
+            Text = keyboard_string;
+        else
+            Text = valueString;
+    }
+    else if (ControlDataType == global.GMUIDataTypeButton) {
+        Text = ControlButtonText;
+    }
+    else if (ControlDataType == global.GMUIDataTypeString) {
+        Text = valueString;
+    }
+    else
+        Text = "";
+    
+    // Default is for fa_left:
+    dtx = cx + padx;    
+    if (ControlFontAlign == fa_center)
+        dtx = cx+(cwx-cx)/2;
+    else if (ControlFontAlign == fa_right)
+        dtx = cwx - padx;
+    else if (ControlFontAlign != fa_left) {
+        ControlFontAlign = (GMUII()).ControlFontAlign;
+        GMUI_ThrowErrorDetailed("Invalid font align","GMUI_ControlDraw");
+    }
+    
+    if (ActualH > 0)
+        midHeight = ActualH / 2;
+    else
+        midHeight = CellHigh * (GMUII()).cellsize_h / 2;
+        
+    // Set control font and alignment
+    draw_set_font(ControlFont);
+    align(ControlFontAlign,ControlFontAlignV);
+    
+    // Specific controls may override display
+    if (ControlDataType == global.GMUIDataTypeButton && ControlButtonTextHoveringOn && Hovering)
+        color_alpha(ControlButtonTextHoverColor,ControlFontAlpha);
+    else
+        color_alpha(ControlFontColor,ControlFontAlpha);
+        
+    // TEMPORARY SOLUTION! :
+    if (Disabled)
+        draw_set_alpha(ControlFontAlpha / 2);
+        
+    // Button with graphic inside
+    if (ControlDataType == global.GMUIDataTypeButton) {
+        if (sprite_exists(ControlButtonGraphic)) {
+            draw_sprite(ControlButtonGraphic,0,dtx, cy + midHeight);
+            dtx += sprite_get_width(ControlButtonGraphic) + padx;
+        }
+    }
+    
+    // Draw value string or button text
+    if (ControlShowCursor && Selected && !DoubleSelected)
+        Text = Text + "|";
+    draw_text(dtx, cy + midHeight,Text);
+    
+}
+//
 
 #define GMUI_ControlInit
 ///GMUI_ControlInit(control object to instantiate)
@@ -1688,259 +2057,49 @@ else if (_getDataType == global.GMUIDataTypeString) {
 return ks;
 
 
-#define GMUI_ControlDraw
-///GMUI_ControlDraw(Draw the control [bool])
-/// The actions done per step for a control added to the grid, along with drawing things
-
-
-// TEMPORARY SOLUTION??:
-if (Hidden) return false;
-
-// STEP actions:
-if (Selected) {
-    // Filter keyboard string to type of input allowed
-    if (ControlInput && (keyboard_lastkey > 20 || keyboard_lastkey == vk_backspace)) {
-        if (keyboard_check(vk_anykey)) {
-            //If 'Overwriting', then reset back to just selected
-            if (DoubleSelected) {
-                if (string_length(keyboard_string) > 0 && string_length(GMUI_ControlFilterInput(ControlType,keyboard_lastchar)) > 0)
-                    keyboard_string = string_copy(keyboard_string,string_length(keyboard_string),1);
-                else
-                    keyboard_string = "";
-                    
-                DoubleSelected = false;
-            }
-            else {
-                // On keypress, sanitize input per the type
-                keyboard_string = GMUI_ControlFilterInput(ControlType,keyboard_string);
-                
-                // Max characters allowed for the control's string
-                if (ControlMaxStringLength > 0)
-                    keyboard_string = string_copy(keyboard_string,1,ControlMaxStringLength);
-            }
-        }
-        
-        // Only does assignment of the value once the key is released
-        if (keyboard_check_released(vk_anykey)) {
-            // On release, we need to filter again incase somebody "fat-fingers" multiple keys fast enough to miss the first filter.. interesting.
-            keyboard_string = GMUI_ControlFilterInput(ControlType,keyboard_string);
-            
-            // Assign keyboard string as the value string
-            valueString = keyboard_string;
-            
-            if (ControlIsNumeric) {
-                // As long as the string is valid, assign stripped zeros to value string, and then assign value
-                if (valueString != "." && valueString != "-") {
-                    valueString = keyboard_string;
-                    value = real(valueString);
-                    if (ControlDataType == global.GMUIDataTypeInteger) {
-                        value = round(value);
-                    }
-                    
-                    // Found the change!
-                    valueChangeDetected = 1;
-                }
-            }
-            else if (ControlIsString) {
-                value = valueString;
-            }
-        }
-    }
-}
-
-if (valueChangeDetected) {
-    // This may need some checks on if it should be allowed to set value... we'll see
-                
-    // String form of the data type
-    //var DataType;
-    //if (ControlDataType == global.GMUIDataTypeInteger) {
-    //    DataType = "integer";
-    //}
-    //else if (ControlDataType == global.GMUIDataTypeDecimal) {
-    //    DataType = "double";
-    //}
-    //else {
-    //    DataType = "string";
-    //}
-    GMUI_SetValue(valueName,value,ControlDataType);
-    
-    //Reset
-    valueChangeDetected = 0;
-}
-
-
-
-// DRAW //
-
-if (argument0 == true) {
-    // Draw the control
-    // Cell x,y and Cell width/height x,y
-    var cx, cy, cwx, chy;
-    //cx = (GMUII()).cellsize * CellX + RelativeX;
-    //cy = (GMUII()).cellsize_h * CellY + RelativeY;
-    cx = ActualX + RelativeX;
-    cy = ActualY + RelativeY;
-    
-    if (ActualW > 0)
-        cwx = cx + ActualW;
-    else
-        cwx = cx + GMUI_CellGetActualX(CellWide);
-    if (ActualH > 0)
-        chy = cy + ActualH;
-    else
-        chy = cy + GMUI_CellGetActualY(CellHigh);
-    
-    if (ControlInput || ControlDataType == global.GMUIDataTypeButton) {
-        // Background
-        color_alpha(ControlBackgroundColor,ControlBackgroundAlpha);
-        draw_rectangle(cx, cy, cwx, chy, 0);
-        
-        // Border
-        color_alpha(ControlBorderColor,ControlBackgroundAlpha);
-        draw_rectangle(cx, cy, cwx, chy, 1);
-    
-
-        if (Hovering || Selected) {
-            // Draw the hovering effect
-            if (!Selected)
-                color_alpha(ControlHoverColor,ControlHoverAlpha);
-            else
-                color_alpha(ControlSelectColor,ControlSelectAlpha);
-            draw_rectangle(cx+1,cy+1,cwx-1,chy-1, ControlHoverBorder);
-        }
-    }
-    
-    if (DoubleSelected && ControlInput) {
-        // Draw 'Overwrite' affect
-        color_alpha(ControlOverwriteColor,ControlOverwriteAlpha);
-        draw_rectangle(cx+2,cy+2,cwx-2,chy-2,0);
-    }
-    
-    // Draw special features for the other types
-    // Picker types (integer, double, etc)
-    if (ControlPicker) {
-        // draw arrows (origin should be on the right and to the corner it is placed at)
-        // Top arrow and bottom arrow
-        draw_sprite(ControlPickerSpriteRightOrUp,0,cwx-2,cy+2);
-        draw_sprite(ControlPickerSpriteLeftOrDown,0,cwx-2,chy-2);
-        
-        if (ControlPickerDirection == global.GMUIDirectionTypeSideVertical) {
-            color_alpha(ControlHoverColor,ControlHoverAlpha);
-            switch (HoveringDirection) {
-                case global.GMUIHoveringDirection_Up:
-                    draw_rectangle(cwx-2-ControlPickerWidth,cy,cwx-1,cy+(chy-cy)/2,0);
-                    break;
-                case global.GMUIHoveringDirection_Down:
-                    draw_rectangle(cwx-2-ControlPickerWidth,chy-(chy-cy)/2,cwx-1,chy,0);
-                    break;
-            }
-        }
-        
-    }
-    
-    
-    // Draw the text inside of the keyboard string or value
-    var Text, dtx, midHeight;
-    if (ControlInput) {
-        if (Selected)
-            Text = keyboard_string;
-        else
-            Text = valueString;
-    }
-    else if (ControlDataType == global.GMUIDataTypeButton) {
-        Text = ControlButtonText;
-    }
-    else if (ControlDataType == global.GMUIDataTypeString) {
-        Text = valueString;
-    }
-    else
-        Text = "";
-    
-    // Default is for fa_left:
-    dtx = cx + 4;    
-    if (ControlFontAlign == fa_center)
-        dtx = cx+(cwx-cx)/2;
-    else if (ControlFontAlign == fa_right)
-        dtx = cwx - 4;
-    else if (ControlFontAlign != fa_left) {
-        ControlFontAlign = (GMUII()).ControlFontAlign;
-        GMUI_ThrowError("Invalid font align in GMUI_ControlDraw");
-    }
-    
-    if (ActualH > 0)
-        midHeight = ActualH / 2;
-    else
-        midHeight = CellHigh * (GMUII()).cellsize_h / 2;
-        
-    // Set control font and alignment
-    draw_set_font(ControlFont);
-    align(ControlFontAlign,ControlFontAlignV);
-    
-    // Specific controls may override display
-    if (ControlDataType == global.GMUIDataTypeButton && ControlButtonTextHoveringOn && Hovering)
-        color_alpha(ControlButtonTextHoverColor,ControlFontAlpha);
-    else
-        color_alpha(ControlFontColor,ControlFontAlpha);
-        
-    // TEMPORARY SOLUTION! :
-    if (Disabled)
-        draw_set_alpha(ControlFontAlpha / 2);
-        
-    
-    if (ControlShowCursor && Selected && !DoubleSelected)
-        Text = Text + "|";
-    draw_text(dtx, cy + midHeight,Text);
-    
-}
-//
-
-#define GMUI_ControlActionScript
-///GMUI_ControlActionScript(control object) Runs the script assigned to the control, if there is one
-
-if (!GMUI_IsControlID(argument0))
-{
-    GMUI_ThrowError("Invalid control for GMUI_ActionScript");
-    return false;
-}
-
-if ((argument0).ActionScript == -1) {
-    GMUI_ThrowError("Action for " + (argument0).valueName +" not implemented");
-}
-else if (!script_exists((argument0).ActionScript)) {
-    GMUI_ThrowError("Invalid script assigned to " + (argument0).valueName + " : " + string((argument0).ActionScript));
-}
-else {
-    script_execute((argument0).ActionScript);
-    return true;
-}
-
-return false;
-
-#define GMUI_ControlSetDefaultStyle
-///GMUI_ControlSetDefaultStyle(id)
-/// Get the default style values from the grid controller
+#define GMUI_ControlSetDefaultAttributes
+///GMUI_ControlSetDefaultAttributes(id)
+/// Set the default attributes of the control from the controller
 
 if (!instance_exists(argument0))
 {
-    GMUI_ThrowError("Invalid control for GMUI_ControlSetDefaultStyle");
+    GMUI_ThrowError("Invalid control for GMUI_ControlSetDefaultAttributes");
     return false;
 }
 
 with (argument0)
 {
-    GMUI_ControlSetStyle(
-    (GMUII()).ControlBackgroundColor,
-    (GMUII()).ControlBorderColor,
-    (GMUII()).ControlHoverColor,
-    (GMUII()).ControlHoverBorder,
-    (GMUII()).ControlHoverAlpha,
-    (GMUII()).ControlOverwriteColor,
-    (GMUII()).ControlOverwriteAlpha,
-    (GMUII()).ControlSelectColor,
-    (GMUII()).ControlSelectAlpha,
-    (GMUII()).ControlShowCursor
+    GMUI_ControlSetAttributes(
+    (GMUII()).ControlMaxStringLength,
+    (GMUII()).ControlMaxDecimalLength,
+    (GMUII()).ControlMinValue,
+    (GMUII()).ControlMaxValue
     );
 }
+
+
+return true;
+
+#define GMUI_ControlSetDefaultButton
+///GMUI_ControlSetDefaultButton(id)
+/// Set the default attributes of the control from the controller
+
+if (!instance_exists(argument0))
+{
+    GMUI_ThrowError("Invalid control for GMUI_ControlSetDefaultButton");
+    return false;
+}
+
+with (argument0)
+{
+    GMUI_ControlSetButton(
+    (GMUII()).ControlButtonText,
+    (GMUII()).ControlButtonGraphic,
+    (GMUII()).ControlFontAlign,
+    (GMUII()).ControlButtonTextHoverColor
+    );
+}
+
 
 return true;
 
@@ -1962,29 +2121,6 @@ with (argument0)
     (GMUII()).ControlFontAlign
     );
 }
-
-return true;
-
-#define GMUI_ControlSetDefaultAttributes
-///GMUI_ControlSetDefaultAttributes(id)
-/// Set the default attributes of the control from the controller
-
-if (!instance_exists(argument0))
-{
-    GMUI_ThrowError("Invalid control for GMUI_ControlSetDefaultAttributes");
-    return false;
-}
-
-with (argument0)
-{
-    GMUI_ControlSetAttributes(
-    (GMUII()).ControlMaxStringLength,
-    (GMUII()).ControlMaxDecimalLength,
-    (GMUII()).ControlMinValue,
-    (GMUII()).ControlMaxValue
-    );
-}
-
 
 return true;
 
@@ -2012,27 +2148,58 @@ with (argument0)
 
 return true;
 
-#define GMUI_ControlSetDefaultButton
-///GMUI_ControlSetDefaultButton(id)
-/// Set the default attributes of the control from the controller
+#define GMUI_ControlSetDefaultSprite
+///GMUI_ControlSetDefaultSprite(id)
+///Set the default attributes of the control from the controller
+
+if (!instance_exists(argument0)) {
+    GMUI_ThrowErrorDetailed("Invalid control","GMUI_ControlSetDefaultSprite");
+    return false;
+}
+
+with (argument0) {
+    GMUI_ControlSetSpriteExt(
+        (GMUII()).ControlGraphic,
+        (GMUII()).ControlGraphicIndex,
+        (GMUII()).ControlGraphicHoveringIndex,
+        (GMUII()).ControlGraphicSelectedIndex,
+        (GMUII()).ControlGraphicXScale,
+        (GMUII()).ControlGraphicYScale,
+        (GMUII()).ControlGraphicColor,
+        (GMUII()).ControlGraphicAlpha
+    );
+    
+    ControlGraphicRotation = 0;
+}
+
+
+return true;
+
+#define GMUI_ControlSetDefaultStyle
+///GMUI_ControlSetDefaultStyle(id)
+/// Get the default style values from the grid controller
 
 if (!instance_exists(argument0))
 {
-    GMUI_ThrowError("Invalid control for GMUI_ControlSetDefaultButton");
+    GMUI_ThrowError("Invalid control for GMUI_ControlSetDefaultStyle");
     return false;
 }
 
 with (argument0)
 {
-    GMUI_ControlSetButton(
-    (GMUII()).ControlButtonText,
-    (GMUII()).ControlButtonGraphic,
-    (GMUII()).ControlButtonReplaceImage,
-    (GMUII()).ControlFontAlign,
-    (GMUII()).ControlButtonTextHoverColor
+    GMUI_ControlSetStyle(
+    (GMUII()).ControlBackgroundColor,
+    (GMUII()).ControlBorderColor,
+    (GMUII()).ControlHoverColor,
+    (GMUII()).ControlHoverBorder,
+    (GMUII()).ControlHoverAlpha,
+    (GMUII()).ControlOverwriteColor,
+    (GMUII()).ControlOverwriteAlpha,
+    (GMUII()).ControlSelectColor,
+    (GMUII()).ControlSelectAlpha,
+    (GMUII()).ControlShowCursor
     );
 }
-
 
 return true;
 
@@ -2104,6 +2271,64 @@ return _type;
 
 
 
+#define GMUI_GetAnchoredCellX
+///GMUI_GetAnchoredCellX(GMUII, Layer, Cell X given, Anchor Type)
+/// Returns the new X cell position in the grid based on the anchoring
+
+
+// Width of a GMUI grid is usually: ds_grid_width((GMUII()).GMUI_grid[Layer]);
+
+var __GridW, __CellX, __Anchor;
+__GridW = argument0;
+__CellX = argument1;
+__Anchor = argument2;
+
+// Left anchors by default will not need to calculate the grid dimensions or any adjustments
+if (__Anchor == global.GMUIAnchorTopLeft || __Anchor == global.GMUIAnchorLeft || __Anchor == global.GMUIAnchorBottomLeft) {
+    return __CellX;
+}
+else {
+    // The Mid X's, else the Right X's 
+    if (__Anchor == global.GMUIAnchorTop || __Anchor == global.GMUIAnchorBottom) {
+        // Half-width accounts for the cell 0 added to the width.
+        // (On even widths, 0 is left of the middle and 1 is right of the middle)
+        return floor(__GridW / 2 - 0.5) + __CellX;
+    }
+    else if (__Anchor == global.GMUIAnchorTopRight || __Anchor == global.GMUIAnchorRight || __Anchor == global.GMUIAnchorBottomRight)
+        return __GridW - __CellX - 1;
+    else
+        return __CellX;
+}
+
+#define GMUI_GetAnchoredCellY
+///GMUI_GetAnchoredCellY(GMUII, Layer, Cell Y given, Anchor Type)
+/// Returns the new X cell position in the grid based on the anchoring
+
+
+// Height of a GMUI grid is usually: ds_grid_height((GMUII()).GMUI_grid[Layer]);
+
+var __GridH, __CellY, __Anchor;
+__GridH = argument0;
+__CellY = argument1;
+__Anchor = argument2;
+
+// Top anchors by default will not need to calculate the grid dimensions or any adjustments
+if (__Anchor == global.GMUIAnchorTopLeft || __Anchor == global.GMUIAnchorTop || __Anchor == global.GMUIAnchorTopRight) {
+    return __CellY;
+}
+else {  
+    // The Mid Y's else the Bottom Y's
+    if (__Anchor == global.GMUIAnchorLeft || __Anchor == global.GMUIAnchorRight) {
+        // Half-height accounts for the cell 0 added to the height.
+        // (On even height, 0 is top of the middle and 1 is bottom of the middle)
+        return floor(__GridH / 2 - 0.5) + __CellY;
+    }
+    else if (__Anchor == global.GMUIAnchorBottomLeft || __Anchor == global.GMUIAnchorBottom || __Anchor == global.GMUIAnchorBottomRight)
+        return __GridH - __CellY - 1;
+    else
+        return __CellY;
+}
+
 #define GMUI_GetDataType
 ///GMUI_GetDataType("Control Type")
 ///Takes the control type and returns the data type it is
@@ -2133,20 +2358,6 @@ switch (_controlType) {
         return -1;
         break;
 }
-
-#define GMUI_IsControl
-///GMUI_IsControl()
-/// Checks that the object calling script is a control in GMUI
-
-// Call the actual check with the current object's ID
-return GMUI_IsControlID(id);
-
-#define GMUI_IsControlID
-///GMUI_IsControlID(id)
-/// Checks that the object ID provided is a control
-
-
-return (ds_list_find_index((GMUII()).GMUI_controlList,argument0) != -1);
 
 #define GMUI_GridEnabled
 ///GMUI_GridEnabled()
@@ -2179,8 +2390,7 @@ if (GMUI_GridEnabled())
     inRegion = false;
     
     // Check if the mouse has moved before checking for any changed selections
-    if (MX != mouse_px || MY != mouse_py)
-    {
+    if (MX != mouse_px || MY != mouse_py) {
         // Get the mouse position on the current top layer visible:
         var mouseHor,mouseVert,ctrlObject;
         mouseHor = GMUI_GridGetMouseCellX(MX);
@@ -2191,25 +2401,21 @@ if (GMUI_GridEnabled())
         if (mouseHor >= GMUI_grid_x[UILayer] && mouseVert >= GMUI_grid_y[UILayer] && mouseHor < GMUI_grid_w[UILayer] && mouseVert < GMUI_grid_h[UILayer])
             ctrlObject = ds_grid_get(GMUI_grid[UILayer],mouseHor+GMUI_grid_x[UILayer],mouseVert+GMUI_grid_y[UILayer]);
             
-        if (ctrlObject != 0 && is_real(ctrlObject))
-        {
+        if (ctrlObject != 0 && is_real(ctrlObject)) {
             // Found object number, do checks before assigning hovering or selected flag
-            if (instance_exists(ctrlObject))
-            {
+            if (instance_exists(ctrlObject)) {
+            
                 if (DebugData) TestHoverObject = ctrlObject;
-                if (ctrlObject != previousHoveringControl && !ctrlObject.Disabled && !ctrlObject.NonClickable)
-                {
+                if (ctrlObject != previousHoveringControl && !ctrlObject.Disabled && !ctrlObject.NonClickable) {
                     GMUI_ResetControlStatus("Hovering");
-                    if (ctrlObject.IsAdjusted)
-                    {
+                    if (ctrlObject.IsAdjusted) {
                         if (GMUI_MouseInAdjustedRegion(ctrlObject,MX,MY))
                             inRegion = true;
                     }
                     else
                         inRegion = true;
                     
-                    if (inRegion)
-                    {
+                    if (inRegion) {
                         // The int picker has a region on the right side for up/down
                         if (ctrlObject.ControlType == "intpicker")
                         {
@@ -2238,8 +2444,7 @@ if (GMUI_GridEnabled())
             else
                 GMUI_ThrowError("Instance recorded is not a control object or no longer exists @ GMUI_GridStep : " + string(ctrlObject));
         }
-        else if (HoveringControl != -1)
-        {
+        else if (HoveringControl != -1) {
             GMUI_ResetControlStatus("Hovering");
             if (DebugData) TestHoverObject = -1;
         }
@@ -2251,8 +2456,7 @@ if (GMUI_GridEnabled())
     }
     
     // Mouse click on grid
-    if (mouse_check_button_pressed(mb_left))
-    {
+    if (mouse_check_button_pressed(mb_left)) {
         GMUI_ResetControlStatus("Selected");
     
         // Get the mouse position on the current top layer visible:
@@ -2261,17 +2465,12 @@ if (GMUI_GridEnabled())
         mouseVert = GMUI_GridGetMouseCellY(MY);
         // Find if there is a control at that position
         ctrlObject = ds_grid_get(GMUI_grid[UILayer],mouseHor,mouseVert);
-        if (ctrlObject != 0)
-        {
-            if (instance_exists(ctrlObject))
-            {
-                if ((!ctrlObject.Disabled) && (!ctrlObject.NonClickable) && (!ctrlObject.Hidden))
-                {
+        if (ctrlObject != 0) {
+            if (instance_exists(ctrlObject)) {
+                if ((!ctrlObject.Disabled) && (!ctrlObject.NonClickable) && (!ctrlObject.Hidden)) {
                     // Switch between special types, general input types, and other controls
-                    if (ctrlObject.ControlType == "intpicker")
-                    {
-                        switch (ctrlObject.HoveringDirection)
-                        {
+                    if (ctrlObject.ControlType == "intpicker") {
+                        switch (ctrlObject.HoveringDirection) {
                             case global.GMUIHoveringDirection_Up:
                             case global.GMUIHoveringDirection_Right:
                                 GMUI_SetValue(ctrlObject.valueName,ctrlObject.value + 1,"integer");
@@ -2285,12 +2484,10 @@ if (GMUI_GridEnabled())
                                 break;
                         }
                     }
-                    else if (ctrlObject.ControlInput)
-                    {
+                    else if (ctrlObject.ControlInput) {
                         GMUI_GridSelect(ctrlObject);
                     }
-                    else
-                    {
+                    else if (ctrlObject.ActionScript != -1) {
                         // Control buttons clicked
                         GMUI_ControlActionScript(ctrlObject);
                     }
@@ -2300,14 +2497,11 @@ if (GMUI_GridEnabled())
     }
     
     // Any key event will trigger a set value on a selected control in GMUI_ControlDraw, so here    ..
-    if (SelectedControl != -1)
-    {
-        if (keyboard_check_pressed(vk_tab))
-        {
+    if (SelectedControl != -1) {
+        if (keyboard_check_pressed(vk_tab)) {
             GMUI_GridNextControl();
         }
-        else if (keyboard_check_pressed(vk_enter))
-        {
+        else if (keyboard_check_pressed(vk_enter)) {
             GMUI_ResetControlStatus("Selected");
         }
     }
@@ -2545,6 +2739,26 @@ return ceil((argument0-(GMUII()).GMUI_grid_y[(GMUII()).UILayer])/(GMUII()).cells
 
 
 
+#define GMUI_GroupExists
+///GMUI_GroupExists(Layer Number, Group Number)
+///Checks that the group number given exists in the layer in GMUI
+
+if (!is_real(argument0))
+    return false;
+    
+if (!is_real(argument0))
+    return false;
+
+var L,G;
+L = floor(argument0);
+G = floor(argument1);
+
+return (ds_list_find_index((GMUII()).GMUI_groupList[L],G) != -1);
+
+#define GMUI_GroupPositionControls
+/// Internal: Re-position the controls of the group, or a specific one
+// GMUI_GroupPositionControls(
+
 #define GMUI_GroupSetPositionAnchored
 ///GMUI_GroupSetPositionAnchored(Layer Number, Group Number, Cell X, Cell Y, X Adjustment, Y Adjustment, Anchor)
 ///Change the position of the group (and all of the controls inside it) according to its anchor
@@ -2596,7 +2810,7 @@ for(i=0;i<ds_list_size((GMUII()).GMUI_groupControlList[_LayerNumber,_GroupNumber
     
     if (!instance_exists(ctrl))
     {
-        GMUI_ThrowError("Control no longer exists. GMUI_GroupSetPosition(" + _LayerNumber + "," + _GroupNumber + ")");
+        GMUI_ThrowError("Control no longer exists. GMUI_GroupSetPositionAnchored(" + _LayerNumber + "," + _GroupNumber + ")");
     }
     else {
         var pCellX,pCellY,groupWidth;
@@ -2624,6 +2838,56 @@ for(i=0;i<ds_list_size((GMUII()).GMUI_groupControlList[_LayerNumber,_GroupNumber
 
 // Reset all control regions for the layer
 GMUI_GridSetRegionsLayer(_LayerNumber);
+
+
+#define GMUI_IsControl
+///GMUI_IsControl()
+/// Checks that the object calling script is a control in GMUI
+
+// Call the actual check with the current object's ID
+return GMUI_IsControlID(id);
+
+#define GMUI_IsControlID
+///GMUI_IsControlID(id)
+/// Checks that the object ID provided is a control
+
+
+return (ds_list_find_index((GMUII()).GMUI_controlList,argument0) != -1);
+
+#define GMUI_IsScript
+///GMUI_IsScript(script)
+///Determines whether the value provided is an existing script
+
+var _ScrVar;
+
+_ScrVar = argument0;
+
+if (is_real(_ScrVar)) {
+    if (_ScrVar > -1) {
+        if (script_exists(_ScrVar)) {
+            return true;
+        }
+    }
+}
+
+return false;
+
+#define GMUI_LastError
+///GMUI_LastError()
+/// Return the last error reported from the error list
+
+return (GMUII()).GMUI_Error[(GMUII()).GMUI_ErrorNumber];
+
+#define GMUI_LayerExists
+///GMUI_LayerExists(Layer Number)
+/// Checks that the layer number given exists in GMUI
+
+if (!is_real(argument0))
+    return false;
+
+var L;L = floor(argument0);
+
+return (ds_list_find_index((GMUII()).GMUI_gridlist,L) != -1);
 
 
 #define GMUI_MouseInAdjustedRegion
@@ -2734,93 +2998,6 @@ return global.GMUIHoveringDirection_None;
 
 
 
-#define GMUI_CellGetActualX
-///GMUI_CellGetActualX(X Cell #);
-/// Internal: Return the actual X of the cell number
-
-return argument0 * ((GMUII()).cellsize);
-
-#define GMUI_CellGetActualY
-///GMUI_CellGetActualY(Y Cell #);
-/// Internal: Return the actual Y of the cell number
-
-return argument0 * ((GMUII()).cellsize_h);
-
-#define GMUI_GetAnchoredCellX
-///GMUI_GetAnchoredCellX(GMUII, Layer, Cell X given, Anchor Type)
-/// Returns the new X cell position in the grid based on the anchoring
-
-
-// Width of a GMUI grid is usually: ds_grid_width((GMUII()).GMUI_grid[Layer]);
-
-var __GridW, __CellX, __Anchor;
-__GridW = argument0;
-__CellX = argument1;
-__Anchor = argument2;
-
-// Left anchors by default will not need to calculate the grid dimensions or any adjustments
-if (__Anchor == global.GMUIAnchorTopLeft || __Anchor == global.GMUIAnchorLeft || __Anchor == global.GMUIAnchorBottomLeft) {
-    return __CellX;
-}
-else {
-    // The Mid X's, else the Right X's 
-    if (__Anchor == global.GMUIAnchorTop || __Anchor == global.GMUIAnchorBottom) {
-        // Half-width accounts for the cell 0 added to the width.
-        // (On even widths, 0 is left of the middle and 1 is right of the middle)
-        return floor(__GridW / 2 - 0.5) + __CellX;
-    }
-    else if (__Anchor == global.GMUIAnchorTopRight || __Anchor == global.GMUIAnchorRight || __Anchor == global.GMUIAnchorBottomRight)
-        return __GridW - __CellX - 1;
-    else
-        return __CellX;
-}
-
-#define GMUI_GetAnchoredCellY
-///GMUI_GetAnchoredCellY(GMUII, Layer, Cell Y given, Anchor Type)
-/// Returns the new X cell position in the grid based on the anchoring
-
-
-// Height of a GMUI grid is usually: ds_grid_height((GMUII()).GMUI_grid[Layer]);
-
-var __GridH, __CellY, __Anchor;
-__GridH = argument0;
-__CellY = argument1;
-__Anchor = argument2;
-
-// Top anchors by default will not need to calculate the grid dimensions or any adjustments
-if (__Anchor == global.GMUIAnchorTopLeft || __Anchor == global.GMUIAnchorTop || __Anchor == global.GMUIAnchorTopRight) {
-    return __CellY;
-}
-else {  
-    // The Mid Y's else the Bottom Y's
-    if (__Anchor == global.GMUIAnchorLeft || __Anchor == global.GMUIAnchorRight) {
-        // Half-height accounts for the cell 0 added to the height.
-        // (On even height, 0 is top of the middle and 1 is bottom of the middle)
-        return floor(__GridH / 2 - 0.5) + __CellY;
-    }
-    else if (__Anchor == global.GMUIAnchorBottomLeft || __Anchor == global.GMUIAnchorBottom || __Anchor == global.GMUIAnchorBottomRight)
-        return __GridH - __CellY - 1;
-    else
-        return __CellY;
-}
-
-#define GMUI_ThrowError
-///GMUI_ThrowError(Error Message)
-///GMUI can store errors and can choose to save/report them if needed
-
-(GMUII()).GMUI_ErrorNumber += 1;
-(GMUII()).GMUI_Error[(GMUII()).GMUI_ErrorNumber] = string(argument0);
-
-if ((GMUII()).PopUpGMUIError) {
-    show_message(GMUI_LastError());
-}
-
-#define GMUI_LastError
-///GMUI_LastError()
-/// Return the last error reported from the error list
-
-return (GMUII()).GMUI_Error[(GMUII()).GMUI_ErrorNumber];
-
 #define GMUI_ResetControlStatus
 ///GMUI_GridStep ("Hovering" / "Selected", GridID)
 /// Resets the hovering or selected values of the controls
@@ -2883,6 +3060,35 @@ else
     
 }
 
+#define GMUI_StudioCheckDefined
+///GMUI_StudioCheckDefined(value) Returns if the argument is defined or not (GM:Studio)
+
+var a0; a0 = argument0;
+
+//GM8:
+if (global.GMUIGameMaker8)
+    return true;
+
+//Studio: UNCOMMENT THE NEXT LINE IN GM:STUDIO
+//return !is_undefined(a0);
+
+#define GMUI_ThrowError
+///GMUI_ThrowError(Error Message)
+///GMUI can store errors and can choose to save/report them if needed
+
+(GMUII()).GMUI_ErrorNumber += 1;
+(GMUII()).GMUI_Error[(GMUII()).GMUI_ErrorNumber] = string(argument0);
+
+if ((GMUII()).PopUpGMUIError) {
+    show_message(GMUI_LastError());
+}
+
+#define GMUI_ThrowErrorDetailed
+///GMUI_ThrowErrorDetailed(Error Message,script name)
+///Throw script name and object caller name with the message
+
+GMUI_ThrowError(string(argument0) + " | " + string(argument1) + " | " + string(object_get_name(object_index)));
+
 #define GMUI_ValidCellBounds
 ///GMUI_ValidCellBounds(anchor,cellX,cellY,gridW,gridH)
 ///This procedure will lightly check the boundaries for each anchor position, as controls outside the grid will not be recognized properly
@@ -2919,34 +3125,4 @@ return true;
 // (GMUII()).Value
 
 return global.GMUIiid[0];
-
-#define GMUI_StudioCheckDefined
-///GMUI_StudioCheckDefined(value) Returns if the argument is defined or not (GM:Studio)
-
-var a0; a0 = argument0;
-
-//GM8:
-if (global.GMUIGameMaker8)
-    return true;
-
-//Studio: UNCOMMENT THE NEXT LINE IN GM:STUDIO
-//return !is_undefined(a0);
-
-#define GMUI_IsScript
-///GMUI_IsScript(script)
-///Determines whether the value provided is an existing script
-
-var _ScrVar;
-
-_ScrVar = argument0;
-
-if (is_real(_ScrVar)) {
-    if (_ScrVar > -1) {
-        if (script_exists(_ScrVar)) {
-            return true;
-        }
-    }
-}
-
-return false;
 
