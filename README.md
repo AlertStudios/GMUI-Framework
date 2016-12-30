@@ -183,8 +183,9 @@ There are a number of features still left to implement, including:
 - Selection list control
 - Screen transitions (of the interface)
 - Control & Group animations
+- Support for views
+- Support for optional surface-based drawing
 
 ##Known issues:
 - Formatting on the decimal field in the Studio version is not working
 - Some bugs with different cell height size than width
-- 
