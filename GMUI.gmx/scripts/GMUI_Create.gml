@@ -1,4 +1,4 @@
-///GMUI_Create(
+///GMUI_Create(Form Script, Cell Width, Cell Height)
 ///Call creation of the grid interfaces and variables
 
 // Create resizable method for window?
@@ -53,6 +53,13 @@
         TestOnDirection = -1;
         TestHoverObject = -1;
     }
+    
+// Rather pointless to be redundant but it gives more flexibility if you really need it...
+persistence = persistent;
+
+// Error management (DEBUG)
+GMUI_Error[0] = "";
+GMUI_ErrorNumber = 0;
 
     
 // Get cellsize arguments (w,h)
@@ -65,19 +72,14 @@ if (argument2 < 1)
 else
     cellsize_h = argument2;
     
-// Rather pointless to be redundant but it gives more flexibility if you really need it...
-persistence = persistent;
+// Set the interface area for new layers, using view 0 if enabled. Can be adjusted later
+GMUI_CreateSetDefaultArea();
 
 
 // Grid setup (New layers will have their own grids)
 GMUI_gridlist = ds_list_create();
 
 GMUI_AddLayer(0,0,0);
-
-
-// Error management (DEBUG)
-GMUI_Error[0] = "";
-GMUI_ErrorNumber = 0;
 
 // Initial Disable steps for the Grid checks
 InitialDisable = 5;
@@ -116,6 +118,9 @@ GMUI_groupCellsH[0,0] = 0;
 GMUI_groupRelativeCellX[0,0] = 0;
 GMUI_groupRelativeCellY[0,0] = 0;
 GMUI_groupAnchor[0,0] = global.GMUIAnchorTopLeft;
+GMUI_groupTransitioning[0,0] = false;
+GMUI_groupTransitioningControl[0,0] = -1;
+
 
 // Call the form code to create the interface
 GMUI_SetForm(argument0);

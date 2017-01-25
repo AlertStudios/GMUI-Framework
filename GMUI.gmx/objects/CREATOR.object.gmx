@@ -25,11 +25,24 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>/// Create GMUI
+            <string>///Create GMUI
 // This is typically in your game's controller object
 // You must call the initialization script before making any GMUI interfaces
 
+// Call only once in the game
+if (instance_number(self) &gt; 1) {
+    instance_destroy();
+    exit;
+}
+
+// Start GMUI
 GMUI_Init();
+
+
+
+// Using a Demo varible in _Switch_Button
+global.Switched = false;
+
 
 
 // Create your grids now

@@ -14,7 +14,9 @@
       <sprite>sprites\GMUIspr_input</sprite>
     </sprites>
   </sprites>
-  <backgrounds name="background"/>
+  <backgrounds name="background">
+    <background>background\background1</background>
+  </backgrounds>
   <paths name="paths"/>
   <scripts name="scripts">
     <scripts name="GMUI">
@@ -29,6 +31,7 @@
         <script>scripts\_Move_Button.gml</script>
         <script>scripts\_Switch_Button.gml</script>
         <script>scripts\_Test_Button.gml</script>
+        <script>scripts\_Enlarge_Button.gml</script>
       </scripts>
       <scripts name="GMUI_DeveloperConfigs">
         <script>scripts\GMUI_SetControlDefaults.gml</script>
@@ -37,9 +40,23 @@
       </scripts>
       <scripts name="GMUI_DeveloperCalls">
         <scripts name="GMUI_Effects">
-          <script>scripts\easeExpOut.gml</script>
           <script>scripts\easeBounceOut.gml</script>
           <script>scripts\easeElasticOut.gml</script>
+          <script>scripts\easeExpIn.gml</script>
+          <script>scripts\easeExpOut.gml</script>
+          <script>scripts\easeInBack.gml</script>
+          <script>scripts\easeOutBack.gml</script>
+          <script>scripts\GMUI_ControlSetFade.gml</script>
+          <script>scripts\GMUI_ControlSetFadeHover.gml</script>
+          <script>scripts\GMUI_ControlSetFadeIn.gml</script>
+          <script>scripts\GMUI_ControlSetFadeOut.gml</script>
+          <script>scripts\GMUI_ControlTransitionStop.gml</script>
+          <script>scripts\GMUI_ControlTransitionToActual.gml</script>
+          <script>scripts\GMUI_ControlTransitionToCell.gml</script>
+          <script>scripts\GMUI_GroupTransitionStop.gml</script>
+          <script>scripts\GMUI_GroupTransitionToActual.gml</script>
+          <script>scripts\GMUI_GroupTransitionToCell.gml</script>
+          <script>scripts\GMUI_Transition.gml</script>
         </scripts>
         <scripts name="GMUI_Shortcuts">
           <script>scripts\rgb.gml</script>
@@ -103,8 +120,10 @@
         <script>scripts\GMUI_ControlSetDefaultSprite.gml</script>
         <script>scripts\GMUI_ControlSetDefaultStyle.gml</script>
         <script>scripts\GMUI_ControlSetType.gml</script>
+        <script>scripts\GMUI_CreateSetDefaultArea.gml</script>
         <script>scripts\GMUI_GetAnchoredCellX.gml</script>
         <script>scripts\GMUI_GetAnchoredCellY.gml</script>
+        <script>scripts\GMUI_GetControlAtPosition.gml</script>
         <script>scripts\GMUI_GetDataType.gml</script>
         <script>scripts\GMUI_GridEnabled.gml</script>
         <script>scripts\GMUI_GridDraw.gml</script>
@@ -115,8 +134,16 @@
         <script>scripts\GMUI_GridSetRegionsLayer.gml</script>
         <script>scripts\GMUI_GridResetControlRegion.gml</script>
         <script>scripts\GMUI_GridNextControl.gml</script>
+        <script>scripts\GMUI_GridGetCellX.gml</script>
+        <script>scripts\GMUI_GridGetCellXOffset.gml</script>
+        <script>scripts\GMUI_GridGetCellXRoom.gml</script>
+        <script>scripts\GMUI_GridGetCellY.gml</script>
+        <script>scripts\GMUI_GridGetCellYOffset.gml</script>
+        <script>scripts\GMUI_GridGetCellYRoom.gml</script>
+        <script>scripts\GMUI_GridGetHeight.gml</script>
         <script>scripts\GMUI_GridGetMouseCellX.gml</script>
         <script>scripts\GMUI_GridGetMouseCellY.gml</script>
+        <script>scripts\GMUI_GridGetWidth.gml</script>
         <script>scripts\GMUI_GroupExists.gml</script>
         <script>scripts\GMUI_GroupPositionControls.gml</script>
         <script>scripts\GMUI_GroupSetPositionAnchored.gml</script>
@@ -149,9 +176,6 @@
       <object>objects\GMUI_custom</object>
     </objects>
     <objects name="Testing">
-      <object>objects\o</object>
-      <object>objects\o2</object>
-      <object>objects\o3</object>
       <object>objects\testmoving</object>
       <object>objects\testmenu</object>
     </objects>

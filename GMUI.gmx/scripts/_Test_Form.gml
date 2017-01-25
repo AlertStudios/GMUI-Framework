@@ -68,6 +68,11 @@ var layer;
         GMUI_ControlSetButton("Move"+chr(13)+"Group",-1,-1,-1);
     }
     
+    with (GMUI_Add("EnlargeButton", "textbutton",   30,3,   6,3,    layer, global.GMUIAnchorBottomLeft)) {
+        GMUI_ControlSetButtonAction(_Enlarge_Button);
+        GMUI_ControlSetButton("Enlarge"+chr(13)+"Window",-1,-1,-1);
+    }
+    
     with (GMUI_Add("MoveButton2", "button",         18,0,   2,2,    layer, global.GMUIAnchorTopLeft)) {
         GMUI_ControlSetButtonAction(_Move_Button);
         GMUI_ControlSetButton("", GMUIspr_move, -1, -1);

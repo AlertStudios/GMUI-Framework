@@ -1,7 +1,7 @@
 ///GMUI_MouseInAdjustedRegion(Control Object, mouse x, mouse y)
 /// Checks to see if the mouse is in the adjusted region of the control (true/false)
 
-var _Control, _MX, _MY, _CW, _CH;
+var _Control, _MX, _MY, _CW, _CH, _xoffset, _yoffset;
 _Control = argument0;
 _MX = argument1;
 _MY = argument2;
@@ -24,9 +24,23 @@ if ((_Control).ActualH != 0)
 else
     _CH = GMUI_CellGetActualY((_Control).CellHigh);
     
+// Adjustments if using views
+_xoffset = 0;
+_yoffset = 0;
+
+if (((_Control).GMUIP).UIsnaptoview) {
+    _xoffset = view_xview[((_Control).GMUIP).UIgridview];
+    _yoffset = view_yview[((_Control).GMUIP).UIgridview];
+}
+
+// Adjustment if grid is offset
+_xoffset += ((_Control).GMUIP).GMUI_grid_x[(_Control).Layer];
+_yoffset += ((_Control).GMUIP).GMUI_grid_y[(_Control).Layer];
+
+    
 // Check if coordinates are inside the adjusted control based on what adjustments are set
-if ((_MX >= (_Control).ActualX + (_Control).RelativeX && _MX <= (_Control).ActualX + (_Control).RelativeX + _CW) &&
-    (_MY >= (_Control).ActualY + (_Control).RelativeY && _MY <= (_Control).ActualY + (_Control).RelativeY + _CH)
+if ((_MX >= (_Control).ActualX + (_Control).RelativeX + _xoffset && _MX <= (_Control).ActualX + (_Control).RelativeX + _xoffset + _CW) &&
+    (_MY >= (_Control).ActualY + (_Control).RelativeY + _yoffset && _MY <= (_Control).ActualY + (_Control).RelativeY + _yoffset + _CH)
     )
     return true;
 else

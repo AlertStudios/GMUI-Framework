@@ -55,7 +55,7 @@ h = 42;
 draw_roundrect(x,y,x+w,y+h,1);
 
 align(fa_left,fa_top);
-draw_text(x+4,y+4,string(value));
+draw_text(x+4,y+4,string(value));draw_text(2,20,string(fps));
 
 // Test: On mouse click, if mouse in control show menu, move group and show it, otherwise if not in group region, hide it again
 if (mouse_check_button_pressed(mb_left)) {
@@ -73,6 +73,15 @@ if (mouse_check_button_pressed(mb_left)) {
             GMUI_GroupHide(3, 1, 1);
             GMUI_SwitchToLayer(0);
         }
+    }
+}
+
+// Test: Deselect the menu if the view is moved, just for this demo.
+if (keyboard_check(vk_left) || keyboard_check(vk_right) || keyboard_check(vk_up) || keyboard_check(vk_down)) {
+    if (GMUIid(1)) {
+        value = GMUI_GetValue("MenuInt");
+        GMUI_GroupHide(3, 1, 1);
+        GMUI_SwitchToLayer(0);
     }
 }
 </string>

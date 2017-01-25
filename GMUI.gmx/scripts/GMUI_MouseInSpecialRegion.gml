@@ -1,7 +1,7 @@
 ///GMUI_MouseInAdjustedSpecialRegion(Control Object, mouse x, mouse y)
 /// Returns direction if mouse is in the adjusted region of the control
 
-var _Control, _MX, _MY, _D, _CW, _CH, sizingW, sizingH;
+var _Control, _MX, _MY, _D, _CW, _CH, sizingW, sizingH, _xoffset, _yoffset;
 _Control = argument0;
 _MX = argument1;
 _MY = argument2;
@@ -42,26 +42,40 @@ else
 {
     sizingW = (_Control).ControlPickerWidth + 2; // +2 borders
 }
+
+// Adjustments if using views
+_xoffset = 0;
+_yoffset = 0;
+
+if (((_Control).GMUIP).UIsnaptoview) {
+    _xoffset = view_xview[((_Control).GMUIP).UIgridview];
+    _yoffset = view_yview[((_Control).GMUIP).UIgridview];
+}
+
+// Adjustment if grid is offset
+_xoffset += ((_Control).GMUIP).GMUI_grid_x[(_Control).Layer];
+_yoffset += ((_Control).GMUIP).GMUI_grid_y[(_Control).Layer];
     
+
 // Check if coordinates are inside the adjusted control based on what adjustments are set
 if (_D == global.GMUIDirectionTypeHorizontal)
 {
-    if ((_MX >= (_Control).ActualX + (_Control).RelativeX) && 
-        (_MX <= (_Control).ActualX + (_Control).RelativeX + sizingW))
+    if ((_MX >= (_Control).ActualX + (_Control).RelativeX + _xoffset) && 
+        (_MX <= (_Control).ActualX + (_Control).RelativeX + sizingW + _xoffset))
         return global.GMUIHoveringDirection_Left;
-    else if ((_MX >= (_Control).ActualX + (_Control).RelativeX + _CW - sizingW) && 
-        (_MX <= (_Control).ActualX + (_Control).RelativeX + _CW))
+    else if ((_MX >= (_Control).ActualX + (_Control).RelativeX + _CW - sizingW + _xoffset) && 
+        (_MX <= (_Control).ActualX + (_Control).RelativeX + _CW + _xoffset))
         return global.GMUIHoveringDirection_Right;
 }
 else if (_D == global.GMUIDirectionTypeSideVertical)
 {
-    if ((_MY >= (_Control).ActualY + (_Control).RelativeY) && 
-        (_MY <= (_Control).ActualY + (_Control).RelativeY + sizingH) &&
-        (_MX >= (_Control).ActualX + (_Control).RelativeX + _CW - sizingW))
+    if ((_MY >= (_Control).ActualY + (_Control).RelativeY + _yoffset) && 
+        (_MY <= (_Control).ActualY + (_Control).RelativeY + sizingH + _yoffset) &&
+        (_MX >= (_Control).ActualX + (_Control).RelativeX + _CW - sizingW + _xoffset))
         return global.GMUIHoveringDirection_Up;
-    else if ((_MY >= (_Control).ActualY + (_Control).RelativeY + _CH - sizingH) &&
-        (_MY <= (_Control).ActualY + (_Control).RelativeY + _CH) &&
-        (_MX >= (_Control).ActualX + (_Control).RelativeX + _CW - sizingW))
+    else if ((_MY >= (_Control).ActualY + (_Control).RelativeY + _CH - sizingH + _yoffset) &&
+        (_MY <= (_Control).ActualY + (_Control).RelativeY + _CH + _yoffset) &&
+        (_MX >= (_Control).ActualX + (_Control).RelativeX + _CW - sizingW + _xoffset))
     return global.GMUIHoveringDirection_Down;
 }
 

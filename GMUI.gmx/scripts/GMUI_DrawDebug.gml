@@ -2,17 +2,22 @@
 // Run only if DebugData is on
 if (DebugData) {
 
-    var gridW,gridH,w,h;
-    gridW = ds_grid_width((GMUII()).GMUI_grid[0]);
-    gridH = ds_grid_height((GMUII()).GMUI_grid[0]);
+    var gridW,gridH,w,h,xoffset,yoffset;
+    gridW = GMUI_GridGetWidth(GMUII(),0);
+    gridH = GMUI_GridGetHeight(GMUII(),0);
+    
+    if ((GMUII()).UIsnaptoview) {
+        xoffset = view_xview[(GMUII()).UIgridview];
+        yoffset = view_yview[(GMUII()).UIgridview];
+    }
     
     // draw the grid lines 
     color_alpha(c_black,0.1);
     for (w=0;w<gridW;w+=1) {
-        draw_line(w*cellsize,0,w*cellsize,room_height);
+        draw_line(w*cellsize+(GMUII()).GMUI_grid_x[0]+xoffset,yoffset,w*cellsize+(GMUII()).GMUI_grid_x[0]+xoffset,(GMUII()).UIgridheight+yoffset);
     }
     for (h=0;h<gridH;h+=1) {
-        draw_line(0,h*cellsize_h,room_width,h*cellsize_h);
+        draw_line(xoffset,h*cellsize_h+(GMUII()).GMUI_grid_y[0]+yoffset,(GMUII()).UIgridwidth+xoffset,h*cellsize_h+(GMUII()).GMUI_grid_y[0]+yoffset);
     }
     
     // draw the errors
@@ -32,9 +37,11 @@ if (DebugData) {
         for(j=0;j<ds_list_size((GMUII()).GMUI_groupList[layer]);j+=1) {
             groupId = ds_list_find_value((GMUII()).GMUI_groupList[layer],j);
             
-            draw_rectangle(GMUI_groupActualX[layer,groupId],GMUI_groupActualY[layer,groupId],
-                GMUI_groupActualX[layer,groupId] + GMUI_groupCellsW[layer,groupId]*cellsize,
-                GMUI_groupActualY[layer,groupId] + GMUI_groupCellsH[layer,groupId]*cellsize_h,
+            draw_rectangle(
+                GMUI_groupActualX[layer,groupId] + (GMUII()).GMUI_grid_x[layer] + xoffset,
+                GMUI_groupActualY[layer,groupId] + (GMUII()).GMUI_grid_y[layer] + yoffset,
+                GMUI_groupActualX[layer,groupId] + GMUI_groupCellsW[layer,groupId]*cellsize + (GMUII()).GMUI_grid_x[layer] + xoffset,
+                GMUI_groupActualY[layer,groupId] + GMUI_groupCellsH[layer,groupId]*cellsize_h + (GMUII()).GMUI_grid_y[layer] + yoffset,
                 true);
         }
     }

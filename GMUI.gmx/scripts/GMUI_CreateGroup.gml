@@ -38,8 +38,8 @@ with (GMUII()) {
     GMUI_groupRelativeY[_layerNumber,_groupNumber] = 0;
     
     // Set position
-    GMUI_groupCellX[_layerNumber,_groupNumber] = GMUI_GetAnchoredCellX(ds_grid_width((GMUII()).GMUI_grid[_layerNumber]),_CellX,_Anchor);
-    GMUI_groupCellY[_layerNumber,_groupNumber] = GMUI_GetAnchoredCellY(ds_grid_height((GMUII()).GMUI_grid[_layerNumber]),_CellY,_Anchor);
+    GMUI_groupCellX[_layerNumber,_groupNumber] = GMUI_GetAnchoredCellX(GMUI_GridGetWidth(GMUII(),_layerNumber),_CellX,_Anchor);
+    GMUI_groupCellY[_layerNumber,_groupNumber] = GMUI_GetAnchoredCellY(GMUI_GridGetHeight(GMUII(),_layerNumber),_CellY,_Anchor);
     GMUI_groupActualX[_layerNumber,_groupNumber] = GMUI_CellGetActualX(GMUI_groupCellX[_layerNumber,_groupNumber]);
     GMUI_groupActualY[_layerNumber,_groupNumber] = GMUI_CellGetActualY(GMUI_groupCellY[_layerNumber,_groupNumber]);
     GMUI_groupCellsW[_layerNumber,_groupNumber] = 1;
@@ -47,6 +47,7 @@ with (GMUII()) {
     GMUI_groupRelativeCellX[_layerNumber,_groupNumber] = _CellX;
     GMUI_groupRelativeCellY[_layerNumber,_groupNumber] = _CellY;
     GMUI_groupAnchor[_layerNumber,_groupNumber] = _Anchor;
+    GMUI_groupTransitioning[_layerNumber,_groupNumber] = false;
 }
 
 

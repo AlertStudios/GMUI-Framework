@@ -10,14 +10,14 @@ if (!GMUI_LayerExists(argument0))
 var _Layer, CW, CH;
 _Layer = floor(argument0);
 
-// If cells wide/high are 0, then it is assumed to be adjusted to the room dimensions. If using views, the cells should be specified to avoid glitching.
+// If cells wide/high are 0, then it is assumed to be adjusted to the room or view dimensions
 if (argument1 == 0)
-    CW = ceil(room_width/(GMUII()).cellsize);
+    CW = ceil((GMUII()).UIgridwidth/(GMUII()).cellsize);
 else
     CW = argument1;
 
 if (argument2 == 0)
-    CH = ceil(room_height/(GMUII()).cellsize_h);
+    CH = ceil((GMUII()).UIgridheight/(GMUII()).cellsize_h);
 else
     CH = argument2;
 
@@ -25,8 +25,8 @@ ds_grid_resize((GMUII()).GMUI_grid[_Layer],CW,CH);
 
 // Get grid dimensions
 var gridW, gridH, anc, relX, relY, pCellX, pCellY;
-gridW = ds_grid_width((GMUII()).GMUI_grid[_Layer]);
-gridH = ds_grid_height((GMUII()).GMUI_grid[_Layer]);
+gridW = GMUI_GridGetWidth(GMUII(),_Layer);
+gridH = GMUI_GridGetHeight(GMUII(),_Layer);
 
 // Move any controls that are anchored to other positions
 var ctrl;

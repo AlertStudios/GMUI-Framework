@@ -6,6 +6,58 @@
 if (Hidden) return false;
 
 // STEP actions:
+
+// Run transition action
+if (Transitioning) {
+    if (GMUI_IsScript(TransitionScript)) {
+        if (Hovering)
+            Hovering = false;
+            
+        if (T_t < T_d) {
+            T_t += 1;
+            ActualX = script_execute(TransitionScript,T_t,T_bx,T_cx,T_d);
+            ActualY = script_execute(TransitionScript,T_t,T_by,T_cy,T_d);
+            
+            if (TransitioningGroup && (GMUIP).GMUI_groupTransitioningControl[Layer,Group] == id) {
+                (GMUIP).GMUI_groupActualX[Layer,Group] = script_execute(TransitionScript,T_t,T_bx_group,T_cx_group,T_d);
+                (GMUIP).GMUI_groupActualY[Layer,Group] = script_execute(TransitionScript,T_t,T_by_group,T_cy_group,T_d);
+            }
+        }
+        else {
+            T_t = T_d;
+            Transitioning = false;
+            
+            if (TransitioningGroup) {
+                if ((GMUIP).GMUI_groupTransitioningControl[Layer,Group] == id) {
+                    var _getGroupX,_getGroupY,_diffX,_diffY;
+                    _diffX = (GMUIP).GMUI_groupActualX[Layer,Group]-GMUI_CellGetActualX(GMUI_GridGetCellXRoom(GMUIP,Layer,(GMUIP).GMUI_groupActualX[Layer,Group]));
+                    _diffY = (GMUIP).GMUI_groupActualY[Layer,Group]-GMUI_CellGetActualY(GMUI_GridGetCellYRoom(GMUIP,Layer,(GMUIP).GMUI_groupActualY[Layer,Group]));
+                    
+                    _getGroupX = GMUI_GetAnchoredCellX(GMUI_GridGetWidth(GMUIP,Layer),GMUI_GridGetCellXRoom(GMUIP,Layer,(GMUIP).GMUI_groupActualX[Layer,Group]),(GMUIP).GMUI_groupAnchor[Layer,Group]);
+                    _getGroupY = GMUI_GetAnchoredCellY(GMUI_GridGetHeight(GMUIP,Layer),GMUI_GridGetCellYRoom(GMUIP,Layer,(GMUIP).GMUI_groupActualY[Layer,Group]),(GMUIP).GMUI_groupAnchor[Layer,Group]);
+
+                    GMUI_GroupSetPositionAnchored(Layer,Group,_getGroupX,_getGroupY,
+                        _diffX,_diffY,
+                        (GMUIP).GMUI_groupAnchor[Layer,Group]);
+                        
+                    TransitioningGroup = false;
+                }
+            }
+            else {
+                CellX = GMUI_GridGetCellX(GMUIP,Layer,ActualX);
+                CellY = GMUI_GridGetCellY(GMUIP,Layer,ActualY);
+                
+                GMUI_ControlSetPositioning(CellX*(GMUIP).cellsize,CellY*(GMUIP).cellsize_h,ActualW,ActualH);
+            }            
+        }
+        
+    }
+    else {
+        Transitioning = false;
+    }
+}
+
+// Process input 
 if (Selected) {
     // Filter keyboard string to type of input allowed
     if (ControlInput && (keyboard_lastkey > 20 || keyboard_lastkey == vk_backspace)) {
@@ -29,8 +81,11 @@ if (Selected) {
             }
         }
         
-        // Only does assignment of the value once the key is released
-        if (keyboard_check_released(vk_anykey)) {
+        // Only does assignment of the value once the key is released (and not transitioning)
+        if (Transitioning) {
+            keyboard_string = valueString;
+        }
+        else if (keyboard_check_released(vk_anykey)) {
             // On release, we need to filter again incase somebody "fat-fingers" multiple keys fast enough to miss the first filter.. interesting.
             keyboard_string = GMUI_ControlFilterInput(ControlType,keyboard_string);
             
@@ -83,12 +138,19 @@ if (valueChangeDetected) {
 
 if (argument0 == true) {
     // Cell x,y and Cell width/height x,y
-    var cx, cy, cwx, chy, padx;
-    //cx = (GMUII()).cellsize * CellX + RelativeX;
-    //cy = (GMUII()).cellsize_h * CellY + RelativeY;
-    cx = ActualX + RelativeX;
-    cy = ActualY + RelativeY;
+    var cx, cy, cwx, chy, padx, xoffset, yoffset;
+    xoffset = 0;
+    yoffset = 0;
     
+    if ((GMUIP).UIsnaptoview) {
+        xoffset = view_xview[(GMUIP).UIgridview];
+        yoffset = view_yview[(GMUIP).UIgridview];
+    }
+    
+    cx = ActualX + RelativeX + (GMUIP).GMUI_grid_x[Layer] + xoffset;
+    cy = ActualY + RelativeY + (GMUIP).GMUI_grid_y[Layer] + yoffset;
+    
+    // Calculate widths based on 
     if (ActualW > 0)
         cwx = cx + ActualW;
     else
@@ -185,14 +247,14 @@ if (argument0 == true) {
     else if (ControlFontAlign == fa_right)
         dtx = cwx - padx;
     else if (ControlFontAlign != fa_left) {
-        ControlFontAlign = (GMUII()).ControlFontAlign;
+        ControlFontAlign = (GMUIP).ControlFontAlign;
         GMUI_ThrowErrorDetailed("Invalid font align","GMUI_ControlDraw");
     }
     
     if (ActualH > 0)
         midHeight = ActualH / 2;
     else
-        midHeight = CellHigh * (GMUII()).cellsize_h / 2;
+        midHeight = CellHigh * (GMUIP).cellsize_h / 2;
         
     // Set control font and alignment
     draw_set_font(ControlFont);

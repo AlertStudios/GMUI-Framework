@@ -1,4 +1,4 @@
-﻿///GMUI_ControlSetSpriteExt(sprite, subimage, hover subimage, selected subimage, xscale, yscale, color, alpha)
+///GMUI_ControlSetSpriteExt(sprite, subimage, hover subimage, selected subimage, xscale, yscale, color, alpha)
 ///Replace the control drawing with a sprite with extra parameters
 
 if (!GMUI_IsControl() && id != GMUII())
@@ -49,4 +49,3 @@ if (!GMUI_IsControl() && id != GMUII())
         
 
 return true;
-

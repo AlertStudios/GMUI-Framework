@@ -9,7 +9,7 @@ _c = argument2;
 _d = argument3;
 
 _t = _t/_d;
-if (t == 1)
+if (_t == 1)
     return _b + _c;
     
 _p = _d * .3;

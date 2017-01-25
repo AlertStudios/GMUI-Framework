@@ -15,12 +15,11 @@ if (!GMUI_LayerExists(_Layer)) {
     return -1;
 }
 
-
 // Check grid positioning first and assign after created
 var gridW, gridH;
 // Get the dimensions and round down for grids that have even grid sizes
-gridW = ds_grid_width((GMUII()).GMUI_grid[_Layer]);
-gridH = ds_grid_height((GMUII()).GMUI_grid[_Layer]);
+gridW = GMUI_GridGetWidth(GMUII(),_Layer);
+gridH = GMUI_GridGetHeight(GMUII(),_Layer);
 
 if (!GMUI_ValidCellBounds(_Anchor,_CellX,_CellY,gridW,gridH)) {
     GMUI_ThrowErrorDetailed("Cell values out of bounds for " + string(argument0) + " (" + string(argument1) + "," + string(_CellX) + ",...",SCRIPT);
@@ -49,6 +48,9 @@ if (!instance_exists(thecontrol))
     return -1;
 else
     GMUI_ControlInit(thecontrol);
+    
+// Assign the grid instance to the control
+thecontrol.GMUIP = GMUII();
 
 // Add control to control list for reference
 ds_list_add((GMUII()).GMUI_controlList,thecontrol);

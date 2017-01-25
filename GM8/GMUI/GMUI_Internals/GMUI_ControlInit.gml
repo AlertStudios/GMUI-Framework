@@ -7,6 +7,9 @@ var i; i = argument0;
 
 if (!instance_exists(i))
     return false;
+    
+// The parent GMUI Instance
+i.GMUIP = -1;
 
 i.Hovering = 0;
 i.Selected = 0;
@@ -81,6 +84,30 @@ i.outboundMax = ceil(room_speed/3);
 i.outbound = 0;
 i.inboundMax = ceil(room_speed/3);
 i.inbound = 0;
+
+// Transitions: time: t, begin: xy, change: xy, delta: d
+i.Transitioning = false;
+i.TransitioningGroup = false;
+i.TransitionScript = -1;
+
+i.T_t = 0;
+i.T_bx = 0;
+i.T_cx = 0;
+i.T_by = 0;
+i.T_cy = 0;
+i.T_d = room_speed;
+
+i.T_bx_group = 0;
+i.T_by_group = 0;
+i.T_cx_group = 0;
+i.T_cy_group = 0;
+
+// Effects
+i.FadeAlpha = 1;
+i.FadeToAlpha = 1;
+i.FadeTime = room_speed;
+
+
 
 // Value variables
 i.value = 0;

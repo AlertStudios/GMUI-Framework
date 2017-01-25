@@ -17,8 +17,8 @@ if (!GMUI_GroupExists(_Layer,_Group)) {
     return false;
 }
 
-_mouseCellX = GMUI_GridGetMouseCellX(mouse_x);
-_mouseCellY = GMUI_GridGetMouseCellY(mouse_y);
+_mouseCellX = GMUI_GridGetMouseCellX(GMUII());
+_mouseCellY = GMUI_GridGetMouseCellY(GMUII());
 
 if (_mouseCellX < (GMUII()).GMUI_groupCellX[_Layer,_Group] || _mouseCellY < (GMUII()).GMUI_groupCellY[_Layer,_Group] || 
     _mouseCellX > (GMUII()).GMUI_groupCellX[_Layer,_Group] + (GMUII()).GMUI_groupCellsW[_Layer,_Group] ||

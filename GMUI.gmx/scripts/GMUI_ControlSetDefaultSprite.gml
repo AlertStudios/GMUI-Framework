@@ -1,4 +1,4 @@
-﻿///GMUI_ControlSetDefaultSprite(id)
+///GMUI_ControlSetDefaultSprite(id)
 ///Set the default attributes of the control from the controller
 
 if (!instance_exists(argument0)) {
@@ -23,4 +23,3 @@ with (argument0) {
 
 
 return true;
-

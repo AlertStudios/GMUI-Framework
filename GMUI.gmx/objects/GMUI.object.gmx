@@ -99,28 +99,37 @@ GMUI_DrawDebug();
 
 
 // FOR DEMONSTRATION PURPOSES ONLY:
-    var mouseHor,mouseVert,ctrl;
-    mouseHor = GMUI_GridGetMouseCellX(mouse_x);
-    mouseVert = GMUI_GridGetMouseCellY(mouse_y);
+var mouseHor,mouseVert,ctrl,xoffset,yoffset;
+mouseHor = GMUI_GridGetMouseCellX(GMUII());
+mouseVert = GMUI_GridGetMouseCellY(GMUII());
 
-    // Find if there is a control at that position
-    if (mouseHor &gt;= (GMUII()).GMUI_grid_x[(GMUII()).UILayer] 
-        &amp;&amp; mouseVert &gt;= (GMUII()).GMUI_grid_y[(GMUII()).UILayer] 
-        &amp;&amp; mouseHor &lt; (GMUII()).GMUI_grid_w[(GMUII()).UILayer] 
-        &amp;&amp; mouseVert &lt; (GMUII()).GMUI_grid_h[(GMUII()).UILayer]) {
-        
-        ctrl = ds_grid_get(GMUI_grid[UILayer],mouseHor,mouseVert);
-        if (ctrl &gt; 0 &amp;&amp; instance_exists(ctrl)) {
-            draw_set_color(c_dkgray);
-            draw_set_alpha(.9);
-            draw_set_valign(fa_middle);
-            draw_set_halign(fa_left);
-            if (ctrl.ControlType == "string")
-                draw_text(0,10,string(GMUI_GetValue((ctrl).valueName)));
-            else
-                draw_text(0,10,string_format(GMUI_GetValue((ctrl).valueName),1,6));
-        }
+// Find if there is a control at that position
+if (mouseHor &gt;= (GMUII()).GMUI_grid_x[(GMUII()).UILayer] 
+    &amp;&amp; mouseVert &gt;= (GMUII()).GMUI_grid_y[(GMUII()).UILayer] 
+    &amp;&amp; mouseHor &lt; (GMUII()).GMUI_grid_w[(GMUII()).UILayer] 
+    &amp;&amp; mouseVert &lt; (GMUII()).GMUI_grid_h[(GMUII()).UILayer]) {
+    
+    // Adjust to the view if enabled
+    xoffset = 0;
+    yoffset = 0;
+    
+    if ((GMUII()).UIsnaptoview) {
+        xoffset = view_xview[(GMUII()).UIgridview];
+        yoffset = view_yview[(GMUII()).UIgridview];
     }
+    
+    ctrl = ds_grid_get(GMUI_grid[UILayer],mouseHor,mouseVert);
+    if (ctrl &gt; 0 &amp;&amp; instance_exists(ctrl)) {
+        draw_set_color(c_dkgray);
+        draw_set_alpha(.9);
+        draw_set_valign(fa_middle);
+        draw_set_halign(fa_left);
+        if (ctrl.ControlType == "string")
+            draw_text(0+xoffset,10+yoffset,string(GMUI_GetValue((ctrl).valueName)));
+        else
+            draw_text(0+xoffset,10+yoffset,string_format(GMUI_GetValue((ctrl).valueName),1,6));
+    }
+}
 </string>
           </argument>
         </arguments>

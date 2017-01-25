@@ -10,7 +10,7 @@
 //
 
 // SET THIS VALUE TO TRUE IF RUNNING IN GAME MAKER 8.x
-global.GMUIGameMaker8 = true;
+global.GMUIGameMaker8 = false;
 
 
 // Index of global GMUI's

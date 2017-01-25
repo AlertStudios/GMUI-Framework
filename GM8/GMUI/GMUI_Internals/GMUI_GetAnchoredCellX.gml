@@ -1,5 +1,5 @@
 #define GMUI_GetAnchoredCellX
-///GMUI_GetAnchoredCellX(GMUII, Layer, Cell X given, Anchor Type)
+///GMUI_GetAnchoredCellX(Area Width, Cell X given, Anchor Type)
 /// Returns the new X cell position in the grid based on the anchoring
 
 

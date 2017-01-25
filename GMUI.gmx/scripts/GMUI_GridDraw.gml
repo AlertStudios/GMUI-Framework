@@ -8,65 +8,52 @@ if (GMUI_GridEnabled())
     //do grid stuff:
     
     // Assign mouse values here to easily switch out later if needed
-    var MX, MY, inRegion, onDirection;
+    var MX, MY, inRegion, onDirection, mouseHor, mouseVert, ctrlObject;
     MX = mouse_x;
     MY = mouse_y;
     inRegion = false;
     
     // Check if the mouse has moved before checking for any changed selections
     if (MX != mouse_px || MY != mouse_py) {
-        // Get the mouse position on the current top layer visible:
-        var mouseHor,mouseVert,ctrlObject;
-        mouseHor = GMUI_GridGetMouseCellX(MX);
-        mouseVert = GMUI_GridGetMouseCellY(MY);
-
-        // Find if there is a control at that position
-        ctrlObject = 0;
-        if (mouseHor >= GMUI_grid_x[UILayer] && mouseVert >= GMUI_grid_y[UILayer] && mouseHor < GMUI_grid_w[UILayer] && mouseVert < GMUI_grid_h[UILayer])
-            ctrlObject = ds_grid_get(GMUI_grid[UILayer],mouseHor+GMUI_grid_x[UILayer],mouseVert+GMUI_grid_y[UILayer]);
+        // Find if there is a control at that position on the current layer
+        ctrlObject = GMUI_GetControlAtPosition(id,MX,MY);
+        
+        if (ctrlObject != -1) {
+            if (DebugData) TestHoverObject = ctrlObject;
             
-        if (ctrlObject != 0 && is_real(ctrlObject)) {
-            // Found object number, do checks before assigning hovering or selected flag
-            if (instance_exists(ctrlObject)) {
-            
-                if (DebugData) TestHoverObject = ctrlObject;
-                if (ctrlObject != previousHoveringControl && !ctrlObject.Disabled && !ctrlObject.NonClickable) {
-                    GMUI_ResetControlStatus("Hovering");
-                    if (ctrlObject.IsAdjusted) {
-                        if (GMUI_MouseInAdjustedRegion(ctrlObject,MX,MY))
-                            inRegion = true;
-                    }
-                    else
+            if (ctrlObject != previousHoveringControl && !ctrlObject.Disabled && !ctrlObject.NonClickable) {
+                GMUI_ResetControlStatus("Hovering");
+                if (ctrlObject.IsAdjusted) {
+                    if (GMUI_MouseInAdjustedRegion(ctrlObject,MX,MY))
                         inRegion = true;
-                    
-                    if (inRegion) {
-                        // The int picker has a region on the right side for up/down
-                        if (ctrlObject.ControlType == "intpicker")
-                        {
-                            onDirection = GMUI_MouseInSpecialRegion(ctrlObject,MX,MY);
-                            
-                            if (onDirection != global.GMUIHoveringDirection_None)
-                                ctrlObject.HoveringDirection = onDirection;
-                            else
-                                ctrlObject.Hovering = 1;
-                        }
-                        else {
+                }
+                else
+                    inRegion = true;
+                
+                if (inRegion) {
+                    // The int picker has a region on the right side for up/down
+                    if (ctrlObject.ControlType == "intpicker")
+                    {
+                        onDirection = GMUI_MouseInSpecialRegion(ctrlObject,MX,MY);
+                        
+                        if (onDirection != global.GMUIHoveringDirection_None)
+                            ctrlObject.HoveringDirection = onDirection;
+                        else
                             ctrlObject.Hovering = 1;
-                        }
-                        
-                        // Set the hovering control and execute optional hover action if set
-                        HoveringControl = ctrlObject;
-                        
-                        if (GMUI_IsScript(ctrlObject.HoverActionScript)) {
-                            script_execute(ctrlObject.HoverActionScript);
-                        }
+                    }
+                    else {
+                        ctrlObject.Hovering = 1;
                     }
                     
+                    // Set the hovering control and execute optional hover action if set
+                    HoveringControl = ctrlObject;
+                    
+                    if (GMUI_IsScript(ctrlObject.HoverActionScript)) {
+                        script_execute(ctrlObject.HoverActionScript);
+                    }
                 }
                 
             }
-            else
-                GMUI_ThrowError("Instance recorded is not a control object or no longer exists @ GMUI_GridStep : " + string(ctrlObject));
         }
         else if (HoveringControl != -1) {
             GMUI_ResetControlStatus("Hovering");
@@ -82,16 +69,20 @@ if (GMUI_GridEnabled())
     // Mouse click on grid
     if (mouse_check_button_pressed(mb_left)) {
         GMUI_ResetControlStatus("Selected");
-    
-        // Get the mouse position on the current top layer visible:
-        var mouseHor,mouseVert;
-        mouseHor = GMUI_GridGetMouseCellX(MX);
-        mouseVert = GMUI_GridGetMouseCellY(MY);
-        // Find if there is a control at that position
-        ctrlObject = ds_grid_get(GMUI_grid[UILayer],mouseHor,mouseVert);
-        if (ctrlObject != 0) {
-            if (instance_exists(ctrlObject)) {
-                if ((!ctrlObject.Disabled) && (!ctrlObject.NonClickable) && (!ctrlObject.Hidden)) {
+
+        // Find if there is a control at that position with the current layer
+        ctrlObject = GMUI_GetControlAtPosition(id,MX,MY);
+
+        if (ctrlObject != -1) {
+            if ((!ctrlObject.Disabled) && (!ctrlObject.NonClickable) && (!ctrlObject.Hidden)) {
+                if (ctrlObject.IsAdjusted) {
+                    if (GMUI_MouseInAdjustedRegion(ctrlObject,MX,MY))
+                        inRegion = true;
+                }
+                else
+                    inRegion = true;
+                
+                if (inRegion) {
                     // Switch between special types, general input types, and other controls
                     if (ctrlObject.ControlType == "intpicker") {
                         switch (ctrlObject.HoveringDirection) {
@@ -117,6 +108,7 @@ if (GMUI_GridEnabled())
                     }
                 }
             }
+
         }
     }
     
@@ -129,6 +121,11 @@ if (GMUI_GridEnabled())
             GMUI_ResetControlStatus("Selected");
         }
     }
+    
+    
+    
+    // Transitioning entire grid
+    
     
     
     

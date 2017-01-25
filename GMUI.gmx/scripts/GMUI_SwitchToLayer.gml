@@ -1,4 +1,4 @@
-﻿///GMUI_SwitchToLayer(Layer number)
+///GMUI_SwitchToLayer(Layer number)
 ///Switches the active layer
 
 // Arguments
@@ -21,4 +21,3 @@ if (!GMUI_LayerExists(_LayerNumber)) {
 
 
 // .... Disable hovering and selection on all controls
-
