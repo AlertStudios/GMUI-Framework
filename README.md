@@ -180,10 +180,10 @@ There are a number of features still left to implement, including:
 - Menus
 - Tooltips
 - List Areas
+- Slider control
+- Picker control for sprite-based selection
 - Selection list control
 - Screen transitions (of the interface)
-- Control & Group animations
-- Support for views
 - Support for optional surface-based drawing
 
 ##Known issues:
