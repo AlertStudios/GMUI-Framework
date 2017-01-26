@@ -83,6 +83,8 @@
         <script>scripts\GMUI_ControlSetPicker.gml</script>
         <script>scripts\GMUI_ControlSetPositioning.gml</script>
         <script>scripts\GMUI_ControlSetSelectingAction.gml</script>
+        <script>scripts\GMUI_ControlSetSprite.gml</script>
+        <script>scripts\GMUI_ControlSetSpriteExt.gml</script>
         <script>scripts\GMUI_ControlSetStyle.gml</script>
         <script>scripts\GMUI_DrawDebug.gml</script>
         <script>scripts\GMUI_GetControl.gml</script>
@@ -102,8 +104,6 @@
         <script>scripts\GMUI_TypeString.gml</script>
         <script>scripts\GMUIid.gml</script>
         <script>scripts\GMUIself.gml</script>
-        <script>scripts\GMUI_ControlSetSprite.gml</script>
-        <script>scripts\GMUI_ControlSetSpriteExt.gml</script>
       </scripts>
       <scripts name="GMUI_Internals">
         <script>scripts\GMUI_CellGetActualX.gml</script>

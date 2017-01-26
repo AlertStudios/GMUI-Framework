@@ -326,20 +326,33 @@ _s = _p / 4;
 
 return (_c * power( 2, -10 * _t ) * sin(((_t*_d)-_s) * (2*pi)/_p) + _c + _b );
 
-#define easeOutBack
-///easeOutBack(t,b,c,d) where t is current time, b is start value, c is change in value, and d is duration
-///Elastic Ease for moving controls smoothly
+#define easeExpIn
+///easeExpIn(t,b,c,d) where t is current time, b is start value, c is change in value, and d is duration
+///Exponential Ease for moving controls smoothly
 
-var _t,_tt,_b,_c,_d, _p,_s;
+var _t,_b,_c,_d;
+
 _t = argument0;
 _b = argument1;
 _c = argument2;
 _d = argument3;
 
-_s = 1.70158;
-_t = _t/_d-1;
 
-return _c*((_t)*_t*((_s+1)*_t + _s) + 1) + _b;
+return _c * power( 2, 10 * (_t/_d - 1) ) + _b;
+
+#define easeExpOut
+///easeExpOut(t,b,c,d) where t is current time, b is start value, c is change in value, and d is duration
+///Exponential Ease for moving controls smoothly
+
+var _t,_b,_c,_d;
+
+_t = argument0;
+_b = argument1;
+_c = argument2;
+_d = argument3;
+
+
+return _c * ( -power( 2, -10 * _t/_d ) + 1 ) + _b;
 
 #define easeInBack
 ///easeInBack(t,b,c,d) where t is current time, b is start value, c is change in value, and d is duration
@@ -356,33 +369,43 @@ _t = _t/_d;
 
 return _c*(_t)*_t*((_s+1)*_t - _s) + _b;
 
-#define easeExpOut
-///easeExpOut(t,b,c,d) where t is current time, b is start value, c is change in value, and d is duration
-///Exponential Ease for moving controls smoothly
+#define easeOutBack
+///easeOutBack(t,b,c,d) where t is current time, b is start value, c is change in value, and d is duration
+///Elastic Ease for moving controls smoothly
 
-var _t,_b,_c,_d;
-
+var _t,_tt,_b,_c,_d, _p,_s;
 _t = argument0;
 _b = argument1;
 _c = argument2;
 _d = argument3;
 
+_s = 1.70158;
+_t = _t/_d-1;
 
-return _c * ( -power( 2, -10 * _t/_d ) + 1 ) + _b;
+return _c*((_t)*_t*((_s+1)*_t + _s) + 1) + _b;
 
-#define easeExpIn
-///easeExpIn(t,b,c,d) where t is current time, b is start value, c is change in value, and d is duration
-///Exponential Ease for moving controls smoothly
+#define GMUI_ControlSetFade
+///GMUI_ControlSetFade("Control Name", Time, In (1) / Out (0) / Hover (2) )
+///
+/// will be moved to internals when done
 
-var _t,_b,_c,_d;
+#define GMUI_ControlSetFadeHover
+///GMUI_ControlSetFadeHover("Control Name", Time)
+///
 
-_t = argument0;
-_b = argument1;
-_c = argument2;
-_d = argument3;
+GMUI_ControlSetFade(argument0,argument1,2);
 
+#define GMUI_ControlSetFadeIn
+///GMUI_ControlSetFadeIn("Control Name", Time)
+///
 
-return _c * power( 2, 10 * (_t/_d - 1) ) + _b;
+GMUI_ControlSetFade(argument0,argument1,1);
+
+#define GMUI_ControlSetFadeOut
+///GMUI_ControlSetFadeOut("Control Name", Time)
+///
+
+GMUI_ControlSetFade(argument0,argument1,0);
 
 #define GMUI_ControlTransitionStop
 ///GMUI_ControlTransitionStop()
@@ -518,29 +541,6 @@ return true;
 #define GMUI_Transition
 ///GMUI_Transition()
 
-/// will be moved to internals when done
-
-#define GMUI_ControlSetFadeIn
-///GMUI_ControlSetFadeIn("Control Name", Time)
-///
-
-GMUI_ControlSetFade(argument0,argument1,1);
-
-#define GMUI_ControlSetFadeOut
-///GMUI_ControlSetFadeOut("Control Name", Time)
-///
-
-GMUI_ControlSetFade(argument0,argument1,0);
-
-#define GMUI_ControlSetFadeHover
-///GMUI_ControlSetFadeHover("Control Name", Time)
-///
-
-GMUI_ControlSetFade(argument0,argument1,2);
-
-#define GMUI_ControlSetFade
-///GMUI_ControlSetFade("Control Name", Time, In (1) / Out (0) / Hover (2) )
-///
 /// will be moved to internals when done
 
 #define hsv
@@ -1961,7 +1961,7 @@ if (Transitioning) {
                     
                     _getGroupX = GMUI_GetAnchoredCellX(GMUI_GridGetWidth(GMUIP,Layer),GMUI_GridGetCellXRoom(GMUIP,Layer,(GMUIP).GMUI_groupActualX[Layer,Group]),(GMUIP).GMUI_groupAnchor[Layer,Group]);
                     _getGroupY = GMUI_GetAnchoredCellY(GMUI_GridGetHeight(GMUIP,Layer),GMUI_GridGetCellYRoom(GMUIP,Layer,(GMUIP).GMUI_groupActualY[Layer,Group]),(GMUIP).GMUI_groupAnchor[Layer,Group]);
-
+                    
                     GMUI_GroupSetPositionAnchored(Layer,Group,_getGroupX,_getGroupY,
                         _diffX,_diffY,
                         (GMUIP).GMUI_groupAnchor[Layer,Group]);
@@ -3159,15 +3159,10 @@ return ceil((argument2-(_GMUII).GMUI_grid_x[_LayerNumber]-_offset+1)/(_GMUII).ce
 // argument1 is the layer
 // argument2 is the X coordinate
 
-var _GMUII,_offset;
+var _GMUII;
 _GMUII = argument0;
-_offset = 0;
 
-if ((_GMUII).UIsnaptoview) {
-    _offset = -view_xview[(_GMUII).UIgridview];
-}
-
-return GMUI_GridGetCellXOffset(_GMUII,argument1,argument2,_offset);
+return GMUI_GridGetCellXOffset(_GMUII,argument1,argument2,0);
 
 
 
@@ -3212,15 +3207,10 @@ return ceil((argument2-(_GMUII).GMUI_grid_y[_LayerNumber]-_offset+1)/(_GMUII).ce
 // argument1 is the layer
 // argument2 is the Y coordinate
 
-var _GMUII,_offset;
+var _GMUII;
 _GMUII = argument0;
-_offset = 0;
 
-if ((_GMUII).UIsnaptoview) {
-    _offset = -view_yview[(_GMUII).UIgridview];
-}
-
-return GMUI_GridGetCellYOffset(_GMUII,argument1,argument2,_offset);
+return GMUI_GridGetCellYOffset(_GMUII,argument1,argument2,0);
 
 
 

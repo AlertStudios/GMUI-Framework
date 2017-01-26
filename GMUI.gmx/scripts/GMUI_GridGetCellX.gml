@@ -1,4 +1,4 @@
-﻿///GMUI_GridGetCellX(GMUI instance, Layer, X)  Returns the horizontal cell block that the mouse is on
+///GMUI_GridGetCellX(GMUI instance, Layer, X)  Returns the horizontal cell block that the mouse is on
 // argument0 is the GMUI instance
 // argument1 is the layer
 // argument2 is the X coordinate
@@ -13,6 +13,5 @@ if ((_GMUII).UIsnaptoview) {
 
 return GMUI_GridGetCellXOffset(_GMUII,argument1,argument2,_offset);
 //return ceil((argument2-(_GMUII).GMUI_grid_x[_LayerNumber]-_offset+1)/(_GMUII).cellsize)-1;
-
 
 

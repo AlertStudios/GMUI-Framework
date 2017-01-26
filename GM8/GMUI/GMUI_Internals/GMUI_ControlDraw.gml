@@ -36,7 +36,7 @@ if (Transitioning) {
                     
                     _getGroupX = GMUI_GetAnchoredCellX(GMUI_GridGetWidth(GMUIP,Layer),GMUI_GridGetCellXRoom(GMUIP,Layer,(GMUIP).GMUI_groupActualX[Layer,Group]),(GMUIP).GMUI_groupAnchor[Layer,Group]);
                     _getGroupY = GMUI_GetAnchoredCellY(GMUI_GridGetHeight(GMUIP,Layer),GMUI_GridGetCellYRoom(GMUIP,Layer,(GMUIP).GMUI_groupActualY[Layer,Group]),(GMUIP).GMUI_groupAnchor[Layer,Group]);
-
+                    
                     GMUI_GroupSetPositionAnchored(Layer,Group,_getGroupX,_getGroupY,
                         _diffX,_diffY,
                         (GMUIP).GMUI_groupAnchor[Layer,Group]);

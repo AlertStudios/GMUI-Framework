@@ -1,4 +1,4 @@
-﻿///easeInBack(t,b,c,d) where t is current time, b is start value, c is change in value, and d is duration
+///easeInBack(t,b,c,d) where t is current time, b is start value, c is change in value, and d is duration
 ///Elastic Ease for moving controls smoothly
 
 var _t,_b,_c,_d, _p,_s;
@@ -11,4 +11,3 @@ _s = 1.70158;
 _t = _t/_d;
 
 return _c*(_t)*_t*((_s+1)*_t - _s) + _b;
-

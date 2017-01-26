@@ -47,7 +47,21 @@
             <folder folderName="GMUI_Effects">
               <file>easeBounceOut.gml</file>
               <file>easeElasticOut.gml</file>
+              <file>easeExpIn.gml</file>
               <file>easeExpOut.gml</file>
+              <file>easeInBack.gml</file>
+              <file>easeOutBack.gml</file>
+              <file>GMUI_ControlSetFade.gml</file>
+              <file>GMUI_ControlSetFadeHover.gml</file>
+              <file>GMUI_ControlSetFadeIn.gml</file>
+              <file>GMUI_ControlSetFadeOut.gml</file>
+              <file>GMUI_ControlTransitionStop.gml</file>
+              <file>GMUI_ControlTransitionToActual.gml</file>
+              <file>GMUI_ControlTransitionToCell.gml</file>
+              <file>GMUI_GroupTransitionStop.gml</file>
+              <file>GMUI_GroupTransitionToActual.gml</file>
+              <file>GMUI_GroupTransitionToCell.gml</file>
+              <file>GMUI_Transition.gml</file>
               <folders />
             </folder>
             <folder folderName="GMUI_Shortcuts">
@@ -82,15 +96,25 @@
           <file>GMUI_ControlSetDefaultSprite.gml</file>
           <file>GMUI_ControlSetDefaultStyle.gml</file>
           <file>GMUI_ControlSetType.gml</file>
+          <file>GMUI_CreateSetDefaultArea.gml</file>
           <file>GMUI_GetAnchoredCellX.gml</file>
           <file>GMUI_GetAnchoredCellY.gml</file>
+          <file>GMUI_GetControlAtPosition.gml</file>
           <file>GMUI_GetDataType.gml</file>
           <file>GMUI_GridAdjust.gml</file>
           <file>GMUI_GridAdjustLayer.gml</file>
           <file>GMUI_GridDraw.gml</file>
           <file>GMUI_GridEnabled.gml</file>
+          <file>GMUI_GridGetCellX.gml</file>
+          <file>GMUI_GridGetCellXOffset.gml</file>
+          <file>GMUI_GridGetCellXRoom.gml</file>
+          <file>GMUI_GridGetCellY.gml</file>
+          <file>GMUI_GridGetCellYOffset.gml</file>
+          <file>GMUI_GridGetCellYRoom.gml</file>
+          <file>GMUI_GridGetHeight.gml</file>
           <file>GMUI_GridGetMouseCellX.gml</file>
           <file>GMUI_GridGetMouseCellY.gml</file>
+          <file>GMUI_GridGetWidth.gml</file>
           <file>GMUI_GridNextControl.gml</file>
           <file>GMUI_GridResetControlRegion.gml</file>
           <file>GMUI_GridSelect.gml</file>
@@ -117,6 +141,7 @@
         <folder folderName="My Actions">
           <file>_Debug_Button.gml</file>
           <file>_Disable_Button.gml</file>
+          <file>_Enlarge_Button.gml</file>
           <file>_Exit_Button.gml</file>
           <file>_Hide_Button.gml</file>
           <file>_Move_Button.gml</file>

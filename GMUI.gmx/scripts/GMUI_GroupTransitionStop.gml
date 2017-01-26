@@ -1,4 +1,3 @@
-﻿///GMUI_GroupTransitionStop(Layer Number, Group Number)
-
+///GMUI_GroupTransitionStop(Layer Number, Group Number)
 
 
