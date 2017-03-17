@@ -1,24 +1,24 @@
 #define GMUI_ResetControlStatus
-///GMUI_GridStep ("Hovering" / "Selected", GridID)
+///GMUI_ResetControlStatus("Hovering" / "Selected" / "Position", GridID)
 /// Resets the hovering or selected values of the controls
 
-var a0,ff,ffo,m,ms; a0 = string(argument0);
+var _SCRIPT,_GridID,a0,ff,ffo,m,ms; a0 = string(argument0);
+_SCRIPT = "GMUI_ResetControlStatus";
+_GID = argument1;
 
-if (string_lower(a0) == "selected" || a0 == "1")
-{
-    (GMUII()).SelectedControl = -1;
-    ff = ds_map_find_first((GMUII()).GMUI_map);
+if (string_lower(a0) == "selected" || a0 == "1") {
+    (_GID).SelectedControl = -1;
+    ff = ds_map_find_first((_GID).GMUI_map);
     if (string(ff) == "0")
-        GMUI_ThrowError("No controls exist for GMUI_ResetControlStatus()");
-    else
-    {
+        GMUI_ThrowErrorDetailed("No controls exist",_SCRIPT);
+    else {
         // Set all controls' selected variable to false and find previous selection if there is one
         PreviousSelectedControl = -1;
         
-        ms = ds_map_size((GMUII()).GMUI_map);
+        ms = ds_map_size((_GID).GMUI_map);
         for (m=0; m < ms; m+=1) {
             if (string(ff) != "0" && GMUI_StudioCheckDefined(ff)) {
-                ffo = ds_map_find_value((GMUII()).GMUI_map,ff);
+                ffo = ds_map_find_value((_GID).GMUI_map,ff);
                 if (GMUI_StudioCheckDefined(ffo)) {
                     if ((ffo).Selected)
                         PreviousSelectedControl = ffo;
@@ -27,36 +27,51 @@ if (string_lower(a0) == "selected" || a0 == "1")
                 }
             }
             
-            ff = ds_map_find_next((GMUII()).GMUI_map,ff);
+            ff = ds_map_find_next((_GID).GMUI_map,ff);
         }
     }
 }
-else
-{
-    // Quiet failure if incorrect arguments provided, but still do hovering value
-    if (string_lower(a0) != "hovering" && a0 != "0")
-        GMUI_ThrowError("Incorrect parameter given to GMUI_ResetControlStatus()");
-    
-    (GMUII()).HoveringControl = -1;
-    ff = ds_map_find_first((GMUII()).GMUI_map);
+else if (string_lower(a0) == "hovering" || a0 == "0") {
+    (_GID).HoveringControl = -1;
+    ff = ds_map_find_first((_GID).GMUI_map);
     if (string(ff) == "0")
-        GMUI_ThrowError("No controls exist for GMUI_ResetControlStatus()");
-    else
-    {
+        GMUI_ThrowErrorDetailed("No controls exist",_SCRIPT);
+    else {
         // Set all controls' hover variable to false
-        ms = ds_map_size((GMUII()).GMUI_map);
+        ms = ds_map_size((_GID).GMUI_map);
         for (m=0; m < ms; m+=1) {
             if (string(ff) != "0" && GMUI_StudioCheckDefined(ff)) {
-                ffo = ds_map_find_value((GMUII()).GMUI_map,ff);
+                ffo = ds_map_find_value((_GID).GMUI_map,ff);
                 if (GMUI_StudioCheckDefined(ffo)) {
                     (ffo).Hovering = 0;
                     (ffo).HoveringDirection = 0;
                 }
             }
             
-            ff = ds_map_find_next((GMUII()).GMUI_map,ff);
+            ff = ds_map_find_next((_GID).GMUI_map,ff);
         }
     }
-    
+}
+else if (string_lower(a0) == "position" || a0 == "2") {
+    ff = ds_map_find_first((_GID).GMUI_map);
+    if (string(ff) == "0")
+        GMUI_ThrowErrorDetailed("No controls exist",_SCRIPT);
+    else {
+        // Set all controls' hover variable to false
+        ms = ds_map_size((_GID).GMUI_map);
+        for (m=0; m < ms; m+=1) {
+            if (string(ff) != "0" && GMUI_StudioCheckDefined(ff)) {
+                ffo = ds_map_find_value((_GID).GMUI_map,ff);
+                if (GMUI_StudioCheckDefined(ffo)) {
+                    (ffo).NeedsPositionUpdate = true;
+                }
+            }
+            
+            ff = ds_map_find_next((_GID).GMUI_map,ff);
+        }
+    }
+}
+else {
+    GMUI_ThrowErrorDetailed("Incorrect parameter given",_SCRIPT);
 }
 

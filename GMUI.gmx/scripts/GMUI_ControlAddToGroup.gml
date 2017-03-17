@@ -1,7 +1,7 @@
 ///GMUI_ControlAddToGroup(group number)
 ///Adds control to a group if it exists in the layer
 
-var SCRIPT,_Group, _Layer;
+var SCRIPT, _Group, _Layer;
 SCRIPT = "GMUI_ControlAddToGroup";
 _Group = argument0;
 
@@ -41,6 +41,11 @@ if (!GMUI_GroupExists(_Layer,_Group)) {
 ds_list_add((GMUII()).GMUI_groupControlList[_Layer,_Group],id);
 Group = _Group;
 
+// The master control will handle drawing and transitioning of the group
+if ((GMUIP).GMUI_groupMasterControl[_Layer,_Group] == -1 || (GMUIP).GMUI_groupMasterControl[_Layer,_Group] > id) {
+    (GMUIP).GMUI_groupMasterControl[_Layer,_Group] = id;
+}
+
 
 // Reset positioning to base on group's position
 CellX = GMUI_GetAnchoredCellX((GMUII()).GMUI_groupCellsW[_Layer,_Group],CellX,Anchor) + (GMUII()).GMUI_groupCellX[_Layer,_Group];
@@ -57,5 +62,9 @@ if (CellX + CellWide > (GMUII()).GMUI_groupCellX[_Layer,_Group] + (GMUII()).GMUI
 if (CellY + CellHigh > (GMUII()).GMUI_groupCellY[_Layer,_Group] + (GMUII()).GMUI_groupCellsH[_Layer,_Group]) {
     (GMUII()).GMUI_groupCellsH[_Layer,_Group] = CellY + CellHigh - (GMUII()).GMUI_groupCellY[_Layer,_Group];
 }
+
+// Update control draw location in the room
+GMUI_ControlUpdateXY(id);
+
     
     

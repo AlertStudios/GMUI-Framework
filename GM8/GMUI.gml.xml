@@ -8,34 +8,50 @@
           <file>GMUI_Add.gml</file>
           <file>GMUI_AddLabel.gml</file>
           <file>GMUI_AddLayer.gml</file>
+          <file>GMUI_AddTooltipToControl.gml</file>
           <file>GMUI_ControlAddToGroup.gml</file>
+          <file>GMUI_ControlAddTooltip.gml</file>
           <file>GMUI_ControlDisable.gml</file>
+          <file>GMUI_ControlDrawTooltip.gml</file>
+          <file>GMUI_ControlFadeIn.gml</file>
+          <file>GMUI_ControlFadeOut.gml</file>
           <file>GMUI_ControlHide.gml</file>
+          <file>GMUI_ControlHideTooltip.gml</file>
           <file>GMUI_ControlIsDisabled.gml</file>
           <file>GMUI_ControlIsHidden.gml</file>
+          <file>GMUI_ControlPosition.gml</file>
           <file>GMUI_ControlSetAttributes.gml</file>
           <file>GMUI_ControlSetButton.gml</file>
           <file>GMUI_ControlSetButtonAction.gml</file>
+          <file>GMUI_ControlSetFadeOnHide.gml</file>
           <file>GMUI_ControlSetFontStyle.gml</file>
           <file>GMUI_ControlSetHoverAction.gml</file>
+          <file>GMUI_ControlSetHoverOffAction.gml</file>
           <file>GMUI_ControlSetInitValue.gml</file>
           <file>GMUI_ControlSetPicker.gml</file>
           <file>GMUI_ControlSetPositioning.gml</file>
           <file>GMUI_ControlSetSelectingAction.gml</file>
           <file>GMUI_ControlSetSprite.gml</file>
           <file>GMUI_ControlSetSpriteExt.gml</file>
+          <file>GMUI_ControlSetSpriteMap.gml</file>
           <file>GMUI_ControlSetStyle.gml</file>
           <file>GMUI_ControlSetValueChangedAction.gml</file>
           <file>GMUI_Create.gml</file>
           <file>GMUI_CreateGroup.gml</file>
+          <file>GMUI_CreateMenu.gml</file>
+          <file>GMUI_Destroy.gml</file>
+          <file>GMUI_DestroyNumber.gml</file>
           <file>GMUI_DrawDebug.gml</file>
           <file>GMUI_GetControl.gml</file>
           <file>GMUI_GetValue.gml</file>
           <file>GMUI_GetValueString.gml</file>
+          <file>GMUI_GridSetNavigation.gml</file>
           <file>GMUI_GroupHide.gml</file>
+          <file>GMUI_GroupSetFadeOnHide.gml</file>
           <file>GMUI_GroupSetPosition.gml</file>
           <file>GMUI_GroupSetPositionActual.gml</file>
           <file>GMUI_GroupSetSize.gml</file>
+          <file>GMUI_GroupSetSpriteMap.gml</file>
           <file>GMUI_Init.gml</file>
           <file>GMUI_SetForm.gml</file>
           <file>GMUI_SetValue.gml</file>
@@ -87,6 +103,8 @@
           <file>GMUI_CellGetActualY.gml</file>
           <file>GMUI_ControlActionScript.gml</file>
           <file>GMUI_ControlDraw.gml</file>
+          <file>GMUI_ControlDrawGroup.gml</file>
+          <file>GMUI_ControlDrawTooltipById.gml</file>
           <file>GMUI_ControlFilterInput.gml</file>
           <file>GMUI_ControlInit.gml</file>
           <file>GMUI_ControlSetDefaultAttributes.gml</file>
@@ -94,9 +112,12 @@
           <file>GMUI_ControlSetDefaultFontStyle.gml</file>
           <file>GMUI_ControlSetDefaultPicker.gml</file>
           <file>GMUI_ControlSetDefaultSprite.gml</file>
+          <file>GMUI_ControlSetDefaultSpriteMap.gml</file>
           <file>GMUI_ControlSetDefaultStyle.gml</file>
           <file>GMUI_ControlSetType.gml</file>
+          <file>GMUI_ControlUpdateXY.gml</file>
           <file>GMUI_CreateSetDefaultArea.gml</file>
+          <file>GMUI_DrawSpriteBox.gml</file>
           <file>GMUI_GetAnchoredCellX.gml</file>
           <file>GMUI_GetAnchoredCellY.gml</file>
           <file>GMUI_GetControlAtPosition.gml</file>
@@ -104,6 +125,7 @@
           <file>GMUI_GridAdjust.gml</file>
           <file>GMUI_GridAdjustLayer.gml</file>
           <file>GMUI_GridDraw.gml</file>
+          <file>GMUI_GridDrawGroups.gml</file>
           <file>GMUI_GridEnabled.gml</file>
           <file>GMUI_GridGetCellX.gml</file>
           <file>GMUI_GridGetCellXOffset.gml</file>
@@ -121,7 +143,6 @@
           <file>GMUI_GridSetRegions.gml</file>
           <file>GMUI_GridSetRegionsLayer.gml</file>
           <file>GMUI_GroupExists.gml</file>
-          <file>GMUI_GroupPositionControls.gml</file>
           <file>GMUI_GroupSetPositionAnchored.gml</file>
           <file>GMUI_IsControl.gml</file>
           <file>GMUI_IsControlID.gml</file>
@@ -131,6 +152,7 @@
           <file>GMUI_MouseInAdjustedRegion.gml</file>
           <file>GMUI_MouseInGroupRegion.gml</file>
           <file>GMUI_MouseInSpecialRegion.gml</file>
+          <file>GMUI_NavigateNextControl.gml</file>
           <file>GMUI_ResetControlStatus.gml</file>
           <file>GMUI_StudioCheckDefined.gml</file>
           <file>GMUI_ThrowError.gml</file>
@@ -144,6 +166,8 @@
           <file>_Enlarge_Button.gml</file>
           <file>_Exit_Button.gml</file>
           <file>_Hide_Button.gml</file>
+          <file>_HoverOff_Int.gml</file>
+          <file>_Hover_Int.gml</file>
           <file>_Move_Button.gml</file>
           <file>_Switch_Button.gml</file>
           <file>_Test_Button.gml</file>

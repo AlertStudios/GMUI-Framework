@@ -28,6 +28,7 @@ global.GMUIAnchorLeft = 5;
 global.GMUIAnchorBottomLeft = 6;
 global.GMUIAnchorBottom = 7;
 global.GMUIAnchorBottomRight = 8;
+global.GMUIAnchorCenter = 9;
 
 // Hovering directions for special controls
 global.GMUIHoveringDirection_None = 0;
@@ -40,10 +41,12 @@ global.GMUIHoveringDirection_Down = 4;
 global.GMUIDirectionTypeHorizontal = 0;
 global.GMUIDirectionTypeVertical = 1;
 global.GMUIDirectionTypeSideVertical = 2;
+global.GMUIDirectionTypeBoth = 3;
 
 // Control datatypes
 global.GMUIDataTypeString = 0;
 global.GMUIDataTypeInteger = 1;
 global.GMUIDataTypeDecimal = 2;
 global.GMUIDataTypeButton = 3;
+global.GMUIDataTypeInfo = 4;
 

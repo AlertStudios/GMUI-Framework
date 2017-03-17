@@ -8,10 +8,10 @@ layerDepth = depth;
 layerDepth_layers = layerDepth-1;
 
 // If you really need more than 100 layers, you can change this (each layer may have tooltips or other objects):
-layerDepth_messages = layerDepth_layers - (100*3);
+layerDepth_maxLayers = 100;
 
-// Windows are above all layers and basic messages (MAY GET RID OF THIS ONE)
-//layerDepth_windows = layerDepth_messages - 10;
+// Display messages over all control layers
+layerDepth_messages = layerDepth_layers - (layerDepth_maxLayers*3);
 
 // Menus show over basic messages and windows
 layerDepth_menus = layerDepth_messages - 100;

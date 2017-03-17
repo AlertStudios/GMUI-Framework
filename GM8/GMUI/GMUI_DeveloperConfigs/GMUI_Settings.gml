@@ -6,7 +6,6 @@
 // Define the controls' object!
 GMUI_controlobject = GMUI_control;
 
-
 // Flexibility to add graphical effects settings to the controls:
 var basic, good, best; basic = 0; good = 1; best = 2;
 graphicsSetting = best;

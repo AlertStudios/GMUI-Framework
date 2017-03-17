@@ -18,6 +18,9 @@ i.DoubleSelected = 0;
 i.ControlType = "";
 i.ControlDataType = global.GMUIDataTypeString; // Default (0)
 
+i.NeedsPositionUpdate = false;
+i.NeedsDrawUpdate= false;
+
 // Redundant based on the datatype
 i.ControlIsNumeric = false;
 i.ControlIsString = true;
@@ -41,7 +44,9 @@ i.NonClickable = 0;
 // Custom Actions
 i.ActionScript = -1;
 i.HoverActionScript = -1;
+i.HoverOffActionScript = -1;
 i.SelectingActionScript = -1;
+i.DeselectActionScript = -1;
 i.ValueChangedActionScript = -1;
 
 // All of these values are set when added ::
@@ -55,12 +60,16 @@ i.ValueChangedActionScript = -1;
 // Cells work like the room grid and are assigned numbers baised on the cell dimensions given
 //CellWide = 1;
 //CellHigh = 1;
+//CellWideMax = 1;
+//CellHighMax = 1;
 //CellX = 0;
 //CellY = 0;
 
-//
+// Horizontal font alignment always set on creation
 //ControlFontAlign = fa_left;
 i.ControlFontAlignV = fa_middle;
+i.ControlPaddingX = 4;
+i.ControlPaddingY = 4;
 
 // ::
 
@@ -79,11 +88,30 @@ i.RelativeY = 0;
 i.ActualX = x;
 i.ActualY = y;
 
+// Real room location after adjustments made to the grid, boundary, and offsets
+i.RoomX = 0;
+i.RoomY = 0;
+i.RoomW = 0;
+i.RoomH = 0;
+
 // Graphical variables
 i.outboundMax = ceil(room_speed/3);
 i.outbound = 0;
 i.inboundMax = ceil(room_speed/3);
 i.inbound = 0;
+
+// Tooltip variables (relative)
+i.TooltipId = -1;
+i.TT_arrowsize = 16;
+i.TT_xposition = 0;
+i.TT_yposition = 0;
+i.TT_direction = 0;
+i.TT_minx = 0;
+i.TT_miny = 0;
+i.TT_maxx = 0;
+i.TT_maxy = 0;
+i.TT_relativeCellX = 0;
+i.TT_relativeCellY = 0;
 
 // Transitions: time: t, begin: xy, change: xy, delta: d
 i.Transitioning = false;
@@ -103,10 +131,12 @@ i.T_cx_group = 0;
 i.T_cy_group = 0;
 
 // Effects
-i.FadeAlpha = 1;
-i.FadeToAlpha = 1;
-i.FadeTime = room_speed;
-
+i.FadeAlpha = 1; // of 1
+i.FadeIn = 1;
+i.FadeOut = 0;
+i.FadeTime = room_speed; // in steps
+i.FadeCalled = 0; // 0 for none, 1 for up, -1 for down
+i.FadeOnHide = false;
 
 
 // Value variables

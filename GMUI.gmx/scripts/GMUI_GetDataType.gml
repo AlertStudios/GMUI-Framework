@@ -22,6 +22,9 @@ switch (_controlType) {
     case "textbutton":
         return global.GMUIDataTypeButton;
         break;
+    case "tooltip":
+        return global.GMUIDataTypeInfo;
+        break;
     default:
         return -1;
         break;

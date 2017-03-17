@@ -15,7 +15,7 @@ if (GMUI_LayerExists(_Layer))
     return false;
 
 // If the layer doesn't exist, add it to the list and create it
-ds_list_add((GMUII()).GMUI_gridlist,floor(_Layer));
+ds_list_add((GMUII()).GMUI_gridlist,_Layer);
 
 // Add a group list to the layer in case its used
 (GMUII()).GMUI_groupList[_Layer] = ds_list_create();

@@ -18,10 +18,15 @@ for(i=0;i<ds_list_size((GMUII()).GMUI_controlList);i+=1) {
         GMUI_ThrowError("Control no longer exists. GMUI_GridSetRegionsLayer()");
     }
     else if ((ctrl).Layer == _Layer) {
-        // Map the control to the grid[layer#] - Warning: This will overwrite any existing instance values (overlapping)
-        _CX2 = (ctrl).CellX+(ctrl).CellWide-1+ceil((ctrl).RelativeX / (GMUII()).cellsize);
-        _CY2 = (ctrl).CellY+(ctrl).CellHigh-1+ceil((ctrl).RelativeY / (GMUII()).cellsize_h);
-        ds_grid_set_region(_Grid,(ctrl).CellX,(ctrl).CellY,_CX2,_CY2,ctrl);
+        if ((ctrl).ControlInteraction) {
+            // Map the control to the grid[layer#] - Warning: This will overwrite any existing instance values (overlapping)
+            _CX2 = (ctrl).CellX+(ctrl).CellWide-1+ceil((ctrl).RelativeX / (GMUII()).cellsize);
+            _CY2 = (ctrl).CellY+(ctrl).CellHigh-1+ceil((ctrl).RelativeY / (GMUII()).cellsize_h);
+            ds_grid_set_region(_Grid,(ctrl).CellX,(ctrl).CellY,_CX2,_CY2,ctrl);
+        }
+        
+        // Update control draw location in the room
+        GMUI_ControlUpdateXY(ctrl);
     }
     
 }

@@ -1,8 +1,8 @@
-///GMUI_ControlSetType("Control Type")
+///GMUI_ControlSetType(Control, "Control Type")
 ///Set the type variables based on the control the developer wants to make
 
-var IID,            _type,              isinput,    ispicker,   _getType;
-    IID=argument0;  _type=argument1;    isinput=0;  ispicker=0; _getType=0;
+var IID,            _type,              isinput,    ispicker,   canInteract,    _getType;
+    IID=argument0;  _type=argument1;    isinput=0;  ispicker=0; canInteract=1;  _getType=0;
 
 if (!GMUI_IsControlID(IID) && IID != GMUII()) {
     GMUI_ThrowError("Invalid control for GMUI_ControlSetType");
@@ -35,6 +35,9 @@ switch (_type) {
     case "dropdown":
         
         break;
+    case "tooltip":
+        canInteract = false;
+        break;
     default:
         // no match; override to show invalid:
         _type = "invalid";
@@ -45,6 +48,7 @@ switch (_type) {
 (IID).ControlType = _type;
 (IID).ControlInput = isinput;
 (IID).ControlPicker = ispicker;
+(IID).ControlInteraction = canInteract;
 
 
 // Set the data type

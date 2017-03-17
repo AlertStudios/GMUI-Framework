@@ -20,6 +20,7 @@ if (ActualW != 0 || ActualH != 0 || RelativeX != 0 || RelativeY != 0)
     IsAdjusted = true;
 else
     IsAdjusted = false;
+    
 
 return true;
 

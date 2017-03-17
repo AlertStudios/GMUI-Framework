@@ -28,6 +28,8 @@
         <script>scripts\_Disable_Button.gml</script>
         <script>scripts\_Exit_Button.gml</script>
         <script>scripts\_Hide_Button.gml</script>
+        <script>scripts\_Hover_Int.gml</script>
+        <script>scripts\_HoverOff_Int.gml</script>
         <script>scripts\_Move_Button.gml</script>
         <script>scripts\_Switch_Button.gml</script>
         <script>scripts\_Test_Button.gml</script>
@@ -68,30 +70,46 @@
         <script>scripts\GMUI_Add.gml</script>
         <script>scripts\GMUI_AddLabel.gml</script>
         <script>scripts\GMUI_AddLayer.gml</script>
+        <script>scripts\GMUI_AddTooltipToControl.gml</script>
         <script>scripts\GMUI_Create.gml</script>
         <script>scripts\GMUI_CreateGroup.gml</script>
+        <script>scripts\GMUI_CreateMenu.gml</script>
         <script>scripts\GMUI_ControlAddToGroup.gml</script>
+        <script>scripts\GMUI_ControlAddTooltip.gml</script>
         <script>scripts\GMUI_ControlDisable.gml</script>
+        <script>scripts\GMUI_ControlDrawTooltip.gml</script>
+        <script>scripts\GMUI_ControlFadeIn.gml</script>
+        <script>scripts\GMUI_ControlFadeOut.gml</script>
         <script>scripts\GMUI_ControlHide.gml</script>
+        <script>scripts\GMUI_ControlHideTooltip.gml</script>
         <script>scripts\GMUI_ControlIsDisabled.gml</script>
         <script>scripts\GMUI_ControlIsHidden.gml</script>
+        <script>scripts\GMUI_ControlPosition.gml</script>
         <script>scripts\GMUI_ControlSetAttributes.gml</script>
         <script>scripts\GMUI_ControlSetButton.gml</script>
         <script>scripts\GMUI_ControlSetButtonAction.gml</script>
+        <script>scripts\GMUI_ControlSetFadeOnHide.gml</script>
         <script>scripts\GMUI_ControlSetFontStyle.gml</script>
         <script>scripts\GMUI_ControlSetHoverAction.gml</script>
+        <script>scripts\GMUI_ControlSetHoverOffAction.gml</script>
         <script>scripts\GMUI_ControlSetPicker.gml</script>
         <script>scripts\GMUI_ControlSetPositioning.gml</script>
         <script>scripts\GMUI_ControlSetSelectingAction.gml</script>
         <script>scripts\GMUI_ControlSetSprite.gml</script>
         <script>scripts\GMUI_ControlSetSpriteExt.gml</script>
+        <script>scripts\GMUI_ControlSetSpriteMap.gml</script>
         <script>scripts\GMUI_ControlSetStyle.gml</script>
+        <script>scripts\GMUI_Destroy.gml</script>
+        <script>scripts\GMUI_DestroyNumber.gml</script>
         <script>scripts\GMUI_DrawDebug.gml</script>
         <script>scripts\GMUI_GetControl.gml</script>
         <script>scripts\GMUI_GetValue.gml</script>
         <script>scripts\GMUI_GetValueString.gml</script>
-        <script>scripts\GMUI_GroupSetSize.gml</script>
         <script>scripts\GMUI_GroupHide.gml</script>
+        <script>scripts\GMUI_GridSetNavigation.gml</script>
+        <script>scripts\GMUI_GroupSetFadeOnHide.gml</script>
+        <script>scripts\GMUI_GroupSetSize.gml</script>
+        <script>scripts\GMUI_GroupSetSpriteMap.gml</script>
         <script>scripts\GMUI_GroupSetPosition.gml</script>
         <script>scripts\GMUI_GroupSetPositionActual.gml</script>
         <script>scripts\GMUI_Init.gml</script>
@@ -111,6 +129,8 @@
         <script>scripts\GMUI_ControlInit.gml</script>
         <script>scripts\GMUI_ControlFilterInput.gml</script>
         <script>scripts\GMUI_ControlDraw.gml</script>
+        <script>scripts\GMUI_ControlDrawGroup.gml</script>
+        <script>scripts\GMUI_ControlDrawTooltipById.gml</script>
         <script>scripts\GMUI_ControlActionScript.gml</script>
         <script>scripts\GMUI_ControlSetInitValue.gml</script>
         <script>scripts\GMUI_ControlSetDefaultAttributes.gml</script>
@@ -118,15 +138,19 @@
         <script>scripts\GMUI_ControlSetDefaultFontStyle.gml</script>
         <script>scripts\GMUI_ControlSetDefaultPicker.gml</script>
         <script>scripts\GMUI_ControlSetDefaultSprite.gml</script>
+        <script>scripts\GMUI_ControlSetDefaultSpriteMap.gml</script>
         <script>scripts\GMUI_ControlSetDefaultStyle.gml</script>
         <script>scripts\GMUI_ControlSetType.gml</script>
+        <script>scripts\GMUI_ControlUpdateXY.gml</script>
         <script>scripts\GMUI_CreateSetDefaultArea.gml</script>
+        <script>scripts\GMUI_DrawSpriteBox.gml</script>
         <script>scripts\GMUI_GetAnchoredCellX.gml</script>
         <script>scripts\GMUI_GetAnchoredCellY.gml</script>
         <script>scripts\GMUI_GetControlAtPosition.gml</script>
         <script>scripts\GMUI_GetDataType.gml</script>
         <script>scripts\GMUI_GridEnabled.gml</script>
         <script>scripts\GMUI_GridDraw.gml</script>
+        <script>scripts\GMUI_GridDrawGroups.gml</script>
         <script>scripts\GMUI_GridSelect.gml</script>
         <script>scripts\GMUI_GridAdjust.gml</script>
         <script>scripts\GMUI_GridAdjustLayer.gml</script>
@@ -154,6 +178,7 @@
         <script>scripts\GMUI_LayerExists.gml</script>
         <script>scripts\GMUI_MouseInAdjustedRegion.gml</script>
         <script>scripts\GMUI_MouseInSpecialRegion.gml</script>
+        <script>scripts\GMUI_NavigateNextControl.gml</script>
         <script>scripts\GMUI_ResetControlStatus.gml</script>
         <script>scripts\GMUI_StudioCheckDefined.gml</script>
         <script>scripts\GMUI_ThrowError.gml</script>
@@ -181,7 +206,8 @@
     </objects>
   </objects>
   <rooms name="rooms">
-    <room>rooms\GMEASE</room>
+    <room>rooms\GMUIdemo</room>
+    <room>rooms\GMUIdemo2</room>
   </rooms>
   <help>
     <rtf>help.rtf</rtf>

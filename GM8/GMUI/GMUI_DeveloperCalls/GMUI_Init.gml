@@ -3,7 +3,7 @@
 //
 // !WARNING! MODIFYING THE GMUI SCRIPTS CAN BREAK FUNCTIONALITY AND CAUSE ERRORS! TRY TO EDIT THE OBJECTS INSTEAD!
 //
-// Copyright 2016 Alert Studios (Mark Palnau). Initially designed by Alert Studios and released as Open-Source.
+// Copyright 2017 Alert Studios (Mark Palnau). Initially designed by Alert Studios and released as Open-Source.
 //
 // If you would like to help make GMUI better, please submit a ticket or pull request on the project on GitHub!
 // https://github.com/AlertStudios/GMUI-Framework
@@ -29,6 +29,7 @@ global.GMUIAnchorLeft = 5;
 global.GMUIAnchorBottomLeft = 6;
 global.GMUIAnchorBottom = 7;
 global.GMUIAnchorBottomRight = 8;
+global.GMUIAnchorCenter = 9;
 
 // Hovering directions for special controls
 global.GMUIHoveringDirection_None = 0;
@@ -41,11 +42,13 @@ global.GMUIHoveringDirection_Down = 4;
 global.GMUIDirectionTypeHorizontal = 0;
 global.GMUIDirectionTypeVertical = 1;
 global.GMUIDirectionTypeSideVertical = 2;
+global.GMUIDirectionTypeBoth = 3;
 
 // Control datatypes
 global.GMUIDataTypeString = 0;
 global.GMUIDataTypeInteger = 1;
 global.GMUIDataTypeDecimal = 2;
 global.GMUIDataTypeButton = 3;
+global.GMUIDataTypeInfo = 4;
 
 

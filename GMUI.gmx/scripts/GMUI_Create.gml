@@ -31,6 +31,8 @@
     
     // Initial time to not execute any actions from the grid
     InitalDisable = floor(room_speed/20); // Default 1/20th of a second
+    // Freeing GMUI data
+    RemovingGMUI = false;
     // Layer that is currently enabled (0 is the bottom-most)
     UILayer = 0;
     // Highest layer, for reference
@@ -84,9 +86,21 @@ GMUI_AddLayer(0,0,0);
 // Initial Disable steps for the Grid checks
 InitialDisable = 5;
 
+// Navigation settings
+GMUI_navigateDirection = -1;
+GMUI_backKey = -1;
+GMUI_forwardKey = -1;
+GMUI_backAltKey = -1;
+GMUI_forwardAltKey = -1;
+GMUI_enableTab = true;
+
 
 // Map setup for control name keys to instances
 GMUI_map = ds_map_create();
+
+// Map setup for menu name keys to group id's
+GMUI_menu_map = ds_map_create();
+GMUI_menu_lastId = 0;
 
 // List of all controls
 GMUI_controlList = ds_list_create();
@@ -98,6 +112,10 @@ GMUI_SetControlDefaults();
 HoveringControl = -1;
 SelectedControl = -1;
 PreviousSelectedControl = -1;
+
+// An offset change will trigger repositioning controls
+previousXOffset = 0;
+previousYOffset = 0;
 
 
 // Grouping variables (handled in GMUI_AddLayer())

@@ -3,7 +3,7 @@
 ///Change the position of the group (and all of the controls inside it)
 
 // Arguments
-var SCRIPT,_LayerNumber,_GroupNumber,_CellX,_CellY,_AdjustmentX,_AdjustmentY, ctrl;
+var SCRIPT,_LayerNumber,_GroupNumber,_CellX,_CellY,_AdjustmentX,_AdjustmentY;
 SCRIPT = "GMUI_GroupSetPosition";
 _LayerNumber = argument0;
 _GroupNumber = argument1;
@@ -15,11 +15,6 @@ _AdjustmentY = argument5;
 // Validate
 if (!is_real(_GroupNumber) || !is_real(_LayerNumber) || !is_real(_CellX) || !is_real(_CellY)) {
     GMUI_ThrowErrorDetailed("Invalid parameters",SCRIPT);
-    return false;
-}
-
-if (_GroupNumber <= 0) {
-    GMUI_ThrowErrorDetailed("Group number must be greater than 0",SCRIPT);
     return false;
 }
 

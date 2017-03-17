@@ -1,6 +1,6 @@
 // DEBUGGING SCRIPT! Call this in the draw event of the GMUI main object 
 // Run only if DebugData is on
-if (DebugData) {
+if (DebugData && !RemovingGMUI) {
 
     var gridW,gridH,w,h,xoffset,yoffset;
     gridW = GMUI_GridGetWidth(GMUII(),0);

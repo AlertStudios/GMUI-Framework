@@ -14,6 +14,7 @@ GMUI_ControlSetStyle(
     
 // Default sprite options
 GMUI_ControlSetSpriteExt(-1,0,0,0,1,1,c_white,1);
+GMUI_ControlSetSpriteMap(-1,-1,-1,-1,-1,-1,-1,-1,-1,false);
 
 // Default font style (font, font color, font align)
 GMUI_ControlSetFontStyle(fontNumeric,rgb(42,42,42), fa_left);

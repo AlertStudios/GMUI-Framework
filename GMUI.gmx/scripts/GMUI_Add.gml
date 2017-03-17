@@ -1,12 +1,14 @@
 ///GMUI_Add("Name", "Type String", cell# x, cell# y, cells wide (min 1), cells high (min 1), Layer**, Anchor***)
 ///Adds a component(instance) to the GMUI grid
 
-var SCRIPT,_Layer,_Anchor,_CellX,_CellY;
+var SCRIPT,_Layer,_Anchor,_CellX,_CellY,_CellWide,_CellHigh;
 SCRIPT = "GMUI_Add";
 _Layer = argument6;
 _Anchor = argument7;
 _CellX = argument2;
 _CellY = argument3;
+_CellWide = argument4;
+_CellHigh = argument5;
 
 // Check that the layer exists first
 if (!GMUI_LayerExists(_Layer)) {
@@ -20,10 +22,10 @@ var gridW, gridH;
 gridW = GMUI_GridGetWidth(GMUII(),_Layer);
 gridH = GMUI_GridGetHeight(GMUII(),_Layer);
 
-if (!GMUI_ValidCellBounds(_Anchor,_CellX,_CellY,gridW,gridH)) {
-    GMUI_ThrowErrorDetailed("Cell values out of bounds for " + string(argument0) + " (" + string(argument1) + "," + string(_CellX) + ",...",SCRIPT);
-    return -1;
-}
+//if (!GMUI_ValidCellBounds(_Anchor,_CellX,_CellY,gridW,gridH)) {
+//    GMUI_ThrowErrorDetailed("Cell values out of bounds for " + string(argument0) + " (" + string(argument1) + "," + string(_CellX) + ",...",SCRIPT);
+//    return -1;
+//}
 
 
 // Check that it hasn't already been created
@@ -48,42 +50,33 @@ if (!instance_exists(thecontrol))
 else
     GMUI_ControlInit(thecontrol);
     
-// Assign the grid instance to the control
+// Assign the grid instance to the control and layer and group
 thecontrol.GMUIP = GMUII();
+thecontrol.Layer = _Layer;
+thecontrol.Group = 0;
 
 // Add control to control list for reference
 ds_list_add((GMUII()).GMUI_controlList,thecontrol);
 
-// Set up control vars
+// First the control type vars must be set
 thetype = GMUI_ControlSetType(thecontrol,string(argument1));
-thecontrol.valueName = argument0;
-thecontrol.CellWide = argument4;
-thecontrol.CellHigh = argument5;
-thecontrol.Layer = _Layer;
-thecontrol.Group = 0;
-thecontrol.depth = (GMUII()).layerDepth_layers-(_Layer*3);
-thecontrol.persistent = persistence; // This is kind of unnecessary but could be used at some point?
 
-// Store the relative values provided that reference against the anchor position
-thecontrol.Anchor = _Anchor;
-thecontrol.RelativeCellX = _CellX;
-thecontrol.RelativeCellY = _CellY;
+// Then set the relative and actual position, and Anchor and IsAdjusted status
+GMUI_ControlPosition(thecontrol,_CellX,_CellY,0,0,_Anchor);
+
+thecontrol.valueName = argument0;
+thecontrol.CellWide = _CellWide;
+thecontrol.CellHigh = _CellHigh;
+thecontrol.CellWideMax = _CellWide;
+thecontrol.CellHighMax = _CellHigh;
+thecontrol.depth = (GMUII()).layerDepth_layers-(_Layer*3)-(thetype=="tooltip");
+thecontrol.persistent = (GMUII()).persistence; // This is kind of unnecessary but could be used at some point?
 
 // Specific setup for particular types
-if (thetype == "textstring") {
+if (thecontrol.ControlIsString) {
     thecontrol.value = "";
     thecontrol.valueString = "";
 }
-
-// Relative is to the anchor, this position is the actual:
-// The relative values when the grid is adjusted has four relative positions: Middle X's, Middle Y's, Right X's, Bottom Y's)
-thecontrol.CellX = GMUI_GetAnchoredCellX(gridW,_CellX,_Anchor);
-thecontrol.CellY = GMUI_GetAnchoredCellY(gridH,_CellY,_Anchor);
-
-
-// Actual position based on its grid position
-thecontrol.ActualX = GMUI_CellGetActualX(thecontrol.CellX);
-thecontrol.ActualY = GMUI_CellGetActualY(thecontrol.CellY);
 
 // Map the name to the instance
 ds_map_add((GMUII()).GMUI_map,argument0,thecontrol);
@@ -96,6 +89,9 @@ GMUI_ControlSetDefaultStyle(thecontrol);
 
 // Set the default optional sprite override vars
 GMUI_ControlSetDefaultSprite(thecontrol);
+
+// Set the default optional flexible sprite map properties
+GMUI_ControlSetDefaultSpriteMap(thecontrol);
 
 // Set the default font style properties
 GMUI_ControlSetDefaultFontStyle(thecontrol);

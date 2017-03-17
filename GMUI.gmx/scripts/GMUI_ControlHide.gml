@@ -4,12 +4,21 @@
 
 with (GMUII()) {
     // Retrieve control from the reference map
-    var control;
-    control = ds_map_find_value(GMUI_map,string(argument0));
-    if (string(control) == "0")
+    var _ctrl;
+    if (is_string(argument0))
+        _ctrl = ds_map_find_value(GMUI_map,argument0);
+    else
+        _ctrl = argument0;
+    if (string(_ctrl) == "0")
         return false;
     else {
-        (control).Hidden = argument1;
+        (_ctrl).Hidden = argument1;
+        if ((_ctrl).FadeOnHide) {
+            if (argument1 > 0)
+                GMUI_ControlFadeOut(argument0,(_ctrl).FadeTime);
+            else
+                GMUI_ControlFadeIn(argument0,(_ctrl).FadeTime);
+        }
         return true;
     }
 }

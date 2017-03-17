@@ -14,10 +14,10 @@ for(i=0;i<ds_list_size((GMUII()).GMUI_groupControlList[_Layer,_Group]);i+=1) {
     
     if (!instance_exists(ctrl))
     {
-        GMUI_ThrowError("Control no longer exists. GMUI_GroupHide(" + _Layer + "," + _Group + ")");
+        GMUI_ThrowErrorDetailed("Control no longer exists layer, group: (" + _Layer + "," + _Group + ")","GMUI_GroupHide");
     }
     else {
-        (ctrl).Hidden = _Hide;
+        GMUI_ControlHide(ctrl,_Hide);
     }
 }
 

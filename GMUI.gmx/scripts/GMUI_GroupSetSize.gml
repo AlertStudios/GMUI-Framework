@@ -1,11 +1,12 @@
-///GMUI_GroupSetSize(Group, cells wide, cells high, Layer)
+///GMUI_GroupSetSize(Layer, Group, cells wide, cells high)
 ///Set the cell size of the group
 
 var _groupNumber, _CellsW, _CellsH, _layerNumber;
-_groupNumber = argument0;
-_CellsW = argument1;
-_CellsH = argument2;
-_layerNumber = argument3;
+_layerNumber = argument0;
+_groupNumber = argument1;
+_CellsW = argument2;
+_CellsH = argument3;
+
 
 GMUI_groupCellsW[_layerNumber,_groupNumber] = _CellsW;
 GMUI_groupCellsH[_layerNumber,_groupNumber] = _CellsH;

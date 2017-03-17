@@ -14,11 +14,6 @@ if (!is_real(_GroupNumber) || !is_real(_LayerNumber) || !is_real(_xcord) || !is_
     return false;
 }
 
-if (_GroupNumber <= 0) {
-    GMUI_ThrowError("Group number must be greater than 0");
-    return false;
-}
-
 if (!GMUI_LayerExists(_LayerNumber)) {
     GMUI_ThrowError("Layer " + string(_LayerNumber) + " doesn't exist. GMUI_GroupSetPositionActual");
     return false;
