@@ -48,7 +48,7 @@ with (GMUI_Add("Test4", "intpicker",            0,6,    10,2,   layer, global.GM
     GMUI_ControlSetHoverOffAction(_HoverOff_Int);
     
     with (GMUI_ControlAddTooltip("-20 to 20.",global.GMUIAnchorLeft,6,2,12,4,-1,-1)) {
-        GMUI_ControlSetFadeOnHide(id, room_speed*100);
+        GMUI_ControlSetFadeOnHide(id, room_speed/4);
     }
 }
 
