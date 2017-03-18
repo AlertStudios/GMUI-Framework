@@ -49,7 +49,7 @@ with (GMUI_Add("Test4", "intpicker",            0,6,    10,2,   layer, global.GM
     GMUI_ControlSetHoverOffAction(_HoverOff_Int);
     
     with (GMUI_ControlAddTooltip("-20 to 20.",global.GMUIAnchorLeft,6,2,12,4,-1,-1)) {
-        GMUI_ControlSetFadeOnHide(id, room_speed*100);
+        GMUI_ControlSetFadeOnHide(id, room_speed/4);
     }
 }
 
@@ -2926,6 +2926,21 @@ if (argument0 == true) {
 }
 //
 
+#define GMUI_ControlDrawGroup
+///GMUI_ControlDrawGroup(GMUI instance, Layer, Group)
+///Draws the group if set to do any drawing - Called by master control of group
+
+var _GMUII, _layer, _group, gx, gy, gw, gh;
+_GMUII = argument0;
+_layer = argument1;
+_group = argument2;
+
+// Draw the selected group if set from the form
+if ((_GMUII).GMUI_groupGraphicMapIsUsed[_layer,_group]) {
+    GMUI_DrawSpriteBox(_GMUII,_layer,_group,1);
+}            
+
+
 #define GMUI_ControlDrawTooltipById
 ///GMUI_ControlDrawTooltipById(id of tooltip control object)
 /// Draw the control as a tooltip
@@ -2976,21 +2991,6 @@ with (_tt_id) {
     
     draw_text_ext(_dtx,cy + (chy-cy)/2,_txt,-1,cwx);
 }
-
-#define GMUI_ControlDrawGroup
-///GMUI_ControlDrawGroup(GMUI instance, Layer, Group)
-///Draws the group if set to do any drawing - Called by master control of group
-
-var _GMUII, _layer, _group, gx, gy, gw, gh;
-_GMUII = argument0;
-_layer = argument1;
-_group = argument2;
-
-// Draw the selected group if set from the form
-if ((_GMUII).GMUI_groupGraphicMapIsUsed[_layer,_group]) {
-    GMUI_DrawSpriteBox(_GMUII,_layer,_group,1);
-}            
-
 
 #define GMUI_ControlInit
 ///GMUI_ControlInit(control object to instantiate)
