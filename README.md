@@ -221,3 +221,7 @@ There are a number of features still left to implement, including:
 
 ## Known issues:
 - Formatting on the decimal field in the Studio version is not working
+- Issue in GM:Studio version where opened menu may not close until the 'Expand Window' option fixes the layer.
+- Issue in GM:Studio version where controls on menus may appear under them rather than on them.
+- Documentation needed on implementation of popups and menus.
+- Documentation update needed on outdated structure.
