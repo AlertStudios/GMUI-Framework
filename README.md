@@ -51,7 +51,7 @@ This script contains some values you can adjust for your grid. This includes the
 `GMUI_controlobject = GMUI_control;`
 
 
-###My Interfaces
+### My Interfaces
 This folder was created as a place to put your interface script files. There are a number of scripts calls (in the GMUI_DeveloperCalls folder) to use to design your game's menus. When creating a new interface, first create a script that specifies the controls to create, then specify that script name as an argument when creating the interface. For example, this is used for calling the interface in the demo:
 
 ```
