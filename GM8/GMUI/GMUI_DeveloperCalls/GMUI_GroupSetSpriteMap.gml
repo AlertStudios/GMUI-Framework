@@ -4,7 +4,7 @@
 
 // Arguments
 var SCRIPT,_LayerNumber,_GroupNumber;
-SCRIPT = "GMUI_GroupSetSpriteMap";
+SCRIPT = GMUI_GroupSetSpriteMap;
 _LayerNumber = argument0;
 _GroupNumber = argument1;
 

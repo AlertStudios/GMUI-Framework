@@ -4,7 +4,7 @@
 
 // Arguments
 var SCRIPT,_LayerNumber;
-SCRIPT = "GMUI_SwitchToLayer";
+SCRIPT = GMUI_SwitchToLayer;
 _LayerNumber = argument0;
 
 // Validate
@@ -18,6 +18,7 @@ if (!GMUI_LayerExists(_LayerNumber)) {
     return false;
 }
 
+(GMUII()).UILayerPrevious = (GMUII()).UILayer;
 (GMUII()).UILayer = _LayerNumber;
 
 

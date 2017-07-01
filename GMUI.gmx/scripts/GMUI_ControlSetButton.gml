@@ -3,7 +3,7 @@
 
 if (!GMUI_IsControl() && id != GMUII())
 {
-    GMUI_ThrowErrorDetailed("Invalid control","GMUI_ControlSetButton");
+    GMUI_ThrowErrorDetailed("Invalid control",GMUI_ControlSetButton);
     return false;
 }
 

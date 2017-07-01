@@ -3,7 +3,7 @@
 ///Set the default attributes of the control from the controller
 
 if (!instance_exists(argument0)) {
-    GMUI_ThrowErrorDetailed("Invalid control","GMUI_ControlSetDefaultSprite");
+    GMUI_ThrowErrorDetailed("Invalid control",GMUI_ControlSetDefaultSprite);
     return false;
 }
 

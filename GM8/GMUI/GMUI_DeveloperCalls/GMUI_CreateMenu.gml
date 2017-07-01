@@ -4,14 +4,10 @@
 
 
 // Arguments
-var _SCRIPT,_menuName,_CellX,_CellY,_CW,_CH,_Anchor,_menuNumber,_layerNumber;
-_SCRIPT = "GMUI_CreateMenu";
-_menuName = string(argument0);
+var _SCRIPT,_CellX,_CellY;
+_SCRIPT = GMUI_CreateMenu;
 _CellX = argument1;
 _CellY = argument2;
-_CW = argument3;
-_CH = argument4;
-_Anchor = argument5;
 
 
 // Validate
@@ -20,21 +16,6 @@ if (!is_real(_CellX) || !is_real(_CellY)) {
     return -1;
 }
 
-// Get menu number and assign name to the ID
-(GMUII()).GMUI_menu_lastId += 1;
-_menuNumber = (GMUII()).GMUI_menu_lastId;
-ds_map_add((GMUII()).GMUI_menu_map,_menuName,_menuNumber);
-
-_layerNumber = (GMUII()).layerDepth_maxLayers - 1;
-
-// Create a group with the assigned layer and group numbers
-if (GMUI_CreateGroup(_layerNumber,_menuNumber,_CellX,_CellY,_Anchor)) {
-    (GMUII()).GMUI_groupCellsW[_layerNumber,_menuNumber] = _CW;
-    (GMUII()).GMUI_groupCellsH[_layerNumber,_menuNumber] = _CH;
-}
-else
-    return -1;
-
-
-return _menuNumber;
+// Call to create a menu that returns the menu number
+GMUI_CreateMenuType(_SCRIPT,string(argument0),_CellX,_CellY,argument3,argument4,argument5);
 

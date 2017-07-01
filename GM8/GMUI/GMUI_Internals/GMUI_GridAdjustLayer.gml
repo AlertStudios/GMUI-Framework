@@ -34,7 +34,7 @@ ds_grid_resize((_GMUI).GMUI_grid[_Layer],CW,CH);
 var gridW, gridH, anc, relX, relY, pCellX, pCellY;
 gridW = GMUI_GridGetWidth(_GMUI,_Layer);
 gridH = GMUI_GridGetHeight(_GMUI,_Layer);
-
+//if (_Layer == 99) show_message(string(gridW) + " , " + string(gridH));
 // Move any controls that are anchored to other positions
 var ctrl;
 for(i=0;i<ds_list_size((_GMUI).GMUI_controlList);i+=1) {
@@ -74,7 +74,7 @@ var groupId;
 for(i=0;i<ds_list_size((_GMUI).GMUI_groupList[_Layer]);i+=1) {
     groupId = ds_list_find_value((_GMUI).GMUI_groupList[_Layer],i);
     
-    GMUI_GroupSetPosition(_Layer,groupId,GMUI_groupCellX[_Layer,groupId],GMUI_groupCellY[_Layer,groupId],GMUI_groupRelativeX[_Layer,groupId],GMUI_groupRelativeY[_Layer,groupId]);
+    GMUI_GroupSetPosition(_Layer,groupId,(_GMUI).GMUI_groupRelativeCellX[_Layer,groupId],(_GMUI).GMUI_groupRelativeCellY[_Layer,groupId],(_GMUI).GMUI_groupRelativeX[_Layer,groupId],(_GMUI).GMUI_groupRelativeY[_Layer,groupId]);
 }
 
 // Reset the regions for the layer

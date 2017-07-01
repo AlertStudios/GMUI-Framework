@@ -7,7 +7,7 @@ _ctrl = argument0;
 _GMUIP = (_ctrl).GMUIP;
 
 if (!GMUI_IsControlID(_ctrl)) {
-    GMUI_ThrowErrorDetailed("Invalid control","GMUI_ControlUpdateXY");
+    GMUI_ThrowErrorDetailed("Invalid control",GMUI_ControlUpdateXY);
     return false;
 }
 

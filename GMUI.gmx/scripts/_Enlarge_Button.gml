@@ -6,6 +6,3 @@ if (room == GMUIdemo)
     room_goto_next();
 
     GMUI_GridAdjust(ceil(room_width/(GMUII()).cellsize),ceil(room_height/(GMUII()).cellsize_h));
-    
-    if (!global.GMUIGameMaker8)
-        window_set_size(room_width,room_height);

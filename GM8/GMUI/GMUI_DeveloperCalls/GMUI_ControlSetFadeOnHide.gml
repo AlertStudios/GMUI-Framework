@@ -16,6 +16,8 @@ with (GMUII()) {
         // Set the fade settings for when hiding or unhiding
         (_ctrl).FadeTime = argument1;
         (_ctrl).FadeOnHide = true;
+        if ((_ctrl).Hidden)
+            (_ctrl).FadeAlpha = 0;
         return true;
     }
 }

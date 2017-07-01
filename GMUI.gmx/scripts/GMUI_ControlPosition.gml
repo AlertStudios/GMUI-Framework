@@ -10,10 +10,16 @@ if (is_string(argument0))
     _ctrl = ds_map_find_value((GMUII()).GMUI_map,argument0);
 else
     _ctrl = argument0;
+    
+// Store the relative values provided that reference against the anchor position
+(_ctrl).Anchor = _Anchor;
+(_ctrl).RelativeCellX = _CellX;
+(_ctrl).RelativeCellY = _CellY;
+
 
 if (!GMUI_IsControlID(_ctrl))
 {
-    GMUI_ThrowErrorDetailed("Invalid control","GMUI_ControlPosition");
+    GMUI_ThrowErrorDetailed("Invalid control",GMUI_ControlPosition);
     return false;
 }
 
@@ -28,11 +34,6 @@ if ((_ctrl).ControlInteraction) {
         return false;
     }
 }
-
-// Store the relative values provided that reference against the anchor position
-(_ctrl).Anchor = _Anchor;
-(_ctrl).RelativeCellX = _CellX;
-(_ctrl).RelativeCellY = _CellY;
 
 // Relative is to the anchor, this position is the actual:
 // The relative values when the grid is adjusted has four relative positions: Middle X's, Middle Y's, Right X's, Bottom Y's)

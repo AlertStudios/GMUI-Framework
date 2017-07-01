@@ -2,11 +2,17 @@
 ///_Test_Form() This interface is for the demo
 
 // DEMO INTERFACE:
+
 var layer;
 // Set optional grid settings
 GMUI_GridSetNavigation(global.GMUIDirectionTypeVertical,vk_up,vk_down,vk_left,vk_right,true);
 
 // Create a control group if you would like: (layer number, group number (> 0), CellX, CellY, CellWide, CellHigh, anchor)
+/*
+
+    1. Create your layers and groups for the controls
+    
+*/
 
 layer = 0;
 // Right side group
@@ -20,7 +26,11 @@ GMUI_CreateGroup(layer, 2,      2,3,    global.GMUIAnchorTopLeft);
 GMUI_AddLayer(1,0,0);
 GMUI_CreateGroup(1, 3,          0,0,    global.GMUIAnchorTopLeft);
 
-//GMUI_CreateGroup(1, 20,3, layer, global.GMUIAnchorTopRight);
+/*
+
+    2. Create the controls 
+
+*/
 
 with (GMUI_Add("Test1","textstring",            1,0,    16,2,   layer, global.GMUIAnchorTopLeft)) {
     GMUI_ControlSetAttributes(20,0,0,0);
@@ -58,6 +68,12 @@ with (GMUI_Add("TestButton", "textbutton",      3,9,    5,3,    layer, global.GM
     GMUI_ControlSetButton("Test!", -1, -1, -1);
     GMUI_ControlSetStyle(-1, -1, c_red, 1, 0.85, -1, -1, -1, -1, -1);
     GMUI_ControlAddToGroup(2);
+}
+
+with (GMUI_Add("PopupMenuButton", "textbutton",     1,7,    5,3,    layer, global.GMUIAnchorBottomLeft)) {
+    GMUI_ControlSetButtonAction(_PopupMenu_Button);
+    GMUI_ControlSetButton("Show"+chr(13)+"Menu", -1, -1, -1);
+    GMUI_ControlSetStyle(-1, -1, c_purple, 1, 0.85, -1, -1, -1, -1, -1);
 }
 
 with (GMUI_Add("DebugButton", "textbutton",     1,3,    5,3,    layer, global.GMUIAnchorBottomLeft)) {
@@ -114,11 +130,71 @@ with (GMUI_Add("MenuIntInstructions", "label",  20,21,  12,2,   layer, global.GM
     GMUI_ControlSetInitValue("Click square to open sub menu");
 }
 
+// Test Menu (Menu ID variable isn't used here... but could be if you want to)
+var menuID;
+menuID = GMUI_CreateMenu("Test Menu",   -9,2,   18,24,   global.GMUIAnchorTop);
+GMUI_MenuSetClickOff("Test Menu", true);
 
-// Call actions dependent on existing controls
-GMUI_GroupSetFadeOnHide(layer, 2, room_speed/4);
+with (GMUI_Add("CloseButton", "textbutton",   4,1,   4,1,    layer, global.GMUIAnchorTopRight)) {
+    GMUI_ControlSetButtonAction(_PopupClose_Button);
+    GMUI_ControlSetButton("Close",-1,-1,-1);
+    GMUI_ControlAddToMenu("Test Menu");
+}
 
+with (GMUI_Add("OpenButton", "textbutton",   -3,8,   8,1,    layer, global.GMUIAnchorTop)) {
+    GMUI_ControlSetButtonAction(_PopupMenu2_Button);
+    GMUI_ControlSetButton("Open Another",-1,-1,-1);
+    GMUI_ControlAddToMenu("Test Menu");
+}
 
+// Test Menu 2
+menuID = GMUI_CreateMenu("Test Menu 2",   -6,8,   18,24,   global.GMUIAnchorTop);
+GMUI_MenuSetClickOff("Test Menu 2", true);
+
+with (GMUI_Add("CloseButton2", "textbutton",   4,1,   4,1,    layer, global.GMUIAnchorTopRight)) {
+    GMUI_ControlSetButtonAction(_PopupClose_Button);
+    GMUI_ControlSetButton("Close",-1,-1,-1);
+    GMUI_ControlAddToMenu("Test Menu 2");
+}
+
+with (GMUI_Add("PopupTestButton","textbutton",  -3,8,   8,1,    layer, global.GMUIAnchorTop)) {
+    GMUI_ControlSetButtonAction(_Popup_Button);
+    GMUI_ControlSetButton("Try Popup",-1,-1,-1);
+    GMUI_ControlAddToMenu("Test Menu 2");
+}
+
+// Test Popup
+menuID = GMUI_CreatePopup("Test Popup",  -10,2,   20,8,   global.GMUIAnchorTop);
+//GMUI_PopupSetClickOff("Test Popup", false);
+
+//todo: change this to be done with popup scripts instead
+with (GMUI_Add("CloseButton3", "textbutton",   4,1,   4,1,    layer, global.GMUIAnchorTopRight)) {
+    GMUI_ControlSetButtonAction(_PopupClose_Button);
+    GMUI_ControlSetButton("Close",-1,-1,-1);
+    GMUI_ControlAddToPopup("Test Popup");
+}
+
+/*
+
+    3. Set group and menu settings after controls are set
+
+*/
+
+// Call actions dependent on existing controls:
+// GROUP STYLES
+GMUI_GroupSetFadeOnHide(layer, 2, room_speed/4, 0);
+
+// MENU STYLES
+GMUI_MenuSetStyle("Test Menu", c_black, 0.25, c_white, 0.75, true);
+GMUI_MenuSetFadeOnHide("Test Menu", room_speed/4, 0);
+//GMUI_MenuSetActionIn("Test Menu",...)
+GMUI_MenuSetStyle("Test Menu 2", c_black, 0.25, c_white, 0.75, true);
+GMUI_MenuSetFadeOnHide("Test Menu 2", room_speed/4, 0);
+
+// POPUP STYLES
+GMUI_PopupSetStyle("Test Popup", c_white, 0.99, c_white, 0.75, true);// needs popup version
+GMUI_PopupSetFadeOnHide("Test Popup", room_speed/8, 0);// needs popup version
+//todo: change the popup style
 
 
 

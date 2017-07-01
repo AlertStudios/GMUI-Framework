@@ -3,7 +3,7 @@
 ///Adds a component(instance) to the GMUI grid
 
 var SCRIPT,_Layer,_Anchor,_CellX,_CellY,_CellWide,_CellHigh;
-SCRIPT = "GMUI_Add";
+SCRIPT = GMUI_Add;
 _Layer = argument6;
 _Anchor = argument7;
 _CellX = argument2;
@@ -105,6 +105,9 @@ GMUI_ControlSetDefaultPicker(thecontrol);
 
 // Set the default button properties
 GMUI_ControlSetDefaultButton(thecontrol);
+
+// Set the default group style properties, if set
+GMUI_GroupSetDefaultStyle(thecontrol);
 
 // Override defaults for specific controls (Avoid defaults conflicts):
 

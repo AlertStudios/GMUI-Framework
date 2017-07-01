@@ -3,7 +3,7 @@
 ///Returns if the mouse is in the bounds of the group
 
 var SCRIPT,_Group, _Layer, _mouseCellX, _mouseCellY;
-SCRIPT = "GMUI_MouseInGroupRegion";
+SCRIPT = GMUI_MouseInGroupRegion;
 _Group = argument0;
 _Layer = argument1;
 

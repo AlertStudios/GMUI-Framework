@@ -4,7 +4,7 @@
 
 if (!GMUI_IsControl() && id != GMUII())
 {
-    GMUI_ThrowErrorDetailed("Invalid control","GMUI_ControlSetSpriteMap");
+    GMUI_ThrowErrorDetailed("Invalid control",GMUI_ControlSetSpriteMap);
     return false;
 }
 

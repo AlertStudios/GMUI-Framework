@@ -165,11 +165,6 @@ if (valueChangeDetected) {
 
 if (argument0 == true) {
 
-    // Call the draw actions for groups if in one and is set to draw
-    if ((GMUIP).GMUI_groupMasterControl[Layer,Group] == id) {
-        GMUI_ControlDrawGroup(GMUIP,Layer,Group);
-    }
-
     // Draw the control based on the type and user-defined settings
     var padx, _BackgroundAlpha;
     padx = ControlPaddingX;
@@ -179,11 +174,17 @@ if (argument0 == true) {
     _OverwriteAlpha = min(ControlOverwriteAlpha,FadeAlpha);
     _FontAlpha = min(ControlFontAlpha,FadeAlpha);
     
+    
+    // Call the draw actions for groups if in one and is set to draw
+    if ((GMUIP).GMUI_groupMasterControl[Layer,Group] == id) {
+        GMUI_ControlDrawGroup(GMUIP,Layer,Group,FadeAlpha,FadeMode);
+    }
+    
         
     // Start drawing the control (inputs and buttons)
     if (ControlInput || ControlDataType == global.GMUIDataTypeButton) {
         if (ControlGraphicMapIsUsed) {
-            GMUI_DrawSpriteBox(GMUIP,Layer,Group,0);
+            GMUI_DrawSpriteBox(GMUIP,Layer,Group,0,1);
         }
         else if (sprite_exists(ControlGraphic)) {
             // Sprite has been substituted for the default drawing
@@ -221,6 +222,9 @@ if (argument0 == true) {
     }
     else if (ControlType == "tooltip") {
         GMUI_ControlDrawTooltipById(id);
+    }
+    else if (ControlType == "slider") {
+        GMUI_ControlDrawSlider(id);
     }
     
     
@@ -273,7 +277,7 @@ if (argument0 == true) {
         dtx = RoomW - padx;
     else if (ControlFontAlign != fa_left) {
         ControlFontAlign = (GMUIP).ControlFontAlign;
-        GMUI_ThrowErrorDetailed("Invalid font align","GMUI_ControlDraw");
+        GMUI_ThrowErrorDetailed("Invalid font align",GMUI_ControlDraw);
     }
     
     if (ActualH > 0)

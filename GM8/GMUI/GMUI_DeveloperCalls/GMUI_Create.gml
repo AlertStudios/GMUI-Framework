@@ -38,6 +38,8 @@
     UILayer = 0;
     // Highest layer, for reference
     UILayerTop = 0;
+    // Layer that was enabled before the current
+    UILayerPrevious = 0;
     
     // Other specific functionality settings that can be turned off if unwanted
     GMUI_Settings(argument0);
@@ -79,10 +81,13 @@ else
 GMUI_CreateSetDefaultArea();
 
 
+
 // Grid setup (New layers will have their own grids)
 GMUI_gridlist = ds_list_create();
+GMUI_defaultX = 0;
+GMUI_defaultY = 0;
 
-GMUI_AddLayer(0,0,0);
+GMUI_AddLayer(0,GMUI_defaultX,GMUI_defaultY);
 
 // Initial Disable steps for the Grid checks
 InitialDisable = 5;
@@ -99,10 +104,6 @@ GMUI_enableTab = true;
 // Map setup for control name keys to instances
 GMUI_map = ds_map_create();
 
-// Map setup for menu name keys to group id's
-GMUI_menu_map = ds_map_create();
-GMUI_menu_lastId = 0;
-
 // List of all controls
 GMUI_controlList = ds_list_create();
 
@@ -117,6 +118,21 @@ PreviousSelectedControl = -1;
 // An offset change will trigger repositioning controls
 previousXOffset = 0;
 previousYOffset = 0;
+
+
+// Map setup for menu name keys to group id's
+GMUI_menu_map = ds_map_create();
+GMUI_menu_layer = layerDepth_maxLayers;
+
+GMUI_menuLastId = 0;
+GMUI_menuCurrent = 0;
+GMUI_menuOpenCount = 0;
+
+// Popup setup for popup name keys to group id's; uses menu id's for reference
+GMUI_popup_map = ds_map_create();
+
+// Warnings
+GMUI_warnings_map = ds_map_create();
 
 
 // Grouping variables (handled in GMUI_AddLayer())
@@ -137,6 +153,7 @@ GMUI_groupCellsH[0,0] = 0;
 GMUI_groupRelativeCellX[0,0] = 0;
 GMUI_groupRelativeCellY[0,0] = 0;
 GMUI_groupAnchor[0,0] = global.GMUIAnchorTopLeft;
+GMUI_groupClickOff[0,0] = false;
 GMUI_groupTransitioning[0,0] = false;
 GMUI_groupTransitioningControl[0,0] = -1;
 

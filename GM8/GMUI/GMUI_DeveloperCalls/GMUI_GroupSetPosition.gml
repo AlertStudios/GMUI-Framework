@@ -4,7 +4,7 @@
 
 // Arguments
 var SCRIPT,_LayerNumber,_GroupNumber,_CellX,_CellY,_AdjustmentX,_AdjustmentY;
-SCRIPT = "GMUI_GroupSetPosition";
+SCRIPT = GMUI_GroupSetPosition;
 _LayerNumber = argument0;
 _GroupNumber = argument1;
 _CellX = argument2;

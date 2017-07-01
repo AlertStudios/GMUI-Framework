@@ -31,6 +31,10 @@
         <script>scripts\_Hover_Int.gml</script>
         <script>scripts\_HoverOff_Int.gml</script>
         <script>scripts\_Move_Button.gml</script>
+        <script>scripts\_Popup_Button.gml</script>
+        <script>scripts\_PopupClose_Button.gml</script>
+        <script>scripts\_PopupMenu_Button.gml</script>
+        <script>scripts\_PopupMenu2_Button.gml</script>
         <script>scripts\_Switch_Button.gml</script>
         <script>scripts\_Test_Button.gml</script>
         <script>scripts\_Enlarge_Button.gml</script>
@@ -71,10 +75,10 @@
         <script>scripts\GMUI_AddLabel.gml</script>
         <script>scripts\GMUI_AddLayer.gml</script>
         <script>scripts\GMUI_AddTooltipToControl.gml</script>
-        <script>scripts\GMUI_Create.gml</script>
-        <script>scripts\GMUI_CreateGroup.gml</script>
-        <script>scripts\GMUI_CreateMenu.gml</script>
+        <script>scripts\GMUI_CloseMenu.gml</script>
         <script>scripts\GMUI_ControlAddToGroup.gml</script>
+        <script>scripts\GMUI_ControlAddToMenu.gml</script>
+        <script>scripts\GMUI_ControlAddToPopup.gml</script>
         <script>scripts\GMUI_ControlAddTooltip.gml</script>
         <script>scripts\GMUI_ControlDisable.gml</script>
         <script>scripts\GMUI_ControlDrawTooltip.gml</script>
@@ -95,27 +99,49 @@
         <script>scripts\GMUI_ControlSetPicker.gml</script>
         <script>scripts\GMUI_ControlSetPositioning.gml</script>
         <script>scripts\GMUI_ControlSetSelectingAction.gml</script>
+        <script>scripts\GMUI_ControlSetSliderSettings.gml</script>
+        <script>scripts\GMUI_ControlSetSliderSize.gml</script>
+        <script>scripts\GMUI_ControlSetSliderStyle.gml</script>
         <script>scripts\GMUI_ControlSetSprite.gml</script>
         <script>scripts\GMUI_ControlSetSpriteExt.gml</script>
         <script>scripts\GMUI_ControlSetSpriteMap.gml</script>
         <script>scripts\GMUI_ControlSetStyle.gml</script>
+        <script>scripts\GMUI_Create.gml</script>
+        <script>scripts\GMUI_CreateGroup.gml</script>
+        <script>scripts\GMUI_CreateMenu.gml</script>
+        <script>scripts\GMUI_CreatePopup.gml</script>
+        <script>scripts\GMUI_CreateWarning.gml</script>
         <script>scripts\GMUI_Destroy.gml</script>
         <script>scripts\GMUI_DestroyNumber.gml</script>
         <script>scripts\GMUI_DrawDebug.gml</script>
         <script>scripts\GMUI_GetControl.gml</script>
+        <script>scripts\GMUI_GetCurrentLayer.gml</script>
         <script>scripts\GMUI_GetValue.gml</script>
         <script>scripts\GMUI_GetValueString.gml</script>
         <script>scripts\GMUI_GroupHide.gml</script>
+        <script>scripts\GMUI_GroupSetStyle.gml</script>
         <script>scripts\GMUI_GridSetNavigation.gml</script>
+        <script>scripts\GMUI_GroupSetClickOff.gml</script>
         <script>scripts\GMUI_GroupSetFadeOnHide.gml</script>
         <script>scripts\GMUI_GroupSetSize.gml</script>
         <script>scripts\GMUI_GroupSetSpriteMap.gml</script>
         <script>scripts\GMUI_GroupSetPosition.gml</script>
         <script>scripts\GMUI_GroupSetPositionActual.gml</script>
         <script>scripts\GMUI_Init.gml</script>
+        <script>scripts\GMUI_MenuSetClickOff.gml</script>
+        <script>scripts\GMUI_MenuSetFadeOnHide.gml</script>
+        <script>scripts\GMUI_MenuSetStyle.gml</script>
         <script>scripts\GMUI_MouseInGroupRegion.gml</script>
+        <script>scripts\GMUI_PopupSetClickOff.gml</script>
+        <script>scripts\GMUI_PopupSetFadeOnHide.gml</script>
+        <script>scripts\GMUI_PopupSetStyle.gml</script>
         <script>scripts\GMUI_SetForm.gml</script>
         <script>scripts\GMUI_SetValue.gml</script>
+        <script>scripts\GMUI_ShowMenu.gml</script>
+        <script>scripts\GMUI_ShowMenuId.gml</script>
+        <script>scripts\GMUI_ShowPopup.gml</script>
+        <script>scripts\GMUI_ShowPopupId.gml</script>
+        <script>scripts\GMUI_SwitchToMenu.gml</script>
         <script>scripts\GMUI_SwitchToLayer.gml</script>
         <script>scripts\GMUI_TypeDecimal.gml</script>
         <script>scripts\GMUI_TypeInt.gml</script>
@@ -126,10 +152,12 @@
       <scripts name="GMUI_Internals">
         <script>scripts\GMUI_CellGetActualX.gml</script>
         <script>scripts\GMUI_CellGetActualY.gml</script>
+        <script>scripts\GMUI_ControlAddToMenuType.gml</script>
         <script>scripts\GMUI_ControlInit.gml</script>
         <script>scripts\GMUI_ControlFilterInput.gml</script>
         <script>scripts\GMUI_ControlDraw.gml</script>
         <script>scripts\GMUI_ControlDrawGroup.gml</script>
+        <script>scripts\GMUI_ControlDrawSlider.gml</script>
         <script>scripts\GMUI_ControlDrawTooltipById.gml</script>
         <script>scripts\GMUI_ControlActionScript.gml</script>
         <script>scripts\GMUI_ControlSetInitValue.gml</script>
@@ -142,12 +170,14 @@
         <script>scripts\GMUI_ControlSetDefaultStyle.gml</script>
         <script>scripts\GMUI_ControlSetType.gml</script>
         <script>scripts\GMUI_ControlUpdateXY.gml</script>
+        <script>scripts\GMUI_CreateMenuType.gml</script>
         <script>scripts\GMUI_CreateSetDefaultArea.gml</script>
         <script>scripts\GMUI_DrawSpriteBox.gml</script>
         <script>scripts\GMUI_GetAnchoredCellX.gml</script>
         <script>scripts\GMUI_GetAnchoredCellY.gml</script>
         <script>scripts\GMUI_GetControlAtPosition.gml</script>
         <script>scripts\GMUI_GetDataType.gml</script>
+        <script>scripts\GMUI_GetMenuLayer.gml</script>
         <script>scripts\GMUI_GridEnabled.gml</script>
         <script>scripts\GMUI_GridDraw.gml</script>
         <script>scripts\GMUI_GridDrawGroups.gml</script>
@@ -170,12 +200,14 @@
         <script>scripts\GMUI_GridGetWidth.gml</script>
         <script>scripts\GMUI_GroupExists.gml</script>
         <script>scripts\GMUI_GroupPositionControls.gml</script>
+        <script>scripts\GMUI_GroupSetDefaultStyle.gml</script>
         <script>scripts\GMUI_GroupSetPositionAnchored.gml</script>
         <script>scripts\GMUI_IsControl.gml</script>
         <script>scripts\GMUI_IsControlID.gml</script>
         <script>scripts\GMUI_IsScript.gml</script>
         <script>scripts\GMUI_LastError.gml</script>
         <script>scripts\GMUI_LayerExists.gml</script>
+        <script>scripts\GMUI_MenuControlDepth.gml</script>
         <script>scripts\GMUI_MouseInAdjustedRegion.gml</script>
         <script>scripts\GMUI_MouseInSpecialRegion.gml</script>
         <script>scripts\GMUI_NavigateNextControl.gml</script>

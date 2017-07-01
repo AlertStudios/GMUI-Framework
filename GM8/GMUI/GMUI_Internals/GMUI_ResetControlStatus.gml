@@ -3,7 +3,7 @@
 /// Resets the hovering or selected values of the controls
 
 var _SCRIPT,_GridID,a0,ff,ffo,m,ms; a0 = string(argument0);
-_SCRIPT = "GMUI_ResetControlStatus";
+_SCRIPT = GMUI_ResetControlStatus;
 _GID = argument1;
 
 if (string_lower(a0) == "selected" || a0 == "1") {

@@ -3,7 +3,7 @@
 ///Adds control to a group if it exists in the layer
 
 var SCRIPT, _Group, _Layer;
-SCRIPT = "GMUI_ControlAddToGroup";
+SCRIPT = GMUI_ControlAddToGroup;
 _Group = argument0;
 
 // Must be control
@@ -36,8 +36,6 @@ if (!GMUI_GroupExists(_Layer,_Group)) {
 }
 
 
-
-
 // Add control to group's control list and assign to control
 ds_list_add((GMUII()).GMUI_groupControlList[_Layer,_Group],id);
 Group = _Group;
@@ -49,8 +47,8 @@ if ((GMUIP).GMUI_groupMasterControl[_Layer,_Group] == -1 || (GMUIP).GMUI_groupMa
 
 
 // Reset positioning to base on group's position
-CellX = GMUI_GetAnchoredCellX((GMUII()).GMUI_groupCellsW[_Layer,_Group],CellX,Anchor) + (GMUII()).GMUI_groupCellX[_Layer,_Group];
-CellY = GMUI_GetAnchoredCellY((GMUII()).GMUI_groupCellsH[_Layer,_Group],CellY,Anchor) + (GMUII()).GMUI_groupCellY[_Layer,_Group];
+CellX = GMUI_GetAnchoredCellX((GMUII()).GMUI_groupCellsW[_Layer,_Group],RelativeCellX,Anchor) + (GMUII()).GMUI_groupCellX[_Layer,_Group];
+CellY = GMUI_GetAnchoredCellY((GMUII()).GMUI_groupCellsH[_Layer,_Group],RelativeCellY,Anchor) + (GMUII()).GMUI_groupCellY[_Layer,_Group];
 
 ActualX = GMUI_CellGetActualX(CellX);
 ActualY = GMUI_CellGetActualY(CellY);
@@ -67,6 +65,7 @@ if (CellY + CellHigh > (GMUII()).GMUI_groupCellY[_Layer,_Group] + (GMUII()).GMUI
 // Update control draw location in the room
 GMUI_ControlUpdateXY(id);
 
+return true;
     
     
 

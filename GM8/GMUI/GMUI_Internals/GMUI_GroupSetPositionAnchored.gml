@@ -4,7 +4,7 @@
 
 // Arguments
 var _SCRIPT, _LayerNumber,_GroupNumber,_CellX,_CellY,_AdjustmentX,_AdjustmentY, ctrl;
-_SCRIPT = "GMUI_GroupSetPositionAnchored";
+_SCRIPT = GMUI_GroupSetPositionAnchored;
 _LayerNumber = argument0;
 _GroupNumber = argument1;
 _CellX = argument2;
@@ -35,6 +35,8 @@ _AdjustmentX = min(_AdjustmentX, (GMUII()).cellsize - 1);
 _AdjustmentY = min(_AdjustmentY, (GMUII()).cellsize_h - 1);
 
 // Change group position
+(GMUII()).GMUI_groupRelativeCellX[_LayerNumber,_GroupNumber] = _CellX;
+(GMUII()).GMUI_groupRelativeCellY[_LayerNumber,_GroupNumber] = _CellY;
 (GMUII()).GMUI_groupCellX[_LayerNumber,_GroupNumber] = GMUI_GetAnchoredCellX(GMUI_GridGetWidth(GMUII(),_LayerNumber),_CellX,_Anchor);
 (GMUII()).GMUI_groupCellY[_LayerNumber,_GroupNumber] = GMUI_GetAnchoredCellY(GMUI_GridGetHeight(GMUII(),_LayerNumber),_CellY,_Anchor);
 (GMUII()).GMUI_groupRelativeX[_LayerNumber,_GroupNumber] = _AdjustmentX;

@@ -25,7 +25,7 @@ if (DebugData && !RemovingGMUI) {
     if (GMUI_ErrorNumber > 0) {
         color_alpha(c_red,0.5);
         align(fa_center,fa_bottom);
-        draw_text(room_width/2,room_height-64,string(GMUI_ErrorNumber) + ".) " + GMUI_LastError());
+        draw_text(view_wview[0]/2+xoffset,view_hview[0]-64+yoffset,string(GMUI_ErrorNumber) + ".) " + GMUI_LastError());
     }
     
     
@@ -34,15 +34,19 @@ if (DebugData && !RemovingGMUI) {
     var groupId, layer;
     for(i=0;i<ds_list_size((GMUII()).GMUI_gridlist);i+=1) {
         layer = ds_list_find_value((GMUII()).GMUI_gridlist,i);
+        if (layer >= (GMUII()).GMUI_menu_layer)
+            color_alpha(c_lime,0.25);
         
         for(j=0;j<ds_list_size((GMUII()).GMUI_groupList[layer]);j+=1) {
             groupId = ds_list_find_value((GMUII()).GMUI_groupList[layer],j);
             
             draw_rectangle(
-                GMUI_groupActualX[layer,groupId] + (GMUII()).GMUI_grid_x[layer] + xoffset,
-                GMUI_groupActualY[layer,groupId] + (GMUII()).GMUI_grid_y[layer] + yoffset,
-                GMUI_groupActualX[layer,groupId] + GMUI_groupCellsW[layer,groupId]*cellsize + (GMUII()).GMUI_grid_x[layer] + xoffset,
-                GMUI_groupActualY[layer,groupId] + GMUI_groupCellsH[layer,groupId]*cellsize_h + (GMUII()).GMUI_grid_y[layer] + yoffset,
+                (GMUII()).GMUI_groupActualX[layer,groupId] + (GMUII()).GMUI_grid_x[layer] + xoffset,
+                (GMUII()).GMUI_groupActualY[layer,groupId] + (GMUII()).GMUI_grid_y[layer] + yoffset,
+                (GMUII()).GMUI_groupActualX[layer,groupId] + 
+                    (GMUII()).GMUI_groupCellsW[layer,groupId]*(GMUII()).cellsize + (GMUII()).GMUI_grid_x[layer] + xoffset,
+                (GMUII()).GMUI_groupActualY[layer,groupId] + 
+                    (GMUII()).GMUI_groupCellsH[layer,groupId]*(GMUII()).cellsize_h + (GMUII()).GMUI_grid_y[layer] + yoffset,
                 true);
         }
     }

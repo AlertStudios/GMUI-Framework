@@ -3,7 +3,7 @@
 ///
 
 var _SCRIPT, _ctrl, _iid, _LayerNumber,  _GridX, _GridY;
-_SCRIPT = "GMUI_GroupTransitionToActual";
+_SCRIPT = GMUI_GroupTransitionToActual;
 _iid = GMUII();
 _LayerNumber = argument0;
 _GroupNumber = argument1;

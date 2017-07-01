@@ -6,7 +6,7 @@ with (GMUII()) {
     var control;
     control = ds_map_find_value(GMUI_map,string(argument0));
     if (string(control) == "0") {
-        GMUI_ThrowErrorDetailed("Control doesn't exist", "GMUI_ControlDrawTooltip");
+        GMUI_ThrowErrorDetailed("Control doesn't exist", GMUI_ControlDrawTooltip);
         return false;
     }
     else {

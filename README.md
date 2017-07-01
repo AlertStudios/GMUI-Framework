@@ -1,16 +1,18 @@
 # GMUI-Framework
-## The Best Programmable Interface for Game Maker
+## The Best Programmable Interface for Game Maker (Studio & GM8!)
 **WARNING: In Alpha Release! Expect rapid changes!!** - [View the Changelog](../../wiki/Changelog)
 
 <b>License:</b> GPL v3.0 (http://www.gnu.org/licenses/gpl-3.0.html)
 
 ## Overview
-GMUI allows you to programmatically create all of your interface controls through GML, and control them through script calls included in the framework. This allows you to structure and control your menus and even game controls without going crazy!
+GMUI allows you to programmatically create all of your interface controls through GML, and control them through script calls included in the framework. This allows you to structure and control your menus and even game controls without going crazy tweaking it forever!
 
-Currently, the framework typcially only handles input fields and buttons, but soon it will be able to handle sliding controls, lists, and other common items you would need.
+The framework allows you to customize input fields, buttons, sliding controls, lists, etc. It even gives you script calls for grouping, layering, anhoring, pop-ups, menus, transitions, and more! And best of all, GMUI handles most of the code for all of this behind the scenes with efficient code, making it much faster and easier to design your game's interface with better functionality and performance already built in.
+
+Surfaces support and shader effects coming soon.
 
 ## How does it work?
-GMUI takes this code from the Form script, and takes care of the rest:
+GMUI takes this code from a Form script you create, and takes care of the rest:
 
 ![GMUI_Form_Code](docs/GMUI_Form_Code.png)
 
@@ -199,16 +201,23 @@ You can see a working demo here:
 
 ## Future Plans:
 There are a number of features still left to implement, including:
-- Pop-ups
-- Menus
-- Tooltips
+- Pop-ups **** Needs to be added into readme ****
+- Menus **** Needs to be added into readme ****
+- Tooltips **** Needs to be added to readme ****
 - List Areas
-- Slider control
+- Slider control **** Needs to be added to readme ****
 - Picker control for sprite-based selection
 - Selection list control
 - Screen transitions (of the interface)
 - Support for optional surface-based drawing
+- Effects for selection controls using surfaces
+- Font scaling
+- Additional picker styles
+- Radio type control
+- Checkbox type control
+- Animated transitions in/out
+- Wrapped text in groups and controls
+- Toggle switch type control
 
 ## Known issues:
 - Formatting on the decimal field in the Studio version is not working
-- Some bugs with different cell height size than width

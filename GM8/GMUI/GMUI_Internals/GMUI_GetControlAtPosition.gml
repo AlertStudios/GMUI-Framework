@@ -28,7 +28,7 @@ if (is_real(_ctrlObject)) {
             return _ctrlObject;
         }
         else
-            GMUI_ThrowErrorDetailed("Instance recorded is not a control object or no longer exists","GMUI_GetControlAtPosition");
+            GMUI_ThrowErrorDetailed("Instance recorded is not a control object or no longer exists",GMUI_GetControlAtPosition);
     }
 }
 

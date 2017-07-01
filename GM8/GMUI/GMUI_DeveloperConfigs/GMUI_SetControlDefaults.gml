@@ -22,6 +22,9 @@ GMUI_ControlSetFontStyle(fontNumeric,rgb(42,42,42), fa_left);
 // Set the default control attributes(id, Max string length/Whole number padding(KEEP @ 0!), max decimal (if applicable), Min value, Max value)
 GMUI_ControlSetAttributes(0,0,0,999);
 
+// Default group style can be set when called
+ControlHasGroupStyle = false;
+
 
 
 // Specific control initializations //

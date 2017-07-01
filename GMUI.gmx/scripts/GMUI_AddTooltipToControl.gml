@@ -3,7 +3,7 @@
 
 var _SCRIPT, _message, _direction, _relX, _relY, _cellX, _cellY, _newCtrl,
     _width, _height, _newwidth, _newheight, _actwidth, _actheight, _maxwidth, _maxheight, gcellsize;
-_SCRIPT = "GMUI_AddTooltipToControl";
+_SCRIPT = GMUI_AddTooltipToControl;
 _ctrl = argument0;
 _message = argument1;
 _direction = argument2;

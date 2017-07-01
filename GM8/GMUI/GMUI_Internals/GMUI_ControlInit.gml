@@ -11,6 +11,11 @@ if (!instance_exists(i))
 // The parent GMUI Instance
 i.GMUIP = -1;
 
+// Previous menu if control is in a menu
+i.PreviousMenu = 0;
+i.PreviousMenuLayer = 0;
+
+
 i.Hovering = 0;
 i.Selected = 0;
 i.DoubleSelected = 0;
@@ -137,6 +142,7 @@ i.FadeOut = 0;
 i.FadeTime = room_speed; // in steps
 i.FadeCalled = 0; // 0 for none, 1 for up, -1 for down
 i.FadeOnHide = false;
+i.FadeMode = 0; // Fade Mode: 0 = fade dimmest last, 1 = fade all together
 
 
 // Value variables

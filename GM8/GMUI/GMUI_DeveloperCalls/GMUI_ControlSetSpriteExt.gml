@@ -4,7 +4,7 @@
 
 if (!GMUI_IsControl() && id != GMUII())
 {
-    GMUI_ThrowErrorDetailed("Invalid control","GMUI_ControlSetSpriteExt");
+    GMUI_ThrowErrorDetailed("Invalid control",GMUI_ControlSetSpriteExt);
     return false;
 }
     

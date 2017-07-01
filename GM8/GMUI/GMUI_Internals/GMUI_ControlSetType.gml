@@ -32,6 +32,8 @@ switch (_type) {
         
         break;
     case "slider":
+        sliderInitialized = false;
+        sliderComputed = false;
     case "label":
     case "dropdown":
         

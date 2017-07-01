@@ -39,6 +39,10 @@ with (argument0) {
     
     ds_map_destroy(GMUI_menu_map);
     
+    ds_map_destroy(GMUI_popup_map);
+    
+    ds_map_destroy(GMUI_warnings_map);
+    
     ds_map_destroy(GMUI_map);
     
     

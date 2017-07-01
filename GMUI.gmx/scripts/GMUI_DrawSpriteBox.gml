@@ -1,11 +1,12 @@
-///GMUI_DrawSpriteBox(GMUI instance, Layer, Group, Control[0] / Group [1] / Menu[2])
+///GMUI_DrawSpriteBox(GMUI instance, Layer, Group, Control[0] / Group [1] / Menu[2], Alpha)
 ///Draws the box of the specified type
 
-var _GMUII, _layer, _group, _bType;
+var _GMUII, _layer, _group, _bType, _alpha;
 _GMUII = argument0;
 _layer = argument1;
 _group = argument2;
 _bType = argument3;
+_alpha = minmax(argument4,0,1);
 
 var _dbx, _dby, _dbw, _dbh, _xoffset, _yoffset, _spr_width, _spr_height, _spr_isFixed,
     _sprTopLeft, _sprTop, _sprTopRight, _sprRight, _sprBottomRight, _sprBottom, _sprBottomLeft, _sprLeft, _sprCenter;
@@ -73,34 +74,34 @@ else if (_bType == 2) {
 
 // Draw the box based on the dimensions and sprites gathered 
 // top left
-draw_sprite(_sprTopLeft,-1,_dbx,_dby);
+draw_sprite_ext(_sprTopLeft,-1,_dbx,_dby,1,1,0,c_white,_alpha);
 
 // top
-draw_sprite_stretched(_sprTop,-1,_dbx+_spr_width,_dby,_dbw-_spr_width*2,sprite_get_height(_sprTop));//_spr_height);
+draw_sprite_stretched_ext(_sprTop,-1,_dbx+_spr_width,_dby,_dbw-_spr_width*2,sprite_get_height(_sprTop),c_white,_alpha);//_spr_height);
 
 // top right
-draw_sprite(_sprTopRight,-1,_dbx+_dbw-_spr_width,_dby);
+draw_sprite_ext(_sprTopRight,-1,_dbx+_dbw-_spr_width,_dby,1,1,0,c_white,_alpha);
 
 // right
-draw_sprite_stretched(_sprRight,-1,_dbx+_dbw-_spr_width,_dby+_spr_height,_spr_width,_dbh-_spr_height);
+draw_sprite_stretched_ext(_sprRight,-1,_dbx+_dbw-_spr_width,_dby+_spr_height,_spr_width,_dbh-_spr_height,c_white,_alpha);
 
 // bottom right
-draw_sprite(_sprBottomRight,-1,_dbx+_dbw-_spr_width,_dby+_dbh-_spr_height);
+draw_sprite_ext(_sprBottomRight,-1,_dbx+_dbw-_spr_width,_dby+_dbh-_spr_height,1,1,0,c_white,_alpha);
 
 // bottom
-draw_sprite_stretched(_sprBottom,-1,_dbx+_spr_width,_dby+_dbh-_spr_height,_dbw-_spr_width*2,sprite_get_width(_sprBottom));
+draw_sprite_stretched_ext(_sprBottom,-1,_dbx+_spr_width,_dby+_dbh-_spr_height,_dbw-_spr_width*2,sprite_get_width(_sprBottom),c_white,_alpha);
 
 // bottom left
-draw_sprite(_sprBottomLeft,-1,_dbx,_dby+_dbh-_spr_height);
+draw_sprite_ext(_sprBottomLeft,-1,_dbx,_dby+_dbh-_spr_height,1,1,0,c_white,_alpha);
 
 // left
-draw_sprite_stretched(_sprLeft,-1,_dbx,_dby+_spr_height,_spr_width,_dbh-_spr_height);
+draw_sprite_stretched_ext(_sprLeft,-1,_dbx,_dby+_spr_height,_spr_width,_dbh-_spr_height,c_white,_alpha);
 
 
 // center (either partial or stretched to fit)
 if (_spr_isFixed) {
-    draw_sprite_part(_sprCenter,-1,0,0,_dbw-_spr_width*2,_dbh-_spr_height*2,_dbx+_spr_width,_dby+_spr_height);
+    draw_sprite_part_ext(_sprCenter,-1,0,0,_dbw-_spr_width*2,_dbh-_spr_height*2,_dbx+_spr_width,_dby+_spr_height,1,1,c_white,_alpha);
 }
 else {
-    draw_sprite_stretched(_sprCenter,-1,_dbx+_spr_width,_dby+_spr_height,_dbw-_spr_width*2,_dbh-_spr_height*2);
+    draw_sprite_stretched_ext(_sprCenter,-1,_dbx+_spr_width,_dby+_spr_height,_dbw-_spr_width*2,_dbh-_spr_height*2,c_white,_alpha);
 }

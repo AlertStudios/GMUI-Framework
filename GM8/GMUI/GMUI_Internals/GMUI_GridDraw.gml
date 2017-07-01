@@ -1,6 +1,6 @@
 #define GMUI_GridDraw
 ///GMUI_GridDraw()
-/// Actions done to operate the grid, executed by the GMUI object in the draw event
+///Actions done to operate the grid, executed by the GMUI object in the draw event
 
 
 // Count down initial disable before executing actions
@@ -9,7 +9,7 @@ if (GMUI_GridEnabled())
     //do grid stuff:
     
     // Assign mouse values here to easily switch out later if needed
-    var MX, MY, inRegion, onDirection, mouseHor, mouseVert, ctrlObject;
+    var MX, MY, inRegion, onDirection, mouseHor, mouseVert, ctrlObject, clickOffEvent;
     MX = mouse_x;
     MY = mouse_y;
     inRegion = false;
@@ -95,46 +95,60 @@ if (GMUI_GridEnabled())
     // Mouse click on grid
     if (mouse_check_button_pressed(mb_left)) {
         GMUI_ResetControlStatus("Selected",id);
-
-        // Find if there is a control at that position with the current layer
-        ctrlObject = GMUI_GetControlAtPosition(id,MX,MY);
-
-        if (ctrlObject != -1) {
-            if ((!ctrlObject.Disabled) && (!ctrlObject.NonClickable) && (!ctrlObject.Hidden)) {
-                if (ctrlObject.IsAdjusted) {
-                    if (GMUI_MouseInAdjustedRegion(ctrlObject,MX,MY))
-                        inRegion = true;
-                }
-                else
-                    inRegion = true;
-                
-                if (inRegion) {
-                    // Switch between special types, general input types, and other controls
-                    if (ctrlObject.ControlType == "intpicker") {
-                        switch (ctrlObject.HoveringDirection) {
-                            case global.GMUIHoveringDirection_Up:
-                            case global.GMUIHoveringDirection_Right:
-                                GMUI_SetValue(ctrlObject.valueName,ctrlObject.value + 1,"integer");
-                                break;
-                            case global.GMUIHoveringDirection_Left:
-                            case global.GMUIHoveringDirection_Down:
-                                GMUI_SetValue(ctrlObject.valueName,ctrlObject.value - 1,"integer");
-                                break;
-                            case global.GMUIHoveringDirection_None:
-                                GMUI_GridSelect(ctrlObject);
-                                break;
-                        }
-                    }
-                    else if (ctrlObject.ControlInput) {
-                        GMUI_GridSelect(ctrlObject);
-                    }
-                    else if (ctrlObject.ActionScript != -1) {
-                        // Control buttons clicked
-                        GMUI_ControlActionScript(ctrlObject);
-                    }
+        
+        // Check if we are looking at a menu, and if this is a click outside of it first
+        clickOffEvent = false;
+        if (UILayer >= GMUI_menu_layer && UILayer < GMUI_menu_layer + GMUI_menuLastId) {
+            if (GMUI_groupClickOff[UILayer,GMUI_menuCurrent]) {
+                if (!GMUI_MouseInGroupRegion(GMUI_menuCurrent,UILayer)) {
+                    GMUI_ShowMenuId(GMUI_menuCurrent,false,true);
+                    clickOffEvent = true;
                 }
             }
-
+        }
+        
+        if (!clickOffEvent) {
+            // Find if there is a control at that position with the current layer
+            ctrlObject = GMUI_GetControlAtPosition(id,MX,MY);
+    
+            if (ctrlObject != -1) {
+                if ((!ctrlObject.Disabled) && (!ctrlObject.NonClickable) && (!ctrlObject.Hidden)) {
+                    if (ctrlObject.IsAdjusted) {
+                        if (GMUI_MouseInAdjustedRegion(ctrlObject,MX,MY))
+                            inRegion = true;
+                    }
+                    else
+                        inRegion = true;
+                    
+                    if (inRegion) {
+                        // Switch between special types, general input types, and other controls
+                        if (ctrlObject.ControlType == "intpicker") {
+                            switch (ctrlObject.HoveringDirection) {
+                                case global.GMUIHoveringDirection_Up:
+                                case global.GMUIHoveringDirection_Right:
+                                    GMUI_SetValue(ctrlObject.valueName,ctrlObject.value + 1,"integer");
+                                    break;
+                                case global.GMUIHoveringDirection_Left:
+                                case global.GMUIHoveringDirection_Down:
+                                    GMUI_SetValue(ctrlObject.valueName,ctrlObject.value - 1,"integer");
+                                    break;
+                                case global.GMUIHoveringDirection_None:
+                                    GMUI_GridSelect(ctrlObject);
+                                    break;
+                            }
+                        }
+                        else if (ctrlObject.ControlInput) {
+                            GMUI_GridSelect(ctrlObject);
+                        }
+                        else if (ctrlObject.ActionScript != -1) {
+                            // Control buttons clicked
+                            GMUI_ControlActionScript(ctrlObject);
+                        }
+                    }
+                }
+    
+            }
+            
         }
     }
     
