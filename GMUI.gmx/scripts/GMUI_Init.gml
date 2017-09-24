@@ -2,7 +2,7 @@
 //
 // !WARNING! MODIFYING THE GMUI SCRIPTS CAN BREAK FUNCTIONALITY AND CAUSE ERRORS! TRY TO EDIT THE OBJECTS INSTEAD!
 //
-// Copyright 2016 Alert Studios (Mark Palnau). Initially designed by Alert Studios and released as Open-Source.
+// Copyright 2017 Alert Studios (Mark Palnau). Initially designed by Alert Studios and released as Open-Source.
 //
 // If you would like to help make GMUI better, please submit a ticket or pull request on the project on GitHub!
 // https://github.com/AlertStudios/GMUI-Framework
@@ -19,7 +19,7 @@ global.GMUIii = 0;
 
 // Common GMUI values:
 
-// AHOY MATEYS - Please note that the cell#'s for new controls are relative to their anchor position (0 is default: TopLeft)
+// AHOY MATEYS - Please note that the cell#'s for new controls are relative to their anchor position
 global.GMUIAnchorRight = 1;
 global.GMUIAnchorTopRight = 2;
 global.GMUIAnchorTop = 3;
@@ -29,6 +29,7 @@ global.GMUIAnchorBottomLeft = 6;
 global.GMUIAnchorBottom = 7;
 global.GMUIAnchorBottomRight = 8;
 global.GMUIAnchorCenter = 9;
+global.GMUIAnchorDefault = global.GMUIAnchorTopLeft;
 
 // Hovering directions for special controls
 global.GMUIHoveringDirection_None = 0;
@@ -50,3 +51,8 @@ global.GMUIDataTypeDecimal = 2;
 global.GMUIDataTypeButton = 3;
 global.GMUIDataTypeInfo = 4;
 
+// PopupTypes
+global.GMUIPopupBlank = -1;
+global.GMUIPopupInformation = 0;
+global.GMUIPopupConfirm = 1;
+global.GMUIPopupThreeOptions = 2;
