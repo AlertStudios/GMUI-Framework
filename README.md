@@ -51,7 +51,7 @@ This script contains some values you can adjust for your grid. This includes the
 `GMUI_controlobject = GMUI_control;`
 
 
-###My Interfaces
+### My Interfaces
 This folder was created as a place to put your interface script files. There are a number of scripts calls (in the GMUI_DeveloperCalls folder) to use to design your game's menus. When creating a new interface, first create a script that specifies the controls to create, then specify that script name as an argument when creating the interface. For example, this is used for calling the interface in the demo:
 
 ```
@@ -221,3 +221,7 @@ There are a number of features still left to implement, including:
 
 ## Known issues:
 - Formatting on the decimal field in the Studio version is not working
+- Issue in GM:Studio version where opened menu may not close until the 'Expand Window' option fixes the layer.
+- Issue in GM:Studio version where controls on menus may appear under them rather than on them.
+- Documentation needed on implementation of popups and menus.
+- Documentation update needed on outdated structure.
