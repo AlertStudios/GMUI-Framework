@@ -121,6 +121,7 @@
         <script>scripts\GMUI_ControlSetSpriteMap.gml</script>
         <script>scripts\GMUI_ControlSetStyle.gml</script>
         <script>scripts\GMUI_ControlSetText.gml</script>
+        <script>scripts\GMUI_ControlSetValueChangedAction.gml</script>
         <script>scripts\GMUI_Create.gml</script>
         <script>scripts\GMUI_CreateGroup.gml</script>
         <script>scripts\GMUI_CreateMenu.gml</script>

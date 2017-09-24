@@ -4,7 +4,7 @@
 
 // todo: needs default script, but will only be called if it is a slider control (default is 0 to 100)
 if (!GMUI_IsControl() && id != GMUII()) {
-    GMUI_ThrowError("Invalid control", GMUI_ControlSetSliderSize);
+    GMUI_ThrowErrorDetailed("Invalid control", GMUI_ControlSetSliderSize);
     return false;
 }
 

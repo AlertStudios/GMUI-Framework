@@ -1,10 +1,9 @@
-#define GMUI_ControlSetValueChangedAction
 ///GMUI_ControlSetValueChangedAction(Action Script)
 ///On changed value, execute script (can also draw)
 
 if (!GMUI_IsControl() && id != GMUII())
 {
-    GMUI_ThrowError("Invalid control for GMUI_ControlSetValueChangedAction");
+    GMUI_ThrowErrorDetailed("Invalid control for GMUI_ControlSetValueChangedAction");
     return false;
 }
 
@@ -18,4 +17,3 @@ else {
 
 return false;
     
-
