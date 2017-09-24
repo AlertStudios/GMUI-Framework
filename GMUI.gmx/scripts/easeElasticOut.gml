@@ -1,3 +1,4 @@
+#define easeElasticOut
 ///easeElasticOut(t,b,c,d) where t is current time, b is start value, c is change in value, and d is duration
 ///Elastic Ease for moving controls smoothly
 
@@ -15,3 +16,4 @@ _p = _d * .3;
 _s = _p / 4;
 
 return (_c * power( 2, -10 * _t ) * sin(((_t*_d)-_s) * (2*pi)/_p) + _c + _b );
+

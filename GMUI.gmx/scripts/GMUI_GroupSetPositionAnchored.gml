@@ -1,8 +1,9 @@
+#define GMUI_GroupSetPositionAnchored
 ///GMUI_GroupSetPositionAnchored(Layer Number, Group Number, Cell X, Cell Y, X Adjustment, Y Adjustment, Anchor)
 ///Change the position of the group (and all of the controls inside it) according to its anchor
 
 // Arguments
-var _SCRIPT, _LayerNumber,_GroupNumber,_CellX,_CellY,_AdjustmentX,_AdjustmentY, ctrl;
+var _SCRIPT, _LayerNumber,_GroupNumber,_CellX,_CellY,_AdjustmentX,_AdjustmentY, ctrl, _MasterControl;
 _SCRIPT = GMUI_GroupSetPositionAnchored;
 _LayerNumber = argument0;
 _GroupNumber = argument1;
@@ -33,6 +34,8 @@ if (!GMUI_GroupExists(_LayerNumber,_GroupNumber)) {
 _AdjustmentX = min(_AdjustmentX, (GMUII()).cellsize - 1);
 _AdjustmentY = min(_AdjustmentY, (GMUII()).cellsize_h - 1);
 
+_MasterControl = (GMUII()).GMUI_groupMasterControl[_LayerNumber,_GroupNumber];
+
 // Change group position
 (GMUII()).GMUI_groupRelativeCellX[_LayerNumber,_GroupNumber] = _CellX;
 (GMUII()).GMUI_groupRelativeCellY[_LayerNumber,_GroupNumber] = _CellY;
@@ -43,6 +46,19 @@ _AdjustmentY = min(_AdjustmentY, (GMUII()).cellsize_h - 1);
 (GMUII()).GMUI_groupActualX[_LayerNumber,_GroupNumber] = GMUI_CellGetActualX((GMUII()).GMUI_groupCellX[_LayerNumber,_GroupNumber]) + _AdjustmentX;
 (GMUII()).GMUI_groupActualY[_LayerNumber,_GroupNumber] = GMUI_CellGetActualY((GMUII()).GMUI_groupCellY[_LayerNumber,_GroupNumber]) + _AdjustmentY;
 
+// If not a transition move, then set the new primary (aka previous) location to this new one
+if (!(_MasterControl).TransitioningGroup) {
+    (_MasterControl).T_px_group = (GMUII()).GMUI_groupActualX[_LayerNumber,_GroupNumber];
+    (_MasterControl).T_py_group = (GMUII()).GMUI_groupActualY[_LayerNumber,_GroupNumber];
+    (_MasterControl).T_hx_group = (_MasterControl).T_px_group + (_MasterControl).T_hrelx_group;
+    (_MasterControl).T_hy_group = (_MasterControl).T_py_group + (_MasterControl).T_hrely_group;
+    
+    if ((_MasterControl).GroupHidden) {
+        (GMUII()).GMUI_groupActualX[_LayerNumber,_GroupNumber] = (_MasterControl).T_hx_group;
+        (GMUII()).GMUI_groupActualY[_LayerNumber,_GroupNumber] = (_MasterControl).T_hy_group;
+    }
+}
+
 
 // Re-position all controls within the group
 var i;
@@ -50,8 +66,7 @@ for(i=0;i<ds_list_size((GMUII()).GMUI_groupControlList[_LayerNumber,_GroupNumber
     // Get the control id
     ctrl = ds_list_find_value((GMUII()).GMUI_groupControlList[_LayerNumber,_GroupNumber],i);
     
-    if (!instance_exists(ctrl))
-    {
+    if (!instance_exists(ctrl)) {
         GMUI_ThrowErrorDetailed("Control no longer exists (" + _LayerNumber + "," + _GroupNumber + ")", _SCRIPT);
     }
     else {
@@ -71,12 +86,17 @@ for(i=0;i<ds_list_size((GMUII()).GMUI_groupControlList[_LayerNumber,_GroupNumber
         with (ctrl) {
             GMUI_ControlSetPositioning(RelativeX,RelativeY,ActualW,ActualH);
         }
-            
-        (ctrl).ActualX = GMUI_CellGetActualX((ctrl).CellX);
-        (ctrl).ActualY = GMUI_CellGetActualY((ctrl).CellY);
+        (ctrl).ActualX = GMUI_CellGetActualX((ctrl).CellX) + (ctrl).RelativeX;
+        (ctrl).ActualY = GMUI_CellGetActualY((ctrl).CellY) + (ctrl).RelativeY;
+        
+        if ((_MasterControl).T_hspeed_group > 0 && !(_MasterControl).TransitioningGroup && (_MasterControl).GroupHidden) {
+            (ctrl).ActualX += (_MasterControl).T_hrelx_group;
+            (ctrl).ActualY += (_MasterControl).T_hrely_group;
+        }
     }
 }
 
 // Reset all control regions for the layer
 GMUI_GridSetRegionsLayer(_LayerNumber);
+
 

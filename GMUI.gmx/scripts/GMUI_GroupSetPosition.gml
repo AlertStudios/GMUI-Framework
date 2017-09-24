@@ -1,3 +1,4 @@
+#define GMUI_GroupSetPosition
 ///GMUI_GroupSetPosition(Layer Number, Group Number, Cell X, Cell Y, X Adjustment, Y Adjustment)
 ///Change the position of the group (and all of the controls inside it)
 
@@ -29,3 +30,5 @@ if (!GMUI_GroupExists(_LayerNumber,_GroupNumber)) {
 
 // Set position by anchor of the group
 GMUI_GroupSetPositionAnchored(_LayerNumber, _GroupNumber, _CellX, _CellY, _AdjustmentX, _AdjustmentY, (GMUII()).GMUI_groupAnchor[_LayerNumber,_GroupNumber]);
+
+

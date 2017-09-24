@@ -1,3 +1,4 @@
+#define GMUI_CloseMenu
 ///GMUI_CloseMenu(animate [bool])
 ///Close the current open menu
 
@@ -10,3 +11,4 @@ if ((GMUII()).GMUI_menuCurrent == 0)
     
 
 return GMUI_ShowMenuId((GMUII()).GMUI_menuCurrent,false,_animate);
+

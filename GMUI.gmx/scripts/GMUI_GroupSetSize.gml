@@ -1,3 +1,4 @@
+#define GMUI_GroupSetSize
 ///GMUI_GroupSetSize(Layer, Group, cells wide, cells high)
 ///Set the cell size of the group
 
@@ -10,3 +11,4 @@ _CellsH = argument3;
 
 GMUI_groupCellsW[_layerNumber,_groupNumber] = _CellsW;
 GMUI_groupCellsH[_layerNumber,_groupNumber] = _CellsH;
+

@@ -1,3 +1,4 @@
+#define GMUI_ControlHide
 ///GMUI_ControlHide("ControlName", Hide?)
 ///Hide or show a control
 // argument1 is to hide (1) or show (0)
@@ -22,3 +23,4 @@ with (GMUII()) {
         return true;
     }
 }
+

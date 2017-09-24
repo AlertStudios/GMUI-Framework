@@ -1,3 +1,4 @@
+#define GMUI_SetValue
 ///GMUI_SetValue("ControlName", value, value type - string:0, integer:1, decimal:2)
 ///Set the value of a control to GMUI to reference in user code (GMUI_GetValue)
 
@@ -45,8 +46,15 @@ with (GMUII())
     }
     else
     {
-        GMUI_ThrowError("Unknown value type for GMUI_SetValue()");
+        GMUI_ThrowErrorDetailed("Unknown value type",GMUI_SetValue);
         _invalid = true;
+    }
+    
+    // If not a string, check if we need to update a slider
+    if (a2 != "0" && string_lower(a2) != "string") {
+        if ((control).ControlType == "slider") {
+            GMUI_ControlSliderUpdate(control);
+        }
     }
     
     // If a value was set and a script is assigned to value change, execute it
@@ -54,3 +62,4 @@ with (GMUII())
         script_execute((control).ValueChangedActionScript);
     }
 }
+

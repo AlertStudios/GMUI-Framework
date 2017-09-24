@@ -1,5 +1,6 @@
-/// Return the value string of a control back to use in user code
-// argument0 is the string of the key
+#define GMUI_GetValueString
+///GMUI_GetValueString("ControlName")
+///Return the value string of a control back to use in user code
 
 with (GMUII()) {
     // Retrieve control from the reference map
@@ -10,3 +11,4 @@ with (GMUII()) {
     else
         return (control).valueString;
 }
+

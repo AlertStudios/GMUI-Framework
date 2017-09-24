@@ -1,10 +1,15 @@
-///GMUI_ControlSetSliderSize(Slider width, Slider height, Slide height, end tick height [or 0], mid tick height [or 0], quarter tick height [or 0])
+#define GMUI_ControlSetSliderSize
+///GMUI_ControlSetSliderSize(Slider width, Slider height, Slide height, end tick height [or 0], mid tick height [or 0], quarter tick height [or 0], tick height [or 0], Pixels of padding [or 0])
 ///Set the ONLY THE SIZING of the slider
 
 // todo: needs default script, but will only be called if it is a slider control (default is 0 to 100)
-if (!GMUI_IsControl() && id != GMUII())
-{
-    GMUI_ThrowError("Invalid control for GMUI_ControlSetStyle");
+if (!GMUI_IsControl() && id != GMUII()) {
+    GMUI_ThrowError("Invalid control", GMUI_ControlSetSliderSize);
+    return false;
+}
+
+if (!sliderInitialized) {
+    GMUI_ThrowErrorDetailed("Must call GMUI_ControlSetSettings() first",GMUI_ControlSetSliderSize);
     return false;
 }
 
@@ -22,6 +27,18 @@ if (argument4 >= 0)
 SliderMidTickHeight = argument4;
 if (argument5 >= 0)
 SliderQuarterTickHeight = argument5;
+if (argument6 >= 0)
+SliderTickHeight = argument6;
+if (argument7 >= 0) {
+    SliderStartEndPadding = argument7;
+    
+    sliderComputed = false;
+    
+    // Adjustment to the padding will need to adjust the slider position
+    if (argument7 > 0)
+        GMUI_ControlSliderMove(false);
+}
 
 return true;
-    
+
+

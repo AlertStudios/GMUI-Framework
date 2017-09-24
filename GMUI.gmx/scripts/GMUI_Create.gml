@@ -1,3 +1,4 @@
+#define GMUI_Create
 ///GMUI_Create(Form Script, Cell Width, Cell Height)
 ///Call creation of the grid interfaces and variables
 
@@ -30,7 +31,7 @@
     
     
     // Initial time to not execute any actions from the grid
-    InitalDisable = floor(room_speed/20); // Default 1/20th of a second
+    InitialDisable = floor(room_speed/20); // Default 1/20th of a second
     // Freeing GMUI data
     RemovingGMUI = false;
     // Layer that is currently enabled (0 is the bottom-most)
@@ -88,9 +89,6 @@ GMUI_defaultY = 0;
 
 GMUI_AddLayer(0,GMUI_defaultX,GMUI_defaultY);
 
-// Initial Disable steps for the Grid checks
-InitialDisable = 5;
-
 // Navigation settings
 GMUI_navigateDirection = -1;
 GMUI_backKey = -1;
@@ -126,6 +124,7 @@ GMUI_menu_layer = layerDepth_maxLayers;
 GMUI_menuLastId = 0;
 GMUI_menuCurrent = 0;
 GMUI_menuOpenCount = 0;
+GMUI_menuResponse = 0; // Cancel:-1, No: 0, Yes: 1
 
 // Popup setup for popup name keys to group id's; uses menu id's for reference
 GMUI_popup_map = ds_map_create();
@@ -154,7 +153,8 @@ GMUI_groupRelativeCellY[0,0] = 0;
 GMUI_groupAnchor[0,0] = global.GMUIAnchorTopLeft;
 GMUI_groupClickOff[0,0] = false;
 GMUI_groupTransitioning[0,0] = false;
-GMUI_groupTransitioningControl[0,0] = -1;
+//GMUI_groupTransitioningControl[0,0] = -1;
+GMUI_groupAction[0,0] = -1;
 
 
 // Call the form code to create the interface
@@ -163,4 +163,5 @@ GMUI_GridSetRegions();
 
 // Upon success, give the GMUI id back
 return GMUInumber;
+
 

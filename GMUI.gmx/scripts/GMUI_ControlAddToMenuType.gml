@@ -1,3 +1,4 @@
+#define GMUI_ControlAddToMenuType
 ///GMUI_ControlAddToMenuType(script [menu type], "menu name")
 ///Adds control to a group if it exists in the layer
 
@@ -52,8 +53,10 @@ if (!GMUI_ControlAddToGroup(_menuNumber))
 // Menus hidden by default if not on that layer
 if ((GMUIP).UILayer < (GMUIP).GMUI_menu_layer || (GMUIP).UILayer != (GMUIP).GMUI_menuCurrent) {
     GMUI_GroupHide(_menuNumber,_Layer,true);
+    GroupHidden = true;
 }
 
 return true;
     
     
+

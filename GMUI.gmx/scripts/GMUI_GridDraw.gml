@@ -1,3 +1,4 @@
+#define GMUI_GridDraw
 ///GMUI_GridDraw()
 ///Actions done to operate the grid, executed by the GMUI object in the draw event
 
@@ -136,7 +137,8 @@ if (GMUI_GridEnabled())
                                     break;
                             }
                         }
-                        else if (ctrlObject.ControlInput) {
+                        else if (ctrlObject.ControlSelectable) {
+                            // Normal input controls
                             GMUI_GridSelect(ctrlObject);
                         }
                         else if (ctrlObject.ActionScript != -1) {
@@ -183,4 +185,5 @@ if (GMUI_GridEnabled())
     
 
 }
+
 

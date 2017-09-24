@@ -1,3 +1,4 @@
+#define easeBounceOut
 ///easeBounceOut(t,b,c,d) where t is current time, b is start value, c is change in value, and d is duration
 /// Bounce Ease for moving controls smoothly
 
@@ -26,3 +27,4 @@ else
     _t -= (2.625/2.75);
     return _c * (7.5625 *_t*_t + .984375 ) + _b;
 }
+

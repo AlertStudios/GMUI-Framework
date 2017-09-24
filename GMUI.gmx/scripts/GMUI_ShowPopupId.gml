@@ -1,3 +1,4 @@
+#define GMUI_ShowPopupId
 ///GMUI_ShowPopupId(popup id, show[1] or hide[0], animate [bool])
 
 // Arguments
@@ -18,34 +19,7 @@ if (string(_popupNumber) == "0")
     return false;
 
 
-
-// Switch to menu layer or back
-if (_show) {
-    (_GMUII).GMUI_menuOpenCount += 1;
-    GMUI_SwitchToMenu(_GMUII,_popupNumber);
-}
-else {
-    _masterControl = (_GMUII).GMUI_groupMasterControl[GMUI_GetMenuLayer(_GMUII,_popupNumber),_popupNumber];
-    GMUI_SwitchToLayer((_masterControl).PreviousMenuLayer);
-    (_GMUII).GMUI_menuCurrent = (_masterControl).PreviousMenu;
-    
-    //if ((GMUII()).GMUI_menuPrevious != 0) {
-    //    if (!instance_exists())
-    //        GMUI_ThrowErrorDetailed("Menu master control doesn't exist for menu " + string((GMUII()).GMUI_menuPrevious),_SCRIPT);
-    //    else if (GMUI_LayerExists(((GMUII()).GMUI_groupMasterControl[_Layer,_menuNumber])).PreviousMenuLayer) {
-    //        
-    //    }
-    //}
-}
-    
-
-//
-if (_animate) {
-// call action to show menu, 
-}
+// Call the show menu to handle the layer switch
+GMUI_ShowMenuId(_popupNumber, _show, _animate);
 
 
-GMUI_GroupHide(_popupNumber, GMUI_GetMenuLayer(_GMUII,_popupNumber), !_show);
-
-//
-return true;

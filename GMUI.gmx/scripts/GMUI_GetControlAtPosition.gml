@@ -1,3 +1,4 @@
+#define GMUI_GetControlAtPosition
 ///GMUI_GetControlAtPosition(GMUI instance,X,Y)
 ///Returns the control that is present in the cell if one exists there
 
@@ -33,3 +34,4 @@ if (is_real(_ctrlObject)) {
 
 // Couldn't find the instance, or none assigned at this cell.
 return -1;
+

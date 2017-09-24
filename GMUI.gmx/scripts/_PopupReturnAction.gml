@@ -1,3 +1,4 @@
+#define _PopupReturnAction
 // Show result
 var str;
 
@@ -8,3 +9,4 @@ switch (GMUI_PopupGetResponse()) {
     default: str = "No response"; break;
 }
 show_message("Responded with: " + str);
+

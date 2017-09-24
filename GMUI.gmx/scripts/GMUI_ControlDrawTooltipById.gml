@@ -1,3 +1,4 @@
+#define GMUI_ControlDrawTooltipById
 ///GMUI_ControlDrawTooltipById(id of tooltip control object)
 /// Draw the control as a tooltip
 
@@ -40,10 +41,14 @@ with (_tt_id) {
             break;
     }
     
+    // Set control color, font, and alignment
     color_alpha(ControlFontColor,min(ControlFontAlpha,FadeAlpha));
+    draw_set_font(ControlFont);
+    align(ControlFontAlign,ControlFontAlignV);
     
     var _dtx, _midHeight;
     _dtx = cx + padx;
     
     draw_text_ext(_dtx,cy + (chy-cy)/2,_txt,-1,cwx);
 }
+

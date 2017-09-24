@@ -1,3 +1,4 @@
+#define GMUI_ControlSetFadeOnHide
 ///GMUI_ControlSetFadeOnHide("ControlName" or id, speed in steps)
 ///Set the fade in/out when the control is hidden or not
 
@@ -20,3 +21,4 @@ with (GMUII()) {
         return true;
     }
 }
+
