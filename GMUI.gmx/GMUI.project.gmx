@@ -35,6 +35,10 @@
         <script>scripts\_PopupClose_Button.gml</script>
         <script>scripts\_PopupMenu_Button.gml</script>
         <script>scripts\_PopupMenu2_Button.gml</script>
+        <script>scripts\_PopupReturnAction.gml</script>
+        <script>scripts\_SliderMid_Button.gml</script>
+        <script>scripts\_SliderSnap_Button.gml</script>
+        <script>scripts\_SliderValue_Changed.gml</script>
         <script>scripts\_Switch_Button.gml</script>
         <script>scripts\_Test_Button.gml</script>
         <script>scripts\_Enlarge_Button.gml</script>
@@ -45,6 +49,11 @@
         <script>scripts\GMUI_Settings.gml</script>
       </scripts>
       <scripts name="GMUI_DeveloperCalls">
+        <scripts name="GMUI_DefaultActions">
+          <script>scripts\GMUI_DefaultActionCancel.gml</script>
+          <script>scripts\GMUI_DefaultActionNo.gml</script>
+          <script>scripts\GMUI_DefaultActionOk.gml</script>
+        </scripts>
         <scripts name="GMUI_Effects">
           <script>scripts\easeBounceOut.gml</script>
           <script>scripts\easeElasticOut.gml</script>
@@ -75,11 +84,15 @@
         <script>scripts\GMUI_AddLabel.gml</script>
         <script>scripts\GMUI_AddLayer.gml</script>
         <script>scripts\GMUI_AddTooltipToControl.gml</script>
+        <script>scripts\GMUI_CenterX.gml</script>
+        <script>scripts\GMUI_CenterY.gml</script>
         <script>scripts\GMUI_CloseMenu.gml</script>
         <script>scripts\GMUI_ControlAddToGroup.gml</script>
         <script>scripts\GMUI_ControlAddToMenu.gml</script>
         <script>scripts\GMUI_ControlAddToPopup.gml</script>
         <script>scripts\GMUI_ControlAddTooltip.gml</script>
+        <script>scripts\GMUI_ControlCenterX.gml</script>
+        <script>scripts\GMUI_ControlCenterY.gml</script>
         <script>scripts\GMUI_ControlDisable.gml</script>
         <script>scripts\GMUI_ControlDrawTooltip.gml</script>
         <script>scripts\GMUI_ControlFadeIn.gml</script>
@@ -99,6 +112,7 @@
         <script>scripts\GMUI_ControlSetPicker.gml</script>
         <script>scripts\GMUI_ControlSetPositioning.gml</script>
         <script>scripts\GMUI_ControlSetSelectingAction.gml</script>
+        <script>scripts\GMUI_ControlSetSliderMovement.gml</script>
         <script>scripts\GMUI_ControlSetSliderSettings.gml</script>
         <script>scripts\GMUI_ControlSetSliderSize.gml</script>
         <script>scripts\GMUI_ControlSetSliderStyle.gml</script>
@@ -106,6 +120,7 @@
         <script>scripts\GMUI_ControlSetSpriteExt.gml</script>
         <script>scripts\GMUI_ControlSetSpriteMap.gml</script>
         <script>scripts\GMUI_ControlSetStyle.gml</script>
+        <script>scripts\GMUI_ControlSetText.gml</script>
         <script>scripts\GMUI_Create.gml</script>
         <script>scripts\GMUI_CreateGroup.gml</script>
         <script>scripts\GMUI_CreateMenu.gml</script>
@@ -128,12 +143,20 @@
         <script>scripts\GMUI_GroupSetPosition.gml</script>
         <script>scripts\GMUI_GroupSetPositionActual.gml</script>
         <script>scripts\GMUI_Init.gml</script>
+        <script>scripts\GMUI_IsMenuOpen.gml</script>
         <script>scripts\GMUI_MenuSetClickOff.gml</script>
         <script>scripts\GMUI_MenuSetFadeOnHide.gml</script>
+        <script>scripts\GMUI_MenuSetHidePosition.gml</script>
+        <script>scripts\GMUI_MenuSetPosition.gml</script>
         <script>scripts\GMUI_MenuSetStyle.gml</script>
         <script>scripts\GMUI_MouseInGroupRegion.gml</script>
+        <script>scripts\GMUI_PopupGetResponse.gml</script>
+        <script>scripts\GMUI_PopupSetAction.gml</script>
+        <script>scripts\GMUI_PopupSetButton.gml</script>
         <script>scripts\GMUI_PopupSetClickOff.gml</script>
         <script>scripts\GMUI_PopupSetFadeOnHide.gml</script>
+        <script>scripts\GMUI_PopupSetHidePosition.gml</script>
+        <script>scripts\GMUI_PopupSetMessage.gml</script>
         <script>scripts\GMUI_PopupSetStyle.gml</script>
         <script>scripts\GMUI_SetForm.gml</script>
         <script>scripts\GMUI_SetValue.gml</script>
@@ -201,7 +224,10 @@
         <script>scripts\GMUI_GroupExists.gml</script>
         <script>scripts\GMUI_GroupPositionControls.gml</script>
         <script>scripts\GMUI_GroupSetDefaultStyle.gml</script>
+        <script>scripts\GMUI_GroupSetHidePosition.gml</script>
         <script>scripts\GMUI_GroupSetPositionAnchored.gml</script>
+        <script>scripts\GMUI_ControlSliderMove.gml</script>
+        <script>scripts\GMUI_ControlSliderUpdate.gml</script>
         <script>scripts\GMUI_IsControl.gml</script>
         <script>scripts\GMUI_IsControlID.gml</script>
         <script>scripts\GMUI_IsScript.gml</script>
