@@ -9,12 +9,16 @@
           <file>GMUI_AddLabel.gml</file>
           <file>GMUI_AddLayer.gml</file>
           <file>GMUI_AddTooltipToControl.gml</file>
+          <file>GMUI_CenterX.gml</file>
+          <file>GMUI_CenterY.gml</file>
           <file>GMUI_CloseMenu.gml</file>
           <file>GMUI_ControlAddToGroup.gml</file>
           <file>GMUI_ControlAddToMenu.gml</file>
           <file>GMUI_ControlAddToMenuType.gml</file>
           <file>GMUI_ControlAddTooltip.gml</file>
           <file>GMUI_ControlAddToPopup.gml</file>
+          <file>GMUI_ControlCenterX.gml</file>
+          <file>GMUI_ControlCenterY.gml</file>
           <file>GMUI_ControlDisable.gml</file>
           <file>GMUI_ControlDrawSlider.gml</file>
           <file>GMUI_ControlDrawTooltip.gml</file>
@@ -36,10 +40,12 @@
           <file>GMUI_ControlSetPicker.gml</file>
           <file>GMUI_ControlSetPositioning.gml</file>
           <file>GMUI_ControlSetSelectingAction.gml</file>
+          <file>GMUI_ControlSetSliderMovement.gml</file>
           <file>GMUI_ControlSetSprite.gml</file>
           <file>GMUI_ControlSetSpriteExt.gml</file>
           <file>GMUI_ControlSetSpriteMap.gml</file>
           <file>GMUI_ControlSetStyle.gml</file>
+          <file>GMUI_ControlSetText.gml</file>
           <file>GMUI_ControlSetValueChangedAction.gml</file>
           <file>GMUI_Create.gml</file>
           <file>GMUI_CreateGroup.gml</file>
@@ -61,7 +67,15 @@
           <file>GMUI_GroupSetSize.gml</file>
           <file>GMUI_GroupSetSpriteMap.gml</file>
           <file>GMUI_Init.gml</file>
+          <file>GMUI_IsMenuOpen.gml</file>
           <file>GMUI_MenuControlDepth.gml</file>
+          <file>GMUI_MenuSetHidePosition.gml</file>
+          <file>GMUI_MenuSetPosition.gml</file>
+          <file>GMUI_PopupGetResponse.gml</file>
+          <file>GMUI_PopupSetAction.gml</file>
+          <file>GMUI_PopupSetButton.gml</file>
+          <file>GMUI_PopupSetHidePosition.gml</file>
+          <file>GMUI_PopupSetMessage.gml</file>
           <file>GMUI_SetForm.gml</file>
           <file>GMUI_SetValue.gml</file>
           <file>GMUI_SwitchToLayer.gml</file>
@@ -70,6 +84,12 @@
           <file>GMUI_TypeInt.gml</file>
           <file>GMUI_TypeString.gml</file>
           <folders>
+            <folder folderName="GMUI_DefaultActions">
+              <file>GMUI_DefaultActionCancel.gml</file>
+              <file>GMUI_DefaultActionNo.gml</file>
+              <file>GMUI_DefaultActionOk.gml</file>
+              <folders />
+            </folder>
             <folder folderName="GMUI_Effects">
               <file>easeBounceOut.gml</file>
               <file>easeElasticOut.gml</file>
@@ -128,6 +148,8 @@
           <file>GMUI_ControlSetSliderSize.gml</file>
           <file>GMUI_ControlSetSliderStyle.gml</file>
           <file>GMUI_ControlSetType.gml</file>
+          <file>GMUI_ControlSliderMove.gml</file>
+          <file>GMUI_ControlSliderUpdate.gml</file>
           <file>GMUI_ControlUpdateXY.gml</file>
           <file>GMUI_CreatePopup.gml</file>
           <file>GMUI_CreateSetDefaultArea.gml</file>
@@ -160,6 +182,7 @@
           <file>GMUI_GridSetRegionsLayer.gml</file>
           <file>GMUI_GroupExists.gml</file>
           <file>GMUI_GroupSetClickOff.gml</file>
+          <file>GMUI_GroupSetHidePosition.gml</file>
           <file>GMUI_GroupSetPositionAnchored.gml</file>
           <file>GMUI_GroupSetStyle.gml</file>
           <file>GMUI_IsControl.gml</file>
@@ -200,7 +223,11 @@
           <file>_PopupClose_Button.gml</file>
           <file>_PopupMenu2_Button.gml</file>
           <file>_PopupMenu_Button.gml</file>
+          <file>_PopupReturnAction.gml</file>
           <file>_Popup_Button.gml</file>
+          <file>_SliderMid_Button.gml</file>
+          <file>_SliderSnap_Button.gml</file>
+          <file>_SliderValue_Changed.gml</file>
           <file>_Switch_Button.gml</file>
           <file>_Test_Button.gml</file>
           <folders />
