@@ -1,4 +1,3 @@
-#define GMUI_ControlSetPicker
 ///GMUI_ControlSetPicker(picker width, picker height, picker direction, picker_right/up sprite, picker_left/down sprite)
 ///Set the picker values of the control (to override the defaults)
 if (!GMUI_IsControl() && id != GMUII())
@@ -17,4 +16,3 @@ if (!GMUI_IsControl() && id != GMUII())
 
 return true;
     
-

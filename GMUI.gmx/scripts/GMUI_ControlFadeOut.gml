@@ -1,4 +1,3 @@
-#define GMUI_ControlFadeOut
 ///GMUI_ControlFadeOut("ControlName", speed in steps)
 ///Fade out a control
 
@@ -18,4 +17,3 @@ with (GMUII()) {
         return true;
     }
 }
-

@@ -1,4 +1,3 @@
-#define GMUI_GridSetNavigation
 ///GMUI_GridSetNavigation(direction that navigates, back key, forward key, alternate back key [or -1], alternate forward key [or -1], allow tab)
 ///Set the controls that can navigate through the list
 // Called by the GMUI instance in the form or otherwise
@@ -17,4 +16,3 @@ GMUI_forwardKey = _forward;
 GMUI_backAltKey = _backalt;
 GMUI_forwardAltKey = _forwardalt;
 GMUI_enableTab = _allowtab;
-

@@ -2898,6 +2898,7 @@ if ((GMUII()).UIsnaptoview) {
 _adjx = _xcord - _offsetx - GMUI_CellGetActualX(GMUI_GridGetCellX(GMUII(),_LayerNumber,_xcord));
 _adjy = _ycord - _offsety - GMUI_CellGetActualY(GMUI_GridGetCellY(GMUII(),_LayerNumber,_ycord));
 
+
 // Set position by default anchor (topleft), and adjustment to the given coordinates
 GMUI_GroupSetPositionAnchored(_LayerNumber,_GroupNumber,GMUI_GridGetCellX(GMUII(),_LayerNumber,_xcord),GMUI_GridGetCellY(GMUII(),_LayerNumber,_ycord),_adjx,_adjy,0);
 
@@ -6288,8 +6289,8 @@ for(i=0;i<ds_list_size((GMUII()).GMUI_groupControlList[_LayerNumber,_GroupNumber
         with (ctrl) {
             GMUI_ControlSetPositioning(RelativeX,RelativeY,ActualW,ActualH);
         }
-        (ctrl).ActualX = GMUI_CellGetActualX((ctrl).CellX) + (ctrl).RelativeX;
-        (ctrl).ActualY = GMUI_CellGetActualY((ctrl).CellY) + (ctrl).RelativeY;
+        (ctrl).ActualX = GMUI_CellGetActualX((ctrl).CellX);
+        (ctrl).ActualY = GMUI_CellGetActualY((ctrl).CellY);
         
         if ((_MasterControl).T_hspeed_group > 0 && !(_MasterControl).TransitioningGroup && (_MasterControl).GroupHidden) {
             (ctrl).ActualX += (_MasterControl).T_hrelx_group;

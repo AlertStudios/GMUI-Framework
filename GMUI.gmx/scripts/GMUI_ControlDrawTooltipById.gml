@@ -1,4 +1,3 @@
-#define GMUI_ControlDrawTooltipById
 ///GMUI_ControlDrawTooltipById(id of tooltip control object)
 /// Draw the control as a tooltip
 
@@ -51,4 +50,3 @@ with (_tt_id) {
     
     draw_text_ext(_dtx,cy + (chy-cy)/2,_txt,-1,cwx);
 }
-

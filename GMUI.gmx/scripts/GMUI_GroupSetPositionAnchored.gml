@@ -1,4 +1,3 @@
-#define GMUI_GroupSetPositionAnchored
 ///GMUI_GroupSetPositionAnchored(Layer Number, Group Number, Cell X, Cell Y, X Adjustment, Y Adjustment, Anchor)
 ///Change the position of the group (and all of the controls inside it) according to its anchor
 
@@ -86,8 +85,8 @@ for(i=0;i<ds_list_size((GMUII()).GMUI_groupControlList[_LayerNumber,_GroupNumber
         with (ctrl) {
             GMUI_ControlSetPositioning(RelativeX,RelativeY,ActualW,ActualH);
         }
-        (ctrl).ActualX = GMUI_CellGetActualX((ctrl).CellX) + (ctrl).RelativeX;
-        (ctrl).ActualY = GMUI_CellGetActualY((ctrl).CellY) + (ctrl).RelativeY;
+        (ctrl).ActualX = GMUI_CellGetActualX((ctrl).CellX);
+        (ctrl).ActualY = GMUI_CellGetActualY((ctrl).CellY);
         
         if ((_MasterControl).T_hspeed_group > 0 && !(_MasterControl).TransitioningGroup && (_MasterControl).GroupHidden) {
             (ctrl).ActualX += (_MasterControl).T_hrelx_group;
@@ -98,5 +97,4 @@ for(i=0;i<ds_list_size((GMUII()).GMUI_groupControlList[_LayerNumber,_GroupNumber
 
 // Reset all control regions for the layer
 GMUI_GridSetRegionsLayer(_LayerNumber);
-
 

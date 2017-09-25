@@ -1,4 +1,3 @@
-#define GMUI_ControlDrawGroup
 ///GMUI_ControlDrawGroup(GMUI instance, Layer, Group, Alpha, FadeMode [0 or 1])
 ///Draws the group if set to do any drawing - Called by master control of group
 
@@ -43,4 +42,3 @@ if (ControlHasGroupStyle) {
         draw_rectangle(x1,y1,x2,y2,true);
         
 }
-

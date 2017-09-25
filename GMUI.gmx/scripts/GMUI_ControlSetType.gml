@@ -1,4 +1,3 @@
-#define GMUI_ControlSetType
 ///GMUI_ControlSetType(Control, "Control Type")
 ///Set the type variables based on the control the developer wants to make
 
@@ -65,6 +64,5 @@ else if (_getType == global.GMUIDataTypeString) {
 
 // Return sanitized and processed type back
 return _type;
-
 
 

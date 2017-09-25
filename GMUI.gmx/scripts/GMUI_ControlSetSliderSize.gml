@@ -1,4 +1,3 @@
-#define GMUI_ControlSetSliderSize
 ///GMUI_ControlSetSliderSize(Slider width, Slider height, Slide height, end tick height [or 0], mid tick height [or 0], quarter tick height [or 0], tick height [or 0], Pixels of padding [or 0])
 ///Set the ONLY THE SIZING of the slider
 
@@ -40,5 +39,4 @@ if (argument7 >= 0) {
 }
 
 return true;
-
 

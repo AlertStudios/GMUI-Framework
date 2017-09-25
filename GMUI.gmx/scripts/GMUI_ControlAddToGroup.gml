@@ -1,4 +1,3 @@
-#define GMUI_ControlAddToGroup
 ///GMUI_ControlAddToGroup(group number)
 ///Adds control to a group if it exists in the layer
 
@@ -68,4 +67,3 @@ GMUI_ControlUpdateXY(id);
 return true;
     
     
-

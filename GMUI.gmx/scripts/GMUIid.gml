@@ -1,4 +1,3 @@
-#define GMUIid
 ///GMUIid(number)
 ///Returns the GMUI object instance with the given GMUI number and sets current grid ref to it
 // Usage: with (GMUIid(1)) { do something; }
@@ -16,4 +15,3 @@ if (argument0 > 0 && argument0 <= global.GMUIii) {
 }
 
 return -1;
-

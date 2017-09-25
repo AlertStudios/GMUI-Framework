@@ -1,6 +1,6 @@
 # GMUI-Framework
 ## The Best Programmable Interface for Game Maker (Studio 1.x & GM8!)
-**Still in alpha, but close to beta release** - [View the Changelog](../../wiki/Changelog)
+**Still in alpha, but close to beta release** - [View the Changelog](../../wiki/Old Changelog)
 
 **Notice: Some of the documentation may be moved into a separate wiki soon for better reference**
 
@@ -231,3 +231,4 @@ There are a number of features still left to implement, including:
 - Issue in GM:Studio version where controls on menus may appear under them rather than on them.
 - Documentation needed on implementation of popups and menus.
 - Documentation update needed on outdated structure.
+- Moving the view (arrow keys) may negate menu functionality

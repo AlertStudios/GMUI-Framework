@@ -1,4 +1,3 @@
-#define GMUI_GridAdjust
 ///GMUI_GridAdjust(cells wide , cells high)
 /// Adjusts grid for all layers of the GMUI instance
 
@@ -11,4 +10,3 @@ for(i=0;i<ds_list_size((GMUII()).GMUI_gridlist);i+=1) {
         GMUI_GridAdjustLayer(layer,argument0,argument1);
     }
 }
-

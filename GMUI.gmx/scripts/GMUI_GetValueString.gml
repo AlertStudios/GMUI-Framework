@@ -1,4 +1,3 @@
-#define GMUI_GetValueString
 ///GMUI_GetValueString("ControlName")
 ///Return the value string of a control back to use in user code
 
@@ -11,4 +10,3 @@ with (GMUII()) {
     else
         return (control).valueString;
 }
-

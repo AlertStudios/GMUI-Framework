@@ -86,8 +86,8 @@ for(i=0;i<ds_list_size((GMUII()).GMUI_groupControlList[_LayerNumber,_GroupNumber
         with (ctrl) {
             GMUI_ControlSetPositioning(RelativeX,RelativeY,ActualW,ActualH);
         }
-        (ctrl).ActualX = GMUI_CellGetActualX((ctrl).CellX) + (ctrl).RelativeX;
-        (ctrl).ActualY = GMUI_CellGetActualY((ctrl).CellY) + (ctrl).RelativeY;
+        (ctrl).ActualX = GMUI_CellGetActualX((ctrl).CellX);
+        (ctrl).ActualY = GMUI_CellGetActualY((ctrl).CellY);
         
         if ((_MasterControl).T_hspeed_group > 0 && !(_MasterControl).TransitioningGroup && (_MasterControl).GroupHidden) {
             (ctrl).ActualX += (_MasterControl).T_hrelx_group;

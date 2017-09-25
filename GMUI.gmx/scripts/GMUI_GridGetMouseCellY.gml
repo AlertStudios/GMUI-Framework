@@ -1,4 +1,3 @@
-#define GMUI_GridGetMouseCellY
 ///GMUI_GridGetMouseCellY(GMUI instance)  Returns the vertical cell block that the mouse is on
 // argument0 is the GMUI instance
 
@@ -11,6 +10,5 @@ if ((_GMUII).UIsnaptoview) {
 }
 
 return ceil((mouse_y-(GMUII()).GMUI_grid_y[(GMUII()).UILayer]-_offset+1)/(GMUII()).cellsize_h)-1;
-
 
 

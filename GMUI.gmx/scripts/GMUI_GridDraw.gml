@@ -1,4 +1,3 @@
-#define GMUI_GridDraw
 ///GMUI_GridDraw()
 ///Actions done to operate the grid, executed by the GMUI object in the draw event
 
@@ -185,5 +184,4 @@ if (GMUI_GridEnabled())
     
 
 }
-
 
