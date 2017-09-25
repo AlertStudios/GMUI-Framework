@@ -31,3 +31,4 @@ if (!GMUI_GroupExists(_LayerNumber,_GroupNumber)) {
 // Set position by anchor of the group
 GMUI_GroupSetPositionAnchored(_LayerNumber, _GroupNumber, _CellX, _CellY, _AdjustmentX, _AdjustmentY, (GMUII()).GMUI_groupAnchor[_LayerNumber,_GroupNumber]);
 
+

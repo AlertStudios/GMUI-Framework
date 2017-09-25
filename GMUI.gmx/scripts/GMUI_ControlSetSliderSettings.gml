@@ -1,7 +1,7 @@
-///GMUI_ControlSetSliderSettings(tick interval, ticks amount, min value, max value, round to snap[bool], snap [bool], smooth snap [bool])
+#define GMUI_ControlSetSliderSettings
+///GMUI_ControlSetSliderSettings(ticks amount, min value, max value, round values to ticks[bool], snap [bool], smooth adjust and snap[bool]) //horizontal orientation [bool] coming soon
 ///Required to be called to set the SETTINGS of the slider
-// todo: next script will set the tick amount, min number, max number, round to snap [bool]
-// todo: needs default script, but will only be called if it is a slider control (default is 0 to 100)
+
 if (!GMUI_IsControl() && id != GMUII())
 {
     GMUI_ThrowError("Invalid control for GMUI_ControlSetStyle");
@@ -10,42 +10,59 @@ if (!GMUI_IsControl() && id != GMUII())
 
 // Initialize all computed and assignment values if not yet set
 if (!sliderInitialized) {
-
-    // Default Style values
-    GMUI_ControlSetSliderStyle(2,2,c_dkgray,0.9,c_aqua,0.8,c_black,0.9,c_aqua,1,c_gray,0.8);
-
-    // Default Sizing values
-    GMUI_ControlSetSliderSize(16, 16, 1, 16, 12, 6);
+    sliderInitialized = true;
     
     // Default Computed values
     // (Values will be computed for the first time before drawn ['sliderComputed' variable])
     SliderStartEndPadding = 0;
     SliderMidPoint = 0;
-    SliderQuarterPoint = 0;
+    SliderQuarterPoint1 = 0;
+    SliderQuarterPoint2 = 0;
     SliderTickDistance = 0;// (size compared to mid/quarter, compared to minumum distance between them, etc.)
-    SliderSnapDistance = 0;// distance until it snaps to a tick
+    SliderSnapDistance = 1;// distance until it snaps to a tick
+    SliderTickPoints[0] = 0;
+    SliderTickInterval = 0; // not sure if will be used
+    SliderRelativeFinalXorY = 0;
+    GMUI_ControlSliderUpdate(id);
+    SliderRelativeXorY = SliderRelativeFinalXorY;
+    SliderRelativePad = 0;
+    Slider_t = 0;
+    Slider_b = 0;
+    Slider_c = 0;
+    Slider_d = room_speed/4;
+    
+    SliderMovementScript = easeExpOut;
+    SliderSnapScript = -1;
+    
+    // Slider_d must be greater than 0 to update correctly
+    if (Slider_d <= 0) Slider_d = 1;
+    
+    // Default Style values
+    GMUI_ControlSetSliderStyle(2,2,c_dkgray,0.6,c_ltgray,0.9,c_dkgray,0.4,c_gray,1,c_gray,0.8);
 
-
-    sliderInitialized = true;
+    // Default Sizing values
+    GMUI_ControlSetSliderSize(16, 20, 1, 12, 10, 8, 6, 0);
+    
+    SliderHorizontal = true;
 }
 
 // If any values are given as negative numbers, those values will remain as the control default
-
 if (argument0 >= 0)
-SliderTickInterval = argument0;
-if (argument1 >= 0)
-SliderTickAmount = argument1;
+    SliderTickAmount = argument0;
+if (is_real(argument1))
+    ControlMinValue = argument1;
 if (is_real(argument2))
-ControlMinValue = argument2;
-if (is_real(argument3))
-ControlMaxValue = argument3;
+    ControlMaxValue = argument2;
+if (argument3 >= 0)
+    SliderRoundValuesToSnap = (argument3 > 0);
 if (argument4 >= 0)
-SliderRoundToSnap = (argument4 > 0);
+    SliderSnap = (argument4 > 0);
 if (argument5 >= 0)
-SliderSnap = (argument5 > 0);
-if (argument6 >= 0)
-SliderSmoothSnap = (argument6 > 0);
+    SliderSmoothSnap = (argument5 > 0);
+//if (argument6 >= 0)
+//    SliderHorizontal = (argument6 > 0);
 
 
 return true;
     
+

@@ -1,3 +1,4 @@
+#define GMUI_DrawDebug
 // DEBUGGING SCRIPT! Call this in the draw event of the GMUI main object 
 // Run only if DebugData is on
 if (DebugData && !RemovingGMUI) {
@@ -27,10 +28,10 @@ if (DebugData && !RemovingGMUI) {
         draw_text(view_wview[0]/2+xoffset,view_hview[0]-64+yoffset,string(GMUI_ErrorNumber) + ".) " + GMUI_LastError());
     }
     
+    var groupId, layer, i, m, ff, ffo;
     
     // draw the group boundaries
     color_alpha(c_green,0.5);
-    var groupId, layer;
     for(i=0;i<ds_list_size((GMUII()).GMUI_gridlist);i+=1) {
         layer = ds_list_find_value((GMUII()).GMUI_gridlist,i);
         if (layer >= (GMUII()).GMUI_menu_layer)
@@ -49,6 +50,30 @@ if (DebugData && !RemovingGMUI) {
                 true);
         }
     }
-
+    
+    // draw control lines
+    color_alpha(c_red,0.8);
+    with (GMUI_controlobject) {
+        if (ControlType == "label" && GMUIP == GMUII()) {
+            draw_rectangle(RoomX, RoomY, RoomW, RoomH, 1);
+        }
+    }
+    /*ff = ds_map_find_first((_GID).GMUI_map);
+    if (string(ff) != "0") {
+        // Set all controls' hover variable to false
+        ms = ds_map_size((_GID).GMUI_map);
+        for (m=0; m < ms; m+=1) {
+            if (string(ff) != "0" && GMUI_StudioCheckDefined(ff)) {
+                ffo = ds_map_find_value((_GID).GMUI_map,ff);
+                if (GMUI_StudioCheckDefined(ffo)) {
+                    draw_
+                }
+            }
+            
+            ff = ds_map_find_next((_GID).GMUI_map,ff);
+        }
+    }*/
+    
 
 }
+

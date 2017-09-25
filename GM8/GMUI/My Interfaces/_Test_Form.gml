@@ -131,8 +131,8 @@ with (GMUI_Add("MenuIntInstructions", "label",  20,21,  12,2,   layer, global.GM
 }
 
 // Test Menu (Menu ID variable isn't used here... but could be if you want to)
-var menuID;
-menuID = GMUI_CreateMenu("Test Menu",   -9,2,   18,24,   global.GMUIAnchorTop);
+var menuID; //-9,2 
+menuID = GMUI_CreateMenu("Test Menu",   GMUI_CenterX(layer, 18, global.GMUIAnchorTop) ,2,   18,24,   global.GMUIAnchorTop);
 GMUI_MenuSetClickOff("Test Menu", true);
 
 with (GMUI_Add("CloseButton", "textbutton",   4,1,   4,1,    layer, global.GMUIAnchorTopRight)) {
@@ -164,15 +164,47 @@ with (GMUI_Add("PopupTestButton","textbutton",  -3,8,   8,1,    layer, global.GM
 }
 
 // Test Popup
-menuID = GMUI_CreatePopup("Test Popup",  -10,2,   20,8,   global.GMUIAnchorTop);
-//GMUI_PopupSetClickOff("Test Popup", false);
+//global.GMUIPopupBlank = -1;global.GMUIPopupInformation = 0;global.GMUIPopupConfirm = 1;global.GMUIPopupThreeOptions = 2;
+menuID = GMUI_CreatePopup("Test Popup",  -14,2,   28,12,   global.GMUIAnchorTop, global.GMUIPopupThreeOptions);
+GMUI_PopupSetMessage("Test Popup", "Click an option to return to the previous screen!", 2, -1, -1);
+GMUI_PopupSetAction("Test Popup", _PopupReturnAction);
 
-//todo: change this to be done with popup scripts instead
-with (GMUI_Add("CloseButton3", "textbutton",   4,1,   4,1,    layer, global.GMUIAnchorTopRight)) {
-    GMUI_ControlSetButtonAction(_PopupClose_Button);
-    GMUI_ControlSetButton("Close",-1,-1,-1);
-    GMUI_ControlAddToPopup("Test Popup");
+// Options to change default controls and actions:
+// GMUI_PopupSetButton("Test Popup", which button, Text or "", graphic or -1, text align, text color on hover)
+
+// Additional Options:
+//with (GMUI_Add("Button", "textbutton", 20,3, 4,2, 0, global.GMUIAnchorBottomRight)) {
+//GMUI_ControlAddToPopup("Test Popup");}
+//GMUI_PopupSetClickOff("Test Popup", false); // False is default
+
+
+
+// Test slider
+with (GMUI_Add("Slider", "slider",              16,12,  10,2,   layer, global.GMUIAnchorBottomRight)) {
+    GMUI_ControlSetSliderSettings(13,10,34,true,true,true);
+    GMUI_ControlSetSliderStyle(2,2,c_dkgray,0.6,c_teal,0.9,c_dkgray,0.4,c_aqua,1,c_gray,0.8);
+    GMUI_ControlSetSliderSize(16, 20, 1, 12, 10, 8, 6, 8);
+    
+    GMUI_ControlSetValueChangedAction(_SliderValue_Changed);
 }
+// Button to set slider to mid point
+with (GMUI_Add("MidSlider", "button",           19,12,  2,2,    layer, global.GMUIAnchorBottomRight)) {
+    GMUI_ControlSetButtonAction(_SliderMid_Button);
+    GMUI_ControlSetButton("Mid",-1,-1,-1);
+    GMUI_ControlSetPositioning(0,6,0,20);
+}
+// Button to set slider to snap or not
+with (GMUI_Add("SnapSlider", "button",           23,12,  3,2,    layer, global.GMUIAnchorBottomRight)) {
+    GMUI_ControlSetButtonAction(_SliderSnap_Button);
+    GMUI_ControlSetButton("Snap",-1,-1,-1);
+    GMUI_ControlSetPositioning(0,6,0,20);
+}
+
+// Display of slider value
+with (GMUI_Add("SliderVal", "label",            5,12,   2,2,    layer, global.GMUIAnchorBottomRight)) {
+    GMUI_ControlSetText(string(round(GMUI_GetValue("MidSlider"))));
+}
+
 
 /*
 
@@ -187,6 +219,7 @@ GMUI_GroupSetFadeOnHide(layer, 2, room_speed/4, 0);
 // MENU STYLES
 GMUI_MenuSetStyle("Test Menu", c_black, 0.25, c_white, 0.75, true);
 GMUI_MenuSetFadeOnHide("Test Menu", room_speed/4, 0);
+GMUI_MenuSetHidePosition("Test Menu", -9, 6, easeExpOut, room_speed/2);
 //GMUI_MenuSetActionIn("Test Menu",...)
 GMUI_MenuSetStyle("Test Menu 2", c_black, 0.25, c_white, 0.75, true);
 GMUI_MenuSetFadeOnHide("Test Menu 2", room_speed/4, 0);
@@ -194,6 +227,7 @@ GMUI_MenuSetFadeOnHide("Test Menu 2", room_speed/4, 0);
 // POPUP STYLES
 GMUI_PopupSetStyle("Test Popup", c_white, 0.99, c_white, 0.75, true);// needs popup version
 GMUI_PopupSetFadeOnHide("Test Popup", room_speed/8, 0);// needs popup version
+GMUI_PopupSetHidePosition("Test Popup", -14, 0, easeExpOut, room_speed/4);
 //todo: change the popup style
 
 

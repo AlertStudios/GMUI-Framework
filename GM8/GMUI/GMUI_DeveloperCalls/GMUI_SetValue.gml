@@ -46,8 +46,15 @@ with (GMUII())
     }
     else
     {
-        GMUI_ThrowError("Unknown value type for GMUI_SetValue()");
+        GMUI_ThrowErrorDetailed("Unknown value type",GMUI_SetValue);
         _invalid = true;
+    }
+    
+    // If not a string, check if we need to update a slider
+    if (a2 != "0" && string_lower(a2) != "string") {
+        if ((control).ControlType == "slider") {
+            GMUI_ControlSliderUpdate(control);
+        }
     }
     
     // If a value was set and a script is assigned to value change, execute it

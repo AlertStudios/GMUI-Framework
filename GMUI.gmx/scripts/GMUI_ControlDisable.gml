@@ -1,3 +1,4 @@
+#define GMUI_ControlDisable
 ///GMUI_ControlDisable("ControlName", Disable?)
 ///Disable or enable a control
 // argument1 is to disable (1) or enable (0)
@@ -16,3 +17,4 @@ with (GMUII()) {
         return true;
     }
 }
+

@@ -41,7 +41,10 @@ with (_tt_id) {
             break;
     }
     
+    // Set control color, font, and alignment
     color_alpha(ControlFontColor,min(ControlFontAlpha,FadeAlpha));
+    draw_set_font(ControlFont);
+    align(ControlFontAlign,ControlFontAlignV);
     
     var _dtx, _midHeight;
     _dtx = cx + padx;

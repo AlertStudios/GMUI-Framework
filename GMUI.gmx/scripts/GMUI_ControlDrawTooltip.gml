@@ -1,3 +1,4 @@
+#define GMUI_ControlDrawTooltip
 ///GMUI_ControlDrawTooltip("name of control with the tooltip")
 /// Draw the control's tooltip
 
@@ -13,3 +14,4 @@ with (GMUII()) {
         GMUI_ControlDrawTooltipById((control).TooltipId);
     }
 }
+

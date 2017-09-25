@@ -137,7 +137,8 @@ if (GMUI_GridEnabled())
                                     break;
                             }
                         }
-                        else if (ctrlObject.ControlInput) {
+                        else if (ctrlObject.ControlSelectable) {
+                            // Normal input controls
                             GMUI_GridSelect(ctrlObject);
                         }
                         else if (ctrlObject.ActionScript != -1) {

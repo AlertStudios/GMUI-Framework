@@ -1,3 +1,4 @@
+#define GMUI_Add
 ///GMUI_Add("Name", "Type String", cell# x, cell# y, cells wide (min 1), cells high (min 1), Layer**, Anchor***)
 ///Adds a component(instance) to the GMUI grid
 
@@ -67,8 +68,8 @@ GMUI_ControlPosition(thecontrol,_CellX,_CellY,0,0,_Anchor);
 thecontrol.valueName = argument0;
 thecontrol.CellWide = _CellWide;
 thecontrol.CellHigh = _CellHigh;
-thecontrol.CellWideMax = _CellWide;
-thecontrol.CellHighMax = _CellHigh;
+thecontrol.CellWideMax = gridW-_CellX;//_CellWide;
+thecontrol.CellHighMax = gridH-_CellY;//_CellHigh;
 thecontrol.depth = (GMUII()).layerDepth_layers-(_Layer*3)-(thetype=="tooltip");
 thecontrol.persistent = (GMUII()).persistence; // This is kind of unnecessary but could be used at some point?
 
@@ -116,8 +117,14 @@ if (GMUI_GetDataType(thetype) == global.GMUIDataTypeButton) {
     thecontrol.ControlShowCursor = false;
 }
 
+// String length settings
+if (GMUI_GetDataType(thetype) == global.GMUIDataTypeString) {
+    thecontrol.ControlMaxStringLength = 1024;
+}
+
 
 return thecontrol;
+
 
 
 

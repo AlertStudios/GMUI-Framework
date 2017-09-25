@@ -1,3 +1,4 @@
+#define GMUI_ResetControlStatus
 ///GMUI_ResetControlStatus("Hovering" / "Selected" / "Position", GridID)
 /// Resets the hovering or selected values of the controls
 
@@ -23,6 +24,8 @@ if (string_lower(a0) == "selected" || a0 == "1") {
                         PreviousSelectedControl = ffo;
                     (ffo).Selected = 0;
                     (ffo).DoubleSelected = 0;
+                    (ffo).Holding = 0;
+                    (ffo).HoldingTime = 0;
                 }
             }
             
@@ -73,3 +76,4 @@ else if (string_lower(a0) == "position" || a0 == "2") {
 else {
     GMUI_ThrowErrorDetailed("Incorrect parameter given",_SCRIPT);
 }
+

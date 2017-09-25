@@ -24,6 +24,8 @@ if (string_lower(a0) == "selected" || a0 == "1") {
                         PreviousSelectedControl = ffo;
                     (ffo).Selected = 0;
                     (ffo).DoubleSelected = 0;
+                    (ffo).Holding = 0;
+                    (ffo).HoldingTime = 0;
                 }
             }
             

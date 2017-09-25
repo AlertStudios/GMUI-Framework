@@ -1,3 +1,4 @@
+#define GMUI_ControlInit
 ///GMUI_ControlInit(control object to instantiate)
 /// Initialize the values to use with a GMUI control
 // These values are controlled by the GMUI controller, and if commented, they are actually intialized by the Add script.
@@ -18,6 +19,9 @@ i.PreviousMenuLayer = 0;
 i.Hovering = 0;
 i.Selected = 0;
 i.DoubleSelected = 0;
+i.Holding = 0;
+i.HoldingTime = 0;
+i.HoldingThreshold = 5; // Steps before a click is registed as a holding click
 
 i.ControlType = "";
 i.ControlDataType = global.GMUIDataTypeString; // Default (0)
@@ -25,22 +29,27 @@ i.ControlDataType = global.GMUIDataTypeString; // Default (0)
 i.NeedsPositionUpdate = false;
 i.NeedsDrawUpdate= false;
 
-// Redundant based on the datatype
+// Redundant control options based on the datatype
 i.ControlIsNumeric = false;
 i.ControlIsString = true;
-i.ControlInput = true;
+i.ControlInput = false;
 i.ControlPicker = false;
+
+i.ControlShowValue = true;
+i.ControlInteraction = true;
+i.ControlSelectable = true;
 
 // For specific controls
 i.checkMouseX = 0;
 i.checkMouseY = 0;
 i.HoveringDirection = 0; // 0 = middle/none (HoveringDirection_None), HoveringDirection_Right=1;HoveringDirection_Up=2;HoveringDirection_Left=3;HoveringDirection_Down=4;
 
-// Custom disable
+// Control Status
 i.Disabled = 0;
-
-// Custom hidden
 i.Hidden = 0;
+
+// Group Status (if master control)
+i.GroupHidden = false;
 
 // NonClickable may be used when a control is moving, for instance. It does not show disabled, but will not register a click
 i.NonClickable = 0;
@@ -134,6 +143,20 @@ i.T_by_group = 0;
 i.T_cx_group = 0;
 i.T_cy_group = 0;
 
+// Destination coordinates
+i.T_dx_group = 0;
+i.T_dy_group = 0;
+
+// For hide positioning
+i.T_hx_group = 0;
+i.T_hy_group = 0;
+i.T_hrelx_group = 0;
+i.T_hrely_group = 0;
+i.T_px_group = 0;
+i.T_py_group = 0;
+i.T_hscript_group = -1;
+i.T_hspeed_group = 0; // User must set speed to activate
+
 // Effects
 i.FadeAlpha = 1; // of 1
 i.FadeIn = 1;
@@ -147,13 +170,14 @@ i.FadeMode = 0; // Fade Mode: 0 = fade dimmest last, 1 = fade all together
 // Value variables
 i.value = 0;
 i.valueString = "0";
+i.valueSetting = 0;
 i.valuePrevious = i.value;
 i.valueStringPrevious = i.valueString;
 i.valueChangeDetected = 0;
 
 
 
-
 /// ???:
 // The control will be disabled for this many steps before allowing action
 //i.Disable = floor(room_speed/20);
+

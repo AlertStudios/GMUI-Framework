@@ -9,9 +9,18 @@
           <file>GMUI_AddLabel.gml</file>
           <file>GMUI_AddLayer.gml</file>
           <file>GMUI_AddTooltipToControl.gml</file>
+          <file>GMUI_CenterX.gml</file>
+          <file>GMUI_CenterY.gml</file>
+          <file>GMUI_CloseMenu.gml</file>
           <file>GMUI_ControlAddToGroup.gml</file>
+          <file>GMUI_ControlAddToMenu.gml</file>
+          <file>GMUI_ControlAddToMenuType.gml</file>
           <file>GMUI_ControlAddTooltip.gml</file>
+          <file>GMUI_ControlAddToPopup.gml</file>
+          <file>GMUI_ControlCenterX.gml</file>
+          <file>GMUI_ControlCenterY.gml</file>
           <file>GMUI_ControlDisable.gml</file>
+          <file>GMUI_ControlDrawSlider.gml</file>
           <file>GMUI_ControlDrawTooltip.gml</file>
           <file>GMUI_ControlFadeIn.gml</file>
           <file>GMUI_ControlFadeOut.gml</file>
@@ -31,35 +40,56 @@
           <file>GMUI_ControlSetPicker.gml</file>
           <file>GMUI_ControlSetPositioning.gml</file>
           <file>GMUI_ControlSetSelectingAction.gml</file>
+          <file>GMUI_ControlSetSliderMovement.gml</file>
           <file>GMUI_ControlSetSprite.gml</file>
           <file>GMUI_ControlSetSpriteExt.gml</file>
           <file>GMUI_ControlSetSpriteMap.gml</file>
           <file>GMUI_ControlSetStyle.gml</file>
+          <file>GMUI_ControlSetText.gml</file>
           <file>GMUI_ControlSetValueChangedAction.gml</file>
           <file>GMUI_Create.gml</file>
           <file>GMUI_CreateGroup.gml</file>
           <file>GMUI_CreateMenu.gml</file>
+          <file>GMUI_CreateMenuType.gml</file>
           <file>GMUI_Destroy.gml</file>
           <file>GMUI_DestroyNumber.gml</file>
           <file>GMUI_DrawDebug.gml</file>
           <file>GMUI_GetControl.gml</file>
+          <file>GMUI_GetMenuLayer.gml</file>
           <file>GMUI_GetValue.gml</file>
           <file>GMUI_GetValueString.gml</file>
           <file>GMUI_GridSetNavigation.gml</file>
           <file>GMUI_GroupHide.gml</file>
+          <file>GMUI_GroupSetDefaultStyle.gml</file>
           <file>GMUI_GroupSetFadeOnHide.gml</file>
           <file>GMUI_GroupSetPosition.gml</file>
           <file>GMUI_GroupSetPositionActual.gml</file>
           <file>GMUI_GroupSetSize.gml</file>
           <file>GMUI_GroupSetSpriteMap.gml</file>
           <file>GMUI_Init.gml</file>
+          <file>GMUI_IsMenuOpen.gml</file>
+          <file>GMUI_MenuControlDepth.gml</file>
+          <file>GMUI_MenuSetHidePosition.gml</file>
+          <file>GMUI_MenuSetPosition.gml</file>
+          <file>GMUI_PopupGetResponse.gml</file>
+          <file>GMUI_PopupSetAction.gml</file>
+          <file>GMUI_PopupSetButton.gml</file>
+          <file>GMUI_PopupSetHidePosition.gml</file>
+          <file>GMUI_PopupSetMessage.gml</file>
           <file>GMUI_SetForm.gml</file>
           <file>GMUI_SetValue.gml</file>
           <file>GMUI_SwitchToLayer.gml</file>
+          <file>GMUI_SwitchToMenu.gml</file>
           <file>GMUI_TypeDecimal.gml</file>
           <file>GMUI_TypeInt.gml</file>
           <file>GMUI_TypeString.gml</file>
           <folders>
+            <folder folderName="GMUI_DefaultActions">
+              <file>GMUI_DefaultActionCancel.gml</file>
+              <file>GMUI_DefaultActionNo.gml</file>
+              <file>GMUI_DefaultActionOk.gml</file>
+              <folders />
+            </folder>
             <folder folderName="GMUI_Effects">
               <file>easeBounceOut.gml</file>
               <file>easeElasticOut.gml</file>
@@ -114,13 +144,21 @@
           <file>GMUI_ControlSetDefaultSprite.gml</file>
           <file>GMUI_ControlSetDefaultSpriteMap.gml</file>
           <file>GMUI_ControlSetDefaultStyle.gml</file>
+          <file>GMUI_ControlSetSliderSettings.gml</file>
+          <file>GMUI_ControlSetSliderSize.gml</file>
+          <file>GMUI_ControlSetSliderStyle.gml</file>
           <file>GMUI_ControlSetType.gml</file>
+          <file>GMUI_ControlSliderMove.gml</file>
+          <file>GMUI_ControlSliderUpdate.gml</file>
           <file>GMUI_ControlUpdateXY.gml</file>
+          <file>GMUI_CreatePopup.gml</file>
           <file>GMUI_CreateSetDefaultArea.gml</file>
+          <file>GMUI_CreateWarning.gml</file>
           <file>GMUI_DrawSpriteBox.gml</file>
           <file>GMUI_GetAnchoredCellX.gml</file>
           <file>GMUI_GetAnchoredCellY.gml</file>
           <file>GMUI_GetControlAtPosition.gml</file>
+          <file>GMUI_GetCurrentLayer.gml</file>
           <file>GMUI_GetDataType.gml</file>
           <file>GMUI_GridAdjust.gml</file>
           <file>GMUI_GridAdjustLayer.gml</file>
@@ -143,17 +181,30 @@
           <file>GMUI_GridSetRegions.gml</file>
           <file>GMUI_GridSetRegionsLayer.gml</file>
           <file>GMUI_GroupExists.gml</file>
+          <file>GMUI_GroupSetClickOff.gml</file>
+          <file>GMUI_GroupSetHidePosition.gml</file>
           <file>GMUI_GroupSetPositionAnchored.gml</file>
+          <file>GMUI_GroupSetStyle.gml</file>
           <file>GMUI_IsControl.gml</file>
           <file>GMUI_IsControlID.gml</file>
           <file>GMUI_IsScript.gml</file>
           <file>GMUI_LastError.gml</file>
           <file>GMUI_LayerExists.gml</file>
+          <file>GMUI_MenuSetClickOff.gml</file>
+          <file>GMUI_MenuSetFadeOnHide.gml</file>
+          <file>GMUI_MenuSetStyle.gml</file>
           <file>GMUI_MouseInAdjustedRegion.gml</file>
           <file>GMUI_MouseInGroupRegion.gml</file>
           <file>GMUI_MouseInSpecialRegion.gml</file>
           <file>GMUI_NavigateNextControl.gml</file>
+          <file>GMUI_PopupSetClickOff.gml</file>
+          <file>GMUI_PopupSetFadeOnHide.gml</file>
+          <file>GMUI_PopupSetStyle.gml</file>
           <file>GMUI_ResetControlStatus.gml</file>
+          <file>GMUI_ShowMenu.gml</file>
+          <file>GMUI_ShowMenuId.gml</file>
+          <file>GMUI_ShowPopup.gml</file>
+          <file>GMUI_ShowPopupId.gml</file>
           <file>GMUI_StudioCheckDefined.gml</file>
           <file>GMUI_ThrowError.gml</file>
           <file>GMUI_ThrowErrorDetailed.gml</file>
@@ -169,6 +220,14 @@
           <file>_HoverOff_Int.gml</file>
           <file>_Hover_Int.gml</file>
           <file>_Move_Button.gml</file>
+          <file>_PopupClose_Button.gml</file>
+          <file>_PopupMenu2_Button.gml</file>
+          <file>_PopupMenu_Button.gml</file>
+          <file>_PopupReturnAction.gml</file>
+          <file>_Popup_Button.gml</file>
+          <file>_SliderMid_Button.gml</file>
+          <file>_SliderSnap_Button.gml</file>
+          <file>_SliderValue_Changed.gml</file>
           <file>_Switch_Button.gml</file>
           <file>_Test_Button.gml</file>
           <folders />
