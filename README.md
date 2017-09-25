@@ -1,36 +1,43 @@
 # GMUI-Framework
-## The Best Programmable Interface for Game Maker (Studio & GM8!)
-**WARNING: In Alpha Release! Expect rapid changes!!** - [View the Changelog](../../wiki/Changelog)
+## The Best Programmable Interface for Game Maker (Studio 1.x & GM8!)
+**Still in alpha, but close to beta release** - [View the Changelog](../../wiki/Changelog)
+
+**Notice: Some of the documentation may be moved into a separate wiki soon for better reference**
 
 <b>License:</b> GPL v3.0 (http://www.gnu.org/licenses/gpl-3.0.html)
 
-## Overview
-GMUI allows you to programmatically create all of your interface controls through GML, and control them through script calls included in the framework. This allows you to structure and control your menus and even game controls without going crazy tweaking it forever!
+## GMUI? What the?
+GMUI lets you programmatically create all of your interface controls through a GML script, and control them through script calls included in the framework. That's right. This project is fully GML! - but don't worry, it is built with efficiency in mind. This allows you to structure and control your menus and even game controls without going crazy going in and out of debugging your own custom interface.
 
-The framework allows you to customize input fields, buttons, sliding controls, lists, etc. It even gives you script calls for grouping, layering, anhoring, pop-ups, menus, transitions, and more! And best of all, GMUI handles most of the code for all of this behind the scenes with efficient code, making it much faster and easier to design your game's interface with better functionality and performance already built in.
+The framework allows you to customize input fields, buttons, sliding controls. It even gives you script calls for grouping, layering, anhoring, pop-ups, menus, transitions, and more!
 
-Surfaces support and shader effects coming soon.
+Best of all, GMUI handles all of the code behind the scenes efficiently, making it much faster and easier to design your game's interface with better functionality and performance already built in. This may remind you of something like .NET apps with screens... Kind of ended up like it actually, interestingly enough...
 
-## How does it work?
-GMUI takes this code from a Form script you create, and takes care of the rest:
+Surfaces support and shader effects coming soon!
+
+## How do I use it, and what does it do?
+GMUI takes this code from a Form script you create, and takes care of the rest (but still lets you easily interact with it):
 
 ![GMUI_Form_Code](docs/GMUI_Form_Code.png)
 
 And turns it into this:
 
-![GMUI_Demo](docs/GMUI_Demo.png)
+![GMUI_Demo](docs/Demo_v0.0.8_menus.gif)
 
 
-### Getting Started
-You must initialize the GMUI system in order to create grids:
+### Getting Started!
+You must initialize the GMUI system in order to create grids. Typically, you'll want to put this in your persistent control object.
 
-`GMUI_Init();`
+Then after it is initialized, you will need to create an object instance that will control your new grid:
 
-After GMUI is initialized, you may create an object instance that will control your grid:
+```
+// You only want to call this once in your game, unless you destroy it later:
+GMUI_Init();
 
-`instance_create(0,0,GMUI);`
+instance_create(0,0,GMUI);
+```
 
-Your object (E.g. GMUI) will need to call two commands in two events.
+Next, your interface object (E.g. 'GMUI') will need to call two commands in two events. Change 'MyGridScriptName' with your own script name.
 CREATE EVENT:
 
 `newGMUI = GMUI_Create(MyGridScriptName,16,0); // Script that defines interface, Cell Width, Cell Height`
@@ -39,20 +46,19 @@ DRAW EVENT:
 
 `GMUI_GridDraw();`
 
-Now your Grid is ready to be used, but now we must make our layout!
+Now your Grid is ready to be used, but we must make our own layout first!
 
-## Creating The Grid (GM8)
-*This may change with GM:Studio*
+## Creating The Grid
 The folder structure contains all of the scripts and separates the internal commands from the ones that need to be modified, as shown here:
 
 ![GMUI_Structure](docs/GMUI_Structure_v0.0.2.png)
-### GMUI_Settings
+### Config script: GMUI_Settings
 This script contains some values you can adjust for your grid. This includes the object used  as the controls, specified in the script:
 `GMUI_controlobject = GMUI_control;`
 
 
-### My Interfaces
-This folder was created as a place to put your interface script files. There are a number of scripts calls (in the GMUI_DeveloperCalls folder) to use to design your game's menus. When creating a new interface, first create a script that specifies the controls to create, then specify that script name as an argument when creating the interface. For example, this is used for calling the interface in the demo:
+### Folder: My Interfaces
+This folder was created for your convenience as a place to put your own interface script files. There are a number of scripts calls (in the GMUI_DeveloperCalls folder) to use to design your game's menus. When creating a new interface, first create a script that specifies the controls to create, then specify that script name as an argument when creating the interface. For example, this is used for calling the interface in the demo:
 
 ```
 newGMUI = GMUI_Create(_Test_Form,16,0);
@@ -221,7 +227,7 @@ There are a number of features still left to implement, including:
 
 ## Known issues:
 - Formatting on the decimal field in the Studio version is not working
-- Issue in GM:Studio version where opened menu may not close until the 'Expand Window' option fixes the layer.
+- Issue in GM:Studio version where opened menu may not work or close until the 'Expand Window' option fixes the layer.
 - Issue in GM:Studio version where controls on menus may appear under them rather than on them.
 - Documentation needed on implementation of popups and menus.
 - Documentation update needed on outdated structure.
