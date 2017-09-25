@@ -20,7 +20,7 @@ global.GMUIii = 0;
 
 // Common GMUI values:
 
-// AHOY MATEYS - Please note that the cell#'s for new controls are relative to their anchor position (0 is default: TopLeft)
+// AHOY MATEYS - Please note that the cell#'s for new controls are relative to their anchor position
 global.GMUIAnchorRight = 1;
 global.GMUIAnchorTopRight = 2;
 global.GMUIAnchorTop = 3;
@@ -30,6 +30,7 @@ global.GMUIAnchorBottomLeft = 6;
 global.GMUIAnchorBottom = 7;
 global.GMUIAnchorBottomRight = 8;
 global.GMUIAnchorCenter = 9;
+global.GMUIAnchorDefault = global.GMUIAnchorTopLeft;
 
 // Hovering directions for special controls
 global.GMUIHoveringDirection_None = 0;
@@ -50,5 +51,11 @@ global.GMUIDataTypeInteger = 1;
 global.GMUIDataTypeDecimal = 2;
 global.GMUIDataTypeButton = 3;
 global.GMUIDataTypeInfo = 4;
+
+// PopupTypes
+global.GMUIPopupBlank = -1;
+global.GMUIPopupInformation = 0;
+global.GMUIPopupConfirm = 1;
+global.GMUIPopupThreeOptions = 2;
 
 

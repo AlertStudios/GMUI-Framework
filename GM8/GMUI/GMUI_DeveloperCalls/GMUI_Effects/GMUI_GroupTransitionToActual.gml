@@ -39,6 +39,8 @@ for(i=0;i<ds_list_size((_iid).GMUI_groupControlList[_LayerNumber,_GroupNumber]);
             (_ctrl).T_by_group = (_iid).GMUI_groupActualY[_LayerNumber,_GroupNumber];
             (_ctrl).T_cx_group = _GridX - (_iid).GMUI_groupActualX[_LayerNumber,_GroupNumber];
             (_ctrl).T_cy_group = _GridY - (_iid).GMUI_groupActualY[_LayerNumber,_GroupNumber];
+            (_ctrl).T_dx_group = _GridX;
+            (_ctrl).T_dy_group = _GridY;
             
             (_iid).GMUI_groupTransitioningControl[_LayerNumber,_GroupNumber] = _ctrl;
             _setMaster = true;

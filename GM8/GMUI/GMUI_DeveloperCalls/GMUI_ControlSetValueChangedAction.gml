@@ -4,7 +4,7 @@
 
 if (!GMUI_IsControl() && id != GMUII())
 {
-    GMUI_ThrowError("Invalid control for GMUI_ControlSetValueChangedAction");
+    GMUI_ThrowErrorDetailed("Invalid control", GMUI_ControlSetValueChangedAction);
     return false;
 }
 
@@ -13,7 +13,7 @@ if (script_exists(argument0)) {
     return true;
 }
 else {
-    GMUI_ThrowError("Invalid script argument for GMUI_ControlSetValueChangedAction");
+    GMUI_ThrowErrorDetailed("Invalid script argument", GMUI_ControlSetValueChangedAction);
 }
 
 return false;

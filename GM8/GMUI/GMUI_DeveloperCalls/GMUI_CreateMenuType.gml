@@ -47,6 +47,7 @@ if (GMUI_CreateGroup(_layerNumber,_menuNumber,_CellX,_CellY,_Anchor)) {
     (_GMUII).GMUI_groupCellsW[_layerNumber,_menuNumber] = _CW;
     (_GMUII).GMUI_groupCellsH[_layerNumber,_menuNumber] = _CH;
     (_GMUII).GMUI_groupClickOff[_layerNumber,_menuNumber] = false;
+    (_GMUII).GMUI_groupAction[_layerNumber,_menuNumber] = -1;
 }
 else
     return -1;

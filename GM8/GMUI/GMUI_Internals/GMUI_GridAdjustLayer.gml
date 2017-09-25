@@ -70,11 +70,28 @@ for(i=0;i<ds_list_size((_GMUI).GMUI_controlList);i+=1) {
 }
 
 // Move any groups that are anchored to other positions
-var groupId;
+var _Group, _MasterControl, _CellX, _CellY;
 for(i=0;i<ds_list_size((_GMUI).GMUI_groupList[_Layer]);i+=1) {
-    groupId = ds_list_find_value((_GMUI).GMUI_groupList[_Layer],i);
+    _Group = ds_list_find_value((_GMUI).GMUI_groupList[_Layer],i);
+    _MasterControl = (_GMUI).GMUI_groupMasterControl[_Layer,_Group];
     
-    GMUI_GroupSetPosition(_Layer,groupId,(_GMUI).GMUI_groupRelativeCellX[_Layer,groupId],(_GMUI).GMUI_groupRelativeCellY[_Layer,groupId],(_GMUI).GMUI_groupRelativeX[_Layer,groupId],(_GMUI).GMUI_groupRelativeY[_Layer,groupId]);
+    _CellX = (_GMUI).GMUI_groupRelativeCellX[_Layer,_Group];
+    _CellY = (_GMUI).GMUI_groupRelativeCellY[_Layer,_Group];
+    
+    GMUI_GroupSetPosition(_Layer,_Group,_CellX,_CellY,(_GMUI).GMUI_groupRelativeX[_Layer,_Group],(_GMUI).GMUI_groupRelativeY[_Layer,_Group]);
+
+    // Reset hide position transition values
+    (_MasterControl).T_px_group = GMUI_CellGetActualX((_GMUI).GMUI_groupCellX[_Layer,_Group]);
+    (_MasterControl).T_py_group = GMUI_CellGetActualY((_GMUI).GMUI_groupCellY[_Layer,_Group]);
+    (_MasterControl).T_hx_group = (_MasterControl).T_px_group + (_MasterControl).T_hrelx_group;
+    (_MasterControl).T_hy_group = (_MasterControl).T_py_group + (_MasterControl).T_hrely_group;
+    
+    if ((_MasterControl).GroupHidden && (_MasterControl).T_hspeed_group > 0) {
+        (_GMUI).GMUI_groupActualX[_Layer,_Group] = (_MasterControl).T_hx_group;
+        (_GMUI).GMUI_groupActualY[_Layer,_Group] = (_MasterControl).T_hy_group;
+        _CellX -= floor((_MasterControl).T_hrelx_group / (_GMUI).cellsize);
+        _CellY -= floor((_MasterControl).T_hrely_group / (_GMUI).cellsize_h);
+    }
 }
 
 // Reset the regions for the layer

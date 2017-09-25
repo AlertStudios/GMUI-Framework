@@ -28,16 +28,24 @@ if (Transitioning) {
             
             if (TransitioningGroup) {
                 if ((GMUIP).GMUI_groupMasterControl[Layer,Group] == id) {
-                    var _getGroupX,_getGroupY,_diffX,_diffY;
-                    _diffX = (GMUIP).GMUI_groupActualX[Layer,Group]-GMUI_CellGetActualX(GMUI_GridGetCellXRoom(GMUIP,Layer,(GMUIP).GMUI_groupActualX[Layer,Group]));
-                    _diffY = (GMUIP).GMUI_groupActualY[Layer,Group]-GMUI_CellGetActualY(GMUI_GridGetCellYRoom(GMUIP,Layer,(GMUIP).GMUI_groupActualY[Layer,Group]));
+                    var _getGroupX,_getGroupY,_diffX,_diffY, _origRelCellX, _origRelCellY;
+                    _diffX = (GMUIP).GMUI_groupActualX[Layer,Group]-GMUI_CellGetActualX(GMUI_GridGetCellXRoom(GMUIP,Layer,T_dx_group));
+                    _diffY = (GMUIP).GMUI_groupActualY[Layer,Group]-GMUI_CellGetActualY(GMUI_GridGetCellYRoom(GMUIP,Layer,T_dy_group));
                     
-                    _getGroupX = GMUI_GetAnchoredCellX(GMUI_GridGetWidth(GMUIP,Layer),GMUI_GridGetCellXRoom(GMUIP,Layer,(GMUIP).GMUI_groupActualX[Layer,Group]),(GMUIP).GMUI_groupAnchor[Layer,Group]);
-                    _getGroupY = GMUI_GetAnchoredCellY(GMUI_GridGetHeight(GMUIP,Layer),GMUI_GridGetCellYRoom(GMUIP,Layer,(GMUIP).GMUI_groupActualY[Layer,Group]),(GMUIP).GMUI_groupAnchor[Layer,Group]);
+                    // This part uses a left anchor temporarily
+                    _getGroupX = GMUI_GetAnchoredCellX(GMUI_GridGetWidth(GMUIP,Layer),GMUI_GridGetCellXRoom(GMUIP,Layer,(GMUIP).GMUI_groupActualX[Layer,Group]),global.GMUIAnchorDefault);
+                    _getGroupY = GMUI_GetAnchoredCellY(GMUI_GridGetHeight(GMUIP,Layer),GMUI_GridGetCellYRoom(GMUIP,Layer,(GMUIP).GMUI_groupActualY[Layer,Group]),global.GMUIAnchorDefault);
+                    
+                    _origRelCellX = (GMUIP).GMUI_groupRelativeCellX[Layer,Group];
+                    _origRelCellY = (GMUIP).GMUI_groupRelativeCellY[Layer,Group];
                     
                     GMUI_GroupSetPositionAnchored(Layer,Group,_getGroupX,_getGroupY,
                         _diffX,_diffY,
-                        (GMUIP).GMUI_groupAnchor[Layer,Group]);
+                        global.GMUIAnchorDefault);
+                    
+                    // Reassigning original relative-to-anchor coordinates
+                    (GMUIP).GMUI_groupRelativeCellX[Layer,Group] = _origRelCellX;
+                    (GMUIP).GMUI_groupRelativeCellY[Layer,Group] = _origRelCellY;
                         
                     TransitioningGroup = false;
                 }
@@ -91,62 +99,89 @@ if (NeedsPositionUpdate) {
 
 
 
+// PROCESS INPUT //
 // Don't process any input or drawing if hidden
-if (Hidden && FadeCalled == 0)
-    return false;
-//
-    
-
-// Process input 
-if (Selected && !Hidden) {
-    // Filter keyboard string to type of input allowed
-    if (ControlInput && (keyboard_lastkey > 20 || keyboard_lastkey == vk_backspace)) {
-        if (keyboard_check(vk_anykey)) {
-            //If 'Overwriting', then reset back to just selected
-            if (DoubleSelected) {
-                if (string_length(keyboard_string) > 0 && string_length(GMUI_ControlFilterInput(ControlType,keyboard_lastchar)) > 0)
-                    keyboard_string = string_copy(keyboard_string,string_length(keyboard_string),1);
-                else
-                    keyboard_string = "";
-                    
-                DoubleSelected = false;
+if (!Hidden) {
+    // Easing update if slider control
+    if (ControlType == "slider") {
+        if (HoldingTime == 1) {
+            GMUI_ControlSliderMove(true);
+        }
+        else if (Slider_t < Slider_d && sliderComputed) {
+            GMUI_ControlSliderMove(false);
+            
+            if (!SliderSmoothSnap)
+                Slider_t = Slider_d;
+        }
+    }
+    if (Selected) {
+        // Holding click event
+        if (mouse_check_button(mb_left)) {
+            HoldingTime += 1;            
+            if (!Holding && HoldingTime > HoldingThreshold)
+                Holding = true;
+        }
+        if (Holding) {
+            if (mouse_check_button_released(mb_left)) {
+                Holding = false;
+                HoldingTime = 0;
             }
-            else {
-                // On keypress, sanitize input per the type
-                keyboard_string = GMUI_ControlFilterInput(ControlType,keyboard_string);
-                
-                // Max characters allowed for the control's string
-                if (ControlMaxStringLength > 0)
-                    keyboard_string = string_copy(keyboard_string,1,ControlMaxStringLength);
+            else if (ControlType == "slider") {
+                // Special case for slider: Holding will move the thumb
+                GMUI_ControlSliderMove(true);
             }
         }
         
-        // Only does assignment of the value once the key is released (and not transitioning)
-        if (Transitioning) {
-            keyboard_string = valueString;
-        }
-        else if (keyboard_check_released(vk_anykey)) {
-            // On release, we need to filter again incase somebody "fat-fingers" multiple keys fast enough to miss the first filter.. interesting.
-            keyboard_string = GMUI_ControlFilterInput(ControlType,keyboard_string);
-            
-            // Assign keyboard string as the value string
-            valueString = keyboard_string;
-            
-            if (ControlIsNumeric) {
-                // As long as the string is valid, assign stripped zeros to value string, and then assign value
-                if (valueString != "." && valueString != "-") {
-                    valueString = keyboard_string;
-                    value = real(valueString);
-                    if (ControlDataType == global.GMUIDataTypeInteger) {
-                        value = round(value);
-                    }
+    
+        // Filter keyboard string to type of input allowed
+        if (ControlInput && (keyboard_lastkey > 20 || keyboard_lastkey == vk_backspace)) {
+            if (keyboard_check(vk_anykey)) {
+                //If 'Overwriting', then reset back to just selected
+                if (DoubleSelected) {
+                    if (string_length(keyboard_string) > 0 && string_length(GMUI_ControlFilterInput(ControlType,keyboard_lastchar)) > 0)
+                        keyboard_string = string_copy(keyboard_string,string_length(keyboard_string),1);
+                    else
+                        keyboard_string = "";
+                        
+                    DoubleSelected = false;
+                }
+                else {
+                    // On keypress, sanitize input per the type
+                    keyboard_string = GMUI_ControlFilterInput(ControlType,keyboard_string);
                     
-                    // Found the change!
-                    valueChangeDetected = 1;
+                    // Max characters allowed for the control's string
+                    if (ControlMaxStringLength > 0)
+                        keyboard_string = string_copy(keyboard_string,1,ControlMaxStringLength);
                 }
             }
-            else if (ControlIsString) {
-                value = valueString;
+            
+            // Only does assignment of the value once the key is released (and not transitioning)
+            if (Transitioning) {
+                keyboard_string = valueString;
+            }
+            else if (keyboard_check_released(vk_anykey)) {
+                // On release, we need to filter again incase somebody "fat-fingers" multiple keys fast enough to miss the first filter.. interesting.
+                keyboard_string = GMUI_ControlFilterInput(ControlType,keyboard_string);
+                
+                // Assign keyboard string as the value string
+                valueString = keyboard_string;
+                
+                if (ControlIsNumeric) {
+                    // As long as the string is valid, assign stripped zeros to value string, and then assign value
+                    if (valueString != "." && valueString != "-") {
+                        valueString = keyboard_string;
+                        value = real(valueString);
+                        if (ControlDataType == global.GMUIDataTypeInteger) {
+                            value = round(value);
+                        }
+                        
+                        // Found the change!
+                        valueChangeDetected = 1;
+                    }
+                }
+                else if (ControlIsString) {
+                    value = valueString;
+                }
             }
         }
     }
@@ -166,6 +201,19 @@ if (valueChangeDetected) {
 
 if (argument0 == true) {
 
+    // Call the draw actions for groups if in one and is set to draw
+    if (1=1 && (GMUIP).GMUI_groupMasterControl[Layer,Group] == id) {
+        if (!GroupHidden || FadeCalled != 0) {
+            GMUI_ControlDrawGroup(GMUIP,Layer,Group,FadeAlpha,FadeMode);
+        }
+    }
+    
+    //todo: Add a flag for if an update is needed (surfaces):
+    // Don't process any drawing if hidden or update not needed
+    if (Hidden && FadeCalled == 0)
+        return false;
+    
+        
     // Draw the control based on the type and user-defined settings
     var padx, _BackgroundAlpha;
     padx = ControlPaddingX;
@@ -174,13 +222,6 @@ if (argument0 == true) {
     _SelectAlpha = min(ControlSelectAlpha,FadeAlpha);
     _OverwriteAlpha = min(ControlOverwriteAlpha,FadeAlpha);
     _FontAlpha = min(ControlFontAlpha,FadeAlpha);
-    
-    
-    // Call the draw actions for groups if in one and is set to draw
-    if ((GMUIP).GMUI_groupMasterControl[Layer,Group] == id) {
-        GMUI_ControlDrawGroup(GMUIP,Layer,Group,FadeAlpha,FadeMode);
-    }
-    
         
     // Start drawing the control (inputs and buttons)
     if (ControlInput || ControlDataType == global.GMUIDataTypeButton) {
@@ -309,10 +350,15 @@ if (argument0 == true) {
     }
     
     // Draw value string or button text
-    if (ControlShowCursor && Selected && !DoubleSelected)
-        Text = Text + "|";
-    draw_text(dtx, RoomY + midHeight,Text);
-    
+    if (ControlShowValue) {
+        if (ControlInteraction && ControlShowCursor && Selected && !DoubleSelected)
+            Text = Text + "|";
+            
+        if (ControlType != "label")
+            draw_text(dtx, RoomY + midHeight, Text);
+        else
+            draw_text_ext(dtx, RoomY + midHeight, Text, -1, RoomW-RoomX-padx*2);
+    }
 }
 //
 
