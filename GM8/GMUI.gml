@@ -500,6 +500,42 @@ GMUI_CloseMenu(true);
 
 GMUI_CloseMenu(true);
 
+#define ease_CopyrightNotice
+// This notice pertains to the scripts that start with "ease".
+// The scripts used were modified to effectively work with Game Maker by Mark Palnau.
+/*
+ *
+ * TERMS OF USE - EASING EQUATIONS
+ * 
+ * Open source under the BSD License. 
+ * 
+ * Copyright © 2001 Robert Penner
+ * All rights reserved.
+ * 
+ * Redistribution and use in source and binary forms, with or without modification, 
+ * are permitted provided that the following conditions are met:
+ * 
+ * Redistributions of source code must retain the above copyright notice, this list of 
+ * conditions and the following disclaimer.
+ * Redistributions in binary form must reproduce the above copyright notice, this list 
+ * of conditions and the following disclaimer in the documentation and/or other materials 
+ * provided with the distribution.
+ * 
+ * Neither the name of the author nor the names of contributors may be used to endorse 
+ * or promote products derived from this software without specific prior written permission.
+ * 
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY 
+ * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
+ * MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE
+ *  COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+ *  EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE
+ *  GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED 
+ * AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
+ *  NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED 
+ * OF THE POSSIBILITY OF SUCH DAMAGE. 
+ *
+ */
+
 #define easeBounceOut
 ///easeBounceOut(t,b,c,d) where t is current time, b is start value, c is change in value, and d is duration
 /// Bounce Ease for moving controls smoothly
@@ -530,6 +566,9 @@ else
     return _c * (7.5625 *_t*_t + .984375 ) + _b;
 }
 
+//To see copyright notice for this script please click on the following text then press F12:
+//ease_CopyrightNotice
+
 #define easeElasticOut
 ///easeElasticOut(t,b,c,d) where t is current time, b is start value, c is change in value, and d is duration
 ///Elastic Ease for moving controls smoothly
@@ -549,6 +588,9 @@ _s = _p / 4;
 
 return (_c * power( 2, -10 * _t ) * sin(((_t*_d)-_s) * (2*pi)/_p) + _c + _b );
 
+//To see copyright notice for this script please click on the following text then press F12:
+//ease_CopyrightNotice
+
 #define easeExpIn
 ///easeExpIn(t,b,c,d) where t is current time, b is start value, c is change in value, and d is duration
 ///Exponential Ease for moving controls smoothly
@@ -562,6 +604,9 @@ _d = argument3;
 
 
 return _c * power( 2, 10 * (_t/_d - 1) ) + _b;
+
+//To see copyright notice for this script please click on the following text then press F12:
+//ease_CopyrightNotice
 
 #define easeExpOut
 ///easeExpOut(t,b,c,d) where t is current time, b is start value, c is change in value, and d is duration
@@ -577,9 +622,12 @@ _d = argument3;
 
 return _c * ( -power( 2, -10 * _t/_d ) + 1 ) + _b;
 
+//To see copyright notice for this script please click on the following text then press F12:
+//ease_CopyrightNotice
+
 #define easeInBack
 ///easeInBack(t,b,c,d) where t is current time, b is start value, c is change in value, and d is duration
-///Elastic Ease for moving controls smoothly
+///Smooth overshot Ease for moving controls smoothly
 
 var _t,_b,_c,_d, _p,_s;
 _t = argument0;
@@ -592,9 +640,51 @@ _t = _t/_d;
 
 return _c*(_t)*_t*((_s+1)*_t - _s) + _b;
 
+//To see copyright notice for this script please click on the following text then press F12:
+//ease_CopyrightNotice
+
+#define easeInOutBack
+///easeInOutBack(t,b,c,d) where t is current time, b is start value, c is change in value, and d is duration
+///Smooth overshot Ease for moving controls smoothly
+
+var _t,_tt,_b,_c,_d, _p;
+_t = argument0;
+_b = argument1;
+_c = argument2;
+_d = argument3;
+
+_s = 1.70158 * 1.525;
+_t = _t/(_d/2);
+
+if (_t < 1)
+    return _c/2*((_t)*_t*((_s+1)*_t - _s)) + _b;
+
+_t -= 2;
+return _c/2*(_t*_t*((_s+1)*_t + _s) + 2) + _b;
+
+//To see copyright notice for this script please click on the following text then press F12:
+//ease_CopyrightNotice
+
+#define easeInOutSine
+///easeInOutSine(t,b,c,d) where t is current time, b is start value, c is change in value, and d is duration
+///Sinusoidal Ease for moving controls smoothly
+
+var _t,_b,_c,_d;
+
+_t = argument0;
+_b = argument1;
+_c = argument2;
+_d = argument3;
+
+
+return (-_c)/2 * (cos(pi*_t/_d) - 1) + _b;
+
+//To see copyright notice for this script please click on the following text then press F12:
+//ease_CopyrightNotice
+
 #define easeOutBack
 ///easeOutBack(t,b,c,d) where t is current time, b is start value, c is change in value, and d is duration
-///Elastic Ease for moving controls smoothly
+///Smooth overshot Ease for moving controls smoothly
 
 var _t,_tt,_b,_c,_d, _p,_s;
 _t = argument0;
@@ -606,6 +696,9 @@ _s = 1.70158;
 _t = _t/_d-1;
 
 return _c*((_t)*_t*((_s+1)*_t + _s) + 1) + _b;
+
+//To see copyright notice for this script please click on the following text then press F12:
+//ease_CopyrightNotice
 
 #define GMUI_ControlSetFade
 ///GMUI_ControlSetFade("Control Name", Time, In (1) / Out (0) / Hover (2) )

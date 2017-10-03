@@ -60,7 +60,10 @@
           <script>scripts\easeExpIn.gml</script>
           <script>scripts\easeExpOut.gml</script>
           <script>scripts\easeInBack.gml</script>
+          <script>scripts\easeInOutBack.gml</script>
+          <script>scripts\easeInOutSine.gml</script>
           <script>scripts\easeOutBack.gml</script>
+          <script>scripts\ease_CopyrightNotice.gml</script>
           <script>scripts\GMUI_ControlSetFade.gml</script>
           <script>scripts\GMUI_ControlSetFadeHover.gml</script>
           <script>scripts\GMUI_ControlSetFadeIn.gml</script>

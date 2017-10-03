@@ -10,3 +10,6 @@ _d = argument3;
 
 
 return _c * ( -power( 2, -10 * _t/_d ) + 1 ) + _b;
+
+//To see copyright notice for this script please click on the following text then press F12:
+//ease_CopyrightNotice

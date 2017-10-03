@@ -17,3 +17,6 @@ _s = _p / 4;
 
 return (_c * power( 2, -10 * _t ) * sin(((_t*_d)-_s) * (2*pi)/_p) + _c + _b );
 
+//To see copyright notice for this script please click on the following text then press F12:
+//ease_CopyrightNotice
+

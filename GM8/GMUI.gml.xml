@@ -96,7 +96,10 @@
               <file>easeExpIn.gml</file>
               <file>easeExpOut.gml</file>
               <file>easeInBack.gml</file>
+              <file>easeInOutBack.gml</file>
+              <file>easeInOutSine.gml</file>
               <file>easeOutBack.gml</file>
+              <file>ease_CopyrightNotice.gml</file>
               <file>GMUI_ControlSetFade.gml</file>
               <file>GMUI_ControlSetFadeHover.gml</file>
               <file>GMUI_ControlSetFadeIn.gml</file>

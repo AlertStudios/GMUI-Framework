@@ -26,3 +26,6 @@ else
     _t -= (2.625/2.75);
     return _c * (7.5625 *_t*_t + .984375 ) + _b;
 }
+
+//To see copyright notice for this script please click on the following text then press F12:
+//ease_CopyrightNotice
