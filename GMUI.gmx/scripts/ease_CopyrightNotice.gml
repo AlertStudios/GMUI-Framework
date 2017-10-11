@@ -1,4 +1,4 @@
-﻿// This notice pertains to the scripts that start with "ease".
+// This notice pertains to the scripts that start with "ease".
 // The scripts used were modified to effectively work with Game Maker by Mark Palnau.
 /*
  *
