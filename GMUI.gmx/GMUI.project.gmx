@@ -9,6 +9,8 @@
     <sprites name="GMUI">
       <sprite>sprites\GMUIspr_arrow</sprite>
       <sprite>sprites\GMUIspr_arrowup</sprite>
+      <sprite>sprites\GMUIspr_arrowleft</sprite>
+      <sprite>sprites\GMUIspr_arrowright</sprite>
       <sprite>sprites\GMUIspr_move</sprite>
       <sprite>sprites\GMUIspr_switch</sprite>
       <sprite>sprites\GMUIspr_input</sprite>
