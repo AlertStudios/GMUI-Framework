@@ -1,3 +1,4 @@
+#define GMUI_MouseInSpecialRegion
 ///GMUI_MouseInAdjustedSpecialRegion(Control Object, mouse x, mouse y)
 /// Returns direction if mouse is in the adjusted region of the control
 
@@ -36,6 +37,7 @@ if (_D == global.GMUIDirectionTypeSideVertical)
 }
 else if (_D == global.GMUIDirectionTypeVertical)
 {
+    sizingW = _CW;
     sizingH = (_Control).ControlPickerHeight + 2; // +2 borders
 }
 else
@@ -67,7 +69,7 @@ if (_D == global.GMUIDirectionTypeHorizontal)
         (_MX <= (_Control).ActualX + (_Control).RelativeX + _CW + _xoffset))
         return global.GMUIHoveringDirection_Right;
 }
-else if (_D == global.GMUIDirectionTypeSideVertical)
+else if (_D == global.GMUIDirectionTypeSideVertical || _D == global.GMUIDirectionTypeVertical)
 {
     if ((_MY >= (_Control).ActualY + (_Control).RelativeY + _yoffset) && 
         (_MY <= (_Control).ActualY + (_Control).RelativeY + sizingH + _yoffset) &&
@@ -81,5 +83,6 @@ else if (_D == global.GMUIDirectionTypeSideVertical)
 
 // No Conditions were met
 return global.GMUIHoveringDirection_None;
+
 
 

@@ -13,6 +13,7 @@
 // 3: PentagonDown
 // 4: Rectangle
 // 5: Rounded Rectangle
+// 6: hexagon
 
 if (!GMUI_IsControl() && id != GMUII()) {
     GMUI_ThrowErrorDetailed("Invalid control",GMUI_ControlSetSliderStyle);

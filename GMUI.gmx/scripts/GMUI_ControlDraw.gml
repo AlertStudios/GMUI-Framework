@@ -1,3 +1,4 @@
+#define GMUI_ControlDraw
 ///GMUI_ControlDraw(Draw the control [bool])
 /// The actions done per step for a control added to the grid, along with drawing things
 
@@ -273,21 +274,44 @@ if (argument0 == true) {
     // Draw special features for the other types
     // Picker types (integer, double, etc)
     if (ControlPicker) {
-        // draw arrows (origin should be on the right and to the corner it is placed at)
-        // Top arrow and bottom arrow
-        draw_sprite_ext(ControlPickerSpriteRightOrUp,0,RoomW-2,RoomY+2,1,1,0,c_white,_BackgroundAlpha);
-        draw_sprite_ext(ControlPickerSpriteLeftOrDown,0,RoomW-2,RoomH-2,1,1,0,c_white,_BackgroundAlpha);
+        // draw arrows (origin should be on the right/left and to the corner it is placed at)
+        var _ax1,_ax2,_ay1,_ay2,_hh,_ax3;
+        _ay1 = RoomY+2;
+        if (ControlPickerDirection == global.GMUIDirectionTypeVertical) {
+            _ax3 = RoomX+1;
+            _ax1 = RoomX + (RoomW-RoomX)/2;
+            _hh = ControlPickerHeight;
+        }
+        else {
+            _ax1 = RoomW-2;
+            _ax3 = _ax1-ControlPickerWidth+1;
+            _hh = (RoomH-RoomY)/2;
+        }
+        if (ControlPickerDirection == global.GMUIDirectionTypeHorizontal) {
+            _ax2 = RoomX+2;
+            _ay2 = _ay1;
+        }
+        else { // GMUIDirectionTypeSideVertical or GMUIDirectionTypeVertical
+            _ax2 = _ax1;
+            _ay2 = RoomH-2;
+        }
         
-        if (ControlPickerDirection == global.GMUIDirectionTypeSideVertical) {
-            color_alpha(ControlHoverColor,_HoverAlpha);
-            switch (HoveringDirection) {
-                case global.GMUIHoveringDirection_Up:
-                    draw_rectangle(RoomW-2-ControlPickerWidth,RoomY,RoomW-1,RoomY+(RoomH-RoomY)/2,0);
-                    break;
-                case global.GMUIHoveringDirection_Down:
-                    draw_rectangle(RoomW-2-ControlPickerWidth,RoomH-(RoomH-RoomY)/2,RoomW-1,RoomH,0);
-                    break;
-            }
+        // Top arrow and bottom arrow
+        draw_sprite_ext(ControlPickerSpriteRightOrUp,0,_ax1,_ay1,1,1,0,c_white,_BackgroundAlpha);
+        draw_sprite_ext(ControlPickerSpriteLeftOrDown,0,_ax2,_ay2,1,1,0,c_white,_BackgroundAlpha);
+        
+        color_alpha(ControlHoverColor,_HoverAlpha);
+        if (ControlPickerDirection == global.GMUIDirectionTypeHorizontal) {
+            if (HoveringDirection == global.GMUIHoveringDirection_Right)
+                draw_rectangle(_ax3,RoomY+1,RoomW-1,RoomH,0);
+            else if (HoveringDirection == global.GMUIHoveringDirection_Left)
+                draw_rectangle(_ax2-1, RoomY+1, _ax2+ControlPickerWidth,RoomH,0);
+        }
+        else { //GMUIDirectionTypeSideVertical or GMUIDirectionTypeVertical
+            if (HoveringDirection == global.GMUIHoveringDirection_Up)
+                draw_rectangle(_ax3,RoomY+1,RoomW-1,RoomY+_hh,0);
+            else if (HoveringDirection == global.GMUIHoveringDirection_Down)
+                draw_rectangle(_ax3,RoomH-_hh,RoomW-1,RoomH,0);
         }
         
     }
@@ -360,3 +384,4 @@ if (argument0 == true) {
     }
 }
 //
+

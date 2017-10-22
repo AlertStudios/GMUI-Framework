@@ -8,7 +8,7 @@ if (argument0) {
     MX = mouse_x-(GMUIP).GMUI_grid_x[Layer];
     MY = mouse_y-(GMUIP).GMUI_grid_y[Layer];
     
-    if (SliderHorizontal)
+    if (!SliderVertical)
         SliderRelativeFinalXorY = minmax(MX,RoomX+SliderStartEndPadding,RoomW-SliderStartEndPadding)-RoomX;
     else
         SliderRelativeFinalXorY = minmax(MY,RoomY+SliderStartEndPadding,RoomH-SliderStartEndPadding)-RoomY;
@@ -19,7 +19,7 @@ var vald,pad2,vali;
 vald = ControlMaxValue-ControlMinValue;
 pad2 = SliderStartEndPadding*2;
 
-if (SliderHorizontal)
+if (!SliderVertical)
     valueSetting = vald*(SliderRelativeFinalXorY-SliderStartEndPadding)/(RoomW-RoomX-pad2)+ControlMinValue;
 else
     valueSetting = vald*(SliderRelativeFinalXorY-SliderStartEndPadding)/(RoomH-RoomY-pad2)+ControlMinValue;

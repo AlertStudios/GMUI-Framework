@@ -7,14 +7,22 @@ if (!GMUI_IsControl() && id != GMUII())
     return false;
 }
 
-
-    ControlPickerWidth = argument0;
-    ControlPickerHeight = argument1;
-    ControlPickerDirection = argument2;
-    ControlPickerSpriteRightOrUp = argument3;
-    ControlPickerSpriteLeftOrDown = argument4;
+    if (argument0 >= 0)
+        ControlPickerWidth = argument0;
+    if (argument1 >= 0)
+        ControlPickerHeight = argument1;
+    if (argument2 >= 0) {
+        ControlPickerDirection = argument2;
+        if (argument2 != global.GMUIDirectionTypeSideVertical)
+            ControlFontAlign = fa_center;
+    }
+    
+    if (sprite_exists(argument3))
+        ControlPickerSpriteRightOrUp = argument3;
+    if (sprite_exists(argument4))
+        ControlPickerSpriteLeftOrDown = argument4;
     
 
 return true;
-    
+
 

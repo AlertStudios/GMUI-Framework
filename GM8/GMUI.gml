@@ -57,7 +57,10 @@ with (GMUI_Add("Test4", "intpicker",            0,6,    10,2,   layer, global.GM
     GMUI_ControlAddToGroup(2);
     GMUI_ControlSetHoverAction(_Hover_Int);
     GMUI_ControlSetHoverOffAction(_HoverOff_Int);
-    
+    //sprite_set_offset(GMUIspr_arrow,10,12);sprite_set_offset(GMUIspr_arrowup,10,0); // If vertical, offset should be centered
+    //GMUI_ControlSetPicker(sprite_get_width(GMUIspr_arrowup) + 4,sprite_get_height(GMUIspr_arrowup) + 4,
+    //    global.GMUIDirectionTypeVertical, GMUIspr_arrowup, GMUIspr_arrow);
+        
     with (GMUI_ControlAddTooltip("-20 to 20.",global.GMUIAnchorLeft,6,2,12,4,-1,-1)) {
         GMUI_ControlSetFadeOnHide(id, room_speed/4);
     }
@@ -181,7 +184,7 @@ GMUI_PopupSetAction("Test Popup", _PopupReturnAction);
 
 // Test slider
 with (GMUI_Add("Slider", "slider",              16,12,  10,2,   layer, global.GMUIAnchorBottomRight)) {
-    GMUI_ControlSetSliderSettings(13,10,34,true,true,true);
+    GMUI_ControlSetSliderSettings(13,10,34,true,true,true,global.GMUIDirectionTypeHorizontal);
     GMUI_ControlSetSliderStyle(2,2,c_dkgray,0.6,c_teal,0.9,c_dkgray,0.4,c_aqua,1,c_gray,0.8);
     GMUI_ControlSetSliderSize(16, 20, 1, 12, 10, 8, 6, 8);
     
@@ -500,42 +503,6 @@ GMUI_CloseMenu(true);
 
 GMUI_CloseMenu(true);
 
-#define ease_CopyrightNotice
-// This notice pertains to the scripts that start with "ease".
-// The scripts used were modified to effectively work with Game Maker by Mark Palnau.
-/*
- *
- * TERMS OF USE - EASING EQUATIONS
- * 
- * Open source under the BSD License. 
- * 
- * Copyright © 2001 Robert Penner
- * All rights reserved.
- * 
- * Redistribution and use in source and binary forms, with or without modification, 
- * are permitted provided that the following conditions are met:
- * 
- * Redistributions of source code must retain the above copyright notice, this list of 
- * conditions and the following disclaimer.
- * Redistributions in binary form must reproduce the above copyright notice, this list 
- * of conditions and the following disclaimer in the documentation and/or other materials 
- * provided with the distribution.
- * 
- * Neither the name of the author nor the names of contributors may be used to endorse 
- * or promote products derived from this software without specific prior written permission.
- * 
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY 
- * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
- * MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE
- *  COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
- *  EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE
- *  GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED 
- * AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
- *  NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED 
- * OF THE POSSIBILITY OF SUCH DAMAGE. 
- *
- */
-
 #define easeBounceOut
 ///easeBounceOut(t,b,c,d) where t is current time, b is start value, c is change in value, and d is duration
 /// Bounce Ease for moving controls smoothly
@@ -699,6 +666,42 @@ return _c*((_t)*_t*((_s+1)*_t + _s) + 1) + _b;
 
 //To see copyright notice for this script please click on the following text then press F12:
 //ease_CopyrightNotice
+
+#define ease_CopyrightNotice
+// This notice pertains to the scripts that start with "ease".
+// The scripts used were modified to effectively work with Game Maker by Mark Palnau.
+/*
+ *
+ * TERMS OF USE - EASING EQUATIONS
+ * 
+ * Open source under the BSD License. 
+ * 
+ * Copyright © 2001 Robert Penner
+ * All rights reserved.
+ * 
+ * Redistribution and use in source and binary forms, with or without modification, 
+ * are permitted provided that the following conditions are met:
+ * 
+ * Redistributions of source code must retain the above copyright notice, this list of 
+ * conditions and the following disclaimer.
+ * Redistributions in binary form must reproduce the above copyright notice, this list 
+ * of conditions and the following disclaimer in the documentation and/or other materials 
+ * provided with the distribution.
+ * 
+ * Neither the name of the author nor the names of contributors may be used to endorse 
+ * or promote products derived from this software without specific prior written permission.
+ * 
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY 
+ * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
+ * MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE
+ *  COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+ *  EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE
+ *  GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED 
+ * AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
+ *  NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED 
+ * OF THE POSSIBILITY OF SUCH DAMAGE. 
+ *
+ */
 
 #define GMUI_ControlSetFade
 ///GMUI_ControlSetFade("Control Name", Time, In (1) / Out (0) / Hover (2) )
@@ -984,14 +987,15 @@ GMUI_ControlSetDefaultSprite(thecontrol);
 // Set the default optional flexible sprite map properties
 GMUI_ControlSetDefaultSpriteMap(thecontrol);
 
+// Set the default picker properties
+GMUI_ControlSetDefaultPicker(thecontrol);
+thecontrol.ControlFontAlign = fa_left; // Reset font align, just in case it was changed from the picker
+
 // Set the default font style properties
 GMUI_ControlSetDefaultFontStyle(thecontrol);
 
 // Set the default attribute properies
 GMUI_ControlSetDefaultAttributes(thecontrol);
-
-// Set the default picker properties
-GMUI_ControlSetDefaultPicker(thecontrol);
 
 // Set the default button properties
 GMUI_ControlSetDefaultButton(thecontrol);
@@ -1790,16 +1794,24 @@ if (!GMUI_IsControl() && id != GMUII())
     return false;
 }
 
-
-    ControlPickerWidth = argument0;
-    ControlPickerHeight = argument1;
-    ControlPickerDirection = argument2;
-    ControlPickerSpriteRightOrUp = argument3;
-    ControlPickerSpriteLeftOrDown = argument4;
+    if (argument0 >= 0)
+        ControlPickerWidth = argument0;
+    if (argument1 >= 0)
+        ControlPickerHeight = argument1;
+    if (argument2 >= 0) {
+        ControlPickerDirection = argument2;
+        if (argument2 != global.GMUIDirectionTypeSideVertical)
+            ControlFontAlign = fa_center;
+    }
+    
+    if (sprite_exists(argument3))
+        ControlPickerSpriteRightOrUp = argument3;
+    if (sprite_exists(argument4))
+        ControlPickerSpriteLeftOrDown = argument4;
     
 
 return true;
-    
+
 
 #define GMUI_ControlSetPositioning
 ///GMUI_ControlSetPositioning( relative x, relative y, actual width, actual height )
@@ -1860,7 +1872,7 @@ if (script_exists(argument0))
     
 
 #define GMUI_ControlSetSliderSettings
-///GMUI_ControlSetSliderSettings(ticks amount, min value, max value, round values to ticks[bool], snap [bool], smooth adjust and snap[bool]) //horizontal orientation [bool] coming soon
+///GMUI_ControlSetSliderSettings(ticks amount, min value, max value, round values to ticks[bool], snap [bool], smooth adjust and snap[bool], vertical orientation[bool])
 ///Required to be called to set the SETTINGS of the slider
 
 if (!GMUI_IsControl() && id != GMUII())
@@ -1884,6 +1896,7 @@ if (!sliderInitialized) {
     SliderTickPoints[0] = 0;
     SliderTickInterval = 0; // not sure if will be used
     SliderRelativeFinalXorY = 0;
+    SliderVertical = false;
     GMUI_ControlSliderUpdate(id);
     SliderRelativeXorY = SliderRelativeFinalXorY;
     SliderRelativePad = 0;
@@ -1904,7 +1917,6 @@ if (!sliderInitialized) {
     // Default Sizing values
     GMUI_ControlSetSliderSize(16, 20, 1, 12, 10, 8, 6, 0);
     
-    SliderHorizontal = true;
 }
 
 // If any values are given as negative numbers, those values will remain as the control default
@@ -1920,8 +1932,8 @@ if (argument4 >= 0)
     SliderSnap = (argument4 > 0);
 if (argument5 >= 0)
     SliderSmoothSnap = (argument5 > 0);
-//if (argument6 >= 0)
-//    SliderHorizontal = (argument6 > 0);
+if (argument6 >= 0)
+    SliderVertical = (argument6 > 0);
 
 
 return true;
@@ -1986,6 +1998,7 @@ return true;
 // 3: PentagonDown
 // 4: Rectangle
 // 5: Rounded Rectangle
+// 6: hexagon
 
 if (!GMUI_IsControl() && id != GMUII()) {
     GMUI_ThrowErrorDetailed("Invalid control",GMUI_ControlSetSliderStyle);
@@ -4216,21 +4229,44 @@ if (argument0 == true) {
     // Draw special features for the other types
     // Picker types (integer, double, etc)
     if (ControlPicker) {
-        // draw arrows (origin should be on the right and to the corner it is placed at)
-        // Top arrow and bottom arrow
-        draw_sprite_ext(ControlPickerSpriteRightOrUp,0,RoomW-2,RoomY+2,1,1,0,c_white,_BackgroundAlpha);
-        draw_sprite_ext(ControlPickerSpriteLeftOrDown,0,RoomW-2,RoomH-2,1,1,0,c_white,_BackgroundAlpha);
+        // draw arrows (origin should be on the right/left and to the corner it is placed at)
+        var _ax1,_ax2,_ay1,_ay2,_hh,_ax3;
+        _ay1 = RoomY+2;
+        if (ControlPickerDirection == global.GMUIDirectionTypeVertical) {
+            _ax3 = RoomX+1;
+            _ax1 = RoomX + (RoomW-RoomX)/2;
+            _hh = ControlPickerHeight;
+        }
+        else {
+            _ax1 = RoomW-2;
+            _ax3 = _ax1-ControlPickerWidth+1;
+            _hh = (RoomH-RoomY)/2;
+        }
+        if (ControlPickerDirection == global.GMUIDirectionTypeHorizontal) {
+            _ax2 = RoomX+2;
+            _ay2 = _ay1;
+        }
+        else { // GMUIDirectionTypeSideVertical or GMUIDirectionTypeVertical
+            _ax2 = _ax1;
+            _ay2 = RoomH-2;
+        }
         
-        if (ControlPickerDirection == global.GMUIDirectionTypeSideVertical) {
-            color_alpha(ControlHoverColor,_HoverAlpha);
-            switch (HoveringDirection) {
-                case global.GMUIHoveringDirection_Up:
-                    draw_rectangle(RoomW-2-ControlPickerWidth,RoomY,RoomW-1,RoomY+(RoomH-RoomY)/2,0);
-                    break;
-                case global.GMUIHoveringDirection_Down:
-                    draw_rectangle(RoomW-2-ControlPickerWidth,RoomH-(RoomH-RoomY)/2,RoomW-1,RoomH,0);
-                    break;
-            }
+        // Top arrow and bottom arrow
+        draw_sprite_ext(ControlPickerSpriteRightOrUp,0,_ax1,_ay1,1,1,0,c_white,_BackgroundAlpha);
+        draw_sprite_ext(ControlPickerSpriteLeftOrDown,0,_ax2,_ay2,1,1,0,c_white,_BackgroundAlpha);
+        
+        color_alpha(ControlHoverColor,_HoverAlpha);
+        if (ControlPickerDirection == global.GMUIDirectionTypeHorizontal) {
+            if (HoveringDirection == global.GMUIHoveringDirection_Right)
+                draw_rectangle(_ax3,RoomY+1,RoomW-1,RoomH,0);
+            else if (HoveringDirection == global.GMUIHoveringDirection_Left)
+                draw_rectangle(_ax2-1, RoomY+1, _ax2+ControlPickerWidth,RoomH,0);
+        }
+        else { //GMUIDirectionTypeSideVertical or GMUIDirectionTypeVertical
+            if (HoveringDirection == global.GMUIHoveringDirection_Up)
+                draw_rectangle(_ax3,RoomY+1,RoomW-1,RoomY+_hh,0);
+            else if (HoveringDirection == global.GMUIHoveringDirection_Down)
+                draw_rectangle(_ax3,RoomH-_hh,RoomW-1,RoomH,0);
         }
         
     }
@@ -4428,22 +4464,36 @@ with (_tt_id) {
     }
     
     // Assign drawing vars
-    var cx, cxp, cy, cw, ch, cwx, chy, chy2;
+    var cx, cp, cy, cw, ch, cwx, cwx2, chy, chy2, cworh, RoomWorH, SC, SA;
     cx = RoomX;
-    cxp = cx+SliderStartEndPadding;
     cy = RoomY;
+    if (!SliderVertical)
+        cp = cx+SliderStartEndPadding;
+    else
+        cp = cy+SliderStartEndPadding;
+
     cw = RoomW-cx;
     ch = RoomH-cy;
     cwx = RoomW;
+    cwx2 = (RoomX+RoomW)/2;
+    chy = RoomH;
     chy2 = (RoomY+RoomH)/2;
     
     // Compute the locations of all drawn elements
     if (!sliderComputed) {
-        
-        SliderTickDistance = (cw - (SliderStartEndPadding*2)) / max(SliderTickAmount - 1, 1);
-        SliderMidPoint = cw/2;
+        if (!SliderVertical) {
+            RoomWorH = RoomW;
+            cworh = cw;
+        }
+        else {
+            RoomWorH = RoomH;
+            cworh = ch;
+        }
+            
+        SliderTickDistance = (cworh - (SliderStartEndPadding*2)) / max(SliderTickAmount - 1, 1);
+        SliderMidPoint = cworh/2;
         SliderQuarterPoint1 = SliderMidPoint/2 + SliderStartEndPadding/2;
-        SliderQuarterPoint2 = cw - SliderQuarterPoint1;
+        SliderQuarterPoint2 = cworh - SliderQuarterPoint1;
         SliderSnapDistance = SliderTickDistance/2;
         
         for (i = 0; i < SliderTickAmount; i+=1) {
@@ -4467,7 +4517,7 @@ with (_tt_id) {
         SliderSnapDistance = SliderTickPoints[i-1] - SliderTickPoints[i-2];
         
         // Check if the slider position is within the padding amount
-        SliderRelativeFinalXorY = minmax(SliderRelativeXorY,SliderStartEndPadding,RoomW-SliderStartEndPadding);
+        SliderRelativeFinalXorY = minmax(SliderRelativeXorY,SliderStartEndPadding,RoomWorH-SliderStartEndPadding);
         SliderRelativeXorY = SliderRelativeFinalXorY;
         Slider_t = Slider_d;
         
@@ -4483,11 +4533,16 @@ with (_tt_id) {
         
             break;
         case 2: // Single (Horizontal line)
-        //todo: actually write this part
-            draw_line(cxp,chy2,cwx-SliderStartEndPadding,chy2);
+            if (!SliderVertical)
+                draw_line(cp,chy2,cwx-SliderStartEndPadding,chy2);
+            else
+                draw_line(cwx2,cp,cwx2,chy-SliderStartEndPadding);
             break;
         case 3: // Rounded rectangle region
-            draw_roundrect(cxp,chy2-SliderSlideHeight/2,cwx-SliderStartEndPadding,chy2+SliderSlideHeight/2,false);
+            if (!SliderVertical)
+                draw_roundrect(cp,chy2-SliderSlideHeight/2,cwx-SliderStartEndPadding,chy2+SliderSlideHeight/2,false);
+            else
+                draw_roundrect(cwx2-SliderSlideHeight/2,cp,cwx2+SliderSlideHeight/2,chy-SliderStartEndPadding,false);
             break;
         case 0: // none (slider only), or sprite
         default:
@@ -4501,32 +4556,62 @@ with (_tt_id) {
         color_alpha(SliderTickColor,SliderTickAlpha);
         
         if (SliderTickHeight > 0 && SliderTickDistance > 1) {
-            for (i = 0; i < SliderTickAmount; i+=1) {
-                if (SliderTickPoints[i] >= 0) {
-                    draw_line(cx+SliderTickPoints[i],chy2-SliderTickHeight,cx+SliderTickPoints[i],chy2+SliderTickHeight);
+            if (!SliderVertical) {
+                for (i = 0; i < SliderTickAmount; i+=1) {
+                    if (SliderTickPoints[i] >= 0) {
+                        draw_line(cx+SliderTickPoints[i],chy2-SliderTickHeight,cx+SliderTickPoints[i],chy2+SliderTickHeight);
+                    }
+                }
+            }
+            else {
+                for (i = 0; i < SliderTickAmount; i+=1) {
+                    if (SliderTickPoints[i] >= 0) {
+                        draw_line(cwx2-SliderTickHeight,cy+SliderTickPoints[i],cwx2+SliderTickHeight,cy+SliderTickPoints[i]);
+                    }
                 }
             }
         }
         
         // Draw the special ticks
-        if (SliderEndTickHeight > 0) {
-            draw_line(cxp,chy2-SliderEndTickHeight,cxp,chy2+SliderEndTickHeight);
-            draw_line(cwx-SliderStartEndPadding,chy2-SliderEndTickHeight,cwx-SliderStartEndPadding,chy2+SliderEndTickHeight);
+        if (!SliderVertical) {
+            if (SliderEndTickHeight > 0) {
+                draw_line(cp,chy2-SliderEndTickHeight,cp,chy2+SliderEndTickHeight);
+                draw_line(cwx-SliderStartEndPadding,chy2-SliderEndTickHeight,cwx-SliderStartEndPadding,chy2+SliderEndTickHeight);
+            }
+            
+            if (SliderMidTickHeight > 0) {
+                draw_line(cx+SliderMidPoint,chy2-SliderMidTickHeight,cx+SliderMidPoint,chy2+SliderMidTickHeight);
+            }
+            
+            if (SliderQuarterTickHeight > 0) {
+                draw_line(cx+SliderQuarterPoint1,chy2-SliderQuarterTickHeight,cx+SliderQuarterPoint1,chy2+SliderQuarterTickHeight);
+                draw_line(cx+SliderQuarterPoint2,chy2-SliderQuarterTickHeight,cx+SliderQuarterPoint2,chy2+SliderQuarterTickHeight);
+            }
         }
-        
-        if (SliderMidTickHeight > 0) {
-            draw_line(cx+SliderMidPoint,chy2-SliderMidTickHeight,cx+SliderMidPoint,chy2+SliderMidTickHeight);
-        }
-        
-        if (SliderQuarterTickHeight > 0) {
-            draw_line(cx+SliderQuarterPoint1,chy2-SliderQuarterTickHeight,cx+SliderQuarterPoint1,chy2+SliderQuarterTickHeight);
-            draw_line(cx+SliderQuarterPoint2,chy2-SliderQuarterTickHeight,cx+SliderQuarterPoint2,chy2+SliderQuarterTickHeight);
+        else {
+            if (SliderEndTickHeight > 0) {
+                draw_line(cwx2-SliderEndTickHeight,cp,cwx2+SliderEndTickHeight,cp);
+                draw_line(cwx2-SliderEndTickHeight,chy-SliderStartEndPadding,cwx2+SliderEndTickHeight,chy-SliderStartEndPadding);
+            }
+            
+            if (SliderMidTickHeight > 0) {
+                draw_line(cwx2-SliderMidTickHeight,cy+SliderMidPoint,cwx2+SliderMidTickHeight,cy+SliderMidPoint);
+            }
+            
+            if (SliderQuarterTickHeight > 0) {
+                draw_line(cwx2-SliderQuarterTickHeight,cy+SliderQuarterPoint1,cwx2+SliderQuarterTickHeight,cy+SliderQuarterPoint1);
+                draw_line(cwx2-SliderQuarterTickHeight,cy+SliderQuarterPoint2,cwx2+SliderQuarterTickHeight,cy+SliderQuarterPoint2);
+            }
         }
     }
     else if (0) {
     //not yet implemented
     }
     
+    // Check if selected or not
+    //todo: implement
+    SC = SliderColor;
+    SA = SliderAlpha;
     
     // Draw slider based on type
     switch (SliderStyle) {
@@ -4534,38 +4619,76 @@ with (_tt_id) {
         
             break;
         case 2: // PentagonUp
-            draw_primitive_begin(pr_trianglefan);
-            draw_vertex_color(cx+SliderRelativeXorY,chy2-SliderThumbHeight/2,SliderColor,SliderAlpha);
-            draw_vertex_color(cx+SliderRelativeXorY-SliderThumbWidth/2,chy2-SliderThumbHeight/2+SliderThumbWidth/2,SliderColor,SliderAlpha);
-            draw_vertex_color(cx+SliderRelativeXorY-SliderThumbWidth/2,chy2+SliderThumbHeight/2,SliderColor,SliderAlpha);
-            draw_vertex_color(cx+SliderRelativeXorY+SliderThumbWidth/2,chy2+SliderThumbHeight/2,SliderColor,SliderAlpha);
-            draw_vertex_color(cx+SliderRelativeXorY+SliderThumbWidth/2,chy2-SliderThumbHeight/2+SliderThumbWidth/2,SliderColor,SliderAlpha);
-            draw_primitive_end();
-            draw_primitive_begin(pr_linestrip);
-            draw_vertex_color(cx+SliderRelativeXorY,chy2-SliderThumbHeight/2,SliderBorderColor,SliderBorderAlpha);
-            draw_vertex_color(cx+SliderRelativeXorY-SliderThumbWidth/2,chy2-SliderThumbHeight/2+SliderThumbWidth/2,SliderBorderColor,SliderBorderAlpha);
-            draw_vertex_color(cx+SliderRelativeXorY-SliderThumbWidth/2,chy2+SliderThumbHeight/2,SliderBorderColor,SliderBorderAlpha);
-            draw_vertex_color(-1+cx+SliderRelativeXorY+SliderThumbWidth/2,chy2+SliderThumbHeight/2,SliderBorderColor,SliderBorderAlpha);
-            draw_vertex_color(-1+cx+SliderRelativeXorY+SliderThumbWidth/2,chy2-SliderThumbHeight/2+SliderThumbWidth/2,SliderBorderColor,SliderBorderAlpha);
-            draw_vertex_color(-1+cx+SliderRelativeXorY,chy2-SliderThumbHeight/2,SliderBorderColor,SliderBorderAlpha);
-            draw_primitive_end();
+            if (!SliderVertical) {
+                draw_primitive_begin(pr_trianglefan);
+                draw_vertex_color(cx+SliderRelativeXorY,chy2-SliderThumbHeight/2,SC,SA);
+                draw_vertex_color(cx+SliderRelativeXorY-SliderThumbWidth/2,chy2-SliderThumbHeight/2+SliderThumbWidth/2,SC,SA);
+                draw_vertex_color(cx+SliderRelativeXorY-SliderThumbWidth/2,chy2+SliderThumbHeight/2,SC,SA);
+                draw_vertex_color(cx+SliderRelativeXorY+SliderThumbWidth/2,chy2+SliderThumbHeight/2,SC,SA);
+                draw_vertex_color(cx+SliderRelativeXorY+SliderThumbWidth/2,chy2-SliderThumbHeight/2+SliderThumbWidth/2,SC,SA);
+                draw_primitive_end();
+                draw_primitive_begin(pr_linestrip);
+                draw_vertex_color(cx+SliderRelativeXorY,chy2-SliderThumbHeight/2,SliderBorderColor,SliderBorderAlpha);
+                draw_vertex_color(cx+SliderRelativeXorY-SliderThumbWidth/2,chy2-SliderThumbHeight/2+SliderThumbWidth/2,SliderBorderColor,SliderBorderAlpha);
+                draw_vertex_color(cx+SliderRelativeXorY-SliderThumbWidth/2,chy2+SliderThumbHeight/2,SliderBorderColor,SliderBorderAlpha);
+                draw_vertex_color(-1+cx+SliderRelativeXorY+SliderThumbWidth/2,chy2+SliderThumbHeight/2,SliderBorderColor,SliderBorderAlpha);
+                draw_vertex_color(-1+cx+SliderRelativeXorY+SliderThumbWidth/2,chy2-SliderThumbHeight/2+SliderThumbWidth/2,SliderBorderColor,SliderBorderAlpha);
+                draw_vertex_color(-1+cx+SliderRelativeXorY,chy2-SliderThumbHeight/2,SliderBorderColor,SliderBorderAlpha);
+                draw_primitive_end();
+            }
+            else {
+                draw_primitive_begin(pr_trianglefan);
+                draw_vertex_color(cwx2+SliderThumbHeight/2,cy+SliderRelativeXorY,SC,SA);
+                draw_vertex_color(cwx2+SliderThumbHeight/2-SliderThumbWidth/2,cy+SliderRelativeXorY-SliderThumbWidth/2,SC,SA);
+                draw_vertex_color(cwx2-SliderThumbHeight/2,cy+SliderRelativeXorY-SliderThumbWidth/2,SC,SA);
+                draw_vertex_color(cwx2-SliderThumbHeight/2,cy+SliderRelativeXorY+SliderThumbWidth/2,SC,SA);
+                draw_vertex_color(cwx2+SliderThumbHeight/2-SliderThumbWidth/2,cy+SliderRelativeXorY+SliderThumbWidth/2,SC,SA);
+                draw_primitive_end();
+                draw_primitive_begin(pr_linestrip);
+                draw_vertex_color(-1+cwx2+SliderThumbHeight/2,cy+SliderRelativeXorY,SliderBorderColor,SliderAlpha);
+                draw_vertex_color(-1+cwx2+SliderThumbHeight/2-SliderThumbWidth/2,cy+SliderRelativeXorY-SliderThumbWidth/2,SliderBorderColor,SliderAlpha);
+                draw_vertex_color(cwx2-SliderThumbHeight/2,cy+SliderRelativeXorY-SliderThumbWidth/2,SliderBorderColor,SliderAlpha);
+                draw_vertex_color(cwx2-SliderThumbHeight/2,cy+SliderRelativeXorY+SliderThumbWidth/2,SliderBorderColor,SliderAlpha);
+                draw_vertex_color(-1+cwx2+SliderThumbHeight/2-SliderThumbWidth/2,cy+SliderRelativeXorY+SliderThumbWidth/2,SliderBorderColor,SliderAlpha);
+                draw_vertex_color(-1+cwx2+SliderThumbHeight/2,cy+SliderRelativeXorY,SliderBorderColor,SliderAlpha);
+                draw_primitive_end();
+            }
             break;
         case 3: // PentagonDown
-            draw_primitive_begin(pr_trianglefan);
-            draw_vertex_color(cx+SliderRelativeXorY,chy2+SliderThumbHeight/2,SliderColor,SliderAlpha);
-            draw_vertex_color(cx+SliderRelativeXorY+SliderThumbWidth/2,chy2+SliderThumbHeight/2-SliderThumbWidth/2,SliderColor,SliderAlpha);
-            draw_vertex_color(cx+SliderRelativeXorY+SliderThumbWidth/2,chy2-SliderThumbHeight/2,SliderColor,SliderAlpha);
-            draw_vertex_color(cx+SliderRelativeXorY-SliderThumbWidth/2,chy2-SliderThumbHeight/2,SliderColor,SliderAlpha);
-            draw_vertex_color(cx+SliderRelativeXorY-SliderThumbWidth/2,chy2+SliderThumbHeight/2-SliderThumbWidth/2,SliderColor,SliderAlpha);
-            draw_primitive_end();
-            draw_primitive_begin(pr_linestrip);
-            draw_vertex_color(-1+cx+SliderRelativeXorY,chy2+SliderThumbHeight/2,SliderColor,SliderAlpha);
-            draw_vertex_color(-1+cx+SliderRelativeXorY+SliderThumbWidth/2,chy2+SliderThumbHeight/2-SliderThumbWidth/2,SliderColor,SliderAlpha);
-            draw_vertex_color(-1+cx+SliderRelativeXorY+SliderThumbWidth/2,chy2-SliderThumbHeight/2,SliderColor,SliderAlpha);
-            draw_vertex_color(cx+SliderRelativeXorY-SliderThumbWidth/2,chy2-SliderThumbHeight/2,SliderColor,SliderAlpha);
-            draw_vertex_color(cx+SliderRelativeXorY-SliderThumbWidth/2,chy2+SliderThumbHeight/2-SliderThumbWidth/2,SliderColor,SliderAlpha);
-            draw_vertex_color(cx+SliderRelativeXorY,chy2+SliderThumbHeight/2,SliderColor,SliderAlpha);
-            draw_primitive_end();
+            if (!SliderVertical) {
+                draw_primitive_begin(pr_trianglefan);
+                draw_vertex_color(cx+SliderRelativeXorY,chy2+SliderThumbHeight/2,SliderColor,SliderAlpha);
+                draw_vertex_color(cx+SliderRelativeXorY+SliderThumbWidth/2,chy2+SliderThumbHeight/2-SliderThumbWidth/2,SC,SA);
+                draw_vertex_color(cx+SliderRelativeXorY+SliderThumbWidth/2,chy2-SliderThumbHeight/2,SC,SA);
+                draw_vertex_color(cx+SliderRelativeXorY-SliderThumbWidth/2,chy2-SliderThumbHeight/2,SC,SA);
+                draw_vertex_color(cx+SliderRelativeXorY-SliderThumbWidth/2,chy2+SliderThumbHeight/2-SliderThumbWidth/2,SC,SA);
+                draw_primitive_end();
+                draw_primitive_begin(pr_linestrip);
+                draw_vertex_color(-1+cx+SliderRelativeXorY,chy2+SliderThumbHeight/2,SliderBorderColor,SliderBorderAlpha);
+                draw_vertex_color(-1+cx+SliderRelativeXorY+SliderThumbWidth/2,chy2+SliderThumbHeight/2-SliderThumbWidth/2,SliderBorderColor,SliderBorderAlpha);
+                draw_vertex_color(-1+cx+SliderRelativeXorY+SliderThumbWidth/2,chy2-SliderThumbHeight/2,SliderBorderColor,SliderBorderAlpha);
+                draw_vertex_color(cx+SliderRelativeXorY-SliderThumbWidth/2,chy2-SliderThumbHeight/2,SliderBorderColor,SliderBorderAlpha);
+                draw_vertex_color(cx+SliderRelativeXorY-SliderThumbWidth/2,chy2+SliderThumbHeight/2-SliderThumbWidth/2,SliderBorderColor,SliderBorderAlpha);
+                draw_vertex_color(cx+SliderRelativeXorY,chy2+SliderThumbHeight/2,SliderBorderColor,SliderBorderAlpha);
+                draw_primitive_end();
+            }
+            else {
+                draw_primitive_begin(pr_trianglefan);
+                draw_vertex_color(cwx2-SliderThumbHeight/2,cy+SliderRelativeXorY,SC,SA);
+                draw_vertex_color(cwx2-SliderThumbHeight/2+SliderThumbWidth/2,cy+SliderRelativeXorY+SliderThumbWidth/2,SC,SA);
+                draw_vertex_color(cwx2+SliderThumbHeight/2,cy+SliderRelativeXorY+SliderThumbWidth/2,SC,SA);
+                draw_vertex_color(cwx2+SliderThumbHeight/2,cy+SliderRelativeXorY-SliderThumbWidth/2,SC,SA);
+                draw_vertex_color(cwx2-SliderThumbHeight/2+SliderThumbWidth/2,cy+SliderRelativeXorY-SliderThumbWidth/2,SC,SA);
+                draw_primitive_end();
+                draw_primitive_begin(pr_linestrip);
+                draw_vertex_color(cwx2-SliderThumbHeight/2,cy+SliderRelativeXorY,SliderBorderColor,SliderBorderAlpha);
+                draw_vertex_color(cwx2-SliderThumbHeight/2+SliderThumbWidth/2,cy+SliderRelativeXorY+SliderThumbWidth/2,SliderBorderColor,SliderBorderAlpha);
+                draw_vertex_color(-1+cwx2+SliderThumbHeight/2,cy+SliderRelativeXorY+SliderThumbWidth/2,SliderBorderColor,SliderBorderAlpha);
+                draw_vertex_color(-1+cwx2+SliderThumbHeight/2,cy+SliderRelativeXorY-SliderThumbWidth/2,SliderBorderColor,SliderBorderAlpha);
+                draw_vertex_color(cwx2-SliderThumbHeight/2+SliderThumbWidth/2,cy+SliderRelativeXorY-SliderThumbWidth/2,SliderBorderColor,SliderBorderAlpha);
+                draw_vertex_color(cwx2-SliderThumbHeight/2,cy+SliderRelativeXorY,SliderBorderColor,SliderBorderAlpha);
+                draw_primitive_end();
+            }
             break;
         case 4: // Rectangle
         //SliderThumbWidth
@@ -4576,6 +4699,9 @@ with (_tt_id) {
             //draw_rectangle(
             break;
         case 5: // Rounded Rectangle
+        
+            break;
+        case 6: // Hexagon
         
             break;
     }
@@ -4593,7 +4719,7 @@ with (_tt_id) {
     
     
     
-    //todo: drawing the value in the control may be an option later on?
+    //todo: drawing the value in/below the control may be an option later on?
     
     //color_alpha(ControlFontColor,min(ControlFontAlpha,FadeAlpha));
     
@@ -5095,7 +5221,7 @@ if (argument0) {
     MX = mouse_x-(GMUIP).GMUI_grid_x[Layer];
     MY = mouse_y-(GMUIP).GMUI_grid_y[Layer];
     
-    if (SliderHorizontal)
+    if (!SliderVertical)
         SliderRelativeFinalXorY = minmax(MX,RoomX+SliderStartEndPadding,RoomW-SliderStartEndPadding)-RoomX;
     else
         SliderRelativeFinalXorY = minmax(MY,RoomY+SliderStartEndPadding,RoomH-SliderStartEndPadding)-RoomY;
@@ -5106,7 +5232,7 @@ var vald,pad2,vali;
 vald = ControlMaxValue-ControlMinValue;
 pad2 = SliderStartEndPadding*2;
 
-if (SliderHorizontal)
+if (!SliderVertical)
     valueSetting = vald*(SliderRelativeFinalXorY-SliderStartEndPadding)/(RoomW-RoomX-pad2)+ControlMinValue;
 else
     valueSetting = vald*(SliderRelativeFinalXorY-SliderStartEndPadding)/(RoomH-RoomY-pad2)+ControlMinValue;
@@ -5157,11 +5283,14 @@ if (!argument0) {
 
 
 #define GMUI_ControlSliderUpdate
-///GMUI_ControlSliderUpdate(Control ID)
+///GMUI_ControlSliderUpdate(Control ID, VerticalOrientation[bool])
 ///Updates the slider position according to its value (called when switching its value or initializing)
 
 with (argument0) {
-    SliderRelativeFinalXorY = (real(value)-ControlMinValue)*(RoomW-RoomX-SliderStartEndPadding*2)/(ControlMaxValue-ControlMinValue)+SliderStartEndPadding;
+    if (!SliderVertical)
+        SliderRelativeFinalXorY = (real(value)-ControlMinValue)*(RoomW-RoomX-SliderStartEndPadding*2)/(ControlMaxValue-ControlMinValue)+SliderStartEndPadding;
+    else
+        SliderRelativeFinalXorY = (real(value)-ControlMinValue)*(RoomH-RoomY-SliderStartEndPadding*2)/(ControlMaxValue-ControlMinValue)+SliderStartEndPadding;
     Slider_t = 0;
 }
 
@@ -6547,6 +6676,7 @@ if (_D == global.GMUIDirectionTypeSideVertical)
 }
 else if (_D == global.GMUIDirectionTypeVertical)
 {
+    sizingW = _CW;
     sizingH = (_Control).ControlPickerHeight + 2; // +2 borders
 }
 else
@@ -6578,7 +6708,7 @@ if (_D == global.GMUIDirectionTypeHorizontal)
         (_MX <= (_Control).ActualX + (_Control).RelativeX + _CW + _xoffset))
         return global.GMUIHoveringDirection_Right;
 }
-else if (_D == global.GMUIDirectionTypeSideVertical)
+else if (_D == global.GMUIDirectionTypeSideVertical || _D == global.GMUIDirectionTypeVertical)
 {
     if ((_MY >= (_Control).ActualY + (_Control).RelativeY + _yoffset) && 
         (_MY <= (_Control).ActualY + (_Control).RelativeY + sizingH + _yoffset) &&

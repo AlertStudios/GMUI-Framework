@@ -94,14 +94,15 @@ GMUI_ControlSetDefaultSprite(thecontrol);
 // Set the default optional flexible sprite map properties
 GMUI_ControlSetDefaultSpriteMap(thecontrol);
 
+// Set the default picker properties
+GMUI_ControlSetDefaultPicker(thecontrol);
+thecontrol.ControlFontAlign = fa_left; // Reset font align, just in case it was changed from the picker
+
 // Set the default font style properties
 GMUI_ControlSetDefaultFontStyle(thecontrol);
 
 // Set the default attribute properies
 GMUI_ControlSetDefaultAttributes(thecontrol);
-
-// Set the default picker properties
-GMUI_ControlSetDefaultPicker(thecontrol);
 
 // Set the default button properties
 GMUI_ControlSetDefaultButton(thecontrol);

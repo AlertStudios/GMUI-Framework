@@ -57,7 +57,10 @@ with (GMUI_Add("Test4", "intpicker",            0,6,    10,2,   layer, global.GM
     GMUI_ControlAddToGroup(2);
     GMUI_ControlSetHoverAction(_Hover_Int);
     GMUI_ControlSetHoverOffAction(_HoverOff_Int);
-    
+    //sprite_set_offset(GMUIspr_arrow,10,12);sprite_set_offset(GMUIspr_arrowup,10,0); // If vertical, offset should be centered
+    //GMUI_ControlSetPicker(sprite_get_width(GMUIspr_arrowup) + 4,sprite_get_height(GMUIspr_arrowup) + 4,
+    //    global.GMUIDirectionTypeVertical, GMUIspr_arrowup, GMUIspr_arrow);
+        
     with (GMUI_ControlAddTooltip("-20 to 20.",global.GMUIAnchorLeft,6,2,12,4,-1,-1)) {
         GMUI_ControlSetFadeOnHide(id, room_speed/4);
     }
@@ -181,7 +184,7 @@ GMUI_PopupSetAction("Test Popup", _PopupReturnAction);
 
 // Test slider
 with (GMUI_Add("Slider", "slider",              16,12,  10,2,   layer, global.GMUIAnchorBottomRight)) {
-    GMUI_ControlSetSliderSettings(13,10,34,true,true,true);
+    GMUI_ControlSetSliderSettings(13,10,34,true,true,true,global.GMUIDirectionTypeHorizontal);
     GMUI_ControlSetSliderStyle(2,2,c_dkgray,0.6,c_teal,0.9,c_dkgray,0.4,c_aqua,1,c_gray,0.8);
     GMUI_ControlSetSliderSize(16, 20, 1, 12, 10, 8, 6, 8);
     

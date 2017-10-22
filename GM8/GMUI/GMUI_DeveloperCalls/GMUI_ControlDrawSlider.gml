@@ -22,22 +22,36 @@ with (_tt_id) {
     }
     
     // Assign drawing vars
-    var cx, cxp, cy, cw, ch, cwx, chy, chy2;
+    var cx, cp, cy, cw, ch, cwx, cwx2, chy, chy2, cworh, RoomWorH, SC, SA;
     cx = RoomX;
-    cxp = cx+SliderStartEndPadding;
     cy = RoomY;
+    if (!SliderVertical)
+        cp = cx+SliderStartEndPadding;
+    else
+        cp = cy+SliderStartEndPadding;
+
     cw = RoomW-cx;
     ch = RoomH-cy;
     cwx = RoomW;
+    cwx2 = (RoomX+RoomW)/2;
+    chy = RoomH;
     chy2 = (RoomY+RoomH)/2;
     
     // Compute the locations of all drawn elements
     if (!sliderComputed) {
-        
-        SliderTickDistance = (cw - (SliderStartEndPadding*2)) / max(SliderTickAmount - 1, 1);
-        SliderMidPoint = cw/2;
+        if (!SliderVertical) {
+            RoomWorH = RoomW;
+            cworh = cw;
+        }
+        else {
+            RoomWorH = RoomH;
+            cworh = ch;
+        }
+            
+        SliderTickDistance = (cworh - (SliderStartEndPadding*2)) / max(SliderTickAmount - 1, 1);
+        SliderMidPoint = cworh/2;
         SliderQuarterPoint1 = SliderMidPoint/2 + SliderStartEndPadding/2;
-        SliderQuarterPoint2 = cw - SliderQuarterPoint1;
+        SliderQuarterPoint2 = cworh - SliderQuarterPoint1;
         SliderSnapDistance = SliderTickDistance/2;
         
         for (i = 0; i < SliderTickAmount; i+=1) {
@@ -61,7 +75,7 @@ with (_tt_id) {
         SliderSnapDistance = SliderTickPoints[i-1] - SliderTickPoints[i-2];
         
         // Check if the slider position is within the padding amount
-        SliderRelativeFinalXorY = minmax(SliderRelativeXorY,SliderStartEndPadding,RoomW-SliderStartEndPadding);
+        SliderRelativeFinalXorY = minmax(SliderRelativeXorY,SliderStartEndPadding,RoomWorH-SliderStartEndPadding);
         SliderRelativeXorY = SliderRelativeFinalXorY;
         Slider_t = Slider_d;
         
@@ -77,11 +91,16 @@ with (_tt_id) {
         
             break;
         case 2: // Single (Horizontal line)
-        //todo: actually write this part
-            draw_line(cxp,chy2,cwx-SliderStartEndPadding,chy2);
+            if (!SliderVertical)
+                draw_line(cp,chy2,cwx-SliderStartEndPadding,chy2);
+            else
+                draw_line(cwx2,cp,cwx2,chy-SliderStartEndPadding);
             break;
         case 3: // Rounded rectangle region
-            draw_roundrect(cxp,chy2-SliderSlideHeight/2,cwx-SliderStartEndPadding,chy2+SliderSlideHeight/2,false);
+            if (!SliderVertical)
+                draw_roundrect(cp,chy2-SliderSlideHeight/2,cwx-SliderStartEndPadding,chy2+SliderSlideHeight/2,false);
+            else
+                draw_roundrect(cwx2-SliderSlideHeight/2,cp,cwx2+SliderSlideHeight/2,chy-SliderStartEndPadding,false);
             break;
         case 0: // none (slider only), or sprite
         default:
@@ -95,32 +114,62 @@ with (_tt_id) {
         color_alpha(SliderTickColor,SliderTickAlpha);
         
         if (SliderTickHeight > 0 && SliderTickDistance > 1) {
-            for (i = 0; i < SliderTickAmount; i+=1) {
-                if (SliderTickPoints[i] >= 0) {
-                    draw_line(cx+SliderTickPoints[i],chy2-SliderTickHeight,cx+SliderTickPoints[i],chy2+SliderTickHeight);
+            if (!SliderVertical) {
+                for (i = 0; i < SliderTickAmount; i+=1) {
+                    if (SliderTickPoints[i] >= 0) {
+                        draw_line(cx+SliderTickPoints[i],chy2-SliderTickHeight,cx+SliderTickPoints[i],chy2+SliderTickHeight);
+                    }
+                }
+            }
+            else {
+                for (i = 0; i < SliderTickAmount; i+=1) {
+                    if (SliderTickPoints[i] >= 0) {
+                        draw_line(cwx2-SliderTickHeight,cy+SliderTickPoints[i],cwx2+SliderTickHeight,cy+SliderTickPoints[i]);
+                    }
                 }
             }
         }
         
         // Draw the special ticks
-        if (SliderEndTickHeight > 0) {
-            draw_line(cxp,chy2-SliderEndTickHeight,cxp,chy2+SliderEndTickHeight);
-            draw_line(cwx-SliderStartEndPadding,chy2-SliderEndTickHeight,cwx-SliderStartEndPadding,chy2+SliderEndTickHeight);
+        if (!SliderVertical) {
+            if (SliderEndTickHeight > 0) {
+                draw_line(cp,chy2-SliderEndTickHeight,cp,chy2+SliderEndTickHeight);
+                draw_line(cwx-SliderStartEndPadding,chy2-SliderEndTickHeight,cwx-SliderStartEndPadding,chy2+SliderEndTickHeight);
+            }
+            
+            if (SliderMidTickHeight > 0) {
+                draw_line(cx+SliderMidPoint,chy2-SliderMidTickHeight,cx+SliderMidPoint,chy2+SliderMidTickHeight);
+            }
+            
+            if (SliderQuarterTickHeight > 0) {
+                draw_line(cx+SliderQuarterPoint1,chy2-SliderQuarterTickHeight,cx+SliderQuarterPoint1,chy2+SliderQuarterTickHeight);
+                draw_line(cx+SliderQuarterPoint2,chy2-SliderQuarterTickHeight,cx+SliderQuarterPoint2,chy2+SliderQuarterTickHeight);
+            }
         }
-        
-        if (SliderMidTickHeight > 0) {
-            draw_line(cx+SliderMidPoint,chy2-SliderMidTickHeight,cx+SliderMidPoint,chy2+SliderMidTickHeight);
-        }
-        
-        if (SliderQuarterTickHeight > 0) {
-            draw_line(cx+SliderQuarterPoint1,chy2-SliderQuarterTickHeight,cx+SliderQuarterPoint1,chy2+SliderQuarterTickHeight);
-            draw_line(cx+SliderQuarterPoint2,chy2-SliderQuarterTickHeight,cx+SliderQuarterPoint2,chy2+SliderQuarterTickHeight);
+        else {
+            if (SliderEndTickHeight > 0) {
+                draw_line(cwx2-SliderEndTickHeight,cp,cwx2+SliderEndTickHeight,cp);
+                draw_line(cwx2-SliderEndTickHeight,chy-SliderStartEndPadding,cwx2+SliderEndTickHeight,chy-SliderStartEndPadding);
+            }
+            
+            if (SliderMidTickHeight > 0) {
+                draw_line(cwx2-SliderMidTickHeight,cy+SliderMidPoint,cwx2+SliderMidTickHeight,cy+SliderMidPoint);
+            }
+            
+            if (SliderQuarterTickHeight > 0) {
+                draw_line(cwx2-SliderQuarterTickHeight,cy+SliderQuarterPoint1,cwx2+SliderQuarterTickHeight,cy+SliderQuarterPoint1);
+                draw_line(cwx2-SliderQuarterTickHeight,cy+SliderQuarterPoint2,cwx2+SliderQuarterTickHeight,cy+SliderQuarterPoint2);
+            }
         }
     }
     else if (0) {
     //not yet implemented
     }
     
+    // Check if selected or not
+    //todo: implement
+    SC = SliderColor;
+    SA = SliderAlpha;
     
     // Draw slider based on type
     switch (SliderStyle) {
@@ -128,38 +177,76 @@ with (_tt_id) {
         
             break;
         case 2: // PentagonUp
-            draw_primitive_begin(pr_trianglefan);
-            draw_vertex_color(cx+SliderRelativeXorY,chy2-SliderThumbHeight/2,SliderColor,SliderAlpha);
-            draw_vertex_color(cx+SliderRelativeXorY-SliderThumbWidth/2,chy2-SliderThumbHeight/2+SliderThumbWidth/2,SliderColor,SliderAlpha);
-            draw_vertex_color(cx+SliderRelativeXorY-SliderThumbWidth/2,chy2+SliderThumbHeight/2,SliderColor,SliderAlpha);
-            draw_vertex_color(cx+SliderRelativeXorY+SliderThumbWidth/2,chy2+SliderThumbHeight/2,SliderColor,SliderAlpha);
-            draw_vertex_color(cx+SliderRelativeXorY+SliderThumbWidth/2,chy2-SliderThumbHeight/2+SliderThumbWidth/2,SliderColor,SliderAlpha);
-            draw_primitive_end();
-            draw_primitive_begin(pr_linestrip);
-            draw_vertex_color(cx+SliderRelativeXorY,chy2-SliderThumbHeight/2,SliderBorderColor,SliderBorderAlpha);
-            draw_vertex_color(cx+SliderRelativeXorY-SliderThumbWidth/2,chy2-SliderThumbHeight/2+SliderThumbWidth/2,SliderBorderColor,SliderBorderAlpha);
-            draw_vertex_color(cx+SliderRelativeXorY-SliderThumbWidth/2,chy2+SliderThumbHeight/2,SliderBorderColor,SliderBorderAlpha);
-            draw_vertex_color(-1+cx+SliderRelativeXorY+SliderThumbWidth/2,chy2+SliderThumbHeight/2,SliderBorderColor,SliderBorderAlpha);
-            draw_vertex_color(-1+cx+SliderRelativeXorY+SliderThumbWidth/2,chy2-SliderThumbHeight/2+SliderThumbWidth/2,SliderBorderColor,SliderBorderAlpha);
-            draw_vertex_color(-1+cx+SliderRelativeXorY,chy2-SliderThumbHeight/2,SliderBorderColor,SliderBorderAlpha);
-            draw_primitive_end();
+            if (!SliderVertical) {
+                draw_primitive_begin(pr_trianglefan);
+                draw_vertex_color(cx+SliderRelativeXorY,chy2-SliderThumbHeight/2,SC,SA);
+                draw_vertex_color(cx+SliderRelativeXorY-SliderThumbWidth/2,chy2-SliderThumbHeight/2+SliderThumbWidth/2,SC,SA);
+                draw_vertex_color(cx+SliderRelativeXorY-SliderThumbWidth/2,chy2+SliderThumbHeight/2,SC,SA);
+                draw_vertex_color(cx+SliderRelativeXorY+SliderThumbWidth/2,chy2+SliderThumbHeight/2,SC,SA);
+                draw_vertex_color(cx+SliderRelativeXorY+SliderThumbWidth/2,chy2-SliderThumbHeight/2+SliderThumbWidth/2,SC,SA);
+                draw_primitive_end();
+                draw_primitive_begin(pr_linestrip);
+                draw_vertex_color(cx+SliderRelativeXorY,chy2-SliderThumbHeight/2,SliderBorderColor,SliderBorderAlpha);
+                draw_vertex_color(cx+SliderRelativeXorY-SliderThumbWidth/2,chy2-SliderThumbHeight/2+SliderThumbWidth/2,SliderBorderColor,SliderBorderAlpha);
+                draw_vertex_color(cx+SliderRelativeXorY-SliderThumbWidth/2,chy2+SliderThumbHeight/2,SliderBorderColor,SliderBorderAlpha);
+                draw_vertex_color(-1+cx+SliderRelativeXorY+SliderThumbWidth/2,chy2+SliderThumbHeight/2,SliderBorderColor,SliderBorderAlpha);
+                draw_vertex_color(-1+cx+SliderRelativeXorY+SliderThumbWidth/2,chy2-SliderThumbHeight/2+SliderThumbWidth/2,SliderBorderColor,SliderBorderAlpha);
+                draw_vertex_color(-1+cx+SliderRelativeXorY,chy2-SliderThumbHeight/2,SliderBorderColor,SliderBorderAlpha);
+                draw_primitive_end();
+            }
+            else {
+                draw_primitive_begin(pr_trianglefan);
+                draw_vertex_color(cwx2+SliderThumbHeight/2,cy+SliderRelativeXorY,SC,SA);
+                draw_vertex_color(cwx2+SliderThumbHeight/2-SliderThumbWidth/2,cy+SliderRelativeXorY-SliderThumbWidth/2,SC,SA);
+                draw_vertex_color(cwx2-SliderThumbHeight/2,cy+SliderRelativeXorY-SliderThumbWidth/2,SC,SA);
+                draw_vertex_color(cwx2-SliderThumbHeight/2,cy+SliderRelativeXorY+SliderThumbWidth/2,SC,SA);
+                draw_vertex_color(cwx2+SliderThumbHeight/2-SliderThumbWidth/2,cy+SliderRelativeXorY+SliderThumbWidth/2,SC,SA);
+                draw_primitive_end();
+                draw_primitive_begin(pr_linestrip);
+                draw_vertex_color(-1+cwx2+SliderThumbHeight/2,cy+SliderRelativeXorY,SliderBorderColor,SliderAlpha);
+                draw_vertex_color(-1+cwx2+SliderThumbHeight/2-SliderThumbWidth/2,cy+SliderRelativeXorY-SliderThumbWidth/2,SliderBorderColor,SliderAlpha);
+                draw_vertex_color(cwx2-SliderThumbHeight/2,cy+SliderRelativeXorY-SliderThumbWidth/2,SliderBorderColor,SliderAlpha);
+                draw_vertex_color(cwx2-SliderThumbHeight/2,cy+SliderRelativeXorY+SliderThumbWidth/2,SliderBorderColor,SliderAlpha);
+                draw_vertex_color(-1+cwx2+SliderThumbHeight/2-SliderThumbWidth/2,cy+SliderRelativeXorY+SliderThumbWidth/2,SliderBorderColor,SliderAlpha);
+                draw_vertex_color(-1+cwx2+SliderThumbHeight/2,cy+SliderRelativeXorY,SliderBorderColor,SliderAlpha);
+                draw_primitive_end();
+            }
             break;
         case 3: // PentagonDown
-            draw_primitive_begin(pr_trianglefan);
-            draw_vertex_color(cx+SliderRelativeXorY,chy2+SliderThumbHeight/2,SliderColor,SliderAlpha);
-            draw_vertex_color(cx+SliderRelativeXorY+SliderThumbWidth/2,chy2+SliderThumbHeight/2-SliderThumbWidth/2,SliderColor,SliderAlpha);
-            draw_vertex_color(cx+SliderRelativeXorY+SliderThumbWidth/2,chy2-SliderThumbHeight/2,SliderColor,SliderAlpha);
-            draw_vertex_color(cx+SliderRelativeXorY-SliderThumbWidth/2,chy2-SliderThumbHeight/2,SliderColor,SliderAlpha);
-            draw_vertex_color(cx+SliderRelativeXorY-SliderThumbWidth/2,chy2+SliderThumbHeight/2-SliderThumbWidth/2,SliderColor,SliderAlpha);
-            draw_primitive_end();
-            draw_primitive_begin(pr_linestrip);
-            draw_vertex_color(-1+cx+SliderRelativeXorY,chy2+SliderThumbHeight/2,SliderColor,SliderAlpha);
-            draw_vertex_color(-1+cx+SliderRelativeXorY+SliderThumbWidth/2,chy2+SliderThumbHeight/2-SliderThumbWidth/2,SliderColor,SliderAlpha);
-            draw_vertex_color(-1+cx+SliderRelativeXorY+SliderThumbWidth/2,chy2-SliderThumbHeight/2,SliderColor,SliderAlpha);
-            draw_vertex_color(cx+SliderRelativeXorY-SliderThumbWidth/2,chy2-SliderThumbHeight/2,SliderColor,SliderAlpha);
-            draw_vertex_color(cx+SliderRelativeXorY-SliderThumbWidth/2,chy2+SliderThumbHeight/2-SliderThumbWidth/2,SliderColor,SliderAlpha);
-            draw_vertex_color(cx+SliderRelativeXorY,chy2+SliderThumbHeight/2,SliderColor,SliderAlpha);
-            draw_primitive_end();
+            if (!SliderVertical) {
+                draw_primitive_begin(pr_trianglefan);
+                draw_vertex_color(cx+SliderRelativeXorY,chy2+SliderThumbHeight/2,SliderColor,SliderAlpha);
+                draw_vertex_color(cx+SliderRelativeXorY+SliderThumbWidth/2,chy2+SliderThumbHeight/2-SliderThumbWidth/2,SC,SA);
+                draw_vertex_color(cx+SliderRelativeXorY+SliderThumbWidth/2,chy2-SliderThumbHeight/2,SC,SA);
+                draw_vertex_color(cx+SliderRelativeXorY-SliderThumbWidth/2,chy2-SliderThumbHeight/2,SC,SA);
+                draw_vertex_color(cx+SliderRelativeXorY-SliderThumbWidth/2,chy2+SliderThumbHeight/2-SliderThumbWidth/2,SC,SA);
+                draw_primitive_end();
+                draw_primitive_begin(pr_linestrip);
+                draw_vertex_color(-1+cx+SliderRelativeXorY,chy2+SliderThumbHeight/2,SliderBorderColor,SliderBorderAlpha);
+                draw_vertex_color(-1+cx+SliderRelativeXorY+SliderThumbWidth/2,chy2+SliderThumbHeight/2-SliderThumbWidth/2,SliderBorderColor,SliderBorderAlpha);
+                draw_vertex_color(-1+cx+SliderRelativeXorY+SliderThumbWidth/2,chy2-SliderThumbHeight/2,SliderBorderColor,SliderBorderAlpha);
+                draw_vertex_color(cx+SliderRelativeXorY-SliderThumbWidth/2,chy2-SliderThumbHeight/2,SliderBorderColor,SliderBorderAlpha);
+                draw_vertex_color(cx+SliderRelativeXorY-SliderThumbWidth/2,chy2+SliderThumbHeight/2-SliderThumbWidth/2,SliderBorderColor,SliderBorderAlpha);
+                draw_vertex_color(cx+SliderRelativeXorY,chy2+SliderThumbHeight/2,SliderBorderColor,SliderBorderAlpha);
+                draw_primitive_end();
+            }
+            else {
+                draw_primitive_begin(pr_trianglefan);
+                draw_vertex_color(cwx2-SliderThumbHeight/2,cy+SliderRelativeXorY,SC,SA);
+                draw_vertex_color(cwx2-SliderThumbHeight/2+SliderThumbWidth/2,cy+SliderRelativeXorY+SliderThumbWidth/2,SC,SA);
+                draw_vertex_color(cwx2+SliderThumbHeight/2,cy+SliderRelativeXorY+SliderThumbWidth/2,SC,SA);
+                draw_vertex_color(cwx2+SliderThumbHeight/2,cy+SliderRelativeXorY-SliderThumbWidth/2,SC,SA);
+                draw_vertex_color(cwx2-SliderThumbHeight/2+SliderThumbWidth/2,cy+SliderRelativeXorY-SliderThumbWidth/2,SC,SA);
+                draw_primitive_end();
+                draw_primitive_begin(pr_linestrip);
+                draw_vertex_color(cwx2-SliderThumbHeight/2,cy+SliderRelativeXorY,SliderBorderColor,SliderBorderAlpha);
+                draw_vertex_color(cwx2-SliderThumbHeight/2+SliderThumbWidth/2,cy+SliderRelativeXorY+SliderThumbWidth/2,SliderBorderColor,SliderBorderAlpha);
+                draw_vertex_color(-1+cwx2+SliderThumbHeight/2,cy+SliderRelativeXorY+SliderThumbWidth/2,SliderBorderColor,SliderBorderAlpha);
+                draw_vertex_color(-1+cwx2+SliderThumbHeight/2,cy+SliderRelativeXorY-SliderThumbWidth/2,SliderBorderColor,SliderBorderAlpha);
+                draw_vertex_color(cwx2-SliderThumbHeight/2+SliderThumbWidth/2,cy+SliderRelativeXorY-SliderThumbWidth/2,SliderBorderColor,SliderBorderAlpha);
+                draw_vertex_color(cwx2-SliderThumbHeight/2,cy+SliderRelativeXorY,SliderBorderColor,SliderBorderAlpha);
+                draw_primitive_end();
+            }
             break;
         case 4: // Rectangle
         //SliderThumbWidth
@@ -170,6 +257,9 @@ with (_tt_id) {
             //draw_rectangle(
             break;
         case 5: // Rounded Rectangle
+        
+            break;
+        case 6: // Hexagon
         
             break;
     }
@@ -187,7 +277,7 @@ with (_tt_id) {
     
     
     
-    //todo: drawing the value in the control may be an option later on?
+    //todo: drawing the value in/below the control may be an option later on?
     
     //color_alpha(ControlFontColor,min(ControlFontAlpha,FadeAlpha));
     

@@ -1,5 +1,5 @@
 #define GMUI_ControlSetSliderSettings
-///GMUI_ControlSetSliderSettings(ticks amount, min value, max value, round values to ticks[bool], snap [bool], smooth adjust and snap[bool]) //horizontal orientation [bool] coming soon
+///GMUI_ControlSetSliderSettings(ticks amount, min value, max value, round values to ticks[bool], snap [bool], smooth adjust and snap[bool], vertical orientation[bool])
 ///Required to be called to set the SETTINGS of the slider
 
 if (!GMUI_IsControl() && id != GMUII())
@@ -23,6 +23,7 @@ if (!sliderInitialized) {
     SliderTickPoints[0] = 0;
     SliderTickInterval = 0; // not sure if will be used
     SliderRelativeFinalXorY = 0;
+    SliderVertical = false;
     GMUI_ControlSliderUpdate(id);
     SliderRelativeXorY = SliderRelativeFinalXorY;
     SliderRelativePad = 0;
@@ -43,7 +44,6 @@ if (!sliderInitialized) {
     // Default Sizing values
     GMUI_ControlSetSliderSize(16, 20, 1, 12, 10, 8, 6, 0);
     
-    SliderHorizontal = true;
 }
 
 // If any values are given as negative numbers, those values will remain as the control default
@@ -59,8 +59,8 @@ if (argument4 >= 0)
     SliderSnap = (argument4 > 0);
 if (argument5 >= 0)
     SliderSmoothSnap = (argument5 > 0);
-//if (argument6 >= 0)
-//    SliderHorizontal = (argument6 > 0);
+if (argument6 >= 0)
+    SliderVertical = (argument6 > 0);
 
 
 return true;

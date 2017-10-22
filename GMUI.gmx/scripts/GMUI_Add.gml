@@ -1,3 +1,4 @@
+#define GMUI_Add
 ///GMUI_Add("Name", "Type String", cell# x, cell# y, cells wide (min 1), cells high (min 1), Layer**, Anchor***)
 ///Adds a component(instance) to the GMUI grid
 
@@ -93,14 +94,15 @@ GMUI_ControlSetDefaultSprite(thecontrol);
 // Set the default optional flexible sprite map properties
 GMUI_ControlSetDefaultSpriteMap(thecontrol);
 
+// Set the default picker properties
+GMUI_ControlSetDefaultPicker(thecontrol);
+thecontrol.ControlFontAlign = fa_left; // Reset font align, just in case it was changed from the picker
+
 // Set the default font style properties
 GMUI_ControlSetDefaultFontStyle(thecontrol);
 
 // Set the default attribute properies
 GMUI_ControlSetDefaultAttributes(thecontrol);
-
-// Set the default picker properties
-GMUI_ControlSetDefaultPicker(thecontrol);
 
 // Set the default button properties
 GMUI_ControlSetDefaultButton(thecontrol);
@@ -123,6 +125,7 @@ if (GMUI_GetDataType(thetype) == global.GMUIDataTypeString) {
 
 
 return thecontrol;
+
 
 
 
