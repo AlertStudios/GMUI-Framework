@@ -1,6 +1,7 @@
 #define GMUI_GridDrawGroups
 ///GMUI_GridDrawGroups(GMUI instance)
 ///Draws the groups if set to do so
+// CURRENTLY NOT USED! //
 
 var _GMUII, layer, l, g, gx, gy, gw, gh, xoffset, yoffset, spr_width, spr_height;
 _GMUII = argument0;

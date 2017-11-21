@@ -26,6 +26,10 @@ switch (_controlType) {
     case "tooltip":
         return global.GMUIDataTypeInfo;
         break;
+    case "toggle":
+    case "checkbox":
+        return global.GMUIDataTypeBoolean;
+        break;
     default:
         return -1;
         break;

@@ -51,11 +51,26 @@ global.GMUIDataTypeInteger = 1;
 global.GMUIDataTypeDecimal = 2;
 global.GMUIDataTypeButton = 3;
 global.GMUIDataTypeInfo = 4;
+global.GMUIDataTypeBoolean = 5;
 
 // PopupTypes
 global.GMUIPopupBlank = -1;
 global.GMUIPopupInformation = 0;
 global.GMUIPopupConfirm = 1;
 global.GMUIPopupThreeOptions = 2;
+
+// Slide shapes
+global.GMUISlideNone = -1;
+global.GMUISlideLine = -2;
+global.GMUISlideRect = -3;
+global.GMUISlideRoundRect = -4;
+global.GMUISlideFullRoundRect = -5;
+
+
+// If studio, run the script to create enum versions of these
+if (!global.GMUIGameMaker8) {
+GMUI_InitStudio();
+}
+
 
 

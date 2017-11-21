@@ -27,7 +27,7 @@ with (_tt_id) {
             draw_triangle(cx,max(cy,cy+TT_yposition-TT_arrowsize),cx,min(cy+TT_yposition+TT_arrowsize,chy),cx-TT_xposition,cy+TT_yposition,0);
             break;
         case global.GMUIAnchorRight:
-            draw_triangle(cwx,max(cy,cy+TT_yposition-TT_arrowsize),cwx,min(cy+TT_yposition+TT_arrowsize,chy),cwx+TT_xposition,cy+TT_yposition,0);
+            draw_triangle(cwx+padx*2+1,max(cy,cy+TT_yposition-TT_arrowsize),cwx+padx*2+1,min(cy+TT_yposition+TT_arrowsize,chy),cwx+padx*2+1+TT_xposition,cy+TT_yposition,0);
             break;
         case global.GMUIAnchorBottom:
         case global.GMUIAnchorBottomRight:
@@ -50,5 +50,10 @@ with (_tt_id) {
     _dtx = cx + padx;
     
     draw_text_ext(_dtx,cy + (chy-cy)/2,_txt,-1,cwx);
+    
+    //debug
+    //color_alpha(c_red,0.15)
+    //draw_rectangle(cx, cy, CellWide*(GMUII()).cellsize, chy, 1)
+    //draw_rectangle(cx, cy, cwx, chy, 1)
 }
 

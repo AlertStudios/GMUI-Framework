@@ -28,10 +28,10 @@ gridH = GMUI_GridGetHeight(GMUII(),_Layer);
 //    return -1;
 //}
 
-
 // Check that it hasn't already been created
 if (ds_map_exists((GMUII()).GMUI_map,argument0)) {
     GMUI_ThrowErrorDetailed("The control name has already been defined for '" + string(argument0) + "'",SCRIPT);
+    show_error(GMUI_LastError(),false);
     return -1;
 }
 

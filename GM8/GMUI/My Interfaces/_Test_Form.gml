@@ -209,6 +209,24 @@ with (GMUI_Add("SliderVal", "label",            5,12,   2,2,    layer, global.GM
 }
 
 
+// Test checkbox and toggle
+with (GMUI_Add("CheckBox", "checkbox",          4,12,   1,1,    layer, global.GMUIAnchorBottomLeft)) {
+    GMUI_ControlSetCheckboxSettings(1, c_lime, c_gray, global.GMUISlideRoundRect, $808080, $505050, room_speed/4);
+    GMUI_ControlSetHoverAction(_Hover_Checkbox);
+    GMUI_ControlSetHoverOffAction(_HoverOff_Checkbox);
+    
+    // Add a space at the end of the string to make sure it wraps. I know... but its Game Maker ;)
+    with (GMUI_ControlAddTooltip("Checkbox!",global.GMUIAnchorBottom,6,2,12,4,-1,-1)) {
+        GMUI_ControlSetFadeOnHide(id, room_speed/6);
+    }
+}
+
+with (GMUI_Add("Toggle", "toggle",          3,10,   3,2,    layer, global.GMUIAnchorBottomLeft)) {
+    GMUI_ControlSetToggleSettings(1, c_lime, c_gray, global.GMUISlideFullRoundRect, $808080, $505050, room_speed/4, global.GMUIDirectionTypeHorizontal, 0);
+}
+
+
+
 /*
 
     3. Set group and menu settings after controls are set

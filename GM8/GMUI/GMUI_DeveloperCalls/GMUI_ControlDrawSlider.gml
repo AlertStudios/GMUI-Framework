@@ -6,13 +6,7 @@ var _tt_id, _SCRIPT;
 _tt_id = argument0;
 _SCRIPT = GMUI_ControlDrawSlider;
 
-// TODO: REDO ALL OF THIS FOR THE SLIDER:
-// make demo show valuechange action updating a number
-// 
-// in other scripts:
-// create variables to calculate the drawing values
-// if the variables are not set, calculate and set them
-// if sizes change for the control, re-calculate these variables (update flag)
+// todo: check if sizes change for the control, re-calculate these variables (update flag)
 
 with (_tt_id) {
     // If this happens, GMUI has a bug

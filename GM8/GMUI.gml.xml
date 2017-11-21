@@ -32,6 +32,7 @@
           <file>GMUI_ControlSetAttributes.gml</file>
           <file>GMUI_ControlSetButton.gml</file>
           <file>GMUI_ControlSetButtonAction.gml</file>
+          <file>GMUI_ControlSetCheckboxSettings.gml</file>
           <file>GMUI_ControlSetFadeOnHide.gml</file>
           <file>GMUI_ControlSetFontStyle.gml</file>
           <file>GMUI_ControlSetHoverAction.gml</file>
@@ -46,6 +47,7 @@
           <file>GMUI_ControlSetSpriteMap.gml</file>
           <file>GMUI_ControlSetStyle.gml</file>
           <file>GMUI_ControlSetText.gml</file>
+          <file>GMUI_ControlSetToggleSettings.gml</file>
           <file>GMUI_ControlSetValueChangedAction.gml</file>
           <file>GMUI_Create.gml</file>
           <file>GMUI_CreateGroup.gml</file>
@@ -137,6 +139,7 @@
           <file>GMUI_ControlActionScript.gml</file>
           <file>GMUI_ControlDraw.gml</file>
           <file>GMUI_ControlDrawGroup.gml</file>
+          <file>GMUI_ControlDrawToggle.gml</file>
           <file>GMUI_ControlDrawTooltipById.gml</file>
           <file>GMUI_ControlFilterInput.gml</file>
           <file>GMUI_ControlInit.gml</file>
@@ -153,6 +156,7 @@
           <file>GMUI_ControlSetType.gml</file>
           <file>GMUI_ControlSliderMove.gml</file>
           <file>GMUI_ControlSliderUpdate.gml</file>
+          <file>GMUI_ControlToggleUpdate.gml</file>
           <file>GMUI_ControlUpdateXY.gml</file>
           <file>GMUI_CreatePopup.gml</file>
           <file>GMUI_CreateSetDefaultArea.gml</file>
@@ -188,6 +192,7 @@
           <file>GMUI_GroupSetHidePosition.gml</file>
           <file>GMUI_GroupSetPositionAnchored.gml</file>
           <file>GMUI_GroupSetStyle.gml</file>
+          <file>GMUI_InitStudio.gml</file>
           <file>GMUI_IsControl.gml</file>
           <file>GMUI_IsControlID.gml</file>
           <file>GMUI_IsScript.gml</file>
@@ -220,7 +225,9 @@
           <file>_Enlarge_Button.gml</file>
           <file>_Exit_Button.gml</file>
           <file>_Hide_Button.gml</file>
+          <file>_HoverOff_Checkbox.gml</file>
           <file>_HoverOff_Int.gml</file>
+          <file>_Hover_Checkbox.gml</file>
           <file>_Hover_Int.gml</file>
           <file>_Move_Button.gml</file>
           <file>_PopupClose_Button.gml</file>

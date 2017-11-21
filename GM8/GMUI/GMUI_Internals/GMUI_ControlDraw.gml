@@ -114,6 +114,16 @@ if (!Hidden) {
                 Slider_t = Slider_d;
         }
     }
+    else if (ControlType == "toggle" || ControlType == "checkbox") {
+        // Fade or Slide update if checkbox/toggle control
+        if (Toggle_t < Toggle_d) {
+            Toggle_t += 1;
+            if (string(value) == "0")
+                ToggleRelativeXorY = ToggleDistance - (Toggle_c * Toggle_t);
+            else if (string(value) == "1")
+                ToggleRelativeXorY = Toggle_c * Toggle_t;
+        }
+    }
     if (Selected) {
         // Holding click event
         if (mouse_check_button(mb_left)) {
@@ -200,14 +210,14 @@ if (valueChangeDetected) {
 // DRAW //
 
 if (argument0 == true) {
-
+depth -=1;//testonly
     // Call the draw actions for groups if in one and is set to draw
     if (1=1 && (GMUIP).GMUI_groupMasterControl[Layer,Group] == id) {
         if (!GroupHidden || FadeCalled != 0) {
             GMUI_ControlDrawGroup(GMUIP,Layer,Group,FadeAlpha,FadeMode);
         }
     }
-    
+    depth+=1;
     //todo: Add a flag for if an update is needed (surfaces):
     // Don't process any drawing if hidden or update not needed
     if (Hidden && FadeCalled == 0)
@@ -224,7 +234,7 @@ if (argument0 == true) {
     _FontAlpha = min(ControlFontAlpha,FadeAlpha);
         
     // Start drawing the control (inputs and buttons)
-    if (ControlInput || ControlDataType == global.GMUIDataTypeButton) {
+    if (ControlInput || ControlDataType == global.GMUIDataTypeButton || ControlType == "image") {
         if (ControlGraphicMapIsUsed) {
             GMUI_DrawSpriteBox(GMUIP,Layer,Group,0,1);
         }
@@ -236,7 +246,7 @@ if (argument0 == true) {
             
             draw_sprite_ext(ControlGraphic,subi,RoomX,RoomY,ControlGraphicXScale,ControlGraphicYScale,ControlGraphicRotation,ControlGraphicColor,ControlGraphicAlpha);
         }
-        else {
+        else if (ControlType != "image") {
             // Background
             color_alpha(ControlBackgroundColor,_BackgroundAlpha);
             draw_rectangle(RoomX, RoomY, RoomW, RoomH, 0);
@@ -267,6 +277,9 @@ if (argument0 == true) {
     }
     else if (ControlType == "slider") {
         GMUI_ControlDrawSlider(id);
+    }
+    else if (ControlType == "checkbox" || ControlType == "toggle") {
+        GMUI_ControlDrawToggle(id);
     }
     
     

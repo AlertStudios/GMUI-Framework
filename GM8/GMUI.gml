@@ -209,6 +209,24 @@ with (GMUI_Add("SliderVal", "label",            5,12,   2,2,    layer, global.GM
 }
 
 
+// Test checkbox and toggle
+with (GMUI_Add("CheckBox", "checkbox",          4,12,   1,1,    layer, global.GMUIAnchorBottomLeft)) {
+    GMUI_ControlSetCheckboxSettings(1, c_lime, c_gray, global.GMUISlideRoundRect, $808080, $505050, room_speed/4);
+    GMUI_ControlSetHoverAction(_Hover_Checkbox);
+    GMUI_ControlSetHoverOffAction(_HoverOff_Checkbox);
+    
+    // Add a space at the end of the string to make sure it wraps. I know... but its Game Maker ;)
+    with (GMUI_ControlAddTooltip("Checkbox!",global.GMUIAnchorBottom,6,2,12,4,-1,-1)) {
+        GMUI_ControlSetFadeOnHide(id, room_speed/6);
+    }
+}
+
+with (GMUI_Add("Toggle", "toggle",          3,10,   3,2,    layer, global.GMUIAnchorBottomLeft)) {
+    GMUI_ControlSetToggleSettings(1, c_lime, c_gray, global.GMUISlideFullRoundRect, $808080, $505050, room_speed/4, global.GMUIDirectionTypeHorizontal, 0);
+}
+
+
+
 /*
 
     3. Set group and menu settings after controls are set
@@ -261,10 +279,21 @@ game_end();
 #define _Hide_Button
 GMUI_GroupHide(2, 0, 1-GMUI_ControlIsHidden("TestButton"));
 
+#define _Hover_Checkbox
+
+if (!GMUI_ControlIsHidden("CheckBox"))
+    GMUI_ControlHideTooltip("CheckBox",false);
+
+
 #define _Hover_Int
 
 if (!GMUI_ControlIsHidden("Test4"))
     GMUI_ControlHideTooltip("Test4",false);
+
+
+#define _HoverOff_Checkbox
+
+GMUI_ControlHideTooltip("CheckBox",true);
 
 
 #define _HoverOff_Int
@@ -921,10 +950,10 @@ gridH = GMUI_GridGetHeight(GMUII(),_Layer);
 //    return -1;
 //}
 
-
 // Check that it hasn't already been created
 if (ds_map_exists((GMUII()).GMUI_map,argument0)) {
     GMUI_ThrowErrorDetailed("The control name has already been defined for '" + string(argument0) + "'",SCRIPT);
+    show_error(GMUI_LastError(),false);
     return -1;
 }
 
@@ -1061,11 +1090,11 @@ if ((GMUII()).UILayerTop < _Layer)
 return true;
 
 #define GMUI_AddTooltipToControl
-///GMUI_AddTooltipToControl(Control id, "message string", direction/side of control, width cells [or -1], height cells [or -1], max cells width, max cells height, relative x [or -1], relative y [or -1])
+///GMUI_AddTooltipToControl(Control id, "message string", direction/side of control, width cells [or -1], height cells [or -1], max cells width, max cells height, adjustment x [or -1], adjustment y [or -1])
 ///Adds a tooltip to the specified control
 
-var _SCRIPT, _message, _direction, _relX, _relY, _cellX, _cellY, _newCtrl,
-    _width, _height, _newwidth, _newheight, _actwidth, _actheight, _maxwidth, _maxheight, gcellsize;
+var _SCRIPT, _message, _direction, _adjX, _adjY, _relX, _relY, _cellX, _cellY, _newCtrl, _isVertical,
+    _width, _height, _newwidth, _newheight, _actwidth, _actheight, _maxwidth, _maxheight, gcellsize, gcellsize_h;
 _SCRIPT = GMUI_AddTooltipToControl;
 _ctrl = argument0;
 _message = argument1;
@@ -1074,8 +1103,8 @@ _width = argument3;
 _height = argument4;
 _maxwidth = argument5;
 _maxheight = argument6;
-_relX = max(0,argument7);
-_relY = max(0,argument8);
+_adjX = max(0,argument7);
+_adjY = max(0,argument8);
 
 // Must be control
 if (!GMUI_IsControlID(_ctrl)) {
@@ -1083,7 +1112,7 @@ if (!GMUI_IsControlID(_ctrl)) {
     return -1;
 }
 // Must have real coordinates
-if (!is_real(_relX) || !is_real(_relY)) {
+if (!is_real(_adjX) || !is_real(_adjY)) {
     GMUI_ThrowErrorDetailed("Invalid coordinates",_SCRIPT);
     return -1;
 }
@@ -1096,33 +1125,57 @@ if (_direction < 0 || _direction > 8) {
 // Adjust sizing based on text given
 draw_set_font(((_ctrl).GMUIP).ControlFont);
 gcellsize = ((_ctrl).GMUIP).cellsize;
+gcellsize_h = ((_ctrl).GMUIP).cellsize_h;
 
-_actwidth = string_width_ext(_message,-1,_maxwidth*gcellsize);
-_actheight = string_height_ext(_message,-1,_maxwidth*gcellsize);
-_newwidth = ceil(_actwidth/gcellsize);
-_newheight = ceil(_actheight/((_ctrl).GMUIP).cellsize_h);
+// Max must be at least the set size
+_maxwidth = gcellsize*max(_maxwidth,_width);
+_maxheight = gcellsize_h*max(_maxheight,_height);
 
+// Compare string to the max (seems to not work so we'll just compare sizes anyway)
+_actwidth = string_width_ext(_message,-1,_maxwidth);
+_actheight = string_height_ext(_message,-1,_maxheight);
+
+// Snap to the string width, unless it hits the max
+if (_maxwidth > 0)
+    _newwidth = ceil(min(_actwidth,_maxwidth)/gcellsize);
+else {
+    _newwidth = ceil(_actwidth/gcellsize);
+    _maxwidth = _actwidth;
+}
+// Only enforce max if both max values are not set
+if (_maxheight > 0 && _maxwidth <= 0)
+    _newheight = floor(min(_actheight,_maxheight)/gcellsize_h);
+else {
+    _newheight = floor(_actheight/gcellsize_h);
+    _maxheight = _actheight;   
+}
+
+_isVertical = false;
 
 // Create the control to store the tooltip, creating it in an adjacent cell
 if (_direction == global.GMUIAnchorBottom) {
-    _cellX = (_ctrl).CellX + ceil((_ctrl).CellWide / 2) - ceil(abs(_width) / 2);
-    _cellY = (_ctrl).CellY - abs(_height) - 1;
+    _relX = ceil((_ctrl).CellWide / 2) - ceil(abs(_width) / 2);
+    _relY = 0 - abs(_newheight) - 1;
+    _isVertical = true;
 }
 else if (_direction == global.GMUIAnchorTop) {
-    _cellX = (_ctrl).CellX + ceil((_ctrl).CellWide / 2) - ceil(abs(_width) / 2);
-    _cellY = (_ctrl).CellY + (_ctrl).CellHigh + 1;
+    _relX = ceil((_ctrl).CellWide / 2) - ceil(abs(_width) / 2);
+    _relY = (_ctrl).CellHigh + 1;
+    _isVertical = true;
 }
 else if (_direction == global.GMUIAnchorRight || _direction == global.GMUIAnchorTopRight || _direction == global.GMUIAnchorBottomRight) {
-    _cellX = (_ctrl).CellX - abs(_width) - 1;
-    _cellY = (_ctrl).CellY + ceil((_ctrl).CellHigh / 2) - ceil(abs(_height) / 2);
+    _relX = 0 - abs(_newwidth) - 1;
+    _relY = floor((_ctrl).CellHigh / 2) - ceil(abs(_height) / 2);
 }
-else {
-    // Left anchored (right side)
-    _cellX = (_ctrl).CellX + (_ctrl).CellWide + 1;
-    _cellY = (_ctrl).CellY + ceil((_ctrl).CellHigh / 2) - ceil(abs(_height) / 2);
+else {// Left anchored (right side)
+    _relX = (_ctrl).CellWide + 1;
+    _relY = floor((_ctrl).CellHigh / 2) - ceil(abs(_height) / 2);
 }
+_cellX = (_ctrl).CellX + _relX;
+_cellY = (_ctrl).CellY + _relY;
 
-newCtrl = GMUI_Add((_ctrl).valueName + "_tooltip","tooltip",_cellX,_cellY,_newwidth,_newheight,(_ctrl).Layer,(_ctrl).Anchor);
+// Add new control based on top-left position (updated on GMUI_ControlUpdateXY)
+newCtrl = GMUI_Add((_ctrl).valueName + "_tooltip","tooltip",_cellX,_cellY, _newwidth,_newheight,(_ctrl).Layer,global.GMUIAnchorTopLeft);
 
 with (newCtrl) {
     valueString = _message;
@@ -1131,23 +1184,32 @@ with (newCtrl) {
     FadeIn = max(ControlBackgroundAlpha,ControlHoverAlpha,ControlSelectAlpha,ControlOverwriteAlpha,ControlFontAlpha);
     
     // Set positioning to given relative amount and fit width to content
-    GMUI_ControlSetPositioning(_relX,_relY,_actwidth,0);
+    GMUI_ControlSetPositioning(_adjX,_adjY,_actwidth,0);
 
     // Assign tooltip settings to control...
     TT_minx = _width;
     TT_miny = _height;
-    TT_maxx = _maxwidth;
-    TT_maxy = _maxheight;
+    TT_maxx = ceil(_maxwidth/gcellsize);
+    TT_maxy = ceil(_maxheight/gcellsize_h);
     
+    // Adjustable later?
     TT_arrowsize = 8;
-    TT_xposition = 8;
-    TT_yposition = 16;
+    TT_yposition = gcellsize_h;
+    if (_isVertical) {
+        TT_xposition = floor(abs(_width)/2)*gcellsize - (gcellsize/2);
+        TT_yposition -= 2;
+    }
+    else
+        TT_xposition = gcellsize/2;
+        
+    
     TT_direction = _direction;
 }
 
 // Store position relative to the parent control
-(newCtrl).TT_relativeCellX = _cellX - (_ctrl).CellX;
-(newCtrl).TT_relativeCellY = _cellY - (_ctrl).CellY;
+(newCtrl).TT_relativeCellX = _relX;
+(newCtrl).TT_relativeCellY = _relY;
+
 // Parent control stores the id
 (_ctrl).TooltipId = newCtrl;
 
@@ -1681,6 +1743,75 @@ else {
 return false;
     
 
+#define GMUI_ControlSetCheckboxSettings
+///GMUI_ControlSetCheckboxSettings(padding [pixels], color on, color off, outline shape/sprite, outline color on, outline color off, transition speed)
+///Required to be called to set the SETTINGS of the checkbox
+
+if (!GMUI_IsControl() && id != GMUII())
+{
+    GMUI_ThrowErrorDetailed("Invalid control",GMUI_ControlSetCheckboxSettings);
+    return false;
+}
+
+// Initialize all computed and assignment values if not yet set
+if (!toggleInitialized) {
+    toggleInitialized = true;
+    
+    TogglePadding = 0;
+    ToggleSlideAlpha = 1;
+    ToggleAlpha = 1;
+
+    Toggle_t = 0;
+    Toggle_d = room_speed;
+    Toggle_c = 1/Toggle_d; // rate (calculated)
+    
+    // Percentage for alpha
+    ToggleRelativeXorY = 0;
+    ToggleDistance = 1;
+    
+    // Toggle_d must be greater than 0 to update correctly
+    if (Toggle_d <= 0)
+        Toggle_d = 1;
+    
+    ToggleOrientation = 0; // unused with checkbox
+}
+
+if (NeedsPositionUpdate) {
+    GMUI_ControlUpdateXY(id);
+    NeedsPositionUpdate = false;
+    NeedsDrawUpdate = true;
+}
+
+// If any values are given as negative numbers, those values will remain as the control default
+if (argument0 >= 0)
+    TogglePadding = argument0;
+
+// Set toggle transition speed
+if (argument6 >= 0) {
+    Toggle_d = argument6;
+    Toggle_c = 1/Toggle_d;
+}
+
+
+if (argument1 >= 0)
+    ToggleColorOn = argument1;
+if (argument2 >= 0)
+    ToggleColorOff = argument2;
+if (is_real(argument3)) {
+    ToggleSlideShape = argument3; // Or sprite
+    if (argument3 > 0 && !sprite_exists(argument3))
+    ToggleSlideShape = -1;    
+}
+if (argument4 >= 0)
+    ToggleSlideColorOn = argument4;
+if (argument5 >= 0)
+    ToggleSlideColorOff = argument5;
+
+    
+
+return true;
+    
+
 #define GMUI_ControlSetFadeOnHide
 ///GMUI_ControlSetFadeOnHide("ControlName" or id, speed in steps)
 ///Set the fade in/out when the control is hidden or not
@@ -1935,6 +2066,114 @@ if (argument5 >= 0)
 if (argument6 >= 0)
     SliderVertical = (argument6 > 0);
 
+
+return true;
+    
+
+#define GMUI_ControlSetToggleSettings
+///GMUI_ControlSetToggleSettings(padding [pixels], color on, color off, slide shape/sprite, slide color on, slide color off, transition speed, orientation, Toggle Thickness [cell decimal])
+///Required to be called to set the SETTINGS of the toggle
+//todo: create checkbox alias for this script (alpha value will utilize the toggle change vars)
+
+if (!GMUI_IsControl() && id != GMUII())
+{
+    GMUI_ThrowErrorDetailed("Invalid control",GMUI_ControlSetToggleSettings);
+    return false;
+}
+
+// Initialize all computed and assignment values if not yet set
+if (!toggleInitialized) {
+    toggleInitialized = true;
+    
+    TogglePadding = 0;
+    ToggleOrientation = global.GMUIDirectionTypeHorizontal;
+    ToggleRelativeXorY = 0;
+    ToggleDistance = 0;
+    
+    ToggleThumbSize = 0;
+    ToggleThickness = 0;
+    ToggleThumbPad = 4;
+    
+    ToggleMidPoint = 0;
+    
+    ToggleSlideAlpha = 1;
+    ToggleAlpha = 1;
+    
+    Toggle_t = 0;
+    Toggle_c = 1; // rate (calculated)
+    Toggle_d = room_speed;
+    
+    // Toggle_d must be greater than 0 to update correctly
+    if (Toggle_d <= 0)
+        Toggle_d = 1;
+        
+    NeedsPositionUpdate = true;
+}
+
+if (NeedsPositionUpdate) {
+    GMUI_ControlUpdateXY(id);
+    NeedsPositionUpdate = false;
+    NeedsDrawUpdate = true;
+}
+
+// If any values are given as negative numbers, those values will remain as the control default
+if (argument0 >= 0)
+    TogglePadding = argument0;
+        
+if (argument7 >= 0)
+    ToggleOrientation = argument7;
+    
+if (argument8 >= 0)
+    ToggleThickness = argument8;
+
+// Set positions based on orientation
+if (ToggleOrientation == global.GMUIDirectionTypeHorizontal) {
+    // Set sizing
+    ToggleThickness = min(ToggleThickness,CellWide - (ToggleThumbPad/(GMUIP).cellsize));
+    if (ToggleThickness <= 0)
+        ToggleThickness = min(CellWide,CellHigh);
+        
+    ToggleThumbSize = ToggleThickness*(GMUIP).cellsize;
+    //ToggleThumbSize = RoomH - RoomY - ToggleThumbPad;
+    ToggleInitialXorY = RoomX + TogglePadding;
+    ToggleFinalXorY = RoomW - TogglePadding*2 - ToggleThumbSize + 1;
+}
+else {
+    // Set sizing
+    ToggleThickness = min(ToggleThickness,CellHigh - (ToggleThumbPad/(GMUIP).cellsize_h));
+    if (ToggleThickness <= 0)
+        ToggleThickness = min(CellWide,CellHigh);
+        
+    ToggleThumbSize = ToggleThickness*(GMUIP).cellsize_h;
+    //ToggleThumbSize = RoomW - RoomX - ToggleThumbPad;
+    ToggleInitialXorY = RoomY + TogglePadding;
+    ToggleFinalXorY = RoomH - TogglePadding*2 - ToggleThumbSize + 1;
+}
+
+ToggleDistance = ToggleFinalXorY - ToggleInitialXorY;
+
+// Set toggle transition speed
+if (argument6 >= 0) {
+    Toggle_d = argument6;
+    Toggle_c = 1/Toggle_d * ToggleDistance;
+}
+
+
+if (argument1 >= 0)
+    ToggleColorOn = argument1;
+if (argument2 >= 0)
+    ToggleColorOff = argument2;
+if (is_real(argument3)) {
+    ToggleSlideShape = argument3; // Or sprite
+    if (argument3 > 0 && !sprite_exists(argument3))
+    ToggleSlideShape = -1;    
+}
+if (argument4 >= 0)
+    ToggleSlideColorOn = argument4;
+if (argument5 >= 0)
+    ToggleSlideColorOff = argument5;
+
+    
 
 return true;
     
@@ -3187,12 +3426,27 @@ global.GMUIDataTypeInteger = 1;
 global.GMUIDataTypeDecimal = 2;
 global.GMUIDataTypeButton = 3;
 global.GMUIDataTypeInfo = 4;
+global.GMUIDataTypeBoolean = 5;
 
 // PopupTypes
 global.GMUIPopupBlank = -1;
 global.GMUIPopupInformation = 0;
 global.GMUIPopupConfirm = 1;
 global.GMUIPopupThreeOptions = 2;
+
+// Slide shapes
+global.GMUISlideNone = -1;
+global.GMUISlideLine = -2;
+global.GMUISlideRect = -3;
+global.GMUISlideRoundRect = -4;
+global.GMUISlideFullRoundRect = -5;
+
+
+// If studio, run the script to create enum versions of these
+if (!global.GMUIGameMaker8) {
+GMUI_InitStudio();
+}
+
 
 
 #define GMUI_IsMenuOpen
@@ -3569,10 +3823,13 @@ with (GMUII())
         _invalid = true;
     }
     
-    // If not a string, check if we need to update a slider
+    // If not a string, check if we need to update a slider or toggle
     if (a2 != "0" && string_lower(a2) != "string") {
         if ((control).ControlType == "slider") {
             GMUI_ControlSliderUpdate(control);
+        }
+        else if ((control).ControlType == "checkbox" || (control).ControlType == "toggle") {
+            GMUI_ControlToggleUpdate(control);
         }
     }
     
@@ -4069,6 +4326,16 @@ if (!Hidden) {
                 Slider_t = Slider_d;
         }
     }
+    else if (ControlType == "toggle" || ControlType == "checkbox") {
+        // Fade or Slide update if checkbox/toggle control
+        if (Toggle_t < Toggle_d) {
+            Toggle_t += 1;
+            if (string(value) == "0")
+                ToggleRelativeXorY = ToggleDistance - (Toggle_c * Toggle_t);
+            else if (string(value) == "1")
+                ToggleRelativeXorY = Toggle_c * Toggle_t;
+        }
+    }
     if (Selected) {
         // Holding click event
         if (mouse_check_button(mb_left)) {
@@ -4155,14 +4422,14 @@ if (valueChangeDetected) {
 // DRAW //
 
 if (argument0 == true) {
-
+depth -=1;//testonly
     // Call the draw actions for groups if in one and is set to draw
     if (1=1 && (GMUIP).GMUI_groupMasterControl[Layer,Group] == id) {
         if (!GroupHidden || FadeCalled != 0) {
             GMUI_ControlDrawGroup(GMUIP,Layer,Group,FadeAlpha,FadeMode);
         }
     }
-    
+    depth+=1;
     //todo: Add a flag for if an update is needed (surfaces):
     // Don't process any drawing if hidden or update not needed
     if (Hidden && FadeCalled == 0)
@@ -4179,7 +4446,7 @@ if (argument0 == true) {
     _FontAlpha = min(ControlFontAlpha,FadeAlpha);
         
     // Start drawing the control (inputs and buttons)
-    if (ControlInput || ControlDataType == global.GMUIDataTypeButton) {
+    if (ControlInput || ControlDataType == global.GMUIDataTypeButton || ControlType == "image") {
         if (ControlGraphicMapIsUsed) {
             GMUI_DrawSpriteBox(GMUIP,Layer,Group,0,1);
         }
@@ -4191,7 +4458,7 @@ if (argument0 == true) {
             
             draw_sprite_ext(ControlGraphic,subi,RoomX,RoomY,ControlGraphicXScale,ControlGraphicYScale,ControlGraphicRotation,ControlGraphicColor,ControlGraphicAlpha);
         }
-        else {
+        else if (ControlType != "image") {
             // Background
             color_alpha(ControlBackgroundColor,_BackgroundAlpha);
             draw_rectangle(RoomX, RoomY, RoomW, RoomH, 0);
@@ -4222,6 +4489,9 @@ if (argument0 == true) {
     }
     else if (ControlType == "slider") {
         GMUI_ControlDrawSlider(id);
+    }
+    else if (ControlType == "checkbox" || ControlType == "toggle") {
+        GMUI_ControlDrawToggle(id);
     }
     
     
@@ -4415,7 +4685,7 @@ with (_tt_id) {
             draw_triangle(cx,max(cy,cy+TT_yposition-TT_arrowsize),cx,min(cy+TT_yposition+TT_arrowsize,chy),cx-TT_xposition,cy+TT_yposition,0);
             break;
         case global.GMUIAnchorRight:
-            draw_triangle(cwx,max(cy,cy+TT_yposition-TT_arrowsize),cwx,min(cy+TT_yposition+TT_arrowsize,chy),cwx+TT_xposition,cy+TT_yposition,0);
+            draw_triangle(cwx+padx*2+1,max(cy,cy+TT_yposition-TT_arrowsize),cwx+padx*2+1,min(cy+TT_yposition+TT_arrowsize,chy),cwx+padx*2+1+TT_xposition,cy+TT_yposition,0);
             break;
         case global.GMUIAnchorBottom:
         case global.GMUIAnchorBottomRight:
@@ -4438,6 +4708,11 @@ with (_tt_id) {
     _dtx = cx + padx;
     
     draw_text_ext(_dtx,cy + (chy-cy)/2,_txt,-1,cwx);
+    
+    //debug
+    //color_alpha(c_red,0.15)
+    //draw_rectangle(cx, cy, CellWide*(GMUII()).cellsize, chy, 1)
+    //draw_rectangle(cx, cy, cwx, chy, 1)
 }
 
 #define GMUI_ControlDrawSlider
@@ -4448,13 +4723,7 @@ var _tt_id, _SCRIPT;
 _tt_id = argument0;
 _SCRIPT = GMUI_ControlDrawSlider;
 
-// TODO: REDO ALL OF THIS FOR THE SLIDER:
-// make demo show valuechange action updating a number
-// 
-// in other scripts:
-// create variables to calculate the drawing values
-// if the variables are not set, calculate and set them
-// if sizes change for the control, re-calculate these variables (update flag)
+// todo: check if sizes change for the control, re-calculate these variables (update flag)
 
 with (_tt_id) {
     // If this happens, GMUI has a bug
@@ -4729,6 +4998,165 @@ with (_tt_id) {
     //draw_text_ext(_dtx,cy + (chy-cy)/2,_txt,-1,cwx);
 }
 
+#define GMUI_ControlDrawToggle
+///GMUI_ControlDrawToggle(id of toggle control object)
+/// Draw the control as a toggle
+
+var _tt_id, _SCRIPT;
+_tt_id = argument0;
+_SCRIPT = GMUI_ControlDrawToggle;
+
+with (_tt_id) {
+    // If this happens, GMUI has a bug
+    if (ControlType == "toggle") {
+        // Draw toggle control
+        //var cpx,cpx2,cpy,cpy2,chh,cx2,cw2,cy2,ch2,chw2,chy2,
+        var chh, cx1, cy1, cx2, cy2, cxrp, cyrp, _tt, _tp, TSC,TSA,deg,degp,d;
+        if (ToggleOrientation == global.GMUIDirectionTypeHorizontal) {
+            
+            // new:
+            chh = ceil((RoomH - RoomY) / 2); // half height
+            cx1 = RoomX + TogglePadding;
+            cy1 = RoomY;
+            cx2 = RoomW - TogglePadding;
+            cy2 = RoomH;
+            // for full rounded:
+            cxrp = chh;
+            cyrp = 1;
+            
+            deg = 90;
+            
+        }
+        else {
+            
+            chh = ceil((RoomW - RoomX) / 2); // half height
+            cx1 = RoomX;
+            cy1 = RoomY + TogglePadding;
+            cx2 = RoomW;
+            cy2 = RoomH - TogglePadding;
+            // for full rounded:
+            cxrp = 1;
+            cyrp = chh;
+            
+            deg = 0;
+        }
+        
+        degp = 2; // degree precision for half circle
+        _tp = ToggleThumbPad; // padding between 'thumb' and slide edge
+        _tt = ToggleThumbSize; // width/height of the 'thumb'
+        
+        if (Toggle_t < Toggle_d)
+            TSC = merge_color(ToggleSlideColorOff,ToggleSlideColorOn,ToggleRelativeXorY/(ToggleFinalXorY-ToggleInitialXorY));
+        else if (value)
+            TSC = ToggleSlideColorOn;
+        else
+            TSC = ToggleSlideColorOff;
+            
+        TSA = ToggleSlideAlpha;
+        
+        // Draw slide region
+        draw_set_color(TSC);
+        draw_set_alpha(TSA);
+        switch (ToggleSlideShape) {
+            case global.GMUISlideNone: // -1 Custom (No slide)
+                break;
+            case global.GMUISlideLine: // -2 Single (Horizontal line)
+                draw_line(cx1+chh,cy1+chh,cx2-chh,cy2-chh);
+                break;
+            case global.GMUISlideRect: // -3
+                draw_rectangle(cx1,cy1,cx2,cy2,0);
+                break;
+            case global.GMUISlideRoundRect: // -4
+                draw_roundrect(cx1,cy1,cx2,cy2,0);
+                break;
+            case global.GMUISlideFullRoundRect: // -5
+                draw_rectangle(cx1+cxrp,cy1+cyrp,cx2-cxrp,cy2-cyrp,0);
+                
+                draw_primitive_begin(pr_trianglefan);
+                draw_vertex_color(cx1+chh,cy1+chh,TSC,TSA);
+                for (d=deg; d <= deg+180; d+=degp) {
+                    draw_vertex_color(cx1+chh+lengthdir_x(chh,d),cy1+chh+lengthdir_y(chh,d),TSC,TSA);
+                }
+                draw_primitive_end();
+                
+                draw_primitive_begin(pr_trianglefan);
+                draw_vertex_color(cx2-chh,cy2-chh,TSC,TSA);
+                for (d=deg; d <= deg+180; d+=degp) {
+                    draw_vertex_color(cx2-chh+lengthdir_x(chh,d+180),cy2-chh+lengthdir_y(chh,d+180),TSC,TSA);
+                }
+                draw_primitive_end();
+                
+                break;
+            case 0: // none (slider only), or sprite
+            default:
+                break;
+        }
+        
+        // Draw toggle thumb
+        if (Toggle_t < Toggle_d)
+            draw_set_color(merge_color(ToggleColorOff,ToggleColorOn,ToggleRelativeXorY/(ToggleFinalXorY-ToggleInitialXorY)));
+        else if (value)
+            draw_set_color(ToggleColorOn);
+        else
+            draw_set_color(ToggleColorOff);
+        draw_set_alpha(ToggleAlpha);
+        
+        if (ToggleOrientation == global.GMUIDirectionTypeHorizontal)
+            cx1 += ToggleRelativeXorY;
+        else
+            cy1 += ToggleRelativeXorY;
+        
+        // For now, just draw the shape that corresponds to the slide shape
+        if (ToggleSlideShape >= global.GMUISlideRect) {
+            draw_rectangle(cx1+_tp, cy1+_tp, cx1+_tt-_tp, cy1+_tt-_tp, 0);
+        }
+        else if (ToggleSlideShape == global.GMUISlideRoundRect) {
+            draw_roundrect(cx1+_tp, cy1+_tp, cx1+_tt-_tp, cy1+_tt-_tp, 0);
+        }
+        else if (ToggleSlideShape == global.GMUISlideFullRoundRect) {
+            draw_circle(cx1+chh,cy1+chh,chh-_tp,0);
+        }
+        else {
+            if (ToggleOrientation == global.GMUIDirectionTypeHorizontal)
+                draw_roundrect(cpx+tp+chh/2, cpy+tp+chh, cpx-tp+chh, cpy-tp+chh, 0);
+            else
+                draw_roundrect(cpx+tp+chh, cpy+tp+chh/2, cpx-tp+chh*1.5, cpy-tp+chh*1.5, 0);
+        }
+        
+    }
+    else if (ControlType == "checkbox") {
+        // Draw checkbox control
+        var TSC,TA,TC;
+        TC = ToggleColorOff;
+        if (Toggle_t < Toggle_d)
+            TSC = merge_color(ToggleSlideColorOff,ToggleSlideColorOn,ToggleRelativeXorY);
+        else if (value)
+            TSC = ToggleSlideColorOn;
+        else
+            TSC = ToggleSlideColorOff;
+        TA = ToggleAlpha;
+        // Draw box
+        draw_set_color(TSC);
+        draw_set_alpha(TA);
+        draw_rectangle(RoomX + TogglePadding, RoomY + TogglePadding, RoomW - TogglePadding, RoomH - TogglePadding, 0);
+        draw_set_color(TC);
+        draw_rectangle(RoomX + TogglePadding, RoomY + TogglePadding, RoomW - TogglePadding, RoomH - TogglePadding, 1);
+        
+        // Draw check
+        draw_set_color(ToggleColorOn);
+        draw_set_alpha(ToggleRelativeXorY);
+        draw_rectangle(RoomX+TogglePadding+3, RoomY+TogglePadding+3, RoomW-TogglePadding-3, RoomH-TogglePadding-3, 0);
+    }
+    else {
+        GMUI_ThrowErrorDetailed("Control Type is not toggle/checkbox!",_SCRIPT);
+        return false;
+    }
+    
+    return true;
+    
+    
+}
+
 #define GMUI_ControlInit
 ///GMUI_ControlInit(control object to instantiate)
 /// Initialize the values to use with a GMUI control
@@ -4758,7 +5186,7 @@ i.ControlType = "";
 i.ControlDataType = global.GMUIDataTypeString; // Default (0)
 
 i.NeedsPositionUpdate = false;
-i.NeedsDrawUpdate= false;
+i.NeedsDrawUpdate = false;
 
 // Redundant control options based on the datatype
 i.ControlIsNumeric = false;
@@ -4774,6 +5202,7 @@ i.ControlSelectable = true;
 i.checkMouseX = 0;
 i.checkMouseY = 0;
 i.HoveringDirection = 0; // 0 = middle/none (HoveringDirection_None), HoveringDirection_Right=1;HoveringDirection_Up=2;HoveringDirection_Left=3;HoveringDirection_Down=4;
+i.toggleInitialized = true; // default skip toggle values
 
 // Control Status
 i.Disabled = 0;
@@ -5176,6 +5605,18 @@ switch (_type) {
         (IID).sliderInitialized = false;
         (IID).sliderComputed = false;
         (IID).ControlShowValue = false;
+        break;
+    case "toggle":
+    case "checkbox":
+        (IID).toggleInitialized = false;
+        (IID).ControlSelectable = false;
+        break;
+    case "sprite":
+        _type = "image";
+    case "image":
+        (IID).ControlInput = false;
+        (IID).ControlSelectable = false;
+        break;
     case "dropdown":
         
         break;
@@ -5197,7 +5638,7 @@ switch (_type) {
 _getType = GMUI_GetDataType(_type);
 (IID).ControlDataType = _getType;
 
-if (_getType == global.GMUIDataTypeInteger || _getType == global.GMUIDataTypeDecimal) {
+if (_getType == global.GMUIDataTypeInteger || _getType == global.GMUIDataTypeDecimal || _getType == global.GMUIDataTypeBoolean) {
     (IID).ControlIsNumeric = true;
     (IID).ControlIsString = false;
 }
@@ -5283,7 +5724,7 @@ if (!argument0) {
 
 
 #define GMUI_ControlSliderUpdate
-///GMUI_ControlSliderUpdate(Control ID, VerticalOrientation[bool])
+///GMUI_ControlSliderUpdate(Control ID)
 ///Updates the slider position according to its value (called when switching its value or initializing)
 
 with (argument0) {
@@ -5294,11 +5735,22 @@ with (argument0) {
     Slider_t = 0;
 }
 
+#define GMUI_ControlToggleUpdate
+///GMUI_ControlToggleUpdate(Control ID)
+///Resets toggle timing for the animation
+
+with (argument0) {
+    if (Toggle_t == Toggle_d)
+        Toggle_t = 0;
+    else
+        Toggle_t = Toggle_d - Toggle_t;
+}
+
 #define GMUI_ControlUpdateXY
 ///GMUI_ControlUpdateXY(control)
 ///Updates the actual location in the room after adjustments
 
-var _ctrl, _GMUIP, _xoffset, _yoffset;
+var _ctrl, _GMUIP, _xoffset, _yoffset, _lw, _lh;
 _ctrl = argument0;
 _GMUIP = (_ctrl).GMUIP;
 
@@ -5311,6 +5763,8 @@ if ((_GMUIP).UIsnaptoview) {
     _xoffset = view_xview[(_GMUIP).UIgridview];
     _yoffset = view_yview[(_GMUIP).UIgridview];
 }
+_lw = GMUI_GridGetWidth((_ctrl).GMUIP,(_ctrl).Layer);
+_lh = GMUI_GridGetHeight((_ctrl).GMUIP,(_ctrl).Layer);
 
 // X,Y position
 (_ctrl).RoomX = (_ctrl).ActualX + (_ctrl).RelativeX + (_GMUIP).GMUI_grid_x[(_ctrl).Layer] + _xoffset;
@@ -5327,13 +5781,14 @@ if ((_ctrl).ActualH > 0)
 else
     (_ctrl).RoomH = (_ctrl).RoomY + (_ctrl).CellHigh * (_GMUIP).cellsize_h;
     
-// If the control has a tooltip, update the tooltip location
+// If the control has a tooltip, update the tooltip location (based on top-left)
 if ((_ctrl).TooltipId != -1) {
     GMUI_ControlPosition((_ctrl).TooltipId,
         (_ctrl).CellX + ((_ctrl).TooltipId).TT_relativeCellX,
         (_ctrl).CellY + ((_ctrl).TooltipId).TT_relativeCellY,
-        0,0,
-        (_ctrl).Anchor);
+        ((_ctrl).TooltipId).RelativeX,
+        ((_ctrl).TooltipId).RelativeY,
+        global.GMUIAnchorTopLeft);
     ((_ctrl).TooltipId).NeedsPositionUpdate = true;
 }
 
@@ -5641,6 +6096,10 @@ switch (_controlType) {
     case "tooltip":
         return global.GMUIDataTypeInfo;
         break;
+    case "toggle":
+    case "checkbox":
+        return global.GMUIDataTypeBoolean;
+        break;
     default:
         return -1;
         break;
@@ -5927,6 +6386,9 @@ if (GMUI_GridEnabled())
                             // Normal input controls
                             GMUI_GridSelect(ctrlObject);
                         }
+                        else if (ctrlObject.ControlType == "checkbox" || ctrlObject.ControlType == "toggle") {
+                            GMUI_SetValue(ctrlObject.valueName,1-ctrlObject.value,"integer");
+                        }
                         else if (ctrlObject.ActionScript != -1) {
                             // Control buttons clicked
                             GMUI_ControlActionScript(ctrlObject);
@@ -5976,6 +6438,7 @@ if (GMUI_GridEnabled())
 #define GMUI_GridDrawGroups
 ///GMUI_GridDrawGroups(GMUI instance)
 ///Draws the groups if set to do so
+// CURRENTLY NOT USED! //
 
 var _GMUII, layer, l, g, gx, gy, gw, gh, xoffset, yoffset, spr_width, spr_height;
 _GMUII = argument0;
@@ -6523,6 +6986,75 @@ for(i=0;i<ds_list_size((GMUII()).GMUI_groupControlList[_LayerNumber,_GroupNumber
 
 // Reset all control regions for the layer
 GMUI_GridSetRegionsLayer(_LayerNumber);
+
+
+#define GMUI_InitStudio
+///GMUI_InitStudio() This internal script is called by GMUI_Init, if running GM:Studio 1.x,2.x
+//
+// !WARNING! MODIFYING THE GMUI SCRIPTS CAN BREAK FUNCTIONALITY AND CAUSE ERRORS! EDIT THE OBJECTS INSTEAD!
+//
+// Copyright 2017 Alert Studios (Mark Palnau). Initially designed by Alert Studios and released as Open-Source.
+//
+// If you would like to help make GMUI better, please submit a ticket or pull request on the project on GitHub!
+// https://github.com/AlertStudios/GMUI-Framework
+//
+//
+
+if (global.GMUIGameMaker8)
+    return false;
+
+    
+    
+// THE REST OF THIS SCRIPT ONLY EXISTS IN GM:STUDIO:
+
+// Common GMUI values:
+
+// AHOY MATEYS - Please note that the cell#'s for new controls are relative to their anchor position
+//global.GMUIAnchorRight = 1;
+//global.GMUIAnchorTopRight = 2;
+//global.GMUIAnchorTop = 3;
+//global.GMUIAnchorTopLeft = 4;
+//global.GMUIAnchorLeft = 5;
+//global.GMUIAnchorBottomLeft = 6;
+//global.GMUIAnchorBottom = 7;
+//global.GMUIAnchorBottomRight = 8;
+//global.GMUIAnchorCenter = 9;
+//global.GMUIAnchorDefault = global.GMUIAnchorTopLeft;
+
+// Hovering directions for special controls
+//global.GMUIHoveringDirection_None = 0;
+//global.GMUIHoveringDirection_Right = 1;
+//global.GMUIHoveringDirection_Up = 2;
+//global.GMUIHoveringDirection_Left = 3;
+//global.GMUIHoveringDirection_Down = 4;
+
+// Direction types
+//global.GMUIDirectionTypeHorizontal = 0;
+//global.GMUIDirectionTypeVertical = 1;
+//global.GMUIDirectionTypeSideVertical = 2;
+//global.GMUIDirectionTypeBoth = 3;
+
+// Control datatypes
+//global.GMUIDataTypeString = 0;
+//global.GMUIDataTypeInteger = 1;
+//global.GMUIDataTypeDecimal = 2;
+//global.GMUIDataTypeButton = 3;
+//global.GMUIDataTypeInfo = 4;
+//global.GMUIDataTypeBoolean = 5;
+
+// PopupTypes
+//global.GMUIPopupBlank = -1;
+//global.GMUIPopupInformation = 0;
+//global.GMUIPopupConfirm = 1;
+//global.GMUIPopupThreeOptions = 2;
+
+// Slide shapes
+//global.GMUISlideNone = -1;
+//global.GMUISlideLine = -2;
+//global.GMUISlideRect = -3;
+//global.GMUISlideRoundRect = -4;
+//global.GMUISlideFullRoundRect = -5;
+
 
 
 #define GMUI_IsControl

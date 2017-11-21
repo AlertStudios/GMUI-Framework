@@ -141,6 +141,9 @@ if (GMUI_GridEnabled())
                             // Normal input controls
                             GMUI_GridSelect(ctrlObject);
                         }
+                        else if (ctrlObject.ControlType == "checkbox" || ctrlObject.ControlType == "toggle") {
+                            GMUI_SetValue(ctrlObject.valueName,1-ctrlObject.value,"integer");
+                        }
                         else if (ctrlObject.ActionScript != -1) {
                             // Control buttons clicked
                             GMUI_ControlActionScript(ctrlObject);

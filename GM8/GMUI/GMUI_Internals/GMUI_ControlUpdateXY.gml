@@ -2,7 +2,7 @@
 ///GMUI_ControlUpdateXY(control)
 ///Updates the actual location in the room after adjustments
 
-var _ctrl, _GMUIP, _xoffset, _yoffset;
+var _ctrl, _GMUIP, _xoffset, _yoffset, _lw, _lh;
 _ctrl = argument0;
 _GMUIP = (_ctrl).GMUIP;
 
@@ -15,6 +15,8 @@ if ((_GMUIP).UIsnaptoview) {
     _xoffset = view_xview[(_GMUIP).UIgridview];
     _yoffset = view_yview[(_GMUIP).UIgridview];
 }
+_lw = GMUI_GridGetWidth((_ctrl).GMUIP,(_ctrl).Layer);
+_lh = GMUI_GridGetHeight((_ctrl).GMUIP,(_ctrl).Layer);
 
 // X,Y position
 (_ctrl).RoomX = (_ctrl).ActualX + (_ctrl).RelativeX + (_GMUIP).GMUI_grid_x[(_ctrl).Layer] + _xoffset;
@@ -31,13 +33,14 @@ if ((_ctrl).ActualH > 0)
 else
     (_ctrl).RoomH = (_ctrl).RoomY + (_ctrl).CellHigh * (_GMUIP).cellsize_h;
     
-// If the control has a tooltip, update the tooltip location
+// If the control has a tooltip, update the tooltip location (based on top-left)
 if ((_ctrl).TooltipId != -1) {
     GMUI_ControlPosition((_ctrl).TooltipId,
         (_ctrl).CellX + ((_ctrl).TooltipId).TT_relativeCellX,
         (_ctrl).CellY + ((_ctrl).TooltipId).TT_relativeCellY,
-        0,0,
-        (_ctrl).Anchor);
+        ((_ctrl).TooltipId).RelativeX,
+        ((_ctrl).TooltipId).RelativeY,
+        global.GMUIAnchorTopLeft);
     ((_ctrl).TooltipId).NeedsPositionUpdate = true;
 }
 
