@@ -88,7 +88,6 @@
           <script>scripts\minmax.gml</script>
         </scripts>
         <script>scripts\GMUI_Add.gml</script>
-        <script>scripts\GMUI_AddLabel.gml</script>
         <script>scripts\GMUI_AddLayer.gml</script>
         <script>scripts\GMUI_AddTooltipToControl.gml</script>
         <script>scripts\GMUI_CenterX.gml</script>
@@ -236,7 +235,6 @@
         <script>scripts\GMUI_GridGetMouseCellY.gml</script>
         <script>scripts\GMUI_GridGetWidth.gml</script>
         <script>scripts\GMUI_GroupExists.gml</script>
-        <script>scripts\GMUI_GroupPositionControls.gml</script>
         <script>scripts\GMUI_GroupSetDefaultStyle.gml</script>
         <script>scripts\GMUI_GroupSetHidePosition.gml</script>
         <script>scripts\GMUI_GroupSetPositionAnchored.gml</script>

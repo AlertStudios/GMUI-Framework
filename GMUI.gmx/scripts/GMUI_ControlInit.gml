@@ -1,3 +1,4 @@
+#define GMUI_ControlInit
 ///GMUI_ControlInit(control object to instantiate)
 /// Initialize the values to use with a GMUI control
 // These values are controlled by the GMUI controller, and if commented, they are actually intialized by the Add script.
@@ -26,7 +27,7 @@ i.ControlType = "";
 i.ControlDataType = global.GMUIDataTypeString; // Default (0)
 
 i.NeedsPositionUpdate = false;
-i.NeedsDrawUpdate= false;
+i.NeedsDrawUpdate = false;
 
 // Redundant control options based on the datatype
 i.ControlIsNumeric = false;
@@ -42,6 +43,7 @@ i.ControlSelectable = true;
 i.checkMouseX = 0;
 i.checkMouseY = 0;
 i.HoveringDirection = 0; // 0 = middle/none (HoveringDirection_None), HoveringDirection_Right=1;HoveringDirection_Up=2;HoveringDirection_Left=3;HoveringDirection_Down=4;
+i.toggleInitialized = true; // default skip toggle values
 
 // Control Status
 i.Disabled = 0;
@@ -179,3 +181,4 @@ i.valueChangeDetected = 0;
 /// ???:
 // The control will be disabled for this many steps before allowing action
 //i.Disable = floor(room_speed/20);
+

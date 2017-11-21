@@ -1,3 +1,4 @@
+#define GMUIself
 ///GMUIself()
 ///Returns id of the GMUI object instance or -1 if not
 // Usage: with (GMUIself()) { do something; }
@@ -20,3 +21,4 @@ if (_gmuii > -1) {
 }
 
 return -1;
+

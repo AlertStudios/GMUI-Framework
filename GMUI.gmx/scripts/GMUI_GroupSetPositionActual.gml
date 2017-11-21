@@ -1,3 +1,4 @@
+#define GMUI_GroupSetPositionActual
 ///GMUI_GroupSetPositionActual(Layer Number, Group Number, x, y)
 ///Set a group to a position in the room by x, y
 
@@ -33,5 +34,7 @@ if ((GMUII()).UIsnaptoview) {
 _adjx = _xcord - _offsetx - GMUI_CellGetActualX(GMUI_GridGetCellX(GMUII(),_LayerNumber,_xcord));
 _adjy = _ycord - _offsety - GMUI_CellGetActualY(GMUI_GridGetCellY(GMUII(),_LayerNumber,_ycord));
 
+
 // Set position by default anchor (topleft), and adjustment to the given coordinates
 GMUI_GroupSetPositionAnchored(_LayerNumber,_GroupNumber,GMUI_GridGetCellX(GMUII(),_LayerNumber,_xcord),GMUI_GridGetCellY(GMUII(),_LayerNumber,_ycord),_adjx,_adjy,0);
+

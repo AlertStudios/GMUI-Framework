@@ -1,3 +1,4 @@
+#define GMUI_Add
 ///GMUI_Add("Name", "Type String", cell# x, cell# y, cells wide (min 1), cells high (min 1), Layer**, Anchor***)
 ///Adds a component(instance) to the GMUI grid
 
@@ -27,10 +28,10 @@ gridH = GMUI_GridGetHeight(GMUII(),_Layer);
 //    return -1;
 //}
 
-
 // Check that it hasn't already been created
 if (ds_map_exists((GMUII()).GMUI_map,argument0)) {
     GMUI_ThrowErrorDetailed("The control name has already been defined for '" + string(argument0) + "'",SCRIPT);
+    show_error(GMUI_LastError(),false);
     return -1;
 }
 
@@ -124,6 +125,7 @@ if (GMUI_GetDataType(thetype) == global.GMUIDataTypeString) {
 
 
 return thecontrol;
+
 
 
 

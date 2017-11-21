@@ -1,3 +1,4 @@
+#define GMUI_ControlSetType
 ///GMUI_ControlSetType(Control, "Control Type")
 ///Set the type variables based on the control the developer wants to make
 
@@ -32,6 +33,18 @@ switch (_type) {
         (IID).sliderInitialized = false;
         (IID).sliderComputed = false;
         (IID).ControlShowValue = false;
+        break;
+    case "toggle":
+    case "checkbox":
+        (IID).toggleInitialized = false;
+        (IID).ControlSelectable = false;
+        break;
+    case "sprite":
+        _type = "image";
+    case "image":
+        (IID).ControlInput = false;
+        (IID).ControlSelectable = false;
+        break;
     case "dropdown":
         
         break;
@@ -53,7 +66,7 @@ switch (_type) {
 _getType = GMUI_GetDataType(_type);
 (IID).ControlDataType = _getType;
 
-if (_getType == global.GMUIDataTypeInteger || _getType == global.GMUIDataTypeDecimal) {
+if (_getType == global.GMUIDataTypeInteger || _getType == global.GMUIDataTypeDecimal || _getType == global.GMUIDataTypeBoolean) {
     (IID).ControlIsNumeric = true;
     (IID).ControlIsString = false;
 }
@@ -64,5 +77,6 @@ else if (_getType == global.GMUIDataTypeString) {
 
 // Return sanitized and processed type back
 return _type;
+
 
 

@@ -1,3 +1,4 @@
+#define GMUI_ControlSetDefaultStyle
 ///GMUI_ControlSetDefaultStyle(id)
 /// Get the default style values from the grid controller
 
@@ -24,3 +25,4 @@ with (argument0)
 }
 
 return true;
+

@@ -1,3 +1,4 @@
+#define _Switch_Button
 //switch group positions
 
 if (!global.Switched) {
@@ -16,3 +17,4 @@ else {
     GMUI_GroupTransitionToCell(0, 2, 2, 3, easeElasticOut, 30);
     global.Switched = false;
 }
+

@@ -1,3 +1,4 @@
+#define GMUI_GroupSetFadeOnHide
 ///GMUI_GroupSetFadeOnHide(Layer Number, Group Number, Speed in steps, Fade Mode [0: alpha-sequential, 1: all-together])
 ///Set the fade in/out when the control is hidden or not
 ///Fade Mode: 0 = fade dimmest last, 1 = fade all together
@@ -48,3 +49,4 @@ for(i=0;i<ds_list_size((GMUII()).GMUI_groupControlList[_LayerNumber,_GroupNumber
 }
 
 return true;
+

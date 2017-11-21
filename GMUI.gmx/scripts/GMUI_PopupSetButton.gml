@@ -1,3 +1,4 @@
+#define GMUI_PopupSetButton
 ///GMUI_PopupSetButton("popup name", )
 ///This option allows the user to click outside of the menu to close it
 
@@ -24,3 +25,4 @@ _Layer = GMUI_GetMenuLayer(GMUII(),_menuNumber);
 
 
 return true;
+

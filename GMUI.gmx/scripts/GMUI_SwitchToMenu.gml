@@ -1,3 +1,4 @@
+#define GMUI_SwitchToMenu
 ///GMUI_SwitchToMenu(GMUI, Menu number)
 ///Switches the depth of all controls in the menu of the current layer
 
@@ -42,4 +43,5 @@ for(i=0;i<ds_list_size((_GMUII).GMUI_groupControlList[_LayerNumber,_MenuNumber])
             - (_MasterControl != id);
     }
 }
+
 

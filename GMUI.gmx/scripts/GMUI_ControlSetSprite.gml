@@ -1,3 +1,4 @@
+#define GMUI_ControlSetSprite
 ///GMUI_ControlSetSprite(sprite, subimage, hover subimage, selected subimage)
 ///Replace the control drawing with a sprite instead
 
@@ -28,4 +29,5 @@ if (!GMUI_IsControl() && id != GMUII())
         ControlGraphicSelectedIndex = 0;
 
 return true;
+
 

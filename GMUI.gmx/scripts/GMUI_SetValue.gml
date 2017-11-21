@@ -1,3 +1,4 @@
+#define GMUI_SetValue
 ///GMUI_SetValue("ControlName", value, value type - string:0, integer:1, decimal:2)
 ///Set the value of a control to GMUI to reference in user code (GMUI_GetValue)
 
@@ -49,10 +50,13 @@ with (GMUII())
         _invalid = true;
     }
     
-    // If not a string, check if we need to update a slider
+    // If not a string, check if we need to update a slider or toggle
     if (a2 != "0" && string_lower(a2) != "string") {
         if ((control).ControlType == "slider") {
             GMUI_ControlSliderUpdate(control);
+        }
+        else if ((control).ControlType == "checkbox" || (control).ControlType == "toggle") {
+            GMUI_ControlToggleUpdate(control);
         }
     }
     
@@ -61,3 +65,4 @@ with (GMUII())
         script_execute((control).ValueChangedActionScript);
     }
 }
+
