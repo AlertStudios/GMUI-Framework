@@ -22,57 +22,56 @@ global.GMUIii = 0;
 
 // Common GMUI values:
 enum GMUIControl {
-    IntPicker = "intpicker",
-    DoublePicker = "doublepicker",
-    TextInt = "textint",
-    TextDecimal = "textdecimal",
-    TextString = "textstring",
-    Button = "button",
-    TextButton = "textbutton",
-    Slider = "slider",
-    Toggle = "toggle",
-    Checkbox = "checkbox",
-    Sprite = "sprite",
-    Image = "image",
-    Dropdown = "dropdown",
-    Label = "label",
-    Tooltip = "tooltip"
+    IntPicker,
+    DoublePicker,
+    TextInt,
+    TextDecimal,
+    TextString,
+    Button,
+    TextButton,
+    Slider,
+    Toggle,
+    Checkbox,
+    Sprite,
+    Image,
+    Dropdown,
+    Label,
+    Tooltip
 }
-
 
 // AHOY MATEYS - Please note that the cell#'s for new controls are relative to their anchor position
 enum GMUIAnchor {
-    Right = global.GMUIAnchorRight, //1
-    TopRight = global.GMUIAnchorTopRight, //2
-    Top = global.GMUIAnchorTop, //3
-    TopLeft = global.GMUIAnchorTopLeft, //4
-    Left = global.GMUIAnchorLeft, //5
-    BottomLeft = global.GMUIAnchorBottomLeft, //6
-    Bottom = global.GMUIAnchorBottom, //7
-    BottomRight = global.GMUIAnchorBottomRight, //8
-    Center = global.GMUIAnchorCenter, //9
-    Default = global.GMUIAnchorDefault //10
+    Right = 1, //global.GMUIAnchorRight
+    TopRight = 2, //global.GMUIAnchorTopRight
+    Top = 3, //global.GMUIAnchorTop
+    TopLeft = 4, //global.GMUIAnchorTopLeft
+    Left = 5, //global.GMUIAnchorLeft
+    BottomLeft = 6, //global.GMUIAnchorBottomLeft
+    Bottom = 7, //global.GMUIAnchorBottom
+    BottomRight = 8, //global.GMUIAnchorBottomRight
+    Center = 9, //global.GMUIAnchorCenter
+    Default = 10 //global.GMUIAnchorDefault
 }
 
 enum GMUIDirection {
-    Horizontal = global.GMUIDirectionTypeHorizontal, //0
-    Vertical = global.GMUIDirectionTypeVertical, //1
-    SideVertical = global.GMUIDirectionTypeSideVertical, //2
-    Both = global.GMUIDirectionTypeBoth //3
+    Horizontal = 0, //global.GMUIDirectionTypeHorizontal
+    Vertical = 1, //global.GMUIDirectionTypeVertical
+    SideVertical = 2, //global.GMUIDirectionTypeSideVertical
+    Both = 3 //global.GMUIDirectionTypeBoth
 }
 
 enum GMUIPopup {
-    Blank = global.GMUIPopupBlank, //-1
-    Information = global.GMUIPopupInformation ,//0
-    Confirm = global.GMUIPopupConfirm ,//1
-    ThreeOptions = global.GMUIPopupThreeOptions //2
+    Blank = -1, //global.GMUIPopupBlank
+    Information = 0, //global.GMUIPopupInformation
+    Confirm = 1, //global.GMUIPopupConfirm
+    ThreeOptions = 2 //global.GMUIPopupThreeOptions
 }
 
 enum GMUISlideShape {
-    None = global.GMUISlideNone, //-1
-    Line = global.GMUISlideLine, //-2
-    Rectangle = global.GMUISlideRect, //-3
-    RoundRectangle = global.GMUISlideRoundRect, //-4
-    FullRoundRectangle = global.GMUISlideFullRoundRect //-5
+    None = -1, //global.GMUISlideNone
+    Line = -2, //global.GMUISlideLine
+    Rectangle = -3, //global.GMUISlideRect
+    RoundRectangle = -4, //global.GMUISlideRoundRect
+    FullRoundRectangle = -5 //global.GMUISlideFullRoundRect
 }
 
