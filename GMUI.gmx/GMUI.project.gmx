@@ -30,7 +30,9 @@
         <script>scripts\_Disable_Button.gml</script>
         <script>scripts\_Exit_Button.gml</script>
         <script>scripts\_Hide_Button.gml</script>
+        <script>scripts\_Hover_Checkbox.gml</script>
         <script>scripts\_Hover_Int.gml</script>
+        <script>scripts\_HoverOff_Checkbox.gml</script>
         <script>scripts\_HoverOff_Int.gml</script>
         <script>scripts\_Move_Button.gml</script>
         <script>scripts\_Popup_Button.gml</script>
@@ -110,6 +112,7 @@
         <script>scripts\GMUI_ControlSetAttributes.gml</script>
         <script>scripts\GMUI_ControlSetButton.gml</script>
         <script>scripts\GMUI_ControlSetButtonAction.gml</script>
+        <script>scripts\GMUI_ControlSetCheckboxSettings.gml</script>
         <script>scripts\GMUI_ControlSetFadeOnHide.gml</script>
         <script>scripts\GMUI_ControlSetFontStyle.gml</script>
         <script>scripts\GMUI_ControlSetHoverAction.gml</script>
@@ -126,6 +129,7 @@
         <script>scripts\GMUI_ControlSetSpriteMap.gml</script>
         <script>scripts\GMUI_ControlSetStyle.gml</script>
         <script>scripts\GMUI_ControlSetText.gml</script>
+        <script>scripts\GMUI_ControlSetToggleSettings.gml</script>
         <script>scripts\GMUI_ControlSetValueChangedAction.gml</script>
         <script>scripts\GMUI_Create.gml</script>
         <script>scripts\GMUI_CreateGroup.gml</script>
@@ -187,6 +191,7 @@
         <script>scripts\GMUI_ControlDraw.gml</script>
         <script>scripts\GMUI_ControlDrawGroup.gml</script>
         <script>scripts\GMUI_ControlDrawSlider.gml</script>
+        <script>scripts\GMUI_ControlDrawToggle.gml</script>
         <script>scripts\GMUI_ControlDrawTooltipById.gml</script>
         <script>scripts\GMUI_ControlActionScript.gml</script>
         <script>scripts\GMUI_ControlSetInitValue.gml</script>
@@ -198,6 +203,9 @@
         <script>scripts\GMUI_ControlSetDefaultSpriteMap.gml</script>
         <script>scripts\GMUI_ControlSetDefaultStyle.gml</script>
         <script>scripts\GMUI_ControlSetType.gml</script>
+        <script>scripts\GMUI_ControlSliderMove.gml</script>
+        <script>scripts\GMUI_ControlSliderUpdate.gml</script>
+        <script>scripts\GMUI_ControlToggleUpdate.gml</script>
         <script>scripts\GMUI_ControlUpdateXY.gml</script>
         <script>scripts\GMUI_CreateMenuType.gml</script>
         <script>scripts\GMUI_CreateSetDefaultArea.gml</script>
@@ -232,8 +240,7 @@
         <script>scripts\GMUI_GroupSetDefaultStyle.gml</script>
         <script>scripts\GMUI_GroupSetHidePosition.gml</script>
         <script>scripts\GMUI_GroupSetPositionAnchored.gml</script>
-        <script>scripts\GMUI_ControlSliderMove.gml</script>
-        <script>scripts\GMUI_ControlSliderUpdate.gml</script>
+        <script>scripts\GMUI_InitStudio.gml</script>
         <script>scripts\GMUI_IsControl.gml</script>
         <script>scripts\GMUI_IsControlID.gml</script>
         <script>scripts\GMUI_IsScript.gml</script>
