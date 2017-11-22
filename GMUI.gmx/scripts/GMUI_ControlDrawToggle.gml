@@ -1,4 +1,3 @@
-#define GMUI_ControlDrawToggle
 ///GMUI_ControlDrawToggle(id of slider control object)
 /// Draw the control as a slider
 
@@ -177,4 +176,3 @@ with (_tt_id) {
     
     
 }
-

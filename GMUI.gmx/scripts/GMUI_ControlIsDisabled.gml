@@ -1,4 +1,3 @@
-#define GMUI_ControlIsDisabled
 ///GMUI_ControlIsDisabled("ControlName")
 ///Is control of name disabled
 
@@ -14,4 +13,3 @@ with (GMUII()) {
         return (control).Disabled;
     }
 }
-

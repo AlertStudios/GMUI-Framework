@@ -1,4 +1,3 @@
-#define GMUI_GridNextControl
 ///GMUI_GridNextControl(next control /or previous: false)
 ///Changes the selected control to the next control in the list by ID
 
@@ -54,4 +53,3 @@ while (i < ds_list_size((GMUII()).GMUI_controlList)) {
 
 
 return false;
-

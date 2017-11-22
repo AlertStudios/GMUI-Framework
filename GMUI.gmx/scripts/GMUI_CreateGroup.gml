@@ -1,4 +1,3 @@
-#define GMUI_CreateGroup
 ///GMUI_CreateGroup (layer number, group number, cell# x, cell# y, cells wide, cells high, Anchor)
 ///Adds a group to a GMUI layer that controls can be put into
 
@@ -67,4 +66,3 @@ with (GMUII()) {
 
 
 return true;
-

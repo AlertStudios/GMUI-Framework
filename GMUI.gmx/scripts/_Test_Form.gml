@@ -1,4 +1,3 @@
-#define _Test_Form
 ///_Test_Form() This interface is for the demo
 
 // DEMO INTERFACE:
@@ -250,6 +249,5 @@ GMUI_PopupSetStyle("Test Popup", c_white, 0.99, c_white, 0.75, true);// needs po
 GMUI_PopupSetFadeOnHide("Test Popup", room_speed/8, 0);// needs popup version
 GMUI_PopupSetHidePosition("Test Popup", -14, 0, easeExpOut, room_speed/4);
 //todo: change the popup style
-
 
 

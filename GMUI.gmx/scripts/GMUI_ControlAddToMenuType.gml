@@ -1,4 +1,3 @@
-#define GMUI_ControlAddToMenuType
 ///GMUI_ControlAddToMenuType(script [menu type], "menu name")
 ///Adds control to a group if it exists in the layer
 
@@ -59,4 +58,3 @@ if ((GMUIP).UILayer < (GMUIP).GMUI_menu_layer || (GMUIP).UILayer != (GMUIP).GMUI
 return true;
     
     
-

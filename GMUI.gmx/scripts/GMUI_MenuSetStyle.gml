@@ -1,4 +1,3 @@
-#define GMUI_MenuSetStyle
 ///GMUI_MenuSetStyle("menu name", Background Color, Background Alpha, Border color, Border Alpha, Is RoundRect)
 
 var SCRIPT, _menuName, _menuNumber, _Layer;
@@ -25,4 +24,3 @@ if ((GMUII()).GMUI_groupMasterControl[_Layer,_menuNumber] == -1) {
 with ((GMUII()).GMUI_groupMasterControl[_Layer,_menuNumber]) {
     return GMUI_GroupSetStyle(argument1, argument2, argument3, argument4, argument5);
 }
-

@@ -1,4 +1,3 @@
-#define easeOutBack
 ///easeOutBack(t,b,c,d) where t is current time, b is start value, c is change in value, and d is duration
 ///Smooth overshot Ease for moving controls smoothly
 
@@ -15,4 +14,3 @@ return _c*((_t)*_t*((_s+1)*_t + _s) + 1) + _b;
 
 //To see copyright notice for this script please click on the following text then press F12:
 //ease_CopyrightNotice
-

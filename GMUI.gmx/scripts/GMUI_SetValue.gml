@@ -1,4 +1,3 @@
-#define GMUI_SetValue
 ///GMUI_SetValue("ControlName", value, value type - string:0, integer:1, decimal:2)
 ///Set the value of a control to GMUI to reference in user code (GMUI_GetValue)
 
@@ -65,4 +64,3 @@ with (GMUII())
         script_execute((control).ValueChangedActionScript);
     }
 }
-

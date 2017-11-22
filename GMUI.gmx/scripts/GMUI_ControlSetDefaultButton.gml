@@ -1,4 +1,3 @@
-#define GMUI_ControlSetDefaultButton
 ///GMUI_ControlSetDefaultButton(id)
 /// Set the default attributes of the control from the controller
 
@@ -20,4 +19,3 @@ with (argument0)
 
 
 return true;
-
