@@ -28,6 +28,7 @@
       <scripts name="My Actions">
         <script>scripts\_Debug_Button.gml</script>
         <script>scripts\_Disable_Button.gml</script>
+        <script>scripts\_Enlarge_Button.gml</script>
         <script>scripts\_Exit_Button.gml</script>
         <script>scripts\_Hide_Button.gml</script>
         <script>scripts\_Hover_Checkbox.gml</script>
@@ -45,7 +46,6 @@
         <script>scripts\_SliderValue_Changed.gml</script>
         <script>scripts\_Switch_Button.gml</script>
         <script>scripts\_Test_Button.gml</script>
-        <script>scripts\_Enlarge_Button.gml</script>
       </scripts>
       <scripts name="GMUI_DeveloperConfigs">
         <script>scripts\GMUI_SetControlDefaults.gml</script>

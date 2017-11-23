@@ -60,7 +60,7 @@ with (GMUI_Add("Test4", "intpicker",            0,6,    10,2,   layer, global.GM
     //GMUI_ControlSetPicker(sprite_get_width(GMUIspr_arrowup) + 4,sprite_get_height(GMUIspr_arrowup) + 4,
     //    global.GMUIDirectionTypeVertical, GMUIspr_arrowup, GMUIspr_arrow);
         
-    with (GMUI_ControlAddTooltip("-20 to 20.",global.GMUIAnchorLeft,6,2,12,4,-1,-1)) {
+    with (GMUI_ControlAddTooltip("-20 to 20.",GMUIAnchor.Left,6,2,12,4,-1,-1)) {
         GMUI_ControlSetFadeOnHide(id, room_speed/4);
     }
 }
@@ -167,7 +167,7 @@ with (GMUI_Add("PopupTestButton","textbutton",  -3,8,   8,1,    layer, global.GM
 
 // Test Popup
 //global.GMUIPopupBlank = -1;global.GMUIPopupInformation = 0;global.GMUIPopupConfirm = 1;global.GMUIPopupThreeOptions = 2;
-menuID = GMUI_CreatePopup("Test Popup",  -14,2,   28,12,   global.GMUIAnchorTop, global.GMUIPopupThreeOptions);
+menuID = GMUI_CreatePopup("Test Popup",  -14,2,   28,12,   global.GMUIAnchorTop, GMUIPopup.ThreeOptions);
 GMUI_PopupSetMessage("Test Popup", "Click an option to return to the previous screen!", 2, -1, -1);
 GMUI_PopupSetAction("Test Popup", _PopupReturnAction);
 
@@ -183,7 +183,7 @@ GMUI_PopupSetAction("Test Popup", _PopupReturnAction);
 
 // Test slider
 with (GMUI_Add("Slider", "slider",              16,12,  10,2,   layer, global.GMUIAnchorBottomRight)) {
-    GMUI_ControlSetSliderSettings(13,10,34,true,true,true,global.GMUIDirectionTypeHorizontal);
+    GMUI_ControlSetSliderSettings(13,10,34,true,true,true,GMUIDirection.Horizontal);
     GMUI_ControlSetSliderStyle(2,2,c_dkgray,0.6,c_teal,0.9,c_dkgray,0.4,c_aqua,1,c_gray,0.8);
     GMUI_ControlSetSliderSize(16, 20, 1, 12, 10, 8, 6, 8);
     
@@ -221,7 +221,7 @@ with (GMUI_Add("CheckBox", "checkbox",          4,12,   1,1,    layer, global.GM
 }
 
 with (GMUI_Add("Toggle", "toggle",          3,10,   3,2,    layer, global.GMUIAnchorBottomLeft)) {
-    GMUI_ControlSetToggleSettings(1, c_lime, c_gray, global.GMUISlideFullRoundRect, $808080, $505050, room_speed/4, global.GMUIDirectionTypeHorizontal, 0);
+    GMUI_ControlSetToggleSettings(1, c_lime, c_gray, GMUISlideShape.FullRoundRectangle, $808080, $505050, room_speed/4, global.GMUIDirectionTypeHorizontal, 0);
 }
 
 

@@ -39,7 +39,7 @@ for(i=0;i<ds_list_size((_GMUII).GMUI_groupControlList[_LayerNumber,_MenuNumber])
     else {
         // Set control depth to the # of menu's open if master control, -1 for not master, -2 for tooltip, etc.
         (ctrl).depth = GMUI_MenuControlDepth(_GMUII,(_GMUII).GMUI_menuOpenCount,(ctrl).ControlType)
-            - (_MasterControl != id);
+            - (_MasterControl != ctrl);
     }
 }
 

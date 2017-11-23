@@ -4422,14 +4422,13 @@ if (valueChangeDetected) {
 // DRAW //
 
 if (argument0 == true) {
-depth -=1;//testonly
     // Call the draw actions for groups if in one and is set to draw
     if (1=1 && (GMUIP).GMUI_groupMasterControl[Layer,Group] == id) {
         if (!GroupHidden || FadeCalled != 0) {
             GMUI_ControlDrawGroup(GMUIP,Layer,Group,FadeAlpha,FadeMode);
         }
     }
-    depth+=1;
+    
     //todo: Add a flag for if an update is needed (surfaces):
     // Don't process any drawing if hidden or update not needed
     if (Hidden && FadeCalled == 0)
@@ -5025,7 +5024,6 @@ with (_tt_id) {
             cyrp = 1;
             
             deg = 90;
-            
         }
         else {
             
@@ -5070,7 +5068,7 @@ with (_tt_id) {
                 draw_roundrect(cx1,cy1,cx2,cy2,0);
                 break;
             case global.GMUISlideFullRoundRect: // -5
-                draw_rectangle(cx1+cxrp,cy1+cyrp,cx2-cxrp,cy2-cyrp,0);
+                draw_rectangle(cx1+cxrp,cy1+cyrp-(global.GMUIGameMaker8 <= 0),cx2-cxrp,cy2-cyrp,0);
                 
                 draw_primitive_begin(pr_trianglefan);
                 draw_vertex_color(cx1+chh,cy1+chh,TSC,TSA);
@@ -5114,7 +5112,7 @@ with (_tt_id) {
             draw_roundrect(cx1+_tp, cy1+_tp, cx1+_tt-_tp, cy1+_tt-_tp, 0);
         }
         else if (ToggleSlideShape == global.GMUISlideFullRoundRect) {
-            draw_circle(cx1+chh,cy1+chh,chh-_tp,0);
+            draw_circle(cx1+chh,cy1+chh-(global.GMUIGameMaker8 <= 0),chh-_tp,0);
         }
         else {
             if (ToggleOrientation == global.GMUIDirectionTypeHorizontal)
@@ -7426,7 +7424,7 @@ for(i=0;i<ds_list_size((_GMUII).GMUI_groupControlList[_LayerNumber,_MenuNumber])
     else {
         // Set control depth to the # of menu's open if master control, -1 for not master, -2 for tooltip, etc.
         (ctrl).depth = GMUI_MenuControlDepth(_GMUII,(_GMUII).GMUI_menuOpenCount,(ctrl).ControlType)
-            - (_MasterControl != id);
+            - (_MasterControl != ctrl);
     }
 }
 

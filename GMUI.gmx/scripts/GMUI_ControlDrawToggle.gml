@@ -1,5 +1,5 @@
-///GMUI_ControlDrawToggle(id of slider control object)
-/// Draw the control as a slider
+///GMUI_ControlDrawToggle(id of toggle control object)
+/// Draw the control as a toggle
 
 var _tt_id, _SCRIPT;
 _tt_id = argument0;
@@ -12,18 +12,6 @@ with (_tt_id) {
         //var cpx,cpx2,cpy,cpy2,chh,cx2,cw2,cy2,ch2,chw2,chy2,
         var chh, cx1, cy1, cx2, cy2, cxrp, cyrp, _tt, _tp, TSC,TSA,deg,degp,d;
         if (ToggleOrientation == global.GMUIDirectionTypeHorizontal) {
-            //cpx = ToggleInitialXorY;
-            //cpx2 = RoomW - TogglePadding;
-            //cpy = RoomY;
-            //cpy2 = RoomH;
-            
-            //chh = ceil((RoomH - RoomY) / 2); // half height
-            //cw2 = cpx2 - chh;
-            //ch2 = cpy + chh;
-            //cx2 = cpx + chh;
-            //cy2 = cpy;
-            //chw2 = cx
-            //deg = 90;
             
             // new:
             chh = ceil((RoomH - RoomY) / 2); // half height
@@ -36,18 +24,8 @@ with (_tt_id) {
             cyrp = 1;
             
             deg = 90;
-            
         }
         else {
-            //cpx = RoomX;
-            //cpx2 = RoomW;
-            //cpy = ToggleInitialXorY;
-            //cpy2 = RoomH - TogglePadding;
-            
-            //cw2 = cpx + chh;
-            //ch2 = cpy2 - chh;
-            //cx2 = cpx;
-            //cy2 = cpy + chh;
             
             chh = ceil((RoomW - RoomX) / 2); // half height
             cx1 = RoomX;
@@ -90,7 +68,7 @@ with (_tt_id) {
                 draw_roundrect(cx1,cy1,cx2,cy2,0);
                 break;
             case global.GMUISlideFullRoundRect: // -5
-                draw_rectangle(cx1+cxrp,cy1+cyrp,cx2-cxrp,cy2-cyrp,0);
+                draw_rectangle(cx1+cxrp,cy1+cyrp-(global.GMUIGameMaker8 <= 0),cx2-cxrp,cy2-cyrp,0);
                 
                 draw_primitive_begin(pr_trianglefan);
                 draw_vertex_color(cx1+chh,cy1+chh,TSC,TSA);
@@ -134,7 +112,7 @@ with (_tt_id) {
             draw_roundrect(cx1+_tp, cy1+_tp, cx1+_tt-_tp, cy1+_tt-_tp, 0);
         }
         else if (ToggleSlideShape == global.GMUISlideFullRoundRect) {
-            draw_circle(cx1+chh,cy1+chh,chh-_tp,0);
+            draw_circle(cx1+chh,cy1+chh-(global.GMUIGameMaker8 <= 0),chh-_tp,0);
         }
         else {
             if (ToggleOrientation == global.GMUIDirectionTypeHorizontal)

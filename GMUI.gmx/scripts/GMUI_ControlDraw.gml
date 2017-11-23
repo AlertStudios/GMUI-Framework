@@ -209,14 +209,12 @@ if (valueChangeDetected) {
 // DRAW //
 
 if (argument0 == true) {
-depth -=1;//testonly
     // Call the draw actions for groups if in one and is set to draw
     if (1=1 && (GMUIP).GMUI_groupMasterControl[Layer,Group] == id) {
         if (!GroupHidden || FadeCalled != 0) {
             GMUI_ControlDrawGroup(GMUIP,Layer,Group,FadeAlpha,FadeMode);
         }
     }
-    depth+=1;
     //todo: Add a flag for if an update is needed (surfaces):
     // Don't process any drawing if hidden or update not needed
     if (Hidden && FadeCalled == 0)
