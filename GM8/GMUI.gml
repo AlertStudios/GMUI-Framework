@@ -121,6 +121,7 @@ with (GMUI_Add("ExitButton", "textbutton",      0,0,    1,1,     layer, global.G
     GMUI_ControlSetButton("x", -1, -1, -1);
     // (Example:) Minor adjustment so that the control isnt cut off by the room
     GMUI_ControlSetPositioning(-1,0,0,0);
+    GMUI_ControlPersistentToLayer(1); // Test multi-layer
 }
 
 with (GMUI_Add("MenuInt", "intpicker",          0,0,    3,2,    1, global.GMUIAnchorTopLeft)) {
@@ -166,6 +167,12 @@ with (GMUI_Add("PopupTestButton","textbutton",  -3,8,   8,1,    layer, global.GM
     GMUI_ControlAddToMenu("Test Menu 2");
 }
 
+with (GMUI_Add("ResponseLabel", "label", -8, 10, 16, 2, layer, global.GMUIAnchorTop)) {
+    // This value will be set by the popup
+    GMUI_ControlSetFontStyle(fontNumeric,c_white,fa_center);
+    GMUI_ControlAddToMenu("Test Menu 2");
+}
+
 // Test Popup
 //global.GMUIPopupBlank = -1;global.GMUIPopupInformation = 0;global.GMUIPopupConfirm = 1;global.GMUIPopupThreeOptions = 2;
 menuID = GMUI_CreatePopup("Test Popup",  -14,2,   28,12,   global.GMUIAnchorTop, global.GMUIPopupThreeOptions);
@@ -187,6 +194,7 @@ with (GMUI_Add("Slider", "slider",              16,12,  10,2,   layer, global.GM
     GMUI_ControlSetSliderSettings(13,10,34,true,true,true,global.GMUIDirectionTypeHorizontal);
     GMUI_ControlSetSliderStyle(2,2,c_dkgray,0.6,c_teal,0.9,c_dkgray,0.4,c_aqua,1,c_gray,0.8);
     GMUI_ControlSetSliderSize(16, 20, 1, 12, 10, 8, 6, 8);
+    GMUI_ControlSetInitValue(20);
     
     GMUI_ControlSetValueChangedAction(_SliderValue_Changed);
 }
@@ -197,13 +205,13 @@ with (GMUI_Add("MidSlider", "button",           19,12,  2,2,    layer, global.GM
     GMUI_ControlSetPositioning(0,6,0,20);
 }
 // Button to set slider to snap or not
-with (GMUI_Add("SnapSlider", "button",           23,12,  3,2,    layer, global.GMUIAnchorBottomRight)) {
+with (GMUI_Add("SnapSlider", "button",          23,12,  3,2,    layer, global.GMUIAnchorBottomRight)) {
     GMUI_ControlSetButtonAction(_SliderSnap_Button);
     GMUI_ControlSetButton("Snap",-1,-1,-1);
     GMUI_ControlSetPositioning(0,6,0,20);
 }
 
-// Display of slider value
+// Display of slider value to the side
 with (GMUI_Add("SliderVal", "label",            5,12,   2,2,    layer, global.GMUIAnchorBottomRight)) {
     GMUI_ControlSetText(string(round(GMUI_GetValue("MidSlider"))));
 }
@@ -211,9 +219,10 @@ with (GMUI_Add("SliderVal", "label",            5,12,   2,2,    layer, global.GM
 
 // Test checkbox and toggle
 with (GMUI_Add("CheckBox", "checkbox",          4,12,   1,1,    layer, global.GMUIAnchorBottomLeft)) {
-    GMUI_ControlSetCheckboxSettings(1, c_lime, c_gray, global.GMUISlideRoundRect, $808080, $505050, room_speed/4);
+    GMUI_ControlSetCheckboxSettings(1, c_lime, c_gray, global.GMUISlideRoundRect, $808080, $505050, room_speed/6);
     GMUI_ControlSetHoverAction(_Hover_Checkbox);
     GMUI_ControlSetHoverOffAction(_HoverOff_Checkbox);
+    GMUI_ControlSetSprite(s10, 0, 0, 0);
     
     // Add a space at the end of the string to make sure it wraps. I know... but its Game Maker ;)
     with (GMUI_ControlAddTooltip("Checkbox!",global.GMUIAnchorBottom,6,2,12,4,-1,-1)) {
@@ -221,9 +230,25 @@ with (GMUI_Add("CheckBox", "checkbox",          4,12,   1,1,    layer, global.GM
     }
 }
 
-with (GMUI_Add("Toggle", "toggle",          3,10,   3,2,    layer, global.GMUIAnchorBottomLeft)) {
+with (GMUI_Add("Toggle", "toggle",              3,10,   3,2,    layer, global.GMUIAnchorBottomLeft)) {
     GMUI_ControlSetToggleSettings(1, c_lime, c_gray, global.GMUISlideFullRoundRect, $808080, $505050, room_speed/4, global.GMUIDirectionTypeHorizontal, 0);
 }
+
+with (GMUI_Add("SpritePicker", "spritepicker",  -10,10, 5,2,    layer, global.GMUIAnchorBottom)) {
+    GMUI_ControlAddOption(0, GMUIspr_arrowright);
+    GMUI_ControlAddOption(2, GMUIspr_arrowup);
+    GMUI_ControlAddOption(4, GMUIspr_arrowleft);
+    GMUI_ControlAddOption(6, GMUIspr_arrow);
+    GMUI_ControlSetPicker(sprite_get_width(GMUIspr_arrowleft) + 4,sprite_get_height(GMUIspr_arrowleft) + 4,
+        global.GMUIDirectionTypeHorizontal, GMUIspr_arrowright, GMUIspr_arrowleft);
+    GMUI_ControlSetInitValue(6);
+}
+// Example: overrides initial value:
+GMUI_ControlSelectOption("SpritePicker",2);
+
+//with (GMUI_Add("Graphic", "image",          -12,10, 2,2,    layer, global.GMUIAnchorBottom)) {
+//    GMUI_ControlSetSpriteExt(s10, 0, 0, 0, 2, 2, c_white, 0.2);
+//}
 
 
 
@@ -347,7 +372,11 @@ switch (GMUI_PopupGetResponse()) {
     case 1: str = "Yes/Ok" break;
     default: str = "No response"; break;
 }
-show_message("Responded with: " + str);
+
+with (GMUI_GetControl("ResponseLabel")) {
+    GMUI_ControlSetText("Responded with: " + str);
+}
+
 
 #define _SliderMid_Button
 var slider;
@@ -1308,6 +1337,48 @@ with (GMUII()) {
     }
 }
 
+#define GMUI_ControlAddOption
+///GMUI_ControlAddOption(OptionKeyValue, OptionText/Sprite)
+///Adds an option to the picker control
+
+if (!GMUI_IsControl() && id != GMUII())
+{
+    GMUI_ThrowErrorDetailed("Invalid control", GMUI_ControlAddOption);
+    return false;
+}
+
+// Initialize mapping if not yet set
+if (!optionsInitialized) {
+    OptionsMap = ds_map_create();
+    OptionsMin = 0;
+    OptionsMax = 0;
+    
+    optionsInitialized = true;    
+}
+
+if (ControlType == "spritepicker" && !sprite_exists(argument1)) {
+    GMUI_ThrowErrorDetailed("Sprite does not exist!", GMUI_ControlAddOption);
+    return false;
+}
+
+if (is_real(argument0)) {
+    if (!ds_map_exists(OptionsMap,argument0)) {
+    
+        ds_map_add(OptionsMap, argument0, argument1);
+        
+        if (argument0 < OptionsMin)
+            OptionsMin = argument0;
+        else if (argument0 > OptionsMax)
+            OptionsMax = argument0;
+            
+        return true;
+    }
+    else {
+        GMUI_ThrowErrorDetailed("Key " + string(argument0) + " already exists", GMUI_ControlAddOption);
+        return false;
+    }
+}
+
 #define GMUI_ControlAddToGroup
 ///GMUI_ControlAddToGroup(group number)
 ///Adds control to a group if it exists in the layer
@@ -1608,6 +1679,20 @@ with (GMUII()) {
     }
 }
 
+#define GMUI_ControlPersistentToLayer
+///GMUI_ControlPersistentToLayer(Layer persistent to)
+///Allow the control to be enabled for all layers between the main layer, and the one provided
+
+if (!GMUI_IsControl() && id != GMUII())
+{
+    GMUI_ThrowErrorDetailed("Invalid control", GMUI_ControlPersistentToLayer);
+    return false;
+}
+
+if (GMUI_LayerExists(argument0)) {
+    AdditionalLayer = argument0;
+}
+
 #define GMUI_ControlPosition
 ///GMUI_ControlPosition("control name" or id, cell x, cell y, relative x, relative y, Anchor)
 ///Set the relative positioning and sizing of the control within its cell
@@ -1670,12 +1755,47 @@ return true;
 
 
 
+#define GMUI_ControlSelectOption
+///GMUI_ControlSelectOption("ControlName", key value)
+///Safely set the value of a selection control using key value
+
+with (GMUII())
+{
+    // Retrieve control from the reference map
+    var _SCRIPT,_ctrl;
+    _SCRIPT = GMUI_ControlSelectOption;
+    _ctrl = ds_map_find_value(GMUI_map,argument0);
+    
+    if (string(_ctrl) == "0") {
+        GMUI_ThrowErrorDetailed("Control not found: " + argument0,_SCRIPT);
+    }
+    else if ((_ctrl).optionsInitialized) {
+        if (ds_map_exists((_ctrl).OptionsMap,argument1)) {
+            (_ctrl).value = argument1;
+            (_ctrl).valueString = string((_ctrl).value);
+    
+            // If script is assigned to value change, execute it
+            if (GMUI_IsScript((_ctrl).ValueChangedActionScript)) {
+                script_execute((_ctrl).ValueChangedActionScript);
+            }
+        }
+        else
+        {
+            GMUI_ThrowErrorDetailed("Key value not defined",_SCRIPT);
+        }
+    }
+    else {
+        GMUI_ThrowErrorDetailed("Not yet initialized. No options for '" + argument0 + "'?",_SCRIPT);
+    }
+    
+}
+
 #define GMUI_ControlSetAttributes
 ///GMUI_ControlSetAttributes(max string length(or 0 for none), max decimal length (if applicable), min value, max value, )
 ///Set the attributes of the control for the different types (to override the defaults)
 if (!GMUI_IsControl() && id != GMUII())
 {
-    GMUI_ThrowError("Invalid control for GMUI_ControlSetAttributes");
+    GMUI_ThrowErrorDetailed("Invalid control", GMUI_ControlSetAttributes);
     return false;
 }
 
@@ -1913,6 +2033,7 @@ if (!GMUI_IsControl() && id != GMUII())
 
 value = argument0;
 valueString = string(argument0);
+
     
 return true;
 
@@ -2028,7 +2149,6 @@ if (!sliderInitialized) {
     SliderTickInterval = 0; // not sure if will be used
     SliderRelativeFinalXorY = 0;
     SliderVertical = false;
-    GMUI_ControlSliderUpdate(id);
     SliderRelativeXorY = SliderRelativeFinalXorY;
     SliderRelativePad = 0;
     Slider_t = 0;
@@ -2047,7 +2167,6 @@ if (!sliderInitialized) {
 
     // Default Sizing values
     GMUI_ControlSetSliderSize(16, 20, 1, 12, 10, 8, 6, 0);
-    
 }
 
 // If any values are given as negative numbers, those values will remain as the control default
@@ -2894,6 +3013,9 @@ with (argument0) {
         
         if (instance_exists(ctrl)) {
             with (ctrl) {
+                if (optionsInitialized) {
+                    ds_map_destroy(OptionsMap);
+                }
                 instance_destroy();
             }
         }
@@ -4445,7 +4567,7 @@ if (argument0 == true) {
     _FontAlpha = min(ControlFontAlpha,FadeAlpha);
         
     // Start drawing the control (inputs and buttons)
-    if (ControlInput || ControlDataType == global.GMUIDataTypeButton || ControlType == "image") {
+    if (ControlInput || ControlPicker || ControlDataType == global.GMUIDataTypeButton || ControlType == "image") {
         if (ControlGraphicMapIsUsed) {
             GMUI_DrawSpriteBox(GMUIP,Layer,Group,0,1);
         }
@@ -4584,7 +4706,7 @@ if (argument0 == true) {
     else
         color_alpha(ControlFontColor,_FontAlpha);
         
-    // TEMPORARY SOLUTION! :
+    // TEMPORARY SOLUTION FOR DISABLED CONTROLS! :
     if (Disabled)
         draw_set_alpha(_FontAlpha / 2);
         
@@ -4597,14 +4719,23 @@ if (argument0 == true) {
     }
     
     // Draw value string or button text
-    if (ControlShowValue) {
-        if (ControlInteraction && ControlShowCursor && Selected && !DoubleSelected)
-            Text = Text + "|";
-            
-        if (ControlType != "label")
-            draw_text(dtx, RoomY + midHeight, Text);
-        else
-            draw_text_ext(dtx, RoomY + midHeight, Text, -1, RoomW-RoomX-padx*2);
+    if (Text != "") {
+        if (ControlShowValue) {
+            if (ControlInteraction && ControlShowCursor && Selected && !DoubleSelected)
+                Text = Text + "|";
+                
+            if (ControlType != "label")
+                draw_text(dtx, RoomY + midHeight, Text);
+            else
+                draw_text_ext(dtx, RoomY + midHeight, Text, -1, RoomW-RoomX-padx*2);
+        }
+    }
+    else if (ControlType == "spritepicker" && optionsInitialized) {
+        // Special case for sprite picker
+        var _spr; _spr = ds_map_find_value(OptionsMap,value);
+        draw_sprite(_spr,0,
+            dtx-(sprite_get_width(_spr)/2)+sprite_get_xoffset(_spr),
+            RoomY+midHeight-(sprite_get_height(_spr)/2)+sprite_get_yoffset(_spr));
     }
 }
 //
@@ -4785,7 +4916,8 @@ with (_tt_id) {
         SliderSnapDistance = SliderTickPoints[i-1] - SliderTickPoints[i-2];
         
         // Check if the slider position is within the padding amount
-        SliderRelativeFinalXorY = minmax(SliderRelativeXorY,SliderStartEndPadding,RoomWorH-SliderStartEndPadding);
+        GMUI_ControlSliderUpdate(id);
+        SliderRelativeFinalXorY = minmax(SliderRelativeFinalXorY,SliderStartEndPadding,RoomWorH-SliderStartEndPadding);
         SliderRelativeXorY = SliderRelativeFinalXorY;
         Slider_t = Slider_d;
         
@@ -5124,7 +5256,7 @@ with (_tt_id) {
     }
     else if (ControlType == "checkbox") {
         // Draw checkbox control
-        var TSC,TA,TC;
+        var TSC,TA,TC,SII;
         TC = ToggleColorOff;
         if (Toggle_t < Toggle_d)
             TSC = merge_color(ToggleSlideColorOff,ToggleSlideColorOn,ToggleRelativeXorY);
@@ -5134,16 +5266,34 @@ with (_tt_id) {
             TSC = ToggleSlideColorOff;
         TA = ToggleAlpha;
         // Draw box
-        draw_set_color(TSC);
-        draw_set_alpha(TA);
-        draw_rectangle(RoomX + TogglePadding, RoomY + TogglePadding, RoomW - TogglePadding, RoomH - TogglePadding, 0);
-        draw_set_color(TC);
-        draw_rectangle(RoomX + TogglePadding, RoomY + TogglePadding, RoomW - TogglePadding, RoomH - TogglePadding, 1);
+        if (ToggleSlideShape >= 0) {
+            draw_sprite(ToggleSlideShape,0, RoomX + TogglePadding, RoomY + TogglePadding);
+        }
+        else {
+            draw_set_color(TSC);
+            draw_set_alpha(TA);
+            draw_rectangle(RoomX + TogglePadding, RoomY + TogglePadding, RoomW - TogglePadding, RoomH - TogglePadding, 0);
+            draw_set_color(TC);
+            draw_rectangle(RoomX + TogglePadding, RoomY + TogglePadding, RoomW - TogglePadding, RoomH - TogglePadding, 1);
+        }
         
         // Draw check
-        draw_set_color(ToggleColorOn);
-        draw_set_alpha(ToggleRelativeXorY);
-        draw_rectangle(RoomX+TogglePadding+3, RoomY+TogglePadding+3, RoomW-TogglePadding-3, RoomH-TogglePadding-3, 0);
+        if (ControlGraphic > -1) {
+            if (value) {
+                if (Hovering)
+                    SII = ControlGraphicHoveringIndex;
+                else if (Selected)
+                    SII = ControlGraphicSelectedIndex;
+                else
+                    SII = ControlGraphicIndex;
+                draw_sprite_ext(ControlGraphic, SII, RoomX + TogglePadding, RoomY + TogglePadding, 1,1,0,c_white, ToggleRelativeXorY);
+            }
+        }
+        else {
+            draw_set_color(ToggleColorOn);
+            draw_set_alpha(ToggleRelativeXorY);
+            draw_rectangle(RoomX+TogglePadding+3, RoomY+TogglePadding+3, RoomW-TogglePadding-3, RoomH-TogglePadding-3, 0);
+        }
     }
     else {
         GMUI_ThrowErrorDetailed("Control Type is not toggle/checkbox!",_SCRIPT);
@@ -5201,6 +5351,7 @@ i.checkMouseX = 0;
 i.checkMouseY = 0;
 i.HoveringDirection = 0; // 0 = middle/none (HoveringDirection_None), HoveringDirection_Right=1;HoveringDirection_Up=2;HoveringDirection_Left=3;HoveringDirection_Down=4;
 i.toggleInitialized = true; // default skip toggle values
+i.optionsInitialized = true; // default skip option values
 
 // Control Status
 i.Disabled = 0;
@@ -5224,6 +5375,8 @@ i.ValueChangedActionScript = -1;
 
 // Layer can disable the control if a higher layer is opened (0 is default)
 //Layer = 0;
+// Control can be added to an additional layer and work in both and any layers in-between
+i.AdditionalLayer = -1;
 
 // Group allows actions for a group of controls, such as disabling, moving, and hiding (0 is no-group)
 //Group = 0;
@@ -5585,6 +5738,10 @@ _type = string_lower(string_replace(_type," ",""));
 
 // Set if input, or button, or etc 
 switch (_type) {
+    case "spritepicker":
+        (IID).ControlPicker = true;
+        (IID).optionsInitialized = false;
+        break;
     case "intpicker":
     case "doublepicker":
         (IID).ControlPicker = true;
@@ -6075,8 +6232,10 @@ var _controlType;
     _controlType = string_lower(string_replace(string(argument0)," ",""));
     
 switch (_controlType) {
+    case "spritepicker":
     case "textint":
     case "intpicker":
+    case "image":
         return global.GMUIDataTypeInteger;
         break;
     case "textdecimal":
@@ -6287,8 +6446,8 @@ if (GMUI_GridEnabled())
                     
                 
                 if (inRegion) {
-                    // The int picker has a region on the right side for up/down
-                    if (ctrlObject.ControlType == "intpicker")
+                    // The picker controls have a region on the sides for up/down
+                    if (ctrlObject.ControlPicker)
                     {
                         onDirection = GMUI_MouseInSpecialRegion(ctrlObject,MX,MY);
                         
@@ -6365,18 +6524,37 @@ if (GMUI_GridEnabled())
                     
                     if (inRegion) {
                         // Switch between special types, general input types, and other controls
-                        if (ctrlObject.ControlType == "intpicker") {
+                        if (ctrlObject.ControlPicker) {
                             switch (ctrlObject.HoveringDirection) {
                                 case global.GMUIHoveringDirection_Up:
                                 case global.GMUIHoveringDirection_Right:
-                                    GMUI_SetValue(ctrlObject.valueName,ctrlObject.value + 1,"integer");
+                                    if (ctrlObject.ControlType == "intpicker")
+                                        GMUI_SetValue(ctrlObject.valueName,ctrlObject.value + 1,"integer");
+                                    else if (ctrlObject.ControlType == "doublepicker")
+                                        GMUI_SetValue(ctrlObject.valueName,ctrlObject.value + 1,"double");
+                                    else if (ctrlObject.optionsInitialized) {
+                                        if (ctrlObject.value == ctrlObject.OptionsMax)
+                                            ctrlObject.value = ctrlObject.OptionsMin;
+                                        else
+                                            ctrlObject.value = ds_map_find_next(ctrlObject.OptionsMap,ctrlObject.value);
+                                    }
                                     break;
                                 case global.GMUIHoveringDirection_Left:
                                 case global.GMUIHoveringDirection_Down:
-                                    GMUI_SetValue(ctrlObject.valueName,ctrlObject.value - 1,"integer");
+                                    if (ctrlObject.ControlType == "intpicker")
+                                        GMUI_SetValue(ctrlObject.valueName,ctrlObject.value - 1,"integer");
+                                    else if (ctrlObject.ControlType == "doublepicker")
+                                        GMUI_SetValue(ctrlObject.valueName,ctrlObject.value - 1,"double");
+                                    else if (ctrlObject.optionsInitialized) {
+                                        if (ctrlObject.value == ctrlObject.OptionsMin)
+                                            ctrlObject.value = ctrlObject.OptionsMax;
+                                        else
+                                            ctrlObject.value = ds_map_find_previous(ctrlObject.OptionsMap,ctrlObject.value);
+                                    }
                                     break;
                                 case global.GMUIHoveringDirection_None:
-                                    GMUI_GridSelect(ctrlObject);
+                                    if (ctrlObject.ControlInput)
+                                        GMUI_GridSelect(ctrlObject);
                                     break;
                             }
                         }
@@ -6767,24 +6945,25 @@ _Grid = (GMUII()).GMUI_grid[_Layer];
 ds_grid_clear(_Grid,0);
 
 // Loop through all controls in the layer
-var i,ctrl,_CX2,_CY2;
+var i,_ctrl,_CX2,_CY2;
 for(i=0;i<ds_list_size((GMUII()).GMUI_controlList);i+=1) {
     // Get control value
-    ctrl = ds_list_find_value((GMUII()).GMUI_controlList,i);
+    _ctrl = ds_list_find_value((GMUII()).GMUI_controlList,i);
     
-    if (!instance_exists(ctrl)) {
-        GMUI_ThrowError("Control no longer exists. GMUI_GridSetRegionsLayer()");
+    if (!instance_exists(_ctrl)) {
+        GMUI_ThrowErrorDetailed("Control no longer exists", GMUI_GridSetRegionsLayer);
     }
-    else if ((ctrl).Layer == _Layer) {
-        if ((ctrl).ControlInteraction) {
+    else if (GMUI_ControlIsInLayer(_ctrl,_Layer)) {
+        if ((_ctrl).ControlInteraction) {
             // Map the control to the grid[layer#] - Warning: This will overwrite any existing instance values (overlapping)
-            _CX2 = (ctrl).CellX+(ctrl).CellWide-1+ceil((ctrl).RelativeX / (GMUII()).cellsize);
-            _CY2 = (ctrl).CellY+(ctrl).CellHigh-1+ceil((ctrl).RelativeY / (GMUII()).cellsize_h);
-            ds_grid_set_region(_Grid,(ctrl).CellX,(ctrl).CellY,_CX2,_CY2,ctrl);
+            _CX2 = (_ctrl).CellX+(_ctrl).CellWide-1+ceil((_ctrl).RelativeX / (GMUII()).cellsize);
+            _CY2 = (_ctrl).CellY+(_ctrl).CellHigh-1+ceil((_ctrl).RelativeY / (GMUII()).cellsize_h);
+            ds_grid_set_region(_Grid,(_ctrl).CellX,(_ctrl).CellY,_CX2,_CY2,_ctrl);
         }
         
         // Update control draw location in the room
-        GMUI_ControlUpdateXY(ctrl);
+        if ((_ctrl).Layer == _Layer)
+            GMUI_ControlUpdateXY(_ctrl);
     }
     
 }
@@ -7482,4 +7661,30 @@ return true;
 // (GMUII()).Value
 
 return global.GMUIiid[0];
+
+#define GMUI_ControlIsInLayer
+///GMUI_ControlIsInLayer(control, layer)
+var _ctl,_L;
+
+_ctl = argument0;
+_L = argument1;
+
+if ((_ctl).Layer == _L)
+    return true;
+    
+// Check if it has been added to another layer (nested if's for small GML performance improvement)
+if ((_ctl).AdditionalLayer != -1) {
+    if ((_ctl).AdditionalLayer > (_ctl).Layer) {
+        if (_L <= (_ctl).AdditionalLayer) {
+            if (_L > (_ctl).Layer)
+                return true;
+        }
+    }
+    else if (_L >= (_ctl).AddtionalLayer) {
+        if (_L < (_ctl).Layer)
+            return true;
+    }
+}
+    
+return false;
 
