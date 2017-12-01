@@ -24,7 +24,6 @@ if (!sliderInitialized) {
     SliderTickInterval = 0; // not sure if will be used
     SliderRelativeFinalXorY = 0;
     SliderVertical = false;
-    GMUI_ControlSliderUpdate(id);
     SliderRelativeXorY = SliderRelativeFinalXorY;
     SliderRelativePad = 0;
     Slider_t = 0;
@@ -43,7 +42,6 @@ if (!sliderInitialized) {
 
     // Default Sizing values
     GMUI_ControlSetSliderSize(16, 20, 1, 12, 10, 8, 6, 0);
-    
 }
 
 // If any values are given as negative numbers, those values will remain as the control default

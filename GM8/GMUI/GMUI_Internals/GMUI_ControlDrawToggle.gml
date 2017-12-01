@@ -125,7 +125,7 @@ with (_tt_id) {
     }
     else if (ControlType == "checkbox") {
         // Draw checkbox control
-        var TSC,TA,TC;
+        var TSC,TA,TC,SII;
         TC = ToggleColorOff;
         if (Toggle_t < Toggle_d)
             TSC = merge_color(ToggleSlideColorOff,ToggleSlideColorOn,ToggleRelativeXorY);
@@ -135,16 +135,34 @@ with (_tt_id) {
             TSC = ToggleSlideColorOff;
         TA = ToggleAlpha;
         // Draw box
-        draw_set_color(TSC);
-        draw_set_alpha(TA);
-        draw_rectangle(RoomX + TogglePadding, RoomY + TogglePadding, RoomW - TogglePadding, RoomH - TogglePadding, 0);
-        draw_set_color(TC);
-        draw_rectangle(RoomX + TogglePadding, RoomY + TogglePadding, RoomW - TogglePadding, RoomH - TogglePadding, 1);
+        if (ToggleSlideShape >= 0) {
+            draw_sprite(ToggleSlideShape,0, RoomX + TogglePadding, RoomY + TogglePadding);
+        }
+        else {
+            draw_set_color(TSC);
+            draw_set_alpha(TA);
+            draw_rectangle(RoomX + TogglePadding, RoomY + TogglePadding, RoomW - TogglePadding, RoomH - TogglePadding, 0);
+            draw_set_color(TC);
+            draw_rectangle(RoomX + TogglePadding, RoomY + TogglePadding, RoomW - TogglePadding, RoomH - TogglePadding, 1);
+        }
         
         // Draw check
-        draw_set_color(ToggleColorOn);
-        draw_set_alpha(ToggleRelativeXorY);
-        draw_rectangle(RoomX+TogglePadding+3, RoomY+TogglePadding+3, RoomW-TogglePadding-3, RoomH-TogglePadding-3, 0);
+        if (ControlGraphic > -1) {
+            if (value) {
+                if (Hovering)
+                    SII = ControlGraphicHoveringIndex;
+                else if (Selected)
+                    SII = ControlGraphicSelectedIndex;
+                else
+                    SII = ControlGraphicIndex;
+                draw_sprite_ext(ControlGraphic, SII, RoomX + TogglePadding, RoomY + TogglePadding, 1,1,0,c_white, ToggleRelativeXorY);
+            }
+        }
+        else {
+            draw_set_color(ToggleColorOn);
+            draw_set_alpha(ToggleRelativeXorY);
+            draw_rectangle(RoomX+TogglePadding+3, RoomY+TogglePadding+3, RoomW-TogglePadding-3, RoomH-TogglePadding-3, 0);
+        }
     }
     else {
         GMUI_ThrowErrorDetailed("Control Type is not toggle/checkbox!",_SCRIPT);

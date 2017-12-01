@@ -7,8 +7,10 @@ var _controlType;
     _controlType = string_lower(string_replace(string(argument0)," ",""));
     
 switch (_controlType) {
+    case "spritepicker":
     case "textint":
     case "intpicker":
+    case "image":
         return global.GMUIDataTypeInteger;
         break;
     case "textdecimal":

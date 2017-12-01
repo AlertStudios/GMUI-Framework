@@ -233,7 +233,7 @@ if (argument0 == true) {
     _FontAlpha = min(ControlFontAlpha,FadeAlpha);
         
     // Start drawing the control (inputs and buttons)
-    if (ControlInput || ControlDataType == global.GMUIDataTypeButton || ControlType == "image") {
+    if (ControlInput || ControlPicker || ControlDataType == global.GMUIDataTypeButton || ControlType == "image") {
         if (ControlGraphicMapIsUsed) {
             GMUI_DrawSpriteBox(GMUIP,Layer,Group,0,1);
         }
@@ -372,7 +372,7 @@ if (argument0 == true) {
     else
         color_alpha(ControlFontColor,_FontAlpha);
         
-    // TEMPORARY SOLUTION! :
+    // TEMPORARY SOLUTION FOR DISABLED CONTROLS! :
     if (Disabled)
         draw_set_alpha(_FontAlpha / 2);
         
@@ -385,14 +385,23 @@ if (argument0 == true) {
     }
     
     // Draw value string or button text
-    if (ControlShowValue) {
-        if (ControlInteraction && ControlShowCursor && Selected && !DoubleSelected)
-            Text = Text + "|";
-            
-        if (ControlType != "label")
-            draw_text(dtx, RoomY + midHeight, Text);
-        else
-            draw_text_ext(dtx, RoomY + midHeight, Text, -1, RoomW-RoomX-padx*2);
+    if (Text != "") {
+        if (ControlShowValue) {
+            if (ControlInteraction && ControlShowCursor && Selected && !DoubleSelected)
+                Text = Text + "|";
+                
+            if (ControlType != "label")
+                draw_text(dtx, RoomY + midHeight, Text);
+            else
+                draw_text_ext(dtx, RoomY + midHeight, Text, -1, RoomW-RoomX-padx*2);
+        }
+    }
+    else if (ControlType == "spritepicker" && optionsInitialized) {
+        // Special case for sprite picker
+        var _spr; _spr = ds_map_find_value(OptionsMap,value);
+        draw_sprite(_spr,0,
+            dtx-(sprite_get_width(_spr)/2)+sprite_get_xoffset(_spr),
+            RoomY+midHeight-(sprite_get_height(_spr)/2)+sprite_get_yoffset(_spr));
     }
 }
 //

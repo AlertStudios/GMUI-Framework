@@ -12,6 +12,7 @@
           <file>GMUI_CenterX.gml</file>
           <file>GMUI_CenterY.gml</file>
           <file>GMUI_CloseMenu.gml</file>
+          <file>GMUI_ControlAddOption.gml</file>
           <file>GMUI_ControlAddToGroup.gml</file>
           <file>GMUI_ControlAddToMenu.gml</file>
           <file>GMUI_ControlAddToMenuType.gml</file>
@@ -28,7 +29,9 @@
           <file>GMUI_ControlHideTooltip.gml</file>
           <file>GMUI_ControlIsDisabled.gml</file>
           <file>GMUI_ControlIsHidden.gml</file>
+          <file>GMUI_ControlPersistentToLayer.gml</file>
           <file>GMUI_ControlPosition.gml</file>
+          <file>GMUI_ControlSelectOption.gml</file>
           <file>GMUI_ControlSetAttributes.gml</file>
           <file>GMUI_ControlSetButton.gml</file>
           <file>GMUI_ControlSetButtonAction.gml</file>
@@ -143,6 +146,7 @@
           <file>GMUI_ControlDrawTooltipById.gml</file>
           <file>GMUI_ControlFilterInput.gml</file>
           <file>GMUI_ControlInit.gml</file>
+          <file>GMUI_ControlIsInLayer.gml</file>
           <file>GMUI_ControlSetDefaultAttributes.gml</file>
           <file>GMUI_ControlSetDefaultButton.gml</file>
           <file>GMUI_ControlSetDefaultFontStyle.gml</file>

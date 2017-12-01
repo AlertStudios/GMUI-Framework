@@ -69,7 +69,8 @@ with (_tt_id) {
         SliderSnapDistance = SliderTickPoints[i-1] - SliderTickPoints[i-2];
         
         // Check if the slider position is within the padding amount
-        SliderRelativeFinalXorY = minmax(SliderRelativeXorY,SliderStartEndPadding,RoomWorH-SliderStartEndPadding);
+        GMUI_ControlSliderUpdate(id);
+        SliderRelativeFinalXorY = minmax(SliderRelativeFinalXorY,SliderStartEndPadding,RoomWorH-SliderStartEndPadding);
         SliderRelativeXorY = SliderRelativeFinalXorY;
         Slider_t = Slider_d;
         

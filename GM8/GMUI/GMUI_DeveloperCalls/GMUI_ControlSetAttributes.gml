@@ -3,7 +3,7 @@
 ///Set the attributes of the control for the different types (to override the defaults)
 if (!GMUI_IsControl() && id != GMUII())
 {
-    GMUI_ThrowError("Invalid control for GMUI_ControlSetAttributes");
+    GMUI_ThrowErrorDetailed("Invalid control", GMUI_ControlSetAttributes);
     return false;
 }
 

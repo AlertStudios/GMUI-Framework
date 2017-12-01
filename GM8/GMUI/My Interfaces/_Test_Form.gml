@@ -121,6 +121,7 @@ with (GMUI_Add("ExitButton", "textbutton",      0,0,    1,1,     layer, global.G
     GMUI_ControlSetButton("x", -1, -1, -1);
     // (Example:) Minor adjustment so that the control isnt cut off by the room
     GMUI_ControlSetPositioning(-1,0,0,0);
+    GMUI_ControlPersistentToLayer(1); // Test multi-layer
 }
 
 with (GMUI_Add("MenuInt", "intpicker",          0,0,    3,2,    1, global.GMUIAnchorTopLeft)) {
@@ -166,6 +167,12 @@ with (GMUI_Add("PopupTestButton","textbutton",  -3,8,   8,1,    layer, global.GM
     GMUI_ControlAddToMenu("Test Menu 2");
 }
 
+with (GMUI_Add("ResponseLabel", "label", -8, 10, 16, 2, layer, global.GMUIAnchorTop)) {
+    // This value will be set by the popup
+    GMUI_ControlSetFontStyle(fontNumeric,c_white,fa_center);
+    GMUI_ControlAddToMenu("Test Menu 2");
+}
+
 // Test Popup
 //global.GMUIPopupBlank = -1;global.GMUIPopupInformation = 0;global.GMUIPopupConfirm = 1;global.GMUIPopupThreeOptions = 2;
 menuID = GMUI_CreatePopup("Test Popup",  -14,2,   28,12,   global.GMUIAnchorTop, global.GMUIPopupThreeOptions);
@@ -187,6 +194,7 @@ with (GMUI_Add("Slider", "slider",              16,12,  10,2,   layer, global.GM
     GMUI_ControlSetSliderSettings(13,10,34,true,true,true,global.GMUIDirectionTypeHorizontal);
     GMUI_ControlSetSliderStyle(2,2,c_dkgray,0.6,c_teal,0.9,c_dkgray,0.4,c_aqua,1,c_gray,0.8);
     GMUI_ControlSetSliderSize(16, 20, 1, 12, 10, 8, 6, 8);
+    GMUI_ControlSetInitValue(20);
     
     GMUI_ControlSetValueChangedAction(_SliderValue_Changed);
 }
@@ -197,13 +205,13 @@ with (GMUI_Add("MidSlider", "button",           19,12,  2,2,    layer, global.GM
     GMUI_ControlSetPositioning(0,6,0,20);
 }
 // Button to set slider to snap or not
-with (GMUI_Add("SnapSlider", "button",           23,12,  3,2,    layer, global.GMUIAnchorBottomRight)) {
+with (GMUI_Add("SnapSlider", "button",          23,12,  3,2,    layer, global.GMUIAnchorBottomRight)) {
     GMUI_ControlSetButtonAction(_SliderSnap_Button);
     GMUI_ControlSetButton("Snap",-1,-1,-1);
     GMUI_ControlSetPositioning(0,6,0,20);
 }
 
-// Display of slider value
+// Display of slider value to the side
 with (GMUI_Add("SliderVal", "label",            5,12,   2,2,    layer, global.GMUIAnchorBottomRight)) {
     GMUI_ControlSetText(string(round(GMUI_GetValue("MidSlider"))));
 }
@@ -211,9 +219,10 @@ with (GMUI_Add("SliderVal", "label",            5,12,   2,2,    layer, global.GM
 
 // Test checkbox and toggle
 with (GMUI_Add("CheckBox", "checkbox",          4,12,   1,1,    layer, global.GMUIAnchorBottomLeft)) {
-    GMUI_ControlSetCheckboxSettings(1, c_lime, c_gray, global.GMUISlideRoundRect, $808080, $505050, room_speed/4);
+    GMUI_ControlSetCheckboxSettings(1, c_lime, c_gray, global.GMUISlideRoundRect, $808080, $505050, room_speed/6);
     GMUI_ControlSetHoverAction(_Hover_Checkbox);
     GMUI_ControlSetHoverOffAction(_HoverOff_Checkbox);
+    GMUI_ControlSetSprite(s10, 0, 0, 0);
     
     // Add a space at the end of the string to make sure it wraps. I know... but its Game Maker ;)
     with (GMUI_ControlAddTooltip("Checkbox!",global.GMUIAnchorBottom,6,2,12,4,-1,-1)) {
@@ -221,9 +230,25 @@ with (GMUI_Add("CheckBox", "checkbox",          4,12,   1,1,    layer, global.GM
     }
 }
 
-with (GMUI_Add("Toggle", "toggle",          3,10,   3,2,    layer, global.GMUIAnchorBottomLeft)) {
+with (GMUI_Add("Toggle", "toggle",              3,10,   3,2,    layer, global.GMUIAnchorBottomLeft)) {
     GMUI_ControlSetToggleSettings(1, c_lime, c_gray, global.GMUISlideFullRoundRect, $808080, $505050, room_speed/4, global.GMUIDirectionTypeHorizontal, 0);
 }
+
+with (GMUI_Add("SpritePicker", "spritepicker",  -10,10, 5,2,    layer, global.GMUIAnchorBottom)) {
+    GMUI_ControlAddOption(0, GMUIspr_arrowright);
+    GMUI_ControlAddOption(2, GMUIspr_arrowup);
+    GMUI_ControlAddOption(4, GMUIspr_arrowleft);
+    GMUI_ControlAddOption(6, GMUIspr_arrow);
+    GMUI_ControlSetPicker(sprite_get_width(GMUIspr_arrowleft) + 4,sprite_get_height(GMUIspr_arrowleft) + 4,
+        global.GMUIDirectionTypeHorizontal, GMUIspr_arrowright, GMUIspr_arrowleft);
+    GMUI_ControlSetInitValue(6);
+}
+// Example: overrides initial value:
+GMUI_ControlSelectOption("SpritePicker",2);
+
+//with (GMUI_Add("Graphic", "image",          -12,10, 2,2,    layer, global.GMUIAnchorBottom)) {
+//    GMUI_ControlSetSpriteExt(s10, 0, 0, 0, 2, 2, c_white, 0.2);
+//}
 
 
 

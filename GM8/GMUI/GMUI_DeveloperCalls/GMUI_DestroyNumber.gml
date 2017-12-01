@@ -13,6 +13,9 @@ with (argument0) {
         
         if (instance_exists(ctrl)) {
             with (ctrl) {
+                if (optionsInitialized) {
+                    ds_map_destroy(OptionsMap);
+                }
                 instance_destroy();
             }
         }
