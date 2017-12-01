@@ -43,6 +43,7 @@ i.checkMouseX = 0;
 i.checkMouseY = 0;
 i.HoveringDirection = 0; // 0 = middle/none (HoveringDirection_None), HoveringDirection_Right=1;HoveringDirection_Up=2;HoveringDirection_Left=3;HoveringDirection_Down=4;
 i.toggleInitialized = true; // default skip toggle values
+i.optionsInitialized = true; // default skip option values
 
 // Control Status
 i.Disabled = 0;
@@ -66,6 +67,8 @@ i.ValueChangedActionScript = -1;
 
 // Layer can disable the control if a higher layer is opened (0 is default)
 //Layer = 0;
+// Control can be added to an additional layer and work in both and any layers in-between
+i.AdditionalLayer = -1;
 
 // Group allows actions for a group of controls, such as disabling, moving, and hiding (0 is no-group)
 //Group = 0;
@@ -180,3 +183,4 @@ i.valueChangeDetected = 0;
 /// ???:
 // The control will be disabled for this many steps before allowing action
 //i.Disable = floor(room_speed/20);
+

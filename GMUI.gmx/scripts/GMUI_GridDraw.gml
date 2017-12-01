@@ -43,8 +43,8 @@ if (GMUI_GridEnabled())
                     
                 
                 if (inRegion) {
-                    // The int picker has a region on the right side for up/down
-                    if (ctrlObject.ControlType == "intpicker")
+                    // The picker controls have a region on the sides for up/down
+                    if (ctrlObject.ControlPicker)
                     {
                         onDirection = GMUI_MouseInSpecialRegion(ctrlObject,MX,MY);
                         
@@ -121,18 +121,37 @@ if (GMUI_GridEnabled())
                     
                     if (inRegion) {
                         // Switch between special types, general input types, and other controls
-                        if (ctrlObject.ControlType == "intpicker") {
+                        if (ctrlObject.ControlPicker) {
                             switch (ctrlObject.HoveringDirection) {
                                 case global.GMUIHoveringDirection_Up:
                                 case global.GMUIHoveringDirection_Right:
-                                    GMUI_SetValue(ctrlObject.valueName,ctrlObject.value + 1,"integer");
+                                    if (ctrlObject.ControlType == "intpicker")
+                                        GMUI_SetValue(ctrlObject.valueName,ctrlObject.value + 1,"integer");
+                                    else if (ctrlObject.ControlType == "doublepicker")
+                                        GMUI_SetValue(ctrlObject.valueName,ctrlObject.value + 1,"double");
+                                    else if (ctrlObject.optionsInitialized) {
+                                        if (ctrlObject.value == ctrlObject.OptionsMax)
+                                            ctrlObject.value = ctrlObject.OptionsMin;
+                                        else
+                                            ctrlObject.value = ds_map_find_next(ctrlObject.OptionsMap,ctrlObject.value);
+                                    }
                                     break;
                                 case global.GMUIHoveringDirection_Left:
                                 case global.GMUIHoveringDirection_Down:
-                                    GMUI_SetValue(ctrlObject.valueName,ctrlObject.value - 1,"integer");
+                                    if (ctrlObject.ControlType == "intpicker")
+                                        GMUI_SetValue(ctrlObject.valueName,ctrlObject.value - 1,"integer");
+                                    else if (ctrlObject.ControlType == "doublepicker")
+                                        GMUI_SetValue(ctrlObject.valueName,ctrlObject.value - 1,"double");
+                                    else if (ctrlObject.optionsInitialized) {
+                                        if (ctrlObject.value == ctrlObject.OptionsMin)
+                                            ctrlObject.value = ctrlObject.OptionsMax;
+                                        else
+                                            ctrlObject.value = ds_map_find_previous(ctrlObject.OptionsMap,ctrlObject.value);
+                                    }
                                     break;
                                 case global.GMUIHoveringDirection_None:
-                                    GMUI_GridSelect(ctrlObject);
+                                    if (ctrlObject.ControlInput)
+                                        GMUI_GridSelect(ctrlObject);
                                     break;
                             }
                         }
@@ -187,4 +206,5 @@ if (GMUI_GridEnabled())
     
 
 }
+
 

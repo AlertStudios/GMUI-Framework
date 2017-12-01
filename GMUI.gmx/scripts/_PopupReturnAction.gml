@@ -7,4 +7,9 @@ switch (GMUI_PopupGetResponse()) {
     case 1: str = "Yes/Ok" break;
     default: str = "No response"; break;
 }
-show_message("Responded with: " + str);
+
+with (GMUI_GetControl("ResponseLabel")) {
+    GMUI_ControlSetText("Responded with: " + str);
+}
+
+

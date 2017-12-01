@@ -14,6 +14,10 @@ _type = string_lower(string_replace(_type," ",""));
 
 // Set if input, or button, or etc 
 switch (_type) {
+    case "spritepicker":
+        (IID).ControlPicker = true;
+        (IID).optionsInitialized = false;
+        break;
     case "intpicker":
     case "doublepicker":
         (IID).ControlPicker = true;
@@ -76,5 +80,6 @@ else if (_getType == global.GMUIDataTypeString) {
 
 // Return sanitized and processed type back
 return _type;
+
 
 

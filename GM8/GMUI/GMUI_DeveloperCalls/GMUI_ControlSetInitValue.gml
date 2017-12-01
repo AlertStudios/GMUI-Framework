@@ -11,6 +11,7 @@ if (!GMUI_IsControl() && id != GMUII())
 
 value = argument0;
 valueString = string(argument0);
+
     
 return true;
 

@@ -14,6 +14,7 @@
       <sprite>sprites\GMUIspr_move</sprite>
       <sprite>sprites\GMUIspr_switch</sprite>
       <sprite>sprites\GMUIspr_input</sprite>
+      <sprite>sprites\s10</sprite>
     </sprites>
   </sprites>
   <backgrounds name="background">
@@ -93,6 +94,7 @@
         <script>scripts\GMUI_CenterX.gml</script>
         <script>scripts\GMUI_CenterY.gml</script>
         <script>scripts\GMUI_CloseMenu.gml</script>
+        <script>scripts\GMUI_ControlAddOption.gml</script>
         <script>scripts\GMUI_ControlAddToGroup.gml</script>
         <script>scripts\GMUI_ControlAddToMenu.gml</script>
         <script>scripts\GMUI_ControlAddToPopup.gml</script>
@@ -107,7 +109,9 @@
         <script>scripts\GMUI_ControlHideTooltip.gml</script>
         <script>scripts\GMUI_ControlIsDisabled.gml</script>
         <script>scripts\GMUI_ControlIsHidden.gml</script>
+        <script>scripts\GMUI_ControlPersistentToLayer.gml</script>
         <script>scripts\GMUI_ControlPosition.gml</script>
+        <script>scripts\GMUI_ControlSelectOption.gml</script>
         <script>scripts\GMUI_ControlSetAttributes.gml</script>
         <script>scripts\GMUI_ControlSetButton.gml</script>
         <script>scripts\GMUI_ControlSetButtonAction.gml</script>
@@ -184,15 +188,16 @@
       <scripts name="GMUI_Internals">
         <script>scripts\GMUI_CellGetActualX.gml</script>
         <script>scripts\GMUI_CellGetActualY.gml</script>
+        <script>scripts\GMUI_ControlActionScript.gml</script>
         <script>scripts\GMUI_ControlAddToMenuType.gml</script>
-        <script>scripts\GMUI_ControlInit.gml</script>
-        <script>scripts\GMUI_ControlFilterInput.gml</script>
         <script>scripts\GMUI_ControlDraw.gml</script>
         <script>scripts\GMUI_ControlDrawGroup.gml</script>
         <script>scripts\GMUI_ControlDrawSlider.gml</script>
         <script>scripts\GMUI_ControlDrawToggle.gml</script>
         <script>scripts\GMUI_ControlDrawTooltipById.gml</script>
-        <script>scripts\GMUI_ControlActionScript.gml</script>
+        <script>scripts\GMUI_ControlFilterInput.gml</script>
+        <script>scripts\GMUI_ControlInit.gml</script>
+        <script>scripts\GMUI_ControlIsInLayer.gml</script>
         <script>scripts\GMUI_ControlSetInitValue.gml</script>
         <script>scripts\GMUI_ControlSetDefaultAttributes.gml</script>
         <script>scripts\GMUI_ControlSetDefaultButton.gml</script>

@@ -15,15 +15,15 @@ GMUI_GridSetNavigation(global.GMUIDirectionTypeVertical,vk_up,vk_down,vk_left,vk
 
 layer = 0;
 // Right side group
-GMUI_CreateGroup(layer, 1,      20,3,   global.GMUIAnchorTopRight);
+GMUI_CreateGroup(layer, 1,      20,3,   GMUIAnchor.TopRight);
 GMUI_GroupSetSize(layer, 1,     18,4);
 //GMUI_GroupSetSpriteMap(layer, 1, s2,s3,s4,s5,s6,s7,s8,s1,s9,false);
 // Left side group
-GMUI_CreateGroup(layer, 2,      2,3,    global.GMUIAnchorTopLeft);
+GMUI_CreateGroup(layer, 2,      2,3,    GMUIAnchor.TopLeft);
 //This must be called after the controls are made: GMUI_GroupSetFadeOnHide(layer, 2, room_speed/4);
 // Object click group test
 GMUI_AddLayer(1,0,0);
-GMUI_CreateGroup(1, 3,          0,0,    global.GMUIAnchorTopLeft);
+GMUI_CreateGroup(1, 3,          0,0,    GMUIAnchor.TopLeft);
 
 /*
 
@@ -60,7 +60,7 @@ with (GMUI_Add("Test4", "intpicker",            0,6,    10,2,   layer, global.GM
     //GMUI_ControlSetPicker(sprite_get_width(GMUIspr_arrowup) + 4,sprite_get_height(GMUIspr_arrowup) + 4,
     //    global.GMUIDirectionTypeVertical, GMUIspr_arrowup, GMUIspr_arrow);
         
-    with (GMUI_ControlAddTooltip("-20 to 20.",GMUIAnchor.Left,6,2,12,4,-1,-1)) {
+    with (GMUI_ControlAddTooltip("-20 to 20.",global.GMUIAnchorLeft,6,2,12,4,-1,-1)) {
         GMUI_ControlSetFadeOnHide(id, room_speed/4);
     }
 }
@@ -120,6 +120,7 @@ with (GMUI_Add("ExitButton", "textbutton",      0,0,    1,1,     layer, global.G
     GMUI_ControlSetButton("x", -1, -1, -1);
     // (Example:) Minor adjustment so that the control isnt cut off by the room
     GMUI_ControlSetPositioning(-1,0,0,0);
+    GMUI_ControlPersistentToLayer(1); // Test multi-layer
 }
 
 with (GMUI_Add("MenuInt", "intpicker",          0,0,    3,2,    1, global.GMUIAnchorTopLeft)) {
@@ -165,9 +166,15 @@ with (GMUI_Add("PopupTestButton","textbutton",  -3,8,   8,1,    layer, global.GM
     GMUI_ControlAddToMenu("Test Menu 2");
 }
 
+with (GMUI_Add("ResponseLabel", "label", -8, 10, 16, 2, layer, global.GMUIAnchorTop)) {
+    // This value will be set by the popup
+    GMUI_ControlSetFontStyle(fontNumeric,c_white,fa_center);
+    GMUI_ControlAddToMenu("Test Menu 2");
+}
+
 // Test Popup
 //global.GMUIPopupBlank = -1;global.GMUIPopupInformation = 0;global.GMUIPopupConfirm = 1;global.GMUIPopupThreeOptions = 2;
-menuID = GMUI_CreatePopup("Test Popup",  -14,2,   28,12,   global.GMUIAnchorTop, GMUIPopup.ThreeOptions);
+menuID = GMUI_CreatePopup("Test Popup",  -14,2,   28,12,   global.GMUIAnchorTop, global.GMUIPopupThreeOptions);
 GMUI_PopupSetMessage("Test Popup", "Click an option to return to the previous screen!", 2, -1, -1);
 GMUI_PopupSetAction("Test Popup", _PopupReturnAction);
 
@@ -183,9 +190,10 @@ GMUI_PopupSetAction("Test Popup", _PopupReturnAction);
 
 // Test slider
 with (GMUI_Add("Slider", "slider",              16,12,  10,2,   layer, global.GMUIAnchorBottomRight)) {
-    GMUI_ControlSetSliderSettings(13,10,34,true,true,true,GMUIDirection.Horizontal);
+    GMUI_ControlSetSliderSettings(13,10,34,true,true,true,global.GMUIDirectionTypeHorizontal);
     GMUI_ControlSetSliderStyle(2,2,c_dkgray,0.6,c_teal,0.9,c_dkgray,0.4,c_aqua,1,c_gray,0.8);
     GMUI_ControlSetSliderSize(16, 20, 1, 12, 10, 8, 6, 8);
+    GMUI_ControlSetInitValue(20);
     
     GMUI_ControlSetValueChangedAction(_SliderValue_Changed);
 }
@@ -196,13 +204,13 @@ with (GMUI_Add("MidSlider", "button",           19,12,  2,2,    layer, global.GM
     GMUI_ControlSetPositioning(0,6,0,20);
 }
 // Button to set slider to snap or not
-with (GMUI_Add("SnapSlider", "button",           23,12,  3,2,    layer, global.GMUIAnchorBottomRight)) {
+with (GMUI_Add("SnapSlider", "button",          23,12,  3,2,    layer, global.GMUIAnchorBottomRight)) {
     GMUI_ControlSetButtonAction(_SliderSnap_Button);
     GMUI_ControlSetButton("Snap",-1,-1,-1);
     GMUI_ControlSetPositioning(0,6,0,20);
 }
 
-// Display of slider value
+// Display of slider value to the side
 with (GMUI_Add("SliderVal", "label",            5,12,   2,2,    layer, global.GMUIAnchorBottomRight)) {
     GMUI_ControlSetText(string(round(GMUI_GetValue("MidSlider"))));
 }
@@ -210,9 +218,10 @@ with (GMUI_Add("SliderVal", "label",            5,12,   2,2,    layer, global.GM
 
 // Test checkbox and toggle
 with (GMUI_Add("CheckBox", "checkbox",          4,12,   1,1,    layer, global.GMUIAnchorBottomLeft)) {
-    GMUI_ControlSetCheckboxSettings(1, c_lime, c_gray, global.GMUISlideRoundRect, $808080, $505050, room_speed/4);
+    GMUI_ControlSetCheckboxSettings(1, c_lime, c_gray, global.GMUISlideRoundRect, $808080, $505050, room_speed/6);
     GMUI_ControlSetHoverAction(_Hover_Checkbox);
     GMUI_ControlSetHoverOffAction(_HoverOff_Checkbox);
+    GMUI_ControlSetSprite(s10, 0, 0, 0);
     
     // Add a space at the end of the string to make sure it wraps. I know... but its Game Maker ;)
     with (GMUI_ControlAddTooltip("Checkbox!",global.GMUIAnchorBottom,6,2,12,4,-1,-1)) {
@@ -220,9 +229,25 @@ with (GMUI_Add("CheckBox", "checkbox",          4,12,   1,1,    layer, global.GM
     }
 }
 
-with (GMUI_Add("Toggle", "toggle",          3,10,   3,2,    layer, global.GMUIAnchorBottomLeft)) {
-    GMUI_ControlSetToggleSettings(1, c_lime, c_gray, GMUISlideShape.FullRoundRectangle, $808080, $505050, room_speed/4, global.GMUIDirectionTypeHorizontal, 0);
+with (GMUI_Add("Toggle", "toggle",              3,10,   3,2,    layer, global.GMUIAnchorBottomLeft)) {
+    GMUI_ControlSetToggleSettings(1, c_lime, c_gray, global.GMUISlideFullRoundRect, $808080, $505050, room_speed/4, global.GMUIDirectionTypeHorizontal, 0);
 }
+
+with (GMUI_Add("SpritePicker", "spritepicker",  -10,10, 5,2,    layer, global.GMUIAnchorBottom)) {
+    GMUI_ControlAddOption(0, GMUIspr_arrowright);
+    GMUI_ControlAddOption(2, GMUIspr_arrowup);
+    GMUI_ControlAddOption(4, GMUIspr_arrowleft);
+    GMUI_ControlAddOption(6, GMUIspr_arrow);
+    GMUI_ControlSetPicker(sprite_get_width(GMUIspr_arrowleft) + 4,sprite_get_height(GMUIspr_arrowleft) + 4,
+        global.GMUIDirectionTypeHorizontal, GMUIspr_arrowright, GMUIspr_arrowleft);
+    GMUI_ControlSetInitValue(6);
+}
+// Example: overrides initial value:
+GMUI_ControlSelectOption("SpritePicker",2);
+
+//with (GMUI_Add("Graphic", "image",          -12,10, 2,2,    layer, global.GMUIAnchorBottom)) {
+//    GMUI_ControlSetSpriteExt(s10, 0, 0, 0, 2, 2, c_white, 0.2);
+//}
 
 
 
@@ -249,5 +274,6 @@ GMUI_PopupSetStyle("Test Popup", c_white, 0.99, c_white, 0.75, true);// needs po
 GMUI_PopupSetFadeOnHide("Test Popup", room_speed/8, 0);// needs popup version
 GMUI_PopupSetHidePosition("Test Popup", -14, 0, easeExpOut, room_speed/4);
 //todo: change the popup style
+
 
 
