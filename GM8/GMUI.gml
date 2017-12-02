@@ -1352,6 +1352,8 @@ if (!optionsInitialized) {
     OptionsMap = ds_map_create();
     OptionsMin = 0;
     OptionsMax = 0;
+    OptionsFirst = argument0;
+    OptionsLast = argument0;
     
     optionsInitialized = true;    
 }
@@ -1365,6 +1367,10 @@ if (is_real(argument0)) {
     if (!ds_map_exists(OptionsMap,argument0)) {
     
         ds_map_add(OptionsMap, argument0, argument1);
+        
+        // Need to double check this for GM:Studio
+        OptionsFirst = ds_map_find_first(OptionsMap);
+        OptionsLast = ds_map_find_last(OptionsMap);
         
         if (argument0 < OptionsMin)
             OptionsMin = argument0;
@@ -5492,6 +5498,32 @@ i.valueChangeDetected = 0;
 // The control will be disabled for this many steps before allowing action
 //i.Disable = floor(room_speed/20);
 
+#define GMUI_ControlIsInLayer
+///GMUI_ControlIsInLayer(control, layer)
+var _ctl,_L;
+
+_ctl = argument0;
+_L = argument1;
+
+if ((_ctl).Layer == _L)
+    return true;
+    
+// Check if it has been added to another layer (nested if's for small GML performance improvement)
+if ((_ctl).AdditionalLayer != -1) {
+    if ((_ctl).AdditionalLayer > (_ctl).Layer) {
+        if (_L <= (_ctl).AdditionalLayer) {
+            if (_L > (_ctl).Layer)
+                return true;
+        }
+    }
+    else if (_L >= (_ctl).AddtionalLayer) {
+        if (_L < (_ctl).Layer)
+            return true;
+    }
+}
+    
+return false;
+
 #define GMUI_ControlFilterInput
 ///GMUI_ControlFilterInput(Control Type, Input String - keyboard_string)
 ///Modifies keyboard string to be acceptable for the control. Typcially called on a keypress.
@@ -6533,8 +6565,8 @@ if (GMUI_GridEnabled())
                                     else if (ctrlObject.ControlType == "doublepicker")
                                         GMUI_SetValue(ctrlObject.valueName,ctrlObject.value + 1,"double");
                                     else if (ctrlObject.optionsInitialized) {
-                                        if (ctrlObject.value == ctrlObject.OptionsMax)
-                                            ctrlObject.value = ctrlObject.OptionsMin;
+                                        if (ctrlObject.value == ctrlObject.OptionsLast)
+                                            ctrlObject.value = ctrlObject.OptionsFirst;
                                         else
                                             ctrlObject.value = ds_map_find_next(ctrlObject.OptionsMap,ctrlObject.value);
                                     }
@@ -6546,8 +6578,8 @@ if (GMUI_GridEnabled())
                                     else if (ctrlObject.ControlType == "doublepicker")
                                         GMUI_SetValue(ctrlObject.valueName,ctrlObject.value - 1,"double");
                                     else if (ctrlObject.optionsInitialized) {
-                                        if (ctrlObject.value == ctrlObject.OptionsMin)
-                                            ctrlObject.value = ctrlObject.OptionsMax;
+                                        if (ctrlObject.value == ctrlObject.OptionsFirst)
+                                            ctrlObject.value = ctrlObject.OptionsLast;
                                         else
                                             ctrlObject.value = ds_map_find_previous(ctrlObject.OptionsMap,ctrlObject.value);
                                     }
@@ -7661,30 +7693,4 @@ return true;
 // (GMUII()).Value
 
 return global.GMUIiid[0];
-
-#define GMUI_ControlIsInLayer
-///GMUI_ControlIsInLayer(control, layer)
-var _ctl,_L;
-
-_ctl = argument0;
-_L = argument1;
-
-if ((_ctl).Layer == _L)
-    return true;
-    
-// Check if it has been added to another layer (nested if's for small GML performance improvement)
-if ((_ctl).AdditionalLayer != -1) {
-    if ((_ctl).AdditionalLayer > (_ctl).Layer) {
-        if (_L <= (_ctl).AdditionalLayer) {
-            if (_L > (_ctl).Layer)
-                return true;
-        }
-    }
-    else if (_L >= (_ctl).AddtionalLayer) {
-        if (_L < (_ctl).Layer)
-            return true;
-    }
-}
-    
-return false;
 

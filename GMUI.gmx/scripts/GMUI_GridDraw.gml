@@ -130,8 +130,8 @@ if (GMUI_GridEnabled())
                                     else if (ctrlObject.ControlType == "doublepicker")
                                         GMUI_SetValue(ctrlObject.valueName,ctrlObject.value + 1,"double");
                                     else if (ctrlObject.optionsInitialized) {
-                                        if (ctrlObject.value == ctrlObject.OptionsMax)
-                                            ctrlObject.value = ctrlObject.OptionsMin;
+                                        if (ctrlObject.value == ctrlObject.OptionsLast)
+                                            ctrlObject.value = ctrlObject.OptionsFirst;
                                         else
                                             ctrlObject.value = ds_map_find_next(ctrlObject.OptionsMap,ctrlObject.value);
                                     }
@@ -143,8 +143,8 @@ if (GMUI_GridEnabled())
                                     else if (ctrlObject.ControlType == "doublepicker")
                                         GMUI_SetValue(ctrlObject.valueName,ctrlObject.value - 1,"double");
                                     else if (ctrlObject.optionsInitialized) {
-                                        if (ctrlObject.value == ctrlObject.OptionsMin)
-                                            ctrlObject.value = ctrlObject.OptionsMax;
+                                        if (ctrlObject.value == ctrlObject.OptionsFirst)
+                                            ctrlObject.value = ctrlObject.OptionsLast;
                                         else
                                             ctrlObject.value = ds_map_find_previous(ctrlObject.OptionsMap,ctrlObject.value);
                                     }

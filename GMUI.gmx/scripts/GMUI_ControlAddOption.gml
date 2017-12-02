@@ -12,6 +12,8 @@ if (!optionsInitialized) {
     OptionsMap = ds_map_create();
     OptionsMin = 0;
     OptionsMax = 0;
+    OptionsFirst = argument0;
+    OptionsLast = argument0;
     
     optionsInitialized = true;    
 }
@@ -26,6 +28,10 @@ if (is_real(argument0)) {
     
         ds_map_add(OptionsMap, argument0, argument1);
         
+        // Need to double check this for GM:Studio
+        OptionsFirst = ds_map_find_first(OptionsMap);
+        OptionsLast = ds_map_find_last(OptionsMap);
+        
         if (argument0 < OptionsMin)
             OptionsMin = argument0;
         else if (argument0 > OptionsMax)
@@ -38,3 +44,4 @@ if (is_real(argument0)) {
         return false;
     }
 }
+
