@@ -1,3 +1,4 @@
+#define easeBounceOut
 ///easeBounceOut(t,b,c,d) where t is current time, b is start value, c is change in value, and d is duration
 /// Bounce Ease for moving controls smoothly
 
@@ -29,3 +30,4 @@ else
 
 //To see copyright notice for this script please click on the following text then press F12:
 //ease_CopyrightNotice
+

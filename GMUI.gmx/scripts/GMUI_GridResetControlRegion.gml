@@ -1,3 +1,4 @@
+#define GMUI_GridResetControlRegion
 ///GMUI_GridResetControlRegion(Layer, previous CellX, previous CellY, Cell Width, Cell Height, control id)
 /// Resets any control values in the control's previous region
 
@@ -19,3 +20,4 @@ for (i=0;i<_CellW;i+=1) {
         }
     }
 }
+

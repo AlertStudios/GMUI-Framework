@@ -1,3 +1,4 @@
+#define GMUI_ControlPosition
 ///GMUI_ControlPosition("control name" or id, cell x, cell y, relative x, relative y, Anchor)
 ///Set the relative positioning and sizing of the control within its cell
 
@@ -11,17 +12,17 @@ if (is_string(argument0))
 else
     _ctrl = argument0;
     
-// Store the relative values provided that reference against the anchor position
-(_ctrl).Anchor = _Anchor;
-(_ctrl).RelativeCellX = _CellX;
-(_ctrl).RelativeCellY = _CellY;
-
-
 if (!GMUI_IsControlID(_ctrl))
 {
     GMUI_ThrowErrorDetailed("Invalid control",GMUI_ControlPosition);
     return false;
 }
+    
+// Store the relative values provided that reference against the anchor position
+if (_Anchor >= 0)
+    (_ctrl).Anchor = _Anchor;
+(_ctrl).RelativeCellX = _CellX;
+(_ctrl).RelativeCellY = _CellY;
 
 // Get the dimensions and round down for grids that have even grid sizes
 _gridW = GMUI_GridGetWidth((_ctrl).GMUIP,(_ctrl).Layer);
@@ -54,7 +55,15 @@ if ((_ctrl).ActualW != 0 || (_ctrl).ActualH != 0 || (_ctrl).RelativeX != 0 || (_
 else
     (_ctrl).IsAdjusted = false;
     
+if ((_ctrl).Group > 0) {
+    GMUI_ControlPositionToGroup(_ctrl);
+    if ((GMUII()).UIInterfaceSet)
+        GMUI_GridSetRegionsLayer((_ctrl).Layer);
+}
+else
+    (_ctrl).NeedsPositionUpdate = true;
 
 return true;
+
 
 

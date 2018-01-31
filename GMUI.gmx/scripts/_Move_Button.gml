@@ -1,3 +1,4 @@
+#define _Move_Button
 var MyButton,MyButtonText;
 
 MyButton = GMUI_GetControl("MoveButton");
@@ -14,5 +15,7 @@ else {
     with (MyButton) GMUI_ControlSetButton("Move"+chr(13)+"Group",-1,-1,-1);
     testmoving.moving = 0;
     // Return the group to where it was
-    GMUI_GroupSetPosition(0,1,20,3,0,0);
+    GMUI_SetOnLayer(0);
+    GMUI_GroupSetPosition(1,20,3,0,0);
 }
+

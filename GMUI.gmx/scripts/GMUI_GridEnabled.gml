@@ -1,3 +1,4 @@
+#define GMUI_GridEnabled
 ///GMUI_GridEnabled()
 /// Returns if the entire grid is enabled to be used
 
@@ -10,3 +11,4 @@ else
 {
     return true;
 }
+

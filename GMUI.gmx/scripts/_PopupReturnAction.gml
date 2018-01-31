@@ -1,3 +1,4 @@
+#define _PopupReturnAction
 // Show result
 var str;
 

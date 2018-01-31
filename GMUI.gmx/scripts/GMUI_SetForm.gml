@@ -1,3 +1,4 @@
+#define GMUI_SetForm
 /// GMUI_SetForm(name of form script)
 /// Playbook to create all of the UI component objects for the project
 //
@@ -43,3 +44,4 @@ if (is_real(OptionalInterfaceName)) {
         }
     }
 }
+

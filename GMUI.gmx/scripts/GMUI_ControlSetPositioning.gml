@@ -1,3 +1,4 @@
+#define GMUI_ControlSetPositioning
 ///GMUI_ControlSetPositioning( relative x, relative y, actual width, actual height )
 ///Set the relative positioning and sizing of the control within its cell
 
@@ -23,5 +24,6 @@ else
     
 
 return true;
+
 
 

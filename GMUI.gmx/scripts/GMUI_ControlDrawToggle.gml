@@ -1,3 +1,4 @@
+#define GMUI_ControlDrawToggle
 ///GMUI_ControlDrawToggle(id of toggle control object)
 /// Draw the control as a toggle
 

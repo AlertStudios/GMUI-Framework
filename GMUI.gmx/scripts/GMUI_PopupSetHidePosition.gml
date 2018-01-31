@@ -1,3 +1,4 @@
+#define GMUI_PopupSetHidePosition
 ///GMUI_PopupSetHidePosition("popup name", Cell X, Cell Y, transition_script [or -1], speed in steps)
 // Sets popup position to come from and go to when shown or hidden
 
@@ -11,4 +12,13 @@ if (string(_MenuNumber) == "0") {
     return false;
 }
 
-GMUI_GroupSetHidePosition(GMUI_GetMenuLayer(GMUII(),_MenuNumber),_MenuNumber,argument1,argument2,argument3,argument4);
+
+// Set style with the menu, temporary change to setting layer
+_prevLayer = UIAddToLayer;
+UIAddToLayer = GMUI_GetMenuLayer(GMUII(),_MenuNumber);
+
+_result = GMUI_GroupSetHidePosition(_MenuNumber,argument1,argument2,argument3,argument4);
+
+UIAddToLayer = _prevLayer;
+return _result;
+

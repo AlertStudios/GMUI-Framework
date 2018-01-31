@@ -1,3 +1,4 @@
+#define GMUI_ControlSetType
 ///GMUI_ControlSetType(Control, "Control Type")
 ///Set the type variables based on the control the developer wants to make
 

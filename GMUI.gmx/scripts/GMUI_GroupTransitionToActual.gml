@@ -1,3 +1,4 @@
+#define GMUI_GroupTransitionToActual
 ///GMUI_GroupTransitionToActual(Layer Number, Group Id, Grid X, Grid Y, Transition Script, Time)
 ///
 
@@ -61,5 +62,6 @@ if (!_setMaster) {
 (_iid).GMUI_groupTransitioning[_LayerNumber,_GroupNumber] = true;
 
 return true;
+
 
 

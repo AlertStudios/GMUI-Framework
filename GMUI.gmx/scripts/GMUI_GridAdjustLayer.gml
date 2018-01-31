@@ -1,3 +1,4 @@
+#define GMUI_GridAdjustLayer
 ///GMUI_GridAdjustLayer(Layer Number, cells wide, cells high)
 /// Adjusts the layer's grid based on new dimensions and moves the controls according to their anchors
 
@@ -6,7 +7,7 @@ if (!GMUI_LayerExists(argument0))
     return false;
 
 
-var _GMUI,_Layer, CW, CH;
+var _GMUI,_Layer, CW, CH, _prevLayer;
 _GMUI = GMUII();
 _Layer = floor(argument0);
 
@@ -77,8 +78,11 @@ for(i=0;i<ds_list_size((_GMUI).GMUI_groupList[_Layer]);i+=1) {
     _CellX = (_GMUI).GMUI_groupRelativeCellX[_Layer,_Group];
     _CellY = (_GMUI).GMUI_groupRelativeCellY[_Layer,_Group];
     
-    GMUI_GroupSetPosition(_Layer,_Group,_CellX,_CellY,(_GMUI).GMUI_groupRelativeX[_Layer,_Group],(_GMUI).GMUI_groupRelativeY[_Layer,_Group]);
-
+    _prevLayer = (_GMUI).UIAddToLayer;
+    (_GMUI).UIAddToLayer = _Layer;
+    GMUI_GroupSetPosition(_Group,_CellX,_CellY,(_GMUI).GMUI_groupRelativeX[_Layer,_Group],(_GMUI).GMUI_groupRelativeY[_Layer,_Group]);
+    (_GMUI).UIAddToLayer = _prevLayer;
+    
     // Reset hide position transition values
     (_MasterControl).T_px_group = GMUI_CellGetActualX((_GMUI).GMUI_groupCellX[_Layer,_Group]);
     (_MasterControl).T_py_group = GMUI_CellGetActualY((_GMUI).GMUI_groupCellY[_Layer,_Group]);
@@ -99,4 +103,5 @@ GMUI_GridSetRegionsLayer(_Layer);
 
 
 return true;
+
 

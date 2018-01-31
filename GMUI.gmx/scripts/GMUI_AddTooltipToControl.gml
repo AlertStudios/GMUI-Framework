@@ -1,7 +1,8 @@
+#define GMUI_AddTooltipToControl
 ///GMUI_AddTooltipToControl(Control id, "message string", direction/side of control, width cells [or -1], height cells [or -1], max cells width, max cells height, adjustment x [or -1], adjustment y [or -1])
 ///Adds a tooltip to the specified control
 
-var _SCRIPT, _message, _direction, _adjX, _adjY, _relX, _relY, _cellX, _cellY, _newCtrl, _isVertical,
+var _SCRIPT, _message, _direction, _adjX, _adjY, _relX, _relY, _cellX, _cellY, _newCtrl, _prevLayer, _isVertical,
     _width, _height, _newwidth, _newheight, _actwidth, _actheight, _maxwidth, _maxheight, gcellsize, gcellsize_h;
 _SCRIPT = GMUI_AddTooltipToControl;
 _ctrl = argument0;
@@ -83,7 +84,11 @@ _cellX = (_ctrl).CellX + _relX;
 _cellY = (_ctrl).CellY + _relY;
 
 // Add new control based on top-left position (updated on GMUI_ControlUpdateXY)
-newCtrl = GMUI_Add((_ctrl).valueName + "_tooltip","tooltip",_cellX,_cellY, _newwidth,_newheight,(_ctrl).Layer,global.GMUIAnchorTopLeft);
+// Use GMUII to temporarily set the adding layer, then revert after
+_prevLayer = (GMUII()).UIAddToLayer;
+(GMUII()).UIAddToLayer = (_ctrl).Layer;
+newCtrl = GMUI_Add((_ctrl).valueName + "_tooltip","tooltip",_cellX,_cellY, _newwidth,_newheight,global.GMUIAnchorTopLeft);
+(GMUII()).UIAddToLayer = _prevLayer;
 
 with (newCtrl) {
     valueString = _message;
@@ -122,4 +127,5 @@ with (newCtrl) {
 (_ctrl).TooltipId = newCtrl;
 
 return newCtrl;
+
 

@@ -1,3 +1,4 @@
+#define GMUI_AddLayer
 ///GMUI_AddLayer(Layer Number,x offset, y offset)
 /// Adds a new grid layer to GMUI for controls to exist on
 // returns false on failure (bad params)
@@ -12,6 +13,8 @@ if (!is_real(argument2))
     
 if (GMUI_LayerExists(_Layer))
     return false;
+    
+UIAddToLayer = _Layer;
 
 // If the layer doesn't exist, add it to the list and create it
 ds_list_add((GMUII()).GMUI_gridlist,_Layer);
@@ -34,3 +37,4 @@ if ((GMUII()).UILayerTop < _Layer)
     (GMUII()).UILayerTop = _Layer;
 
 return true;
+

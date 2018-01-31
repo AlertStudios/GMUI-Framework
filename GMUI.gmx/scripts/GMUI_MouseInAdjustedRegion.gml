@@ -1,3 +1,4 @@
+#define GMUI_MouseInAdjustedRegion
 ///GMUI_MouseInAdjustedRegion(Control Object, mouse x, mouse y)
 /// Checks to see if the mouse is in the adjusted region of the control (true/false)
 
@@ -45,3 +46,4 @@ if ((_MX >= (_Control).ActualX + (_Control).RelativeX + _xoffset && _MX <= (_Con
     return true;
 else
     return false;
+

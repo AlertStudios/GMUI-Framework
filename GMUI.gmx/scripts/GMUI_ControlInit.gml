@@ -1,3 +1,4 @@
+#define GMUI_ControlInit
 ///GMUI_ControlInit(control object to instantiate)
 /// Initialize the values to use with a GMUI control
 // These values are controlled by the GMUI controller, and if commented, they are actually intialized by the Add script.

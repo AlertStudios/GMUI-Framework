@@ -1,3 +1,4 @@
+#define GMUI_ControlDrawSlider
 ///GMUI_ControlDrawSlider(id of slider control object)
 /// Draw the control as a slider
 

@@ -1,3 +1,4 @@
+#define GMUI_ControlDrawTooltipById
 ///GMUI_ControlDrawTooltipById(id of tooltip control object)
 /// Draw the control as a tooltip
 
@@ -55,3 +56,4 @@ with (_tt_id) {
     //draw_rectangle(cx, cy, CellWide*(GMUII()).cellsize, chy, 1)
     //draw_rectangle(cx, cy, cwx, chy, 1)
 }
+

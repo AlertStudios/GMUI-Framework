@@ -1,3 +1,4 @@
+#define GMUI_ControlUpdateXY
 ///GMUI_ControlUpdateXY(control)
 ///Updates the actual location in the room after adjustments
 
@@ -42,3 +43,4 @@ if ((_ctrl).TooltipId != -1) {
         global.GMUIAnchorTopLeft);
     ((_ctrl).TooltipId).NeedsPositionUpdate = true;
 }
+

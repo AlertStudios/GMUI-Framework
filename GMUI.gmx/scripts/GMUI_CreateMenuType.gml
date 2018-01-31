@@ -1,11 +1,12 @@
+#define GMUI_CreateMenuType
 ///GMUI_CreateMenuType (Type[script calling], menu name, cell# x, cell# y, cells wide, cells high, Anchor)
 ///Adds a menu to a GMUI layer that controls can be put into
 
 
 // Arguments
-var _SCRIPT,_GMUII,_menuName,_CellX,_CellY,_CW,_CH,_Anchor,_menuNumber,_layerNumber, _menuType;
+var _SCRIPT,_GMUI,_menuName,_CellX,_CellY,_CW,_CH,_Anchor,_menuNumber,_layerNumber, _menuType, _prevLayer;
 _SCRIPT = GMUI_CreateMenuType;
-_GMUII = GMUII();
+_GMUI = GMUII();
 _menuScript = argument0;
 _menuName = string(argument1);
 _CellX = argument2;
@@ -22,34 +23,37 @@ if (!is_real(_CellX) || !is_real(_CellY)) {
 }
 
 // Get menu number and assign name to the ID
-(GMUII()).GMUI_menuLastId += 1;
-_menuNumber = (GMUII()).GMUI_menuLastId;
+(_GMUI).GMUI_menuLastId += 1;
+_menuNumber = (_GMUI).GMUI_menuLastId;
 switch (_menuScript) {
-    case GMUI_CreatePopup: ds_map_add((_GMUII).GMUI_popup_map,_menuName,_menuNumber);
+    case GMUI_CreatePopup: ds_map_add((_GMUI).GMUI_popup_map,_menuName,_menuNumber);
         break;
-    case GMUI_CreateWarning: ds_map_add((_GMUII).GMUI_warnings_map,_menuName,_menuNumber);
+    case GMUI_CreateWarning: ds_map_add((_GMUI).GMUI_warnings_map,_menuName,_menuNumber);
         break;
     default:
-    case GMUI_CreateMenu: ds_map_add((_GMUII).GMUI_menu_map,_menuName,_menuNumber);
+    case GMUI_CreateMenu: ds_map_add((_GMUI).GMUI_menu_map,_menuName,_menuNumber);
         break;
 }
 
-
-_layerNumber = GMUI_GetMenuLayer(_GMUII,_menuNumber);
+_prevLayer = (_GMUI).UIAddToLayer;
+_layerNumber = GMUI_GetMenuLayer(_GMUI,_menuNumber);
 if (!GMUI_LayerExists(_layerNumber)) {
-    GMUI_AddLayer(_layerNumber,(_GMUII).GMUI_defaultX,(_GMUII).GMUI_defaultY);
+    GMUI_AddLayer(_layerNumber,(_GMUI).GMUI_defaultX,(_GMUI).GMUI_defaultY);
 }
-
 
 // Create a group with the assigned layer and group numbers
-if (GMUI_CreateGroup(_layerNumber,_menuNumber,_CellX,_CellY,_Anchor)) {
-    (_GMUII).GMUI_groupCellsW[_layerNumber,_menuNumber] = _CW;
-    (_GMUII).GMUI_groupCellsH[_layerNumber,_menuNumber] = _CH;
-    (_GMUII).GMUI_groupClickOff[_layerNumber,_menuNumber] = false;
-    (_GMUII).GMUI_groupAction[_layerNumber,_menuNumber] = -1;
+if (GMUI_CreateGroup(_menuNumber,_CellX,_CellY,_Anchor)) {
+    (_GMUI).GMUI_groupCellsW[_layerNumber,_menuNumber] = _CW;
+    (_GMUI).GMUI_groupCellsH[_layerNumber,_menuNumber] = _CH;
+    (_GMUI).GMUI_groupClickOff[_layerNumber,_menuNumber] = false;
+    (_GMUI).GMUI_groupAction[_layerNumber,_menuNumber] = -1;
+    UIAddToLayer = _prevLayer;
 }
-else
+else {
+    UIAddToLayer = _prevLayer;
     return -1;
+}
 
 
 return _menuNumber;
+

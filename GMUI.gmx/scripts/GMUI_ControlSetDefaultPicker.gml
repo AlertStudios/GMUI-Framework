@@ -1,3 +1,4 @@
+#define GMUI_ControlSetDefaultPicker
 ///GMUI_ControlSetDefaultPicker(id)
 /// Set the default attributes of the control from the controller
 
@@ -20,3 +21,4 @@ with (argument0)
 
 
 return true;
+

@@ -1,3 +1,4 @@
+#define GMUI_MenuControlDepth
 ///GMUI_MenuControlDepth(GMUI, Menu Number, ControlType)
 ///Returns the depth for the menu and control's type value
 
@@ -9,3 +10,4 @@ _ControlType = argument2;
 
 return (_GMUII).layerDepth_menus-((_MenuNumber)*4) 
     - (_ControlType=="tooltip");
+

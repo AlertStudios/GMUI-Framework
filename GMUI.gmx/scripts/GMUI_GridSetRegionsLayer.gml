@@ -1,3 +1,4 @@
+#define GMUI_GridSetRegionsLayer
 /// Set the control regions for the given layer
 
 var _Layer,_Grid;
