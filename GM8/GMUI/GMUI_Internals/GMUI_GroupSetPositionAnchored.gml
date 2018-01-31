@@ -1,5 +1,5 @@
 #define GMUI_GroupSetPositionAnchored
-///GMUI_GroupSetPositionAnchored(Layer Number, Group Number, Cell X, Cell Y, X Adjustment, Y Adjustment, Anchor)
+///GMUI_GroupSetPositionAnchored(Group Number, Cell X, Cell Y, X Adjustment, Y Adjustment, Anchor)
 ///Change the position of the group (and all of the controls inside it) according to its anchor
 
 // Arguments

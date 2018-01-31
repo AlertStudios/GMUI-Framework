@@ -13,6 +13,8 @@ if (!is_real(argument2))
     
 if (GMUI_LayerExists(_Layer))
     return false;
+    
+UIAddToLayer = _Layer;
 
 // If the layer doesn't exist, add it to the list and create it
 ds_list_add((GMUII()).GMUI_gridlist,_Layer);

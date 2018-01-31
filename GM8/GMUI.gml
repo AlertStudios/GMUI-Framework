@@ -971,7 +971,47 @@ else
 ///GMUI_Add("Name", "Type String", cell# x, cell# y, cells wide (min 1), cells high (min 1), Anchor)
 ///Adds a component(instance) to the GMUI grid at the current layer
 
-GMUI_AddToLayer((GMUII()).UIAddToLayer,argument0,argument1,argument2,argument3,argument4,argument5,argument6);
+return GMUI_AddToLayer((GMUII()).UIAddToLayer,argument0,argument1,argument2,argument3,argument4,argument5,argument6);
+
+#define GMUI_AddLayer
+///GMUI_AddLayer(Layer Number,x offset, y offset)
+/// Adds a new grid layer to GMUI for controls to exist on
+// returns false on failure (bad params)
+
+var _Layer;
+_Layer = floor(argument0);
+
+if (!is_real(argument1))
+    return false;
+if (!is_real(argument2))
+    return false;
+    
+if (GMUI_LayerExists(_Layer))
+    return false;
+    
+UIAddToLayer = _Layer;
+
+// If the layer doesn't exist, add it to the list and create it
+ds_list_add((GMUII()).GMUI_gridlist,_Layer);
+
+// Add a group list to the layer in case its used
+(GMUII()).GMUI_groupList[_Layer] = ds_list_create();
+(GMUII()).GMUI_groupControlList[_Layer,0] = ds_list_create();
+
+//Default
+(GMUII()).GMUI_grid_w[_Layer] = ceil((GMUII()).UIgridwidth/(GMUII()).cellsize);
+(GMUII()).GMUI_grid_h[_Layer] = ceil((GMUII()).UIgridheight/(GMUII()).cellsize_h);
+
+// Assign
+(GMUII()).GMUI_grid[_Layer] = ds_grid_create((GMUII()).GMUI_grid_w[_Layer],(GMUII()).GMUI_grid_h[_Layer]);
+(GMUII()).GMUI_grid_x[_Layer] = argument1;
+(GMUII()).GMUI_grid_y[_Layer] = argument2;
+
+
+if ((GMUII()).UILayerTop < _Layer)
+    (GMUII()).UILayerTop = _Layer;
+
+return true;
 
 #define GMUI_AddToLayer
 ///GMUI_AddToLayer(Layer, "Name", "Type String", cell# x, cell# y, cells wide (min 1), cells high (min 1), Anchor)
@@ -1083,8 +1123,8 @@ GMUI_ControlSetDefaultAttributes(thecontrol);
 // Set the default button properties
 GMUI_ControlSetDefaultButton(thecontrol);
 
-// Set the default group style properties, if set
-GMUI_GroupSetDefaultStyle(thecontrol);
+// The control has group style if it is the master control of the group
+thecontrol.ControlHasGroupStyle = false;
 
 // Override defaults for specific controls (Avoid defaults conflicts):
 
@@ -1105,51 +1145,11 @@ return thecontrol;
 
 
 
-#define GMUI_AddLayer
-///GMUI_AddLayer(Layer Number,x offset, y offset)
-/// Adds a new grid layer to GMUI for controls to exist on
-// returns false on failure (bad params)
-
-var _Layer;
-_Layer = floor(argument0);
-
-if (!is_real(argument1))
-    return false;
-if (!is_real(argument2))
-    return false;
-    
-if (GMUI_LayerExists(_Layer))
-    return false;
-    
-UIAddToLayer = _Layer;
-
-// If the layer doesn't exist, add it to the list and create it
-ds_list_add((GMUII()).GMUI_gridlist,_Layer);
-
-// Add a group list to the layer in case its used
-(GMUII()).GMUI_groupList[_Layer] = ds_list_create();
-(GMUII()).GMUI_groupControlList[_Layer,0] = ds_list_create();
-
-//Default
-(GMUII()).GMUI_grid_w[_Layer] = ceil((GMUII()).UIgridwidth/(GMUII()).cellsize);
-(GMUII()).GMUI_grid_h[_Layer] = ceil((GMUII()).UIgridheight/(GMUII()).cellsize_h);
-
-// Assign
-(GMUII()).GMUI_grid[_Layer] = ds_grid_create((GMUII()).GMUI_grid_w[_Layer],(GMUII()).GMUI_grid_h[_Layer]);
-(GMUII()).GMUI_grid_x[_Layer] = argument1;
-(GMUII()).GMUI_grid_y[_Layer] = argument2;
-
-
-if ((GMUII()).UILayerTop < _Layer)
-    (GMUII()).UILayerTop = _Layer;
-
-return true;
-
 #define GMUI_AddTooltipToControl
 ///GMUI_AddTooltipToControl(Control id, "message string", direction/side of control, width cells [or -1], height cells [or -1], max cells width, max cells height, adjustment x [or -1], adjustment y [or -1])
 ///Adds a tooltip to the specified control
 
-var _SCRIPT, _message, _direction, _adjX, _adjY, _relX, _relY, _cellX, _cellY, _newCtrl, _prevLayer, _isVertical,
+var _SCRIPT, _message, _direction, _adjX, _adjY, _relX, _relY, _cellX, _cellY, _newCtrl, _isVertical,
     _width, _height, _newwidth, _newheight, _actwidth, _actheight, _maxwidth, _maxheight, gcellsize, gcellsize_h;
 _SCRIPT = GMUI_AddTooltipToControl;
 _ctrl = argument0;
@@ -1232,10 +1232,7 @@ _cellY = (_ctrl).CellY + _relY;
 
 // Add new control based on top-left position (updated on GMUI_ControlUpdateXY)
 // Use GMUII to temporarily set the adding layer, then revert after
-_prevLayer = (GMUII()).UIAddToLayer;
-(GMUII()).UIAddToLayer = (_ctrl).Layer;
-newCtrl = GMUI_Add((_ctrl).valueName + "_tooltip","tooltip",_cellX,_cellY, _newwidth,_newheight,global.GMUIAnchorTopLeft);
-(GMUII()).UIAddToLayer = _prevLayer;
+newCtrl = GMUI_AddToLayer((_ctrl).Layer,(_ctrl).valueName + "_tooltip","tooltip",_cellX,_cellY, _newwidth,_newheight,global.GMUIAnchorTopLeft);
 
 with (newCtrl) {
     valueString = _message;
@@ -2011,7 +2008,7 @@ return true;
 
 if (!GMUI_IsControl() && id != GMUII())
 {
-    GMUI_ThrowError("Invalid control for GMUI_ControlSetHoverAction");
+    GMUI_ThrowErrorDetailed("Invalid control", GMUI_ControlSetHoverAction);
     return false;
 }
 
@@ -2020,7 +2017,7 @@ if (script_exists(argument0)) {
     return true;
 }
 else {
-    GMUI_ThrowError("Invalid script argument for GMUI_ControlSetHoverAction");
+    GMUI_ThrowErrorDetailed("Invalid script argument", GMUI_ControlSetHoverAction);
 }
 
 return false;
@@ -2032,7 +2029,7 @@ return false;
 
 if (!GMUI_IsControl() && id != GMUII())
 {
-    GMUI_ThrowError("Invalid control for GMUI_ControlSetHoverOffAction");
+    GMUI_ThrowErrorDetailed("Invalid control", GMUI_ControlSetHoverOffAction);
     return false;
 }
 
@@ -2041,7 +2038,7 @@ if (script_exists(argument0)) {
     return true;
 }
 else {
-    GMUI_ThrowError("Invalid script argument for GMUI_ControlSetHoverOffAction");
+    GMUI_ThrowErrorDetailed("Invalid script argument", GMUI_ControlSetHoverOffAction);
 }
 
 return false;
@@ -2054,7 +2051,7 @@ return false;
 
 if (!GMUI_IsControl() && id != GMUII())
 {
-    GMUI_ThrowError("Invalid control for GMUI_ControlSetInitValue");
+    GMUI_ThrowErrorDetailed("Invalid control", GMUI_ControlSetInitValue);
     return false;
 }
 
@@ -2583,7 +2580,7 @@ return true;
 ///Set the style of the controls that will be used for new controls (to override the defaults)
 if (!GMUI_IsControl() && id != GMUII())
 {
-    GMUI_ThrowError("Invalid control for GMUI_ControlSetStyle");
+    GMUI_ThrowErrorDetailed("Invalid control", GMUI_ControlSetStyle);
     return false;
 }
 
@@ -2665,15 +2662,10 @@ return false;
 if (!object_exists(argument0))
     return -1;
 
-var _NEWGMUI;
-_NEWGMUI = instance_create(0,0,argument0);
-
 // Initialize
-with (_NEWGMUI) {
-    GMUI_CreateEvent(argument1, argument2, argument3);
+with (instance_create(0,0,argument0)) {
+    return GMUI_CreateEvent(argument1, argument2, argument3);
 }
-
-return _NEWGMUI;
 
 #define GMUI_CreateGroup
 ///GMUI_CreateGroup(group number, cell# x, cell# y, cells wide, cells high, Anchor)
@@ -3579,13 +3571,14 @@ return true;
 #define GMUI_GroupSetStyle
 ///GMUI_GroupSetStyle(Group, Background Color, Background Alpha, Border color, Border Alpha, Is RoundRect)
 ///Set the style of the controls that will be used for new controls (to override the defaults)
+var _SCRIPT, _Layer, _Group;
+_SCRIPT = GMUI_GroupSetStyle;
 if (!GMUI_IsControl() && id != GMUII())
 {
-    GMUI_ThrowError("Invalid control for GMUI_GroupSetStyle");
+    GMUI_ThrowErrorDetailed("Invalid control",_SCRIPT);
     return false;
 }
 
-var _Layer, _Group;
 _Layer = UIAddToLayer;
 _Group = argument0;
 
@@ -3606,7 +3599,7 @@ if (!GMUII().UIInterfaceSet) {
 
 // Get master control for menu if it exists
 if ((GMUII()).GMUI_groupMasterControl[UIAddToLayer,_Group] == -1) {
-    GMUI_ThrowErrorDetailed("A control is needed to set style: " + _menuName,_SCRIPT);
+    GMUI_ThrowErrorDetailed("A control is needed to set style: " + _menuName, _SCRIPT);
     return false;
 }
 
@@ -5765,6 +5758,31 @@ else if (_getDataType == global.GMUIDataTypeString) {
 return ks;
 
 
+#define GMUI_ControlPositionToGroup
+///GMUI_ControlPositionToGroup(Control id)
+
+with (argument0) {
+    // Reset positioning to base on group's position
+    CellX = GMUI_GetAnchoredCellX((GMUIP).GMUI_groupCellsW[Layer,Group],RelativeCellX,Anchor) + (GMUIP).GMUI_groupCellX[Layer,Group];
+    CellY = GMUI_GetAnchoredCellY((GMUIP).GMUI_groupCellsH[Layer,Group],RelativeCellY,Anchor) + (GMUIP).GMUI_groupCellY[Layer,Group];
+    
+    ActualX = GMUI_CellGetActualX(CellX);
+    ActualY = GMUI_CellGetActualY(CellY);
+    
+    
+    // If control is outside of the group boundaries, expand the group to fit it
+    if (CellX + CellWide > (GMUIP).GMUI_groupCellX[Layer,Group] + (GMUIP).GMUI_groupCellsW[Layer,Group]) {
+        (GMUIP).GMUI_groupCellsW[Layer,Group] = CellX + CellWide - (GMUIP).GMUI_groupCellX[Layer,Group];
+    }
+    if (CellY + CellHigh > (GMUIP).GMUI_groupCellY[Layer,Group] + (GMUIP).GMUI_groupCellsH[Layer,Group]) {
+        (GMUIP).GMUI_groupCellsH[Layer,Group] = CellY + CellHigh - (GMUIP).GMUI_groupCellY[Layer,Group];
+    }
+    
+    // Update control draw location in the room
+    GMUI_ControlUpdateXY(id);
+}
+
+
 #define GMUI_ControlSetDefaultAttributes
 ///GMUI_ControlSetDefaultAttributes(id)
 /// Set the default attributes of the control from the controller
@@ -7133,30 +7151,6 @@ with (argument0) {
 
 }
 
-#define GMUI_GridSetAllMenuValues
-///GMUI_GridSetAllMenuValues(GMUI instance);
-///Set all mapped values to each type of menu, called after the UI is set
-//
-with (argument0) {
-
-    // Cycle through each grid layer
-    var i,l,j,g,k;
-    for(i=0;i<ds_list_size(GMUI_gridlist);i+=1) {
-        l = ds_list_find_value(GMUI_gridlist,i);
-        for(j=0;j<ds_list_size(GMUI_groupList[l]);j+=1) {
-            g = ds_list_find_value(GMUI_groupList[l],j);
-            if (GMUI_groupSettingsMap[l,g] != -1) {
-                // Set group mapped values
-                //GMUI_GridSetGroupValues(id,l,g);
-                // Reset map
-                ds_map_destroy(GMUI_groupSettingsMap[l,g]);
-                GMUI_groupSettingsMap[l,g] = -1;
-            }
-        }
-    }
-//
-}//
-
 #define GMUI_GridSetMappedValues
 ///GMUI_GridSetMappedValues(GMUI instance, layer, group number)
 ///Iterate over the value map for the specific group to set values
@@ -7292,32 +7286,6 @@ L = floor(argument0);
 G = floor(argument1);
 
 return (ds_list_find_index((GMUII()).GMUI_groupList[L],G) != -1);
-
-#define GMUI_GroupSetDefaultStyle
-///GMUI_GroupSetDefaultStyle(id)
-/// Get the default style values from the grid controller
-
-if (!instance_exists(argument0)) {
-    GMUI_ThrowErrorDetailed("Invalid control",GMUI_GroupSetDefaultStyle);
-    return false;
-}
-
-with (argument0) {
-
-    ControlHasGroupStyle = (GMUII()).ControlHasGroupStyle;
-    
-    if (ControlHasGroupStyle) {
-        GMUI_GroupSetStyle(
-            (GMUII()).GroupBackgroundColor,
-            (GMUII()).GroupBackgroundAlpha,
-            (GMUII()).GroupBorderColor,
-            (GMUII()).GroupBorderAlpha,
-            (GMUII()).GroupIsRoundRect
-        );
-    }
-}
-
-return true;
 
 #define GMUI_GroupSetHidePosition
 ///GMUI_GroupSetHidePosition(Group Number, Cell X, Cell Y, Transition_script [or -1], speed in steps)
@@ -8015,29 +7983,4 @@ return true;
 // (GMUII()).Value
 
 return global.GMUIiid[0];
-
-#define GMUI_ControlPositionToGroup
-///GMUI_ControlPositionToGroup(Control id)
-
-with (argument0) {
-    // Reset positioning to base on group's position
-    CellX = GMUI_GetAnchoredCellX((GMUIP).GMUI_groupCellsW[Layer,Group],RelativeCellX,Anchor) + (GMUIP).GMUI_groupCellX[Layer,Group];
-    CellY = GMUI_GetAnchoredCellY((GMUIP).GMUI_groupCellsH[Layer,Group],RelativeCellY,Anchor) + (GMUIP).GMUI_groupCellY[Layer,Group];
-    
-    ActualX = GMUI_CellGetActualX(CellX);
-    ActualY = GMUI_CellGetActualY(CellY);
-    
-    
-    // If control is outside of the group boundaries, expand the group to fit it
-    if (CellX + CellWide > (GMUIP).GMUI_groupCellX[Layer,Group] + (GMUIP).GMUI_groupCellsW[Layer,Group]) {
-        (GMUIP).GMUI_groupCellsW[Layer,Group] = CellX + CellWide - (GMUIP).GMUI_groupCellX[Layer,Group];
-    }
-    if (CellY + CellHigh > (GMUIP).GMUI_groupCellY[Layer,Group] + (GMUIP).GMUI_groupCellsH[Layer,Group]) {
-        (GMUIP).GMUI_groupCellsH[Layer,Group] = CellY + CellHigh - (GMUIP).GMUI_groupCellY[Layer,Group];
-    }
-    
-    // Update control draw location in the room
-    GMUI_ControlUpdateXY(id);
-}
-
 

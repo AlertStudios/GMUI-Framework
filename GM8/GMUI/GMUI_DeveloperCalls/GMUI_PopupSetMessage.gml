@@ -24,7 +24,7 @@ _wcells = (_G).GMUI_groupCellsW[_Layer,_menuNumber] - _pad * 2;
 _hcells = 2;
 
 // Create label
-with (GMUI_Add("GMUIPopupMessage" + string(_menuNumber), "label", _pad, _pad, _wcells, _hcells, 0, global.GMUIAnchorTopLeft)) {
+with (GMUI_Add("GMUIPopupMessage" + string(_menuNumber), "label", _pad, _pad, _wcells, _hcells, global.GMUIAnchorTopLeft)) {
     GMUI_ControlSetText(_message);
     GMUI_ControlSetFontStyle(argument3,argument4,fa_left);
     GMUI_ControlAddToPopup(_menuName);

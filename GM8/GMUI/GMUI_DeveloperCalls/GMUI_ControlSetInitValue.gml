@@ -5,7 +5,7 @@
 
 if (!GMUI_IsControl() && id != GMUII())
 {
-    GMUI_ThrowError("Invalid control for GMUI_ControlSetInitValue");
+    GMUI_ThrowErrorDetailed("Invalid control", GMUI_ControlSetInitValue);
     return false;
 }
 

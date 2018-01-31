@@ -24,7 +24,7 @@ if (_menu > -1) {
     switch (argument6) {
         case global.GMUIPopupInformation:
             // Button with "Ok"
-            with (GMUI_Add("GMUIPopupOkBtn"+string(_menu), "textbutton", 5,3, 4,2, 0, global.GMUIAnchorBottomRight)) {
+            with (GMUI_Add("GMUIPopupOkBtn"+string(_menu), "textbutton", 5,3, 4,2, global.GMUIAnchorBottomRight)) {
                 GMUI_ControlSetButtonAction(GMUI_DefaultActionOk)
                 GMUI_ControlSetButton("Ok",-1,-1,-1);
                 GMUI_ControlAddToPopup(_name);
@@ -32,12 +32,12 @@ if (_menu > -1) {
             break;
         case global.GMUIPopupConfirm:
             // Buttons Yes / No
-            with (GMUI_Add("GMUIPopupYesBtn"+string(_menu), "textbutton", 10,3, 4,2, 0, global.GMUIAnchorBottomRight)) {
+            with (GMUI_Add("GMUIPopupYesBtn"+string(_menu), "textbutton", 10,3, 4,2, global.GMUIAnchorBottomRight)) {
                 GMUI_ControlSetButtonAction(GMUI_DefaultActionOk)
                 GMUI_ControlSetButton("Yes",-1,-1,-1);
                 GMUI_ControlAddToPopup(_name);
             }
-            with (GMUI_Add("GMUIPopupNoBtn"+string(_menu), "textbutton", 5,3, 4,2, 0, global.GMUIAnchorBottomRight)) {
+            with (GMUI_Add("GMUIPopupNoBtn"+string(_menu), "textbutton", 5,3, 4,2, global.GMUIAnchorBottomRight)) {
                 GMUI_ControlSetButtonAction(GMUI_DefaultActionNo)
                 GMUI_ControlSetButton("No",-1,-1,-1);
                 GMUI_ControlAddToPopup(_name);
@@ -45,17 +45,17 @@ if (_menu > -1) {
             break;
         case global.GMUIPopupThreeOptions:
             // Buttons Yes / No / Cancel
-            with (GMUI_Add("GMUIPopupYesBtn"+string(_menu), "textbutton", 15,3, 4,2, 0, global.GMUIAnchorBottomRight)) {
+            with (GMUI_Add("GMUIPopupYesBtn"+string(_menu), "textbutton", 15,3, 4,2, global.GMUIAnchorBottomRight)) {
                 GMUI_ControlSetButtonAction(GMUI_DefaultActionOk)
                 GMUI_ControlSetButton("Yes",-1,-1,-1);
                 GMUI_ControlAddToPopup(_name);
             }
-            with (GMUI_Add("GMUIPopupNoBtn"+string(_menu), "textbutton", 10,3, 4,2, 0, global.GMUIAnchorBottomRight)) {
+            with (GMUI_Add("GMUIPopupNoBtn"+string(_menu), "textbutton", 10,3, 4,2, global.GMUIAnchorBottomRight)) {
                 GMUI_ControlSetButtonAction(GMUI_DefaultActionNo)
                 GMUI_ControlSetButton("No",-1,-1,-1);
                 GMUI_ControlAddToPopup(_name);
             }
-            with (GMUI_Add("GMUIPopupCancelBtn"+string(_menu), "textbutton", 5,3, 4,2, 0, global.GMUIAnchorBottomRight)) {
+            with (GMUI_Add("GMUIPopupCancelBtn"+string(_menu), "textbutton", 5,3, 4,2, global.GMUIAnchorBottomRight)) {
                 GMUI_ControlSetButtonAction(GMUI_DefaultActionCancel)
                 GMUI_ControlSetButton("Cancel",-1,-1,-1);
                 GMUI_ControlAddToPopup(_name);

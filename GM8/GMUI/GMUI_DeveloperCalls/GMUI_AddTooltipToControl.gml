@@ -84,7 +84,8 @@ _cellX = (_ctrl).CellX + _relX;
 _cellY = (_ctrl).CellY + _relY;
 
 // Add new control based on top-left position (updated on GMUI_ControlUpdateXY)
-newCtrl = GMUI_Add((_ctrl).valueName + "_tooltip","tooltip",_cellX,_cellY, _newwidth,_newheight,(_ctrl).Layer,global.GMUIAnchorTopLeft);
+// Use GMUII to temporarily set the adding layer, then revert after
+newCtrl = GMUI_AddToLayer((_ctrl).Layer,(_ctrl).valueName + "_tooltip","tooltip",_cellX,_cellY, _newwidth,_newheight,global.GMUIAnchorTopLeft);
 
 with (newCtrl) {
     valueString = _message;

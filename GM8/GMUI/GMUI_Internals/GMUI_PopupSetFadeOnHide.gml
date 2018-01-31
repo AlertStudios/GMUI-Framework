@@ -18,5 +18,12 @@ if (string(_MenuNumber) == "0") {
     return false;
 }
 
-return GMUI_GroupSetFadeOnHide(GMUI_GetMenuLayer(GMUII(),_MenuNumber),_MenuNumber,_Speed,_FadeMode);
+// Set style with the menu, temporary change to setting layer
+_prevLayer = UIAddToLayer;
+UIAddToLayer = GMUI_GetMenuLayer(GMUII(),_MenuNumber);
+
+_result = GMUI_GroupSetFadeOnHide(_MenuNumber,_Speed,_FadeMode);
+
+UIAddToLayer = _prevLayer;
+return _result;
 

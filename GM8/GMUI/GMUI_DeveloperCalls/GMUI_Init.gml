@@ -3,7 +3,7 @@
 //
 // !WARNING! MODIFYING THE GMUI SCRIPTS CAN BREAK FUNCTIONALITY AND CAUSE ERRORS! TRY TO EDIT THE OBJECTS INSTEAD!
 //
-// Copyright 2017 Alert Studios (Mark Palnau). Initially designed by Alert Studios and released as Open-Source.
+// Copyright 2017-2018 Alert Studios (Mark Palnau). Initially designed by Alert Studios and released as Open-Source.
 //
 // If you would like to help make GMUI better, please submit a ticket or pull request on the project on GitHub!
 // https://github.com/AlertStudios/GMUI-Framework

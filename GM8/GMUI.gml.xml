@@ -6,8 +6,8 @@
         <folder folderName="GMUI_DeveloperCalls">
           <file>GMUIself.gml</file>
           <file>GMUI_Add.gml</file>
-          <file>GMUI_AddLabel.gml</file>
           <file>GMUI_AddLayer.gml</file>
+          <file>GMUI_AddToLayer.gml</file>
           <file>GMUI_AddTooltipToControl.gml</file>
           <file>GMUI_CenterX.gml</file>
           <file>GMUI_CenterY.gml</file>
@@ -54,11 +54,13 @@
           <file>GMUI_ControlSetValueChangedAction.gml</file>
           <file>GMUI_Create.gml</file>
           <file>GMUI_CreateGroup.gml</file>
+          <file>GMUI_CreateGroupInLayer.gml</file>
           <file>GMUI_CreateMenu.gml</file>
           <file>GMUI_CreateMenuType.gml</file>
           <file>GMUI_Destroy.gml</file>
           <file>GMUI_DestroyNumber.gml</file>
           <file>GMUI_DrawDebug.gml</file>
+          <file>GMUI_DrawEvent.gml</file>
           <file>GMUI_GetControl.gml</file>
           <file>GMUI_GetMenuLayer.gml</file>
           <file>GMUI_GetValue.gml</file>
@@ -82,6 +84,7 @@
           <file>GMUI_PopupSetHidePosition.gml</file>
           <file>GMUI_PopupSetMessage.gml</file>
           <file>GMUI_SetForm.gml</file>
+          <file>GMUI_SetOnLayer.gml</file>
           <file>GMUI_SetValue.gml</file>
           <file>GMUI_SwitchToLayer.gml</file>
           <file>GMUI_SwitchToMenu.gml</file>
@@ -147,6 +150,7 @@
           <file>GMUI_ControlFilterInput.gml</file>
           <file>GMUI_ControlInit.gml</file>
           <file>GMUI_ControlIsInLayer.gml</file>
+          <file>GMUI_ControlPositionToGroup.gml</file>
           <file>GMUI_ControlSetDefaultAttributes.gml</file>
           <file>GMUI_ControlSetDefaultButton.gml</file>
           <file>GMUI_ControlSetDefaultFontStyle.gml</file>
@@ -162,6 +166,7 @@
           <file>GMUI_ControlSliderUpdate.gml</file>
           <file>GMUI_ControlToggleUpdate.gml</file>
           <file>GMUI_ControlUpdateXY.gml</file>
+          <file>GMUI_CreateEvent.gml</file>
           <file>GMUI_CreatePopup.gml</file>
           <file>GMUI_CreateSetDefaultArea.gml</file>
           <file>GMUI_CreateWarning.gml</file>
@@ -173,7 +178,6 @@
           <file>GMUI_GetDataType.gml</file>
           <file>GMUI_GridAdjust.gml</file>
           <file>GMUI_GridAdjustLayer.gml</file>
-          <file>GMUI_GridDraw.gml</file>
           <file>GMUI_GridDrawGroups.gml</file>
           <file>GMUI_GridEnabled.gml</file>
           <file>GMUI_GridGetCellX.gml</file>
@@ -189,6 +193,8 @@
           <file>GMUI_GridNextControl.gml</file>
           <file>GMUI_GridResetControlRegion.gml</file>
           <file>GMUI_GridSelect.gml</file>
+          <file>GMUI_GridSetAllGroupValues.gml</file>
+          <file>GMUI_GridSetMappedValues.gml</file>
           <file>GMUI_GridSetRegions.gml</file>
           <file>GMUI_GridSetRegionsLayer.gml</file>
           <file>GMUI_GroupExists.gml</file>
@@ -213,6 +219,7 @@
           <file>GMUI_PopupSetFadeOnHide.gml</file>
           <file>GMUI_PopupSetStyle.gml</file>
           <file>GMUI_ResetControlStatus.gml</file>
+          <file>GMUI_SetGroupStyle.gml</file>
           <file>GMUI_ShowMenu.gml</file>
           <file>GMUI_ShowMenuId.gml</file>
           <file>GMUI_ShowPopup.gml</file>

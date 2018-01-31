@@ -3,7 +3,7 @@
 // Sets menu position to come from and go to when shown or hidden
 
 // Get menu number and check its valid
-var _MenuName, _MenuNumber;
+var _MenuName, _MenuNumber, _prevLayer, _result;
 _MenuName = string(argument0);
 _MenuNumber = ds_map_find_value((GMUII()).GMUI_menu_map,_MenuName);
 
@@ -12,5 +12,12 @@ if (string(_MenuNumber) == "0") {
     return false;
 }
 
-GMUI_GroupSetHidePosition(GMUI_GetMenuLayer(GMUII(),_MenuNumber),_MenuNumber,argument1,argument2,argument3,argument4);
+// Set style with the menu, temporary change to setting layer
+_prevLayer = UIAddToLayer;
+UIAddToLayer = GMUI_GetMenuLayer(GMUII(),_MenuNumber);
+
+_result = GMUI_GroupSetHidePosition(_MenuNumber,argument1,argument2,argument3,argument4);
+
+UIAddToLayer = _prevLayer;
+return _result;
 
