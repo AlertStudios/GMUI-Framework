@@ -1,4 +1,3 @@
-#define GMUI_ShowMenu
 ///GMUI_ShowMenu("menu name", show[1] or hide[0], animate [bool])
 
 // Arguments
@@ -16,4 +15,3 @@ if (string(_menuNumber) == "0")
     
 
 return GMUI_ShowMenuId(_menuNumber,_show,_animate);
-

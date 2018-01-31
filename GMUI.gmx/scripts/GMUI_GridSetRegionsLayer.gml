@@ -1,4 +1,3 @@
-#define GMUI_GridSetRegionsLayer
 /// Set the control regions for the given layer
 
 var _Layer,_Grid;
@@ -31,4 +30,3 @@ for(i=0;i<ds_list_size((GMUII()).GMUI_controlList);i+=1) {
     }
     
 }
-

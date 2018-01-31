@@ -29,25 +29,31 @@
 // This is typically in your game's controller object
 // You must call the initialization script before making any GMUI interfaces
 
-// Call only once in the game
+// EXAMPLE: Call only once in the game
 if (instance_number(self) &gt; 1) {
     instance_destroy();
     exit;
 }
 
-// Start GMUI
+// Start GMUI (once per game)
 GMUI_Init();
 
+// GMUI_Init also calls GMUI_Settings() and GMUI_SetLayerDepths()
+// for further customization.
 
 
-// Using a Demo varible in _Switch_Button
+// CREATE YOUR GRIDS NOW
+// CREATING A GRID CREATES A NEW INSTANCE OF OBJECT AND CREATES NEW GMUI INSTANCE WITH INTERFACE SCRIPT
+// JUST ADD GMUI_Draw() TO THE DRAW EVENT OF THE GMUI OBJECT
+// AND ADD GMUI_ControlDraw(true) TO THE DRAW EVENT OF THE CONTROL OBJECT
+
+// Just using a Demo varible in _Switch_Button
 global.Switched = false;
 
 
+// Call initiation script with name and cell size of 16 (or use 0 for default size). Returns the GMUI id.
+GMUI_Create(GMUI,_Test_Form,16,0)
 
-// Create your grids now
-
-instance_create(0,0,GMUI);
 </string>
           </argument>
         </arguments>

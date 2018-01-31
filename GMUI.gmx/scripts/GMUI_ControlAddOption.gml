@@ -44,4 +44,3 @@ if (is_real(argument0)) {
         return false;
     }
 }
-

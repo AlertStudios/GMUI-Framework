@@ -1,4 +1,3 @@
-#define GMUI_PopupSetStyle
 ///GMUI_PopupSetStyle("popup name", Background Color, Background Alpha, Border color, Border Alpha, Is RoundRect)
 
 var _SCRIPT, _menuName, _menuNumber, _prevLayer;
@@ -21,4 +20,3 @@ _result =  GMUI_GroupSetStyle(_menuNumber, argument1, argument2, argument3, argu
 
 (GMUII()).UIAddToLayer = _prevLayer;
 return _result;
-

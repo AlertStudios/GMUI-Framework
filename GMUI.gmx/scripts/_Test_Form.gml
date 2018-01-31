@@ -1,4 +1,3 @@
-#define _Test_Form
 ///_Test_Form() This interface is for the demo
 
 // DEMO INTERFACE:
@@ -63,7 +62,6 @@ with (GMUI_Add("Test4", "intpicker",            0,6,    10,2,   global.GMUIAncho
     //sprite_set_offset(GMUIspr_arrow,10,12);sprite_set_offset(GMUIspr_arrowup,10,0); // If vertical, offset should be centered
     //GMUI_ControlSetPicker(sprite_get_width(GMUIspr_arrowup) + 4,sprite_get_height(GMUIspr_arrowup) + 4,
     //    global.GMUIDirectionTypeVertical, GMUIspr_arrowup, GMUIspr_arrow);
-        
     with (GMUI_ControlAddTooltip("-20 to 20.",global.GMUIAnchorLeft,6,2,12,4,-1,-1)) {
         GMUI_ControlSetFadeOnHide(id, room_speed/4);
     }
@@ -288,6 +286,5 @@ GMUI_PopupSetHidePosition("Test Popup", -14, 0, easeExpOut, room_speed/4);
 //with (GMUI_Add("Button", "textbutton", 20,3, 4,2, 0, global.GMUIAnchorBottomRight)) {
 //GMUI_ControlAddToPopup("Test Popup");}
 //GMUI_PopupSetClickOff("Test Popup", false); // False is default
-
 
 

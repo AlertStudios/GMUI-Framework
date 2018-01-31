@@ -1,4 +1,3 @@
-#define GMUI_MenuSetStyle
 ///GMUI_MenuSetStyle("menu name", Background Color, Background Alpha, Border color, Border Alpha, Is RoundRect)
 
 var _SCRIPT, _MenuName, _MenuNumber, _result, _prevLayer;
@@ -21,4 +20,3 @@ _result =  GMUI_GroupSetStyle(_MenuNumber, argument1, argument2, argument3, argu
 
 UIAddToLayer = _prevLayer;
 return _result;
-

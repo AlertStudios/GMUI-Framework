@@ -1,11 +1,10 @@
-#define GMUI_ControlSetInitValue
 ///GMUI_ControlSetInitValue(value)
 ///Set the 'default' value (value/string) for the control, but not the actual value
 
 
 if (!GMUI_IsControl() && id != GMUII())
 {
-    GMUI_ThrowError("Invalid control for GMUI_ControlSetInitValue");
+    GMUI_ThrowErrorDetailed("Invalid control", GMUI_ControlSetInitValue);
     return false;
 }
 
@@ -14,4 +13,3 @@ valueString = string(argument0);
 
     
 return true;
-

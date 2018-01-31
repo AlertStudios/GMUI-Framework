@@ -1,4 +1,3 @@
-#define _Move_Button
 var MyButton,MyButtonText;
 
 MyButton = GMUI_GetControl("MoveButton");
@@ -18,4 +17,3 @@ else {
     GMUI_SetOnLayer(0);
     GMUI_GroupSetPosition(1,20,3,0,0);
 }
-

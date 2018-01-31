@@ -1,13 +1,13 @@
-#define GMUI_GroupSetStyle
 ///GMUI_GroupSetStyle(Group, Background Color, Background Alpha, Border color, Border Alpha, Is RoundRect)
 ///Set the style of the controls that will be used for new controls (to override the defaults)
+var _SCRIPT, _Layer, _Group;
+_SCRIPT = GMUI_GroupSetStyle;
 if (!GMUI_IsControl() && id != GMUII())
 {
-    GMUI_ThrowError("Invalid control for GMUI_GroupSetStyle");
+    GMUI_ThrowErrorDetailed("Invalid control",_SCRIPT);
     return false;
 }
 
-var _Layer, _Group;
 _Layer = UIAddToLayer;
 _Group = argument0;
 
@@ -28,7 +28,7 @@ if (!GMUII().UIInterfaceSet) {
 
 // Get master control for menu if it exists
 if ((GMUII()).GMUI_groupMasterControl[UIAddToLayer,_Group] == -1) {
-    GMUI_ThrowErrorDetailed("A control is needed to set style: " + _menuName,_SCRIPT);
+    GMUI_ThrowErrorDetailed("A control is needed to set style: " + _menuName, _SCRIPT);
     return false;
 }
 
@@ -53,4 +53,3 @@ with ((GMUII()).GMUI_groupMasterControl[UIAddToLayer,_Group]) {
 
 return true;
     
-

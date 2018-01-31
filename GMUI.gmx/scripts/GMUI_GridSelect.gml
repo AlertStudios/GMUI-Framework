@@ -1,4 +1,3 @@
-#define GMUI_GridSelect
 ///GMUI_GridSelect(control object)
 /// Selects a control object from the grid (Called by GMUI_GridStep)
 
@@ -21,4 +20,3 @@ else if (GMUI_IsScript((argument0).SelectingActionScript)) {
     // If there is a script to assigned to run it'll only be done once
     script_execute((argument0).SelectingActionScript);
 }
-

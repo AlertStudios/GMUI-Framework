@@ -1,4 +1,3 @@
-#define GMUI_SetControlDefaults
 ///GMUI_SetControlDefaults() Sets the default values for all controls if they are not specified in GMUI_Form
 
 // ! NOTE ! These values must pass validation or else errors will occur!
@@ -41,4 +40,3 @@ GMUI_ControlSetPicker(
 // Text Button control (Text or "", graphic in button or -1, button image sprite or -1, text alignment, hover color or -1)
 GMUI_ControlSetButton("", -1, -1, -1);
     
-

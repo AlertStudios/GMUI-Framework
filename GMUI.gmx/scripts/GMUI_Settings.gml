@@ -1,4 +1,3 @@
-#define GMUI_Settings
 ///GMUI_Settings("OptionalInterfaceArgument") Settings for GMUI - Do not delete! Modify to fit your preferences
 ///Called from the initialization of each GMUI interface. Argument can set specific settings depending on the interface.
 
@@ -20,7 +19,7 @@ GMUIEnableTabbing = true;               // Tab key will advance to the next cont
 GMUIEnableEnterKey = true;              // Enter key will deselect the control
 
 // Required: Show a pop-up of the GMUI error message when it happens (default: false)
-PopUpGMUIError = false;
+PopUpGMUIError = true;
 
 // Required: Clear mouse actions when interacting with GMUI instances (default: false)
 CaptureMouseEvents = false;
@@ -38,7 +37,6 @@ switch (OptionalInterfaceName) {
         // Do Something
     break;
 }
-
 
 
 

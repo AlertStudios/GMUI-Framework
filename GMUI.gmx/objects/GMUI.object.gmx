@@ -25,7 +25,7 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>/// Create UI - Don't delete this object
+            <string>/// OBJECT USED FOR GMUI INSTANCE
 
 // !READ HERE!
 // :
@@ -34,21 +34,17 @@
 // You may edit these initialization values and the Non-Internal scripts safely.
 // :
 
-// CREATE THE NEW GMUI:
-// YOU CAN ONLY CREATE ONE GMUI PER INSTANCE
-
-// Call initiation script with name and cell size of 16 (or use 0 for default size). Returns the GMUI id.
-newGMUI = GMUI_Create(_Test_Form,16,0);
-
-// GMUI_Init calls the script GMUI_Form() to add controls to the interface, 
-// but you may add functions by any object if you like.
-
-// GMUI_Init also calls GMUI_Settings() GMUI_Actions() and GMUI_SetLayerDepths()
-// for further customization.
+// IF YOU PREFER, YOU COULD INITIALIZE GMUI HERE IN THE OBJECT INSTEAD, 
+// BUT THEN YOU MAY NEED A NEW OBJECT FOR EACH GMUI INTERFACE:
+// GMUI_CreateEvent(_Test_Form,16,0);
 
 
-// You can call permitted GMUI commands using:
-//      with (GMUIid(number)) { some code here }
+// You can call permitted GMUI commands from any object using:
+//      with (GMUIid(number)) { your code here }
+//
+// or, if calling from a GMUI object like this one, you can use:
+//
+//      with (GMUIself()) { your code here }
 //
 // For more information, please read the documentation on how to use GMUI commands
 
@@ -56,15 +52,9 @@ newGMUI = GMUI_Create(_Test_Form,16,0);
 
 // !NOTES!
 // :
-// GMUI is persistent by default. That means that the UI can be used between rooms unless you uncheck it in the GMUI object.
+// GMUI object is persistent by default. That means that the UI can be used between rooms unless you uncheck it.
 // If you delete the instance, the grid is also deleted and you cannot call the GMUI id any longer.
-//
-//
 // :
-
-//debug!!!!!!!!!!
-//testinregion = -1;
-//testinspecial = -1;
 </string>
           </argument>
         </arguments>
@@ -87,9 +77,9 @@ newGMUI = GMUI_Create(_Test_Form,16,0);
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>/// Call GMUI_GridStep (in draw event)
+            <string>/// Call GMUI_DrawEvent(in draw event)
 
-GMUI_GridDraw();
+GMUI_DrawEvent();
 
 
 
@@ -97,8 +87,17 @@ GMUI_GridDraw();
 GMUI_DrawDebug();
 
 
+// !NOTE!
+// GMUI object is persistent by default. That means that the UI can be used between rooms unless you uncheck it.
+// If you delete the instance, the grid is also deleted and you cannot call the GMUI id any longer.
+//
+
+
+
 
 // FOR DEMONSTRATION PURPOSES ONLY:
+
+if (RemovingGMUI) exit;
 var mouseHor,mouseVert,ctrl,xoffset,yoffset;
 mouseHor = GMUI_GridGetMouseCellX(GMUII());
 mouseVert = GMUI_GridGetMouseCellY(GMUII());

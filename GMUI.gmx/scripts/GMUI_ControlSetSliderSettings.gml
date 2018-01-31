@@ -1,4 +1,3 @@
-#define GMUI_ControlSetSliderSettings
 ///GMUI_ControlSetSliderSettings(ticks amount, min value, max value, round values to ticks[bool], snap [bool], smooth adjust and snap[bool], vertical orientation[bool])
 ///Required to be called to set the SETTINGS of the slider
 
@@ -63,4 +62,3 @@ if (argument6 >= 0)
 
 return true;
     
-

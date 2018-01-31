@@ -1,4 +1,3 @@
-#define GMUI_NavigateNextControl
 ///GMUI_NavigateNextControl(check for next control [true] or previous [false])
 ///Check for the keys to change control selection
 
@@ -33,4 +32,3 @@ if (keyboard_check_pressed(vk_anykey)) {
 }
 
 return false;
-

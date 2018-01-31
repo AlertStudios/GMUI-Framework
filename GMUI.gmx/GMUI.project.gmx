@@ -90,6 +90,7 @@
         </scripts>
         <script>scripts\GMUI_Add.gml</script>
         <script>scripts\GMUI_AddLayer.gml</script>
+        <script>scripts\GMUI_AddToLayer.gml</script>
         <script>scripts\GMUI_AddTooltipToControl.gml</script>
         <script>scripts\GMUI_CenterX.gml</script>
         <script>scripts\GMUI_CenterY.gml</script>
@@ -136,12 +137,14 @@
         <script>scripts\GMUI_ControlSetValueChangedAction.gml</script>
         <script>scripts\GMUI_Create.gml</script>
         <script>scripts\GMUI_CreateGroup.gml</script>
+        <script>scripts\GMUI_CreateGroupInLayer.gml</script>
         <script>scripts\GMUI_CreateMenu.gml</script>
         <script>scripts\GMUI_CreatePopup.gml</script>
         <script>scripts\GMUI_CreateWarning.gml</script>
         <script>scripts\GMUI_Destroy.gml</script>
         <script>scripts\GMUI_DestroyNumber.gml</script>
         <script>scripts\GMUI_DrawDebug.gml</script>
+        <script>scripts\GMUI_DrawEvent.gml</script>
         <script>scripts\GMUI_GetControl.gml</script>
         <script>scripts\GMUI_GetCurrentLayer.gml</script>
         <script>scripts\GMUI_GetValue.gml</script>
@@ -172,6 +175,7 @@
         <script>scripts\GMUI_PopupSetMessage.gml</script>
         <script>scripts\GMUI_PopupSetStyle.gml</script>
         <script>scripts\GMUI_SetForm.gml</script>
+        <script>scripts\GMUI_SetOnLayer.gml</script>
         <script>scripts\GMUI_SetValue.gml</script>
         <script>scripts\GMUI_ShowMenu.gml</script>
         <script>scripts\GMUI_ShowMenuId.gml</script>
@@ -198,6 +202,7 @@
         <script>scripts\GMUI_ControlFilterInput.gml</script>
         <script>scripts\GMUI_ControlInit.gml</script>
         <script>scripts\GMUI_ControlIsInLayer.gml</script>
+        <script>scripts\GMUI_ControlPositionToGroup.gml</script>
         <script>scripts\GMUI_ControlSetInitValue.gml</script>
         <script>scripts\GMUI_ControlSetDefaultAttributes.gml</script>
         <script>scripts\GMUI_ControlSetDefaultButton.gml</script>
@@ -211,6 +216,7 @@
         <script>scripts\GMUI_ControlSliderUpdate.gml</script>
         <script>scripts\GMUI_ControlToggleUpdate.gml</script>
         <script>scripts\GMUI_ControlUpdateXY.gml</script>
+        <script>scripts\GMUI_CreateEvent.gml</script>
         <script>scripts\GMUI_CreateMenuType.gml</script>
         <script>scripts\GMUI_CreateSetDefaultArea.gml</script>
         <script>scripts\GMUI_DrawSpriteBox.gml</script>
@@ -220,11 +226,12 @@
         <script>scripts\GMUI_GetDataType.gml</script>
         <script>scripts\GMUI_GetMenuLayer.gml</script>
         <script>scripts\GMUI_GridEnabled.gml</script>
-        <script>scripts\GMUI_GridDraw.gml</script>
         <script>scripts\GMUI_GridDrawGroups.gml</script>
         <script>scripts\GMUI_GridSelect.gml</script>
         <script>scripts\GMUI_GridAdjust.gml</script>
         <script>scripts\GMUI_GridAdjustLayer.gml</script>
+        <script>scripts\GMUI_GridSetAllGroupValues.gml</script>
+        <script>scripts\GMUI_GridSetMappedValues.gml</script>
         <script>scripts\GMUI_GridSetRegions.gml</script>
         <script>scripts\GMUI_GridSetRegionsLayer.gml</script>
         <script>scripts\GMUI_GridResetControlRegion.gml</script>
@@ -240,7 +247,6 @@
         <script>scripts\GMUI_GridGetMouseCellY.gml</script>
         <script>scripts\GMUI_GridGetWidth.gml</script>
         <script>scripts\GMUI_GroupExists.gml</script>
-        <script>scripts\GMUI_GroupSetDefaultStyle.gml</script>
         <script>scripts\GMUI_GroupSetHidePosition.gml</script>
         <script>scripts\GMUI_GroupSetPositionAnchored.gml</script>
         <script>scripts\GMUI_InitStudio.gml</script>
@@ -254,6 +260,7 @@
         <script>scripts\GMUI_MouseInSpecialRegion.gml</script>
         <script>scripts\GMUI_NavigateNextControl.gml</script>
         <script>scripts\GMUI_ResetControlStatus.gml</script>
+        <script>scripts\GMUI_SetGroupStyle.gml</script>
         <script>scripts\GMUI_StudioCheckDefined.gml</script>
         <script>scripts\GMUI_ThrowError.gml</script>
         <script>scripts\GMUI_ThrowErrorDetailed.gml</script>

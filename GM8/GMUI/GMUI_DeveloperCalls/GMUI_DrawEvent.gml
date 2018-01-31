@@ -1,4 +1,4 @@
-#define GMUI_GridDraw
+#define GMUI_DrawEvent
 ///GMUI_GridDraw()
 ///Actions done to operate the grid, executed by the GMUI object in the draw event
 
@@ -9,10 +9,11 @@ if (GMUI_GridEnabled())
     //do grid stuff:
     
     // Assign mouse values here to easily switch out later if needed
-    var MX, MY, inRegion, onDirection, mouseHor, mouseVert, ctrlObject, clickOffEvent;
+    var MX, MY, inRegion, onDirection, mouseHor, mouseVert, ctrlObject, clickOffEvent, mouseEvent;
     MX = mouse_x;
     MY = mouse_y;
     inRegion = false;
+    mouseEvent = true;
     
     // Check if the mouse has moved before checking for any changed selections
     if (MX != mouse_px || MY != mouse_py) {
@@ -167,6 +168,12 @@ if (GMUI_GridEnabled())
                             // Control buttons clicked
                             GMUI_ControlActionScript(ctrlObject);
                         }
+                        else
+                            mouseEvent = false;
+                        // If enabled, consume the mouse event if triggered
+                        if (mouseEvent && CaptureMouseEvents)
+                            mouse_clear(mb_left);
+                        
                     }
                 }
     

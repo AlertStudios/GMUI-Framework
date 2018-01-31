@@ -1,4 +1,3 @@
-#define GMUI_ShowPopup
 ///GMUI_ShowPopup("popup name", show[1] or hide[0], animate [bool])
 
 // Arguments
@@ -16,4 +15,3 @@ if (string(_popupNumber) == "0")
 
 
 return GMUI_ShowPopupId(_popupNumber,_show,_animate);
-
