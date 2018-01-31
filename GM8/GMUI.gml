@@ -3,55 +3,58 @@
 
 // DEMO INTERFACE:
 
-var layer;
 // Set optional grid settings
 GMUI_GridSetNavigation(global.GMUIDirectionTypeVertical,vk_up,vk_down,vk_left,vk_right,true);
 
-// Create a control group if you would like: (layer number, group number (> 0), CellX, CellY, CellWide, CellHigh, anchor)
 /*
 
-    1. Create your layers and groups for the controls
+    1. Create any groups and objects you like for each layer, defaulting to layer 0
+    Note:   Controls have unique names across layers, 
+            whereas group numbers are specific to the layer.
     
 */
 
-layer = 0;
+// Set the layer to change settings on [This one is optional: Already defaults to layer 0]
+GMUI_SetOnLayer(0);
+
 // Right side group
-GMUI_CreateGroup(layer, 1,      20,3,   global.GMUIAnchorTopRight);
-GMUI_GroupSetSize(layer, 1,     18,4);
-//GMUI_GroupSetSpriteMap(layer, 1, s2,s3,s4,s5,s6,s7,s8,s1,s9,false);
+GMUI_CreateGroup(1,      20,3,   global.GMUIAnchorTopRight);
+GMUI_GroupSetSize(1,     18,4);
+GMUI_GroupSetStyle(1, c_black, 0.2, c_black, 0.1, 0);
+
+//GMUI_GroupSetSpriteMap(1, s2,s3,s4,s5,s6,s7,s8,s1,s9,false);
+
 // Left side group
-GMUI_CreateGroup(layer, 2,      2,3,    global.GMUIAnchorTopLeft);
-//This must be called after the controls are made: GMUI_GroupSetFadeOnHide(layer, 2, room_speed/4);
-// Object click group test
-GMUI_AddLayer(1,0,0);
-GMUI_CreateGroup(1, 3,          0,0,    global.GMUIAnchorTopLeft);
+GMUI_CreateGroup(2,      2,3,    global.GMUIAnchorTopLeft);
+GMUI_GroupSetFadeOnHide(2, room_speed/4, 0);
 
 /*
 
-    2. Create the controls 
+    2. Create the controls, defaulting to layer 0 or the last layer created
+    NOTE:   To switch layers, use GMUI_SwitchToLayer(#);
 
 */
 
-with (GMUI_Add("Test1","textstring",            1,0,    16,2,   layer, global.GMUIAnchorTopLeft)) {
+with (GMUI_Add("Test1","textstring",            1,0,    16,2,   global.GMUIAnchorTopLeft)) {
     GMUI_ControlSetAttributes(20,0,0,0);
     GMUI_ControlSetInitValue("Select");
     GMUI_ControlAddToGroup(1);
     GMUI_ControlSetSprite(GMUIspr_input,0,1,0);
 }
 
-with (GMUI_Add("Test2", "textint",              0,0,    10,2,   layer, global.GMUIAnchorTopLeft)) {
+with (GMUI_Add("Test2", "textint",              0,0,    10,2,   global.GMUIAnchorTopLeft)) {
     GMUI_ControlSetAttributes(5,0,-1000,1000);
     GMUI_ControlSetStyle(hsv(120,120,120),rgb(20,20,20),-1,-1,-1,-1,-1,-1,-1,-1);
     GMUI_ControlAddToGroup(2);
 }
 
-with (GMUI_Add("Test3", "textdecimal",          0,3,    10,2,   layer, global.GMUIAnchorTopLeft)) {
+with (GMUI_Add("Test3", "textdecimal",          0,3,    10,2,   global.GMUIAnchorTopLeft)) {
     GMUI_ControlSetAttributes(10,10,-999,999);
     GMUI_ControlAddToGroup(2);
     //GMUI_ControlSetSpriteMap(s2,s3,s4,s5,s6,s7,s8,s1,s9,false);
 }
 
-with (GMUI_Add("Test4", "intpicker",            0,6,    10,2,   layer, global.GMUIAnchorTopLeft)) {
+with (GMUI_Add("Test4", "intpicker",            0,6,    10,2,   global.GMUIAnchorTopLeft)) {
     GMUI_ControlSetAttributes(0,0,-20,20);
     GMUI_ControlSetInitValue(-1);
     GMUI_ControlAddToGroup(2);
@@ -66,57 +69,57 @@ with (GMUI_Add("Test4", "intpicker",            0,6,    10,2,   layer, global.GM
     }
 }
 
-with (GMUI_Add("TestButton", "textbutton",      3,9,    5,3,    layer, global.GMUIAnchorTopLeft)) {
+with (GMUI_Add("TestButton", "textbutton",      3,9,    5,3,    global.GMUIAnchorTopLeft)) {
     GMUI_ControlSetButtonAction(_Test_Button);
     GMUI_ControlSetButton("Test!", -1, -1, -1);
     GMUI_ControlSetStyle(-1, -1, c_red, 1, 0.85, -1, -1, -1, -1, -1);
     GMUI_ControlAddToGroup(2);
 }
 
-with (GMUI_Add("PopupMenuButton", "textbutton",     1,7,    5,3,    layer, global.GMUIAnchorBottomLeft)) {
+with (GMUI_Add("PopupMenuButton", "textbutton",     1,7,    5,3,    global.GMUIAnchorBottomLeft)) {
     GMUI_ControlSetButtonAction(_PopupMenu_Button);
     GMUI_ControlSetButton("Show"+chr(13)+"Menu", -1, -1, -1);
     GMUI_ControlSetStyle(-1, -1, c_purple, 1, 0.85, -1, -1, -1, -1, -1);
 }
 
-with (GMUI_Add("DebugButton", "textbutton",     1,3,    5,3,    layer, global.GMUIAnchorBottomLeft)) {
+with (GMUI_Add("DebugButton", "textbutton",     1,3,    5,3,    global.GMUIAnchorBottomLeft)) {
     GMUI_ControlSetButtonAction(_Debug_Button);
     GMUI_ControlSetButton("Debug", -1, -1, -1);
     GMUI_ControlSetStyle(-1, -1, c_gray, 1, 0.85, -1, -1, -1, -1, -1);
 }
 
-with (GMUI_Add("DisableButton", "textbutton",   8,3,    5,3,    layer, global.GMUIAnchorBottomLeft)) {
+with (GMUI_Add("DisableButton", "textbutton",   8,3,    5,3,    global.GMUIAnchorBottomLeft)) {
     GMUI_ControlSetButtonAction(_Disable_Button);
     GMUI_ControlSetButton("Disable"+chr(13)+"Test",-1,-1,-1);
 }
 
-with (GMUI_Add("HideButton", "textbutton",      15,3,   5,3,    layer, global.GMUIAnchorBottomLeft)) {
+with (GMUI_Add("HideButton", "textbutton",      15,3,   5,3,    global.GMUIAnchorBottomLeft)) {
     GMUI_ControlSetButtonAction(_Hide_Button);
     GMUI_ControlSetButton("Hide"+chr(13)+"Group",-1,-1,-1);
 }
 
-with (GMUI_Add("MoveButton", "textbutton",      22,3,   6,3,    layer, global.GMUIAnchorBottomLeft)) {
+with (GMUI_Add("MoveButton", "textbutton",      22,3,   6,3,    global.GMUIAnchorBottomLeft)) {
     GMUI_ControlSetButtonAction(_Move_Button);
     GMUI_ControlSetButton("Move"+chr(13)+"Group",-1,-1,-1);
 }
 
-with (GMUI_Add("EnlargeButton", "textbutton",   30,3,   6,3,    layer, global.GMUIAnchorBottomLeft)) {
+with (GMUI_Add("EnlargeButton", "textbutton",   30,3,   6,3,    global.GMUIAnchorBottomLeft)) {
     GMUI_ControlSetButtonAction(_Enlarge_Button);
     GMUI_ControlSetButton("Enlarge"+chr(13)+"Window",-1,-1,-1);
 }
 
-with (GMUI_Add("MoveButton2", "button",         18,0,   2,2,    layer, global.GMUIAnchorTopLeft)) {
+with (GMUI_Add("MoveButton2", "button",         18,0,   2,2,    global.GMUIAnchorTopLeft)) {
     GMUI_ControlSetButtonAction(_Move_Button);
     GMUI_ControlSetButton("", GMUIspr_move, -1, -1);
     GMUI_ControlAddToGroup(1);
 }
 
-with (GMUI_Add("SwitchButton", "button",        -2,16,  4,2,    layer, global.GMUIAnchorTop)) {
+with (GMUI_Add("SwitchButton", "button",        -2,16,  4,2,    global.GMUIAnchorTop)) {
     GMUI_ControlSetButtonAction(_Switch_Button);
     GMUI_ControlSetSprite(GMUIspr_switch,0,1,0);
 }
 
-with (GMUI_Add("ExitButton", "textbutton",      0,0,    1,1,     layer, global.GMUIAnchorTopRight)) {
+with (GMUI_Add("ExitButton", "textbutton",      0,0,    1,1,     global.GMUIAnchorTopRight)) {
     GMUI_ControlSetButtonAction(_Exit_Button);
     GMUI_ControlSetButton("x", -1, -1, -1);
     // (Example:) Minor adjustment so that the control isnt cut off by the room
@@ -124,101 +127,38 @@ with (GMUI_Add("ExitButton", "textbutton",      0,0,    1,1,     layer, global.G
     GMUI_ControlPersistentToLayer(1); // Test multi-layer
 }
 
-with (GMUI_Add("MenuInt", "intpicker",          0,0,    3,2,    1, global.GMUIAnchorTopLeft)) {
-    GMUI_ControlSetAttributes(0,0,0,9);
-    GMUI_ControlSetInitValue(0);
-    GMUI_ControlAddToGroup(3);
-    GMUI_GroupHide(3,1,true);
-}
-with (GMUI_Add("MenuIntInstructions", "label",  20,21,  12,2,   layer, global.GMUIAnchorTopLeft)) {
-    GMUI_ControlSetInitValue("Click square to open sub menu");
-}
-
-// Test Menu (Menu ID variable isn't used here... but could be if you want to)
-var menuID; //-9,2 
-menuID = GMUI_CreateMenu("Test Menu",   GMUI_CenterX(layer, 18, global.GMUIAnchorTop) ,2,   18,24,   global.GMUIAnchorTop);
-GMUI_MenuSetClickOff("Test Menu", true);
-
-with (GMUI_Add("CloseButton", "textbutton",   4,1,   4,1,    layer, global.GMUIAnchorTopRight)) {
-    GMUI_ControlSetButtonAction(_PopupClose_Button);
-    GMUI_ControlSetButton("Close",-1,-1,-1);
-    GMUI_ControlAddToMenu("Test Menu");
-}
-
-with (GMUI_Add("OpenButton", "textbutton",   -3,8,   8,1,    layer, global.GMUIAnchorTop)) {
-    GMUI_ControlSetButtonAction(_PopupMenu2_Button);
-    GMUI_ControlSetButton("Open Another",-1,-1,-1);
-    GMUI_ControlAddToMenu("Test Menu");
-}
-
-// Test Menu 2
-menuID = GMUI_CreateMenu("Test Menu 2",   -6,8,   18,24,   global.GMUIAnchorTop);
-GMUI_MenuSetClickOff("Test Menu 2", true);
-
-with (GMUI_Add("CloseButton2", "textbutton",   4,1,   4,1,    layer, global.GMUIAnchorTopRight)) {
-    GMUI_ControlSetButtonAction(_PopupClose_Button);
-    GMUI_ControlSetButton("Close",-1,-1,-1);
-    GMUI_ControlAddToMenu("Test Menu 2");
-}
-
-with (GMUI_Add("PopupTestButton","textbutton",  -3,8,   8,1,    layer, global.GMUIAnchorTop)) {
-    GMUI_ControlSetButtonAction(_Popup_Button);
-    GMUI_ControlSetButton("Try Popup",-1,-1,-1);
-    GMUI_ControlAddToMenu("Test Menu 2");
-}
-
-with (GMUI_Add("ResponseLabel", "label", -8, 10, 16, 2, layer, global.GMUIAnchorTop)) {
-    // This value will be set by the popup
-    GMUI_ControlSetFontStyle(fontNumeric,c_white,fa_center);
-    GMUI_ControlAddToMenu("Test Menu 2");
-}
-
-// Test Popup
-//global.GMUIPopupBlank = -1;global.GMUIPopupInformation = 0;global.GMUIPopupConfirm = 1;global.GMUIPopupThreeOptions = 2;
-menuID = GMUI_CreatePopup("Test Popup",  -14,2,   28,12,   global.GMUIAnchorTop, global.GMUIPopupThreeOptions);
-GMUI_PopupSetMessage("Test Popup", "Click an option to return to the previous screen!", 2, -1, -1);
-GMUI_PopupSetAction("Test Popup", _PopupReturnAction);
-
-// Options to change default controls and actions:
-// GMUI_PopupSetButton("Test Popup", which button, Text or "", graphic or -1, text align, text color on hover)
-
-// Additional Options:
-//with (GMUI_Add("Button", "textbutton", 20,3, 4,2, 0, global.GMUIAnchorBottomRight)) {
-//GMUI_ControlAddToPopup("Test Popup");}
-//GMUI_PopupSetClickOff("Test Popup", false); // False is default
-
 
 
 // Test slider
-with (GMUI_Add("Slider", "slider",              16,12,  10,2,   layer, global.GMUIAnchorBottomRight)) {
+with (GMUI_Add("Slider", "slider",              16,12,  10,2,   global.GMUIAnchorBottomRight)) {
     GMUI_ControlSetSliderSettings(13,10,34,true,true,true,global.GMUIDirectionTypeHorizontal);
     GMUI_ControlSetSliderStyle(2,2,c_dkgray,0.6,c_teal,0.9,c_dkgray,0.4,c_aqua,1,c_gray,0.8);
     GMUI_ControlSetSliderSize(16, 20, 1, 12, 10, 8, 6, 8);
     GMUI_ControlSetInitValue(20);
     
     GMUI_ControlSetValueChangedAction(_SliderValue_Changed);
+    
 }
 // Button to set slider to mid point
-with (GMUI_Add("MidSlider", "button",           19,12,  2,2,    layer, global.GMUIAnchorBottomRight)) {
+with (GMUI_Add("MidSlider", "button",           19,12,  2,2,    global.GMUIAnchorBottomRight)) {
     GMUI_ControlSetButtonAction(_SliderMid_Button);
     GMUI_ControlSetButton("Mid",-1,-1,-1);
     GMUI_ControlSetPositioning(0,6,0,20);
 }
 // Button to set slider to snap or not
-with (GMUI_Add("SnapSlider", "button",          23,12,  3,2,    layer, global.GMUIAnchorBottomRight)) {
+with (GMUI_Add("SnapSlider", "button",          23,12,  3,2,    global.GMUIAnchorBottomRight)) {
     GMUI_ControlSetButtonAction(_SliderSnap_Button);
     GMUI_ControlSetButton("Snap",-1,-1,-1);
     GMUI_ControlSetPositioning(0,6,0,20);
 }
 
 // Display of slider value to the side
-with (GMUI_Add("SliderVal", "label",            5,12,   2,2,    layer, global.GMUIAnchorBottomRight)) {
-    GMUI_ControlSetText(string(round(GMUI_GetValue("MidSlider"))));
+with (GMUI_Add("SliderVal", "label",            5,12,   2,2,    global.GMUIAnchorBottomRight)) {
+    GMUI_ControlSetText(string(round(GMUI_GetValue("Slider"))));
 }
 
-
 // Test checkbox and toggle
-with (GMUI_Add("CheckBox", "checkbox",          4,12,   1,1,    layer, global.GMUIAnchorBottomLeft)) {
+with (GMUI_Add("CheckBox", "checkbox",          4,12,   1,1,    global.GMUIAnchorBottomLeft)) {
     GMUI_ControlSetCheckboxSettings(1, c_lime, c_gray, global.GMUISlideRoundRect, $808080, $505050, room_speed/6);
     GMUI_ControlSetHoverAction(_Hover_Checkbox);
     GMUI_ControlSetHoverOffAction(_HoverOff_Checkbox);
@@ -230,11 +170,11 @@ with (GMUI_Add("CheckBox", "checkbox",          4,12,   1,1,    layer, global.GM
     }
 }
 
-with (GMUI_Add("Toggle", "toggle",              3,10,   3,2,    layer, global.GMUIAnchorBottomLeft)) {
+with (GMUI_Add("Toggle", "toggle",              3,10,   3,2,    global.GMUIAnchorBottomLeft)) {
     GMUI_ControlSetToggleSettings(1, c_lime, c_gray, global.GMUISlideFullRoundRect, $808080, $505050, room_speed/4, global.GMUIDirectionTypeHorizontal, 0);
 }
 
-with (GMUI_Add("SpritePicker", "spritepicker",  -10,10, 5,2,    layer, global.GMUIAnchorBottom)) {
+with (GMUI_Add("SpritePicker", "spritepicker",  -10,10, 5,2,    global.GMUIAnchorBottom)) {
     GMUI_ControlAddOption(0, GMUIspr_arrowright);
     GMUI_ControlAddOption(2, GMUIspr_arrowup);
     GMUI_ControlAddOption(4, GMUIspr_arrowleft);
@@ -251,30 +191,103 @@ GMUI_ControlSelectOption("SpritePicker",2);
 //}
 
 
-
+// Object click group test
 /*
 
-    3. Set group and menu settings after controls are set
+    NEW LAYER: 1 (Automatically switches setting layer to new layer
 
 */
 
-// Call actions dependent on existing controls:
-// GROUP STYLES
-GMUI_GroupSetFadeOnHide(layer, 2, room_speed/4, 0);
+GMUI_AddLayer(1,0,0);
 
-// MENU STYLES
+GMUI_CreateGroup(3,          0,0,    global.GMUIAnchorTopLeft);
+
+
+with (GMUI_Add("MenuInt", "intpicker",          0,0,    3,2,    global.GMUIAnchorTopLeft)) {
+    GMUI_ControlSetAttributes(0,0,0,9);
+    GMUI_ControlSetInitValue(0);
+    GMUI_ControlAddToGroup(3);
+    GMUI_GroupHide(3,1,true);
+}
+
+// Switch back to make instructions on layer 0
+GMUI_SetOnLayer(0);
+
+with (GMUI_Add("MenuIntInstructions", "label",  20,21,  12,2,   global.GMUIAnchorTopLeft)) {
+    GMUI_ControlSetInitValue("Click square to open sub menu");
+}
+
+
+/*
+
+    MENU EXAMPLES
+
+*/
+
+
+// Test Menu (Menu ID variable isn't used here... but could be if you want to)
+var menuID; //-9,2 
+menuID = GMUI_CreateMenu("Test Menu",   GMUI_CenterX(0, 18, global.GMUIAnchorTop) ,2,   18,24,   global.GMUIAnchorTop);
+GMUI_MenuSetClickOff("Test Menu", true);
 GMUI_MenuSetStyle("Test Menu", c_black, 0.25, c_white, 0.75, true);
 GMUI_MenuSetFadeOnHide("Test Menu", room_speed/4, 0);
 GMUI_MenuSetHidePosition("Test Menu", -9, 6, easeExpOut, room_speed/2);
 //GMUI_MenuSetActionIn("Test Menu",...)
+
+with (GMUI_Add("CloseButton", "textbutton",   4,1,   4,1,    global.GMUIAnchorTopRight)) {
+    GMUI_ControlSetButtonAction(_PopupClose_Button);
+    GMUI_ControlSetButton("Close",-1,-1,-1);
+    GMUI_ControlAddToMenu("Test Menu");
+}
+
+with (GMUI_Add("OpenButton", "textbutton",   -3,8,   8,1,    global.GMUIAnchorTop)) {
+    GMUI_ControlSetButtonAction(_PopupMenu2_Button);
+    GMUI_ControlSetButton("Open Another",-1,-1,-1);
+    GMUI_ControlAddToMenu("Test Menu");
+}
+
+
+// Test Menu 2
+menuID = GMUI_CreateMenu("Test Menu 2",   -6,8,   18,24,   global.GMUIAnchorTop);
+GMUI_MenuSetClickOff("Test Menu 2", true);
 GMUI_MenuSetStyle("Test Menu 2", c_black, 0.25, c_white, 0.75, true);
 GMUI_MenuSetFadeOnHide("Test Menu 2", room_speed/4, 0);
 
-// POPUP STYLES
-GMUI_PopupSetStyle("Test Popup", c_white, 0.99, c_white, 0.75, true);// needs popup version
-GMUI_PopupSetFadeOnHide("Test Popup", room_speed/8, 0);// needs popup version
+with (GMUI_Add("CloseButton2", "textbutton",   4,1,   4,1,    global.GMUIAnchorTopRight)) {
+    GMUI_ControlSetButtonAction(_PopupClose_Button);
+    GMUI_ControlSetButton("Close",-1,-1,-1);
+    GMUI_ControlAddToMenu("Test Menu 2");
+}
+
+with (GMUI_Add("PopupTestButton","textbutton",  -3,8,   8,1,    global.GMUIAnchorTop)) {
+    GMUI_ControlSetButtonAction(_Popup_Button);
+    GMUI_ControlSetButton("Try Popup",-1,-1,-1);
+    GMUI_ControlAddToMenu("Test Menu 2");
+}
+
+with (GMUI_Add("ResponseLabel", "label", -8, 10, 16, 2, global.GMUIAnchorTop)) {
+    // This value will be set by the popup
+    GMUI_ControlSetFontStyle(fontNumeric,c_white,fa_center);
+    GMUI_ControlAddToMenu("Test Menu 2");
+}
+
+// Test Popup
+//global.GMUIPopupBlank = -1;global.GMUIPopupInformation = 0;global.GMUIPopupConfirm = 1;global.GMUIPopupThreeOptions = 2;
+menuID = GMUI_CreatePopup("Test Popup",  -14,2,   28,12,   global.GMUIAnchorTop, global.GMUIPopupThreeOptions);
+GMUI_PopupSetMessage("Test Popup", "Click an option to return to the previous screen!", 2, -1, -1);
+GMUI_PopupSetAction("Test Popup", _PopupReturnAction);
+GMUI_PopupSetStyle("Test Popup", c_white, 0.99, c_white, 0.75, true);
+GMUI_PopupSetFadeOnHide("Test Popup", room_speed/8, 0);
 GMUI_PopupSetHidePosition("Test Popup", -14, 0, easeExpOut, room_speed/4);
 //todo: change the popup style
+
+// Options to change default controls and actions:
+// GMUI_PopupSetButton("Test Popup", which button, Text or "", graphic or -1, text align, text color on hover)
+
+// Additional Options:
+//with (GMUI_Add("Button", "textbutton", 20,3, 4,2, 0, global.GMUIAnchorBottomRight)) {
+//GMUI_ControlAddToPopup("Test Popup");}
+//GMUI_PopupSetClickOff("Test Popup", false); // False is default
 
 
 
@@ -343,7 +356,8 @@ else {
     with (MyButton) GMUI_ControlSetButton("Move"+chr(13)+"Group",-1,-1,-1);
     testmoving.moving = 0;
     // Return the group to where it was
-    GMUI_GroupSetPosition(0,1,20,3,0,0);
+    GMUI_SetOnLayer(0);
+    GMUI_GroupSetPosition(1,20,3,0,0);
 }
 
 #define _Popup_Button
@@ -511,9 +525,12 @@ layerDepth_menus = layerDepth_messages - 1;
 // Required: Define the controls' object!
 GMUI_controlobject = GMUI_control;
 
-// Required: Flexibility to add graphical effects settings to the controls:
+// Required: Flexibility to add graphical effects settings to the controls: (currently unused)
 var basic, good, best; basic = 0; good = 1; best = 2;
 graphicsSetting = best;
+
+// Initial depth (z-index) default value. Other objects will have depths relative to this
+depth = -9999;
 
 // Required: Other specific functionality settings that can be turned off if unwanted
 GMUIRemoveExtraDecimalZeros = true;     // Trim extra zeroes in decimal-type controls
@@ -521,23 +538,24 @@ GMUIAllowDoubleSelect = true;           // If double selected, the control will 
 GMUIEnableTabbing = true;               // Tab key will advance to the next control
 GMUIEnableEnterKey = true;              // Enter key will deselect the control
 
-// Required: Enable setting debug data for testing
-DebugData = false;
-
-// Required: Show a pop-up of the GMUI error message when it happens
+// Required: Show a pop-up of the GMUI error message when it happens (default: false)
 PopUpGMUIError = false;
 
+// Required: Clear mouse actions when interacting with GMUI instances (default: false)
+CaptureMouseEvents = false;
 
 
-// Initial depth (z-index) value. Other objects will have depths relative to this
-depth = -9999;
+// Required: Allow setting debug data for testing
+DebugData = false;
 
 
 
 // Argument can be used optionally for different GMUI instances
 var OptionalInterfaceName; OptionalInterfaceName = argument0;
-if (script_exists(OptionalInterfaceName)) {
-    // Do Something
+switch (OptionalInterfaceName) {
+    case "":
+        // Do Something
+    break;
 }
 
 
@@ -950,23 +968,30 @@ else
     return argument1;
 
 #define GMUI_Add
-///GMUI_Add("Name", "Type String", cell# x, cell# y, cells wide (min 1), cells high (min 1), Layer**, Anchor***)
-///Adds a component(instance) to the GMUI grid
+///GMUI_Add("Name", "Type String", cell# x, cell# y, cells wide (min 1), cells high (min 1), Anchor)
+///Adds a component(instance) to the GMUI grid at the current layer
 
-var SCRIPT,_Layer,_Anchor,_CellX,_CellY,_CellWide,_CellHigh;
-SCRIPT = GMUI_Add;
-_Layer = argument6;
+GMUI_AddToLayer((GMUII()).UIAddToLayer,argument0,argument1,argument2,argument3,argument4,argument5,argument6);
+
+#define GMUI_AddToLayer
+///GMUI_AddToLayer(Layer, "Name", "Type String", cell# x, cell# y, cells wide (min 1), cells high (min 1), Anchor)
+///Adds a component(instance) to the GMUI grid on the given layer
+
+var _SCRIPT,_Layer,_Anchor,_CellX,_CellY,_CellWide,_CellHigh;
+_SCRIPT = GMUI_AddToLayer;
+_Layer = argument0;
 _Anchor = argument7;
-_CellX = argument2;
-_CellY = argument3;
-_CellWide = argument4;
-_CellHigh = argument5;
+_CellX = argument3;
+_CellY = argument4;
+_CellWide = argument5;
+_CellHigh = argument6;
 
 // Check that the layer exists first
 if (!GMUI_LayerExists(_Layer)) {
-    GMUI_ThrowErrorDetailed("The layer does not exist for " + string(argument0),SCRIPT);
+    GMUI_ThrowErrorDetailed("The layer does not exist for " + string(argument1),_SCRIPT);
     return -1;
 }
+
 
 // Check grid positioning first and assign after created
 var gridW, gridH;
@@ -975,13 +1000,13 @@ gridW = GMUI_GridGetWidth(GMUII(),_Layer);
 gridH = GMUI_GridGetHeight(GMUII(),_Layer);
 
 //if (!GMUI_ValidCellBounds(_Anchor,_CellX,_CellY,gridW,gridH)) {
-//    GMUI_ThrowErrorDetailed("Cell values out of bounds for " + string(argument0) + " (" + string(argument1) + "," + string(_CellX) + ",...",SCRIPT);
+//    GMUI_ThrowErrorDetailed("Cell values out of bounds for " + string(argument0) + " (" + string(argument1) + "," + string(_CellX) + ",...",_SCRIPT);
 //    return -1;
 //}
 
 // Check that it hasn't already been created
-if (ds_map_exists((GMUII()).GMUI_map,argument0)) {
-    GMUI_ThrowErrorDetailed("The control name has already been defined for '" + string(argument0) + "'",SCRIPT);
+if (ds_map_exists((GMUII()).GMUI_map,argument1)) {
+    GMUI_ThrowErrorDetailed("The control name has already been defined for '" + string(argument1) + "'",_SCRIPT);
     show_error(GMUI_LastError(),false);
     return -1;
 }
@@ -989,11 +1014,11 @@ if (ds_map_exists((GMUII()).GMUI_map,argument0)) {
 
 // Check for type and either reference provided instance or create a new one. MUST BE A VALID TYPE
 var thetype,thecontrol;
-if (is_string(argument1)) {  
+if (is_string(argument2)) {  
     thecontrol = instance_create(0,0,(GMUII()).GMUI_controlobject); // Default is: GMUI_control , set in GMUI_Settings(...)
 }
 else {
-    thecontrol = instance_create(0,0,argument1);
+    thecontrol = instance_create(0,0,argument2);
 }
 
 // Well... this problem should never happen.. in theory
@@ -1011,12 +1036,12 @@ thecontrol.Group = 0;
 ds_list_add((GMUII()).GMUI_controlList,thecontrol);
 
 // First the control type vars must be set
-thetype = GMUI_ControlSetType(thecontrol,string(argument1));
+thetype = GMUI_ControlSetType(thecontrol,string(argument2));
 
 // Then set the relative and actual position, and Anchor and IsAdjusted status
 GMUI_ControlPosition(thecontrol,_CellX,_CellY,0,0,_Anchor);
 
-thecontrol.valueName = argument0;
+thecontrol.valueName = argument1;
 thecontrol.CellWide = _CellWide;
 thecontrol.CellHigh = _CellHigh;
 thecontrol.CellWideMax = gridW-_CellX;//_CellWide;
@@ -1031,7 +1056,7 @@ if (thecontrol.ControlIsString) {
 }
 
 // Map the name to the instance
-ds_map_add((GMUII()).GMUI_map,argument0,thecontrol);
+ds_map_add((GMUII()).GMUI_map,argument1,thecontrol);
 
 
 // SET ALL DEFAULTS (set from the gmui controller):
@@ -1095,6 +1120,8 @@ if (!is_real(argument2))
     
 if (GMUI_LayerExists(_Layer))
     return false;
+    
+UIAddToLayer = _Layer;
 
 // If the layer doesn't exist, add it to the list and create it
 ds_list_add((GMUII()).GMUI_gridlist,_Layer);
@@ -1122,7 +1149,7 @@ return true;
 ///GMUI_AddTooltipToControl(Control id, "message string", direction/side of control, width cells [or -1], height cells [or -1], max cells width, max cells height, adjustment x [or -1], adjustment y [or -1])
 ///Adds a tooltip to the specified control
 
-var _SCRIPT, _message, _direction, _adjX, _adjY, _relX, _relY, _cellX, _cellY, _newCtrl, _isVertical,
+var _SCRIPT, _message, _direction, _adjX, _adjY, _relX, _relY, _cellX, _cellY, _newCtrl, _prevLayer, _isVertical,
     _width, _height, _newwidth, _newheight, _actwidth, _actheight, _maxwidth, _maxheight, gcellsize, gcellsize_h;
 _SCRIPT = GMUI_AddTooltipToControl;
 _ctrl = argument0;
@@ -1204,7 +1231,11 @@ _cellX = (_ctrl).CellX + _relX;
 _cellY = (_ctrl).CellY + _relY;
 
 // Add new control based on top-left position (updated on GMUI_ControlUpdateXY)
-newCtrl = GMUI_Add((_ctrl).valueName + "_tooltip","tooltip",_cellX,_cellY, _newwidth,_newheight,(_ctrl).Layer,global.GMUIAnchorTopLeft);
+// Use GMUII to temporarily set the adding layer, then revert after
+_prevLayer = (GMUII()).UIAddToLayer;
+(GMUII()).UIAddToLayer = (_ctrl).Layer;
+newCtrl = GMUI_Add((_ctrl).valueName + "_tooltip","tooltip",_cellX,_cellY, _newwidth,_newheight,global.GMUIAnchorTopLeft);
+(GMUII()).UIAddToLayer = _prevLayer;
 
 with (newCtrl) {
     valueString = _message;
@@ -1432,25 +1463,8 @@ if ((GMUIP).GMUI_groupMasterControl[_Layer,_Group] == -1 || (GMUIP).GMUI_groupMa
     (GMUIP).GMUI_groupMasterControl[_Layer,_Group] = id;
 }
 
+GMUI_ControlPositionToGroup(id);
 
-// Reset positioning to base on group's position
-CellX = GMUI_GetAnchoredCellX((GMUII()).GMUI_groupCellsW[_Layer,_Group],RelativeCellX,Anchor) + (GMUII()).GMUI_groupCellX[_Layer,_Group];
-CellY = GMUI_GetAnchoredCellY((GMUII()).GMUI_groupCellsH[_Layer,_Group],RelativeCellY,Anchor) + (GMUII()).GMUI_groupCellY[_Layer,_Group];
-
-ActualX = GMUI_CellGetActualX(CellX);
-ActualY = GMUI_CellGetActualY(CellY);
-
-
-// If control is outside of the group boundaries, expand the group to fit it
-if (CellX + CellWide > (GMUII()).GMUI_groupCellX[_Layer,_Group] + (GMUII()).GMUI_groupCellsW[_Layer,_Group]) {
-    (GMUII()).GMUI_groupCellsW[_Layer,_Group] = CellX + CellWide - (GMUII()).GMUI_groupCellX[_Layer,_Group];
-}
-if (CellY + CellHigh > (GMUII()).GMUI_groupCellY[_Layer,_Group] + (GMUII()).GMUI_groupCellsH[_Layer,_Group]) {
-    (GMUII()).GMUI_groupCellsH[_Layer,_Group] = CellY + CellHigh - (GMUII()).GMUI_groupCellY[_Layer,_Group];
-}
-
-// Update control draw location in the room
-GMUI_ControlUpdateXY(id);
 
 return true;
     
@@ -1713,17 +1727,17 @@ if (is_string(argument0))
 else
     _ctrl = argument0;
     
-// Store the relative values provided that reference against the anchor position
-(_ctrl).Anchor = _Anchor;
-(_ctrl).RelativeCellX = _CellX;
-(_ctrl).RelativeCellY = _CellY;
-
-
 if (!GMUI_IsControlID(_ctrl))
 {
     GMUI_ThrowErrorDetailed("Invalid control",GMUI_ControlPosition);
     return false;
 }
+    
+// Store the relative values provided that reference against the anchor position
+if (_Anchor >= 0)
+    (_ctrl).Anchor = _Anchor;
+(_ctrl).RelativeCellX = _CellX;
+(_ctrl).RelativeCellY = _CellY;
 
 // Get the dimensions and round down for grids that have even grid sizes
 _gridW = GMUI_GridGetWidth((_ctrl).GMUIP,(_ctrl).Layer);
@@ -1756,6 +1770,13 @@ if ((_ctrl).ActualW != 0 || (_ctrl).ActualH != 0 || (_ctrl).RelativeX != 0 || (_
 else
     (_ctrl).IsAdjusted = false;
     
+if ((_ctrl).Group > 0) {
+    GMUI_ControlPositionToGroup(_ctrl);
+    if ((GMUII()).UIInterfaceSet)
+        GMUI_GridSetRegionsLayer((_ctrl).Layer);
+}
+else
+    (_ctrl).NeedsPositionUpdate = true;
 
 return true;
 
@@ -2638,174 +2659,30 @@ return false;
     
 
 #define GMUI_Create
-///GMUI_Create(Form Script, Cell Width, Cell Height)
-///Call creation of the grid interfaces and variables
+///GMUI_Create(GMUI-compatible Object, Interface Script, cell size width [0: default], cell size height [0: default])
 
-// Create resizable method for window?
+// Must be an object
+if (!object_exists(argument0))
+    return -1;
 
+var _NEWGMUI;
+_NEWGMUI = instance_create(0,0,argument0);
 
-// // Create grid variables
-    // Is this already using a GMUI? Assign the instance number as long as its not
-    var isOk,G;
-    isOk = 1;
-    for (G=1;G<=global.GMUIii;G+=1) {
-        if (id = global.GMUIiid[G]) {
-            isOk = 0;
-            break;
-        }
-    }
-        
-    if (!isOk)
-        return 0;
-    else {
-        // New ID
-        global.GMUIii += 1;
-    }
+// Initialize
+with (_NEWGMUI) {
+    GMUI_CreateEvent(argument1, argument2, argument3);
+}
 
-    // Define the instance & number running GMUI
-    global.GMUIiid[global.GMUIii] = id;
-    GMUInumber = global.GMUIii;
-    // Current grid is now this one. The 0 index is the currently active grid
-    global.GMUIiid[0] = id;
-    
-    
-    // Initial time to not execute any actions from the grid
-    InitialDisable = floor(room_speed/20); // Default 1/20th of a second
-    // Freeing GMUI data
-    RemovingGMUI = false;
-    // Layer that is currently enabled (0 is the bottom-most)
-    UILayer = 0;
-    // Highest layer, for reference
-    UILayerTop = 0;
-    // Layer that was enabled before the current
-    UILayerPrevious = 0;
-    
-    // Other specific functionality settings that can be turned off if unwanted
-    GMUI_Settings(argument0);
-    
-    // Set the default layering depths
-    GMUI_SetLayerDepths();
-    
-    // Previous values of the mouse to determine if it has moved or not
-    mouse_px = 0;
-    mouse_py = 0;
-    previousHoveringControl = -1;
-    
-    // Debug information
-    if (DebugData) {
-        TestInRegion = -1;
-        TestOnDirection = -1;
-        TestHoverObject = -1;
-    }
-    
-// Rather pointless to be redundant but it gives more flexibility if you really need it...
-persistence = persistent;
-
-// Error management (DEBUG)
-GMUI_Error[0] = "";
-GMUI_ErrorNumber = 0;
-
-    
-// Get cellsize arguments (w,h)
-if (argument1 < 1)
-    cellsize = 16;
-else
-    cellsize = argument1;
-if (argument2 < 1)
-    cellsize_h = cellsize;
-else
-    cellsize_h = argument2;
-    
-// Set the interface area for new layers, using view 0 if enabled. Can be adjusted later
-GMUI_CreateSetDefaultArea();
-
-
-
-// Grid setup (New layers will have their own grids)
-GMUI_gridlist = ds_list_create();
-GMUI_defaultX = 0;
-GMUI_defaultY = 0;
-
-GMUI_AddLayer(0,GMUI_defaultX,GMUI_defaultY);
-
-// Navigation settings
-GMUI_navigateDirection = -1;
-GMUI_backKey = -1;
-GMUI_forwardKey = -1;
-GMUI_backAltKey = -1;
-GMUI_forwardAltKey = -1;
-GMUI_enableTab = true;
-
-
-// Map setup for control name keys to instances
-GMUI_map = ds_map_create();
-
-// List of all controls
-GMUI_controlList = ds_list_create();
-
-// Create all of the default control settings
-GMUI_SetControlDefaults();
-
-// Currently hovering or selecting on control for controls to revert if not them
-HoveringControl = -1;
-SelectedControl = -1;
-PreviousSelectedControl = -1;
-
-// An offset change will trigger repositioning controls
-previousXOffset = 0;
-previousYOffset = 0;
-
-
-// Map setup for menu name keys to group id's
-GMUI_menu_map = ds_map_create();
-GMUI_menu_layer = layerDepth_maxLayers;
-
-GMUI_menuLastId = 0;
-GMUI_menuCurrent = 0;
-GMUI_menuOpenCount = 0;
-GMUI_menuResponse = 0; // Cancel:-1, No: 0, Yes: 1
-
-// Popup setup for popup name keys to group id's; uses menu id's for reference
-GMUI_popup_map = ds_map_create();
-
-// Warnings
-GMUI_warnings_map = ds_map_create();
-
-
-// Grouping variables (handled in GMUI_AddLayer())
-// List of groups per layer [layer number; default 0]
-//GMUI_groupList[0] = ds_list_create();
-// List of controls per group [layer number, group number]
-//GMUI_groupControlList[0,0] = ds_list_create();
-
-//Positioning
-GMUI_groupCellX[0,0] = 0;
-GMUI_groupCellY[0,0] = 0;
-GMUI_groupActualX[0,0] = 0;
-GMUI_groupActualY[0,0] = 0;
-GMUI_groupRelativeX[0,0] = 0;
-GMUI_groupRelativeY[0,0] = 0;
-GMUI_groupCellsW[0,0] = 0;
-GMUI_groupCellsH[0,0] = 0;
-GMUI_groupRelativeCellX[0,0] = 0;
-GMUI_groupRelativeCellY[0,0] = 0;
-GMUI_groupAnchor[0,0] = global.GMUIAnchorTopLeft;
-GMUI_groupClickOff[0,0] = false;
-GMUI_groupTransitioning[0,0] = false;
-//GMUI_groupTransitioningControl[0,0] = -1;
-GMUI_groupAction[0,0] = -1;
-
-
-// Call the form code to create the interface
-GMUI_SetForm(argument0);
-GMUI_GridSetRegions();
-
-// Upon success, give the GMUI id back
-return GMUInumber;
-
+return _NEWGMUI;
 
 #define GMUI_CreateGroup
-///GMUI_CreateGroup (layer number, group number, cell# x, cell# y, cells wide, cells high, Anchor)
+///GMUI_CreateGroup(group number, cell# x, cell# y, cells wide, cells high, Anchor)
+///Adds a group to the current GMUI layer that controls can be put into
+
+return GMUI_CreateGroupInLayer((GMUII()).UIAddToLayer,argument0,argument1,argument2,argument3);
+
+#define GMUI_CreateGroupInLayer
+///GMUI_CreateGroupInLayer(layer number, group number, cell# x, cell# y, cells wide, cells high, Anchor)
 ///Adds a group to a GMUI layer that controls can be put into
 
 
@@ -2821,17 +2698,17 @@ _Anchor = argument4;
 // Validate
 if (!is_real(_groupNumber) || !is_real(_layerNumber) || !is_real(_CellX) || !is_real(_CellY)) {
     GMUI_ThrowError("Invalid parameters for GMUI_CreateGroup");
-    return false;
+    return -1;
 }
 
 if (_groupNumber <= 0) {
     GMUI_ThrowError("Group number must be greater than 0");
-    return false;
+    return -1;
 }
 
 if (!GMUI_LayerExists(_layerNumber)) {
     GMUI_ThrowError("Layer " + string(_layerNumber) + " doesn't exist. GMUI_CreateGroup");
-    return false;
+    return -1;
 }
 
 // Create group; add to GMUI group list and create a control list
@@ -2868,11 +2745,12 @@ with (GMUII()) {
     GMUI_groupAnchor[_layerNumber,_groupNumber] = _Anchor;
     GMUI_groupTransitioning[_layerNumber,_groupNumber] = false;
     GMUI_groupMasterControl[_layerNumber,_groupNumber] = -1;
+    GMUI_groupSettingsMap[_layerNumber,_groupNumber] = -1;
 }
 
 
+return GMUII();
 
-return true;
 
 #define GMUI_CreateMenu
 ///GMUI_CreateMenu (menu name, cell# x, cell# y, cells wide, cells high, Anchor)
@@ -2921,7 +2799,7 @@ if (_menu > -1) {
     switch (argument6) {
         case global.GMUIPopupInformation:
             // Button with "Ok"
-            with (GMUI_Add("GMUIPopupOkBtn"+string(_menu), "textbutton", 5,3, 4,2, 0, global.GMUIAnchorBottomRight)) {
+            with (GMUI_Add("GMUIPopupOkBtn"+string(_menu), "textbutton", 5,3, 4,2, global.GMUIAnchorBottomRight)) {
                 GMUI_ControlSetButtonAction(GMUI_DefaultActionOk)
                 GMUI_ControlSetButton("Ok",-1,-1,-1);
                 GMUI_ControlAddToPopup(_name);
@@ -2929,12 +2807,12 @@ if (_menu > -1) {
             break;
         case global.GMUIPopupConfirm:
             // Buttons Yes / No
-            with (GMUI_Add("GMUIPopupYesBtn"+string(_menu), "textbutton", 10,3, 4,2, 0, global.GMUIAnchorBottomRight)) {
+            with (GMUI_Add("GMUIPopupYesBtn"+string(_menu), "textbutton", 10,3, 4,2, global.GMUIAnchorBottomRight)) {
                 GMUI_ControlSetButtonAction(GMUI_DefaultActionOk)
                 GMUI_ControlSetButton("Yes",-1,-1,-1);
                 GMUI_ControlAddToPopup(_name);
             }
-            with (GMUI_Add("GMUIPopupNoBtn"+string(_menu), "textbutton", 5,3, 4,2, 0, global.GMUIAnchorBottomRight)) {
+            with (GMUI_Add("GMUIPopupNoBtn"+string(_menu), "textbutton", 5,3, 4,2, global.GMUIAnchorBottomRight)) {
                 GMUI_ControlSetButtonAction(GMUI_DefaultActionNo)
                 GMUI_ControlSetButton("No",-1,-1,-1);
                 GMUI_ControlAddToPopup(_name);
@@ -2942,17 +2820,17 @@ if (_menu > -1) {
             break;
         case global.GMUIPopupThreeOptions:
             // Buttons Yes / No / Cancel
-            with (GMUI_Add("GMUIPopupYesBtn"+string(_menu), "textbutton", 15,3, 4,2, 0, global.GMUIAnchorBottomRight)) {
+            with (GMUI_Add("GMUIPopupYesBtn"+string(_menu), "textbutton", 15,3, 4,2, global.GMUIAnchorBottomRight)) {
                 GMUI_ControlSetButtonAction(GMUI_DefaultActionOk)
                 GMUI_ControlSetButton("Yes",-1,-1,-1);
                 GMUI_ControlAddToPopup(_name);
             }
-            with (GMUI_Add("GMUIPopupNoBtn"+string(_menu), "textbutton", 10,3, 4,2, 0, global.GMUIAnchorBottomRight)) {
+            with (GMUI_Add("GMUIPopupNoBtn"+string(_menu), "textbutton", 10,3, 4,2, global.GMUIAnchorBottomRight)) {
                 GMUI_ControlSetButtonAction(GMUI_DefaultActionNo)
                 GMUI_ControlSetButton("No",-1,-1,-1);
                 GMUI_ControlAddToPopup(_name);
             }
-            with (GMUI_Add("GMUIPopupCancelBtn"+string(_menu), "textbutton", 5,3, 4,2, 0, global.GMUIAnchorBottomRight)) {
+            with (GMUI_Add("GMUIPopupCancelBtn"+string(_menu), "textbutton", 5,3, 4,2, global.GMUIAnchorBottomRight)) {
                 GMUI_ControlSetButtonAction(GMUI_DefaultActionCancel)
                 GMUI_ControlSetButton("Cancel",-1,-1,-1);
                 GMUI_ControlAddToPopup(_name);
@@ -3064,6 +2942,224 @@ with (argument0) {
     RemovingGMUI = true;
     instance_destroy();
 }
+
+#define GMUI_DrawEvent
+///GMUI_GridDraw()
+///Actions done to operate the grid, executed by the GMUI object in the draw event
+
+
+// Count down initial disable before executing actions
+if (GMUI_GridEnabled())
+{
+    //do grid stuff:
+    
+    // Assign mouse values here to easily switch out later if needed
+    var MX, MY, inRegion, onDirection, mouseHor, mouseVert, ctrlObject, clickOffEvent, mouseEvent;
+    MX = mouse_x;
+    MY = mouse_y;
+    inRegion = false;
+    mouseEvent = true;
+    
+    // Check if the mouse has moved before checking for any changed selections
+    if (MX != mouse_px || MY != mouse_py) {
+        // Find if there is a control at that position on the current layer
+        ctrlObject = GMUI_GetControlAtPosition(id,MX,MY);
+        
+        if (ctrlObject != -1) {
+            if (DebugData) TestHoverObject = ctrlObject;
+            
+            if (previousHoveringControl != -1 && ctrlObject != previousHoveringControl) {
+                (previousHoveringControl).Hovering = 0;
+                (previousHoveringControl).HoveringDirection = 0;
+                if (GMUI_IsScript((previousHoveringControl).HoverOffActionScript)) {
+                    script_execute((previousHoveringControl).HoverOffActionScript);
+                }
+                previousHoveringControl = -1;
+            }
+            
+            if (!ctrlObject.Disabled && !ctrlObject.NonClickable) {
+                ctrlObject.Hovering = 0;
+                ctrlObject.HoveringDirection = 0;
+                
+                if (!ctrlObject.IsAdjusted) {
+                    inRegion = true;
+                }
+                else if (GMUI_MouseInAdjustedRegion(ctrlObject,MX,MY)) {
+                    inRegion = true;
+                }
+                    
+                
+                if (inRegion) {
+                    // The picker controls have a region on the sides for up/down
+                    if (ctrlObject.ControlPicker)
+                    {
+                        onDirection = GMUI_MouseInSpecialRegion(ctrlObject,MX,MY);
+                        
+                        if (onDirection != global.GMUIHoveringDirection_None) {
+                            ctrlObject.HoveringDirection = onDirection;
+                        }
+                        else {
+                            ctrlObject.Hovering = 1;
+                        }
+                            
+                    }
+                    else {
+                        ctrlObject.Hovering = 1;
+                    }
+                    
+                    // Set the hovering control and execute optional hover action if set
+                    if (ctrlObject != previousHoveringControl) {
+                        HoveringControl = ctrlObject;
+                        previousHoveringControl = ctrlObject;
+                        
+                        if (GMUI_IsScript(ctrlObject.HoverActionScript)) {
+                            script_execute((ctrlObject).HoverActionScript);
+                        }
+                    }
+                }
+                
+            }
+        }
+        else if (HoveringControl != -1) {
+            if (previousHoveringControl != -1) {
+            global.test = previousHoveringControl;
+                if (GMUI_IsScript((previousHoveringControl).HoverOffActionScript)) {
+                    script_execute((previousHoveringControl).HoverOffActionScript);
+                }
+                previousHoveringControl = -1;
+            }
+            GMUI_ResetControlStatus("Hovering",id);
+            HoveringControl = -1;
+        }
+    
+    
+        // Reset previous position
+        mouse_px = MX;
+        mouse_py = MY;
+    }
+    
+    // Mouse click on grid
+    if (mouse_check_button_pressed(mb_left)) {
+        GMUI_ResetControlStatus("Selected",id);
+        
+        // Check if we are looking at a menu, and if this is a click outside of it first
+        clickOffEvent = false;
+        if (UILayer >= GMUI_menu_layer && UILayer < GMUI_menu_layer + GMUI_menuLastId) {
+            if (GMUI_groupClickOff[UILayer,GMUI_menuCurrent]) {
+                if (!GMUI_MouseInGroupRegion(GMUI_menuCurrent,UILayer)) {
+                    GMUI_ShowMenuId(GMUI_menuCurrent,false,true);
+                    clickOffEvent = true;
+                }
+            }
+        }
+        
+        if (!clickOffEvent) {
+            // Find if there is a control at that position with the current layer
+            ctrlObject = GMUI_GetControlAtPosition(id,MX,MY);
+    
+            if (ctrlObject != -1) {
+                if ((!ctrlObject.Disabled) && (!ctrlObject.NonClickable) && (!ctrlObject.Hidden)) {
+                    if (ctrlObject.IsAdjusted) {
+                        if (GMUI_MouseInAdjustedRegion(ctrlObject,MX,MY))
+                            inRegion = true;
+                    }
+                    else
+                        inRegion = true;
+                    
+                    if (inRegion) {
+                        // Switch between special types, general input types, and other controls
+                        if (ctrlObject.ControlPicker) {
+                            switch (ctrlObject.HoveringDirection) {
+                                case global.GMUIHoveringDirection_Up:
+                                case global.GMUIHoveringDirection_Right:
+                                    if (ctrlObject.ControlType == "intpicker")
+                                        GMUI_SetValue(ctrlObject.valueName,ctrlObject.value + 1,"integer");
+                                    else if (ctrlObject.ControlType == "doublepicker")
+                                        GMUI_SetValue(ctrlObject.valueName,ctrlObject.value + 1,"double");
+                                    else if (ctrlObject.optionsInitialized) {
+                                        if (ctrlObject.value == ctrlObject.OptionsLast)
+                                            ctrlObject.value = ctrlObject.OptionsFirst;
+                                        else
+                                            ctrlObject.value = ds_map_find_next(ctrlObject.OptionsMap,ctrlObject.value);
+                                    }
+                                    break;
+                                case global.GMUIHoveringDirection_Left:
+                                case global.GMUIHoveringDirection_Down:
+                                    if (ctrlObject.ControlType == "intpicker")
+                                        GMUI_SetValue(ctrlObject.valueName,ctrlObject.value - 1,"integer");
+                                    else if (ctrlObject.ControlType == "doublepicker")
+                                        GMUI_SetValue(ctrlObject.valueName,ctrlObject.value - 1,"double");
+                                    else if (ctrlObject.optionsInitialized) {
+                                        if (ctrlObject.value == ctrlObject.OptionsFirst)
+                                            ctrlObject.value = ctrlObject.OptionsLast;
+                                        else
+                                            ctrlObject.value = ds_map_find_previous(ctrlObject.OptionsMap,ctrlObject.value);
+                                    }
+                                    break;
+                                case global.GMUIHoveringDirection_None:
+                                    if (ctrlObject.ControlInput)
+                                        GMUI_GridSelect(ctrlObject);
+                                    break;
+                            }
+                        }
+                        else if (ctrlObject.ControlSelectable) {
+                            // Normal input controls
+                            GMUI_GridSelect(ctrlObject);
+                        }
+                        else if (ctrlObject.ControlType == "checkbox" || ctrlObject.ControlType == "toggle") {
+                            GMUI_SetValue(ctrlObject.valueName,1-ctrlObject.value,"integer");
+                        }
+                        else if (ctrlObject.ActionScript != -1) {
+                            // Control buttons clicked
+                            GMUI_ControlActionScript(ctrlObject);
+                        }
+                        else
+                            mouseEvent = false;
+                        // If enabled, consume the mouse event if triggered
+                        if (mouseEvent && CaptureMouseEvents)
+                            mouse_clear(mb_left);
+                        
+                    }
+                }
+    
+            }
+            
+        }
+    }
+    
+    // Any key event will trigger a set value on a selected control in GMUI_ControlDraw, so here    ..
+    if (SelectedControl != -1) {
+        if (GMUI_NavigateNextControl(true)) {
+            GMUI_GridNextControl(true);
+        }
+        else if (GMUI_NavigateNextControl(false)) {
+            GMUI_GridNextControl(false);
+        }
+        else if (keyboard_check_pressed(vk_enter)) {
+            GMUI_ResetControlStatus("Selected",id);
+        }
+    }
+    
+    // The grid offset has changed, all controls must update their position
+    if (UIsnaptoview) {
+        if (previousXOffset != view_xview[UIgridview] || previousYOffset != view_yview[UIgridview]) {
+            GMUI_ResetControlStatus("Position",id);
+            previousXOffset = view_xview[UIgridview];
+            previousYOffset = view_yview[UIgridview];
+        }
+    }
+    
+    
+    // Transitioning entire grid
+    
+    
+    
+    // Check if the room size has changed to move any anchored controls positions
+    // each control needs a relative position...
+    
+
+}
+
 
 #define GMUI_DrawDebug
 // DEBUGGING SCRIPT! Call this in the draw event of the GMUI main object 
@@ -3236,31 +3332,31 @@ for(i=0;i<ds_list_size((GMUII()).GMUI_groupControlList[_Layer,_Group]);i+=1) {
 }
 
 #define GMUI_GroupSetClickOff
-///GMUI_GroupSetClickOff(Layer, Group, Click off to close [1] or not [0])
+///GMUI_GroupSetClickOff(Group, Click off to close [1] or not [0])
 ///This option allows the user to click outside of the menu to close it
 
-var SCRIPT, _Group, _Layer, _clickOff;
-SCRIPT = GMUI_GroupSetClickOff;
-_Layer = argument0;
-_Group = argument1;
-_clickOff = (argument2 > 0);
+var _Group, _Layer, _clickOff;
+_Layer = UIAddToLayer;
+_Group = argument0;
+_clickOff = (argument1 > 0);
 
 (GMUII()).GMUI_groupClickOff[_Layer,_Group] = _clickOff;
 
 return true;
 
 #define GMUI_GroupSetFadeOnHide
-///GMUI_GroupSetFadeOnHide(Layer Number, Group Number, Speed in steps, Fade Mode [0: alpha-sequential, 1: all-together])
+///GMUI_GroupSetFadeOnHide(Group Number, Speed in steps, Fade Mode [0: alpha-sequential, 1: all-together])
 ///Set the fade in/out when the control is hidden or not
 ///Fade Mode: 0 = fade dimmest last, 1 = fade all together
 
 // Arguments
 var _SCRIPT,_LayerNumber,_GroupNumber,_Speed,_FadeMode, _ctrl;
 _SCRIPT = GMUI_GroupSetFadeOnHide;
-_LayerNumber = argument0;
-_GroupNumber = argument1;
-_Speed = max(0,argument2);
-_FadeMode = argument3;
+_LayerNumber = UIAddToLayer;
+_GroupNumber = argument0;
+_Speed = max(0,argument1);
+_FadeMode = argument2;
+
 
 // Validate
 if (!is_real(_GroupNumber) || !is_real(_LayerNumber)) {
@@ -3276,6 +3372,17 @@ if (!GMUI_LayerExists(_LayerNumber)) {
 if (!GMUI_GroupExists(_LayerNumber,_GroupNumber)) {
     GMUI_ThrowErrorDetailed("Group " + string(_GroupNumber) + " doesn't exist on layer " + string(_LayerNumber), _SCRIPT);
     return false;
+}
+
+// Check that the UI has been fully run, otherwise create the values map
+if (!UIInterfaceSet) {
+    if (GMUI_groupSettingsMap[_LayerNumber,_GroupNumber] == -1) {
+        GMUI_groupSettingsMap[_LayerNumber,_GroupNumber] = ds_map_create();
+    }
+    
+    ds_map_add(GMUI_groupSettingsMap[_LayerNumber,_GroupNumber], "FadeSpeed", _Speed);
+    ds_map_add(GMUI_groupSettingsMap[_LayerNumber,_GroupNumber], "FadeMode", _Speed);
+    return true;
 }
 
 // Set fade on hide rule for all controls
@@ -3302,37 +3409,33 @@ for(i=0;i<ds_list_size((GMUII()).GMUI_groupControlList[_LayerNumber,_GroupNumber
 return true;
 
 #define GMUI_GroupSetPosition
-///GMUI_GroupSetPosition(Layer Number, Group Number, Cell X, Cell Y, X Adjustment, Y Adjustment)
+///GMUI_GroupSetPosition(Group Number, Cell X, Cell Y, X Adjustment, Y Adjustment)
 ///Change the position of the group (and all of the controls inside it)
 
 // Arguments
-var SCRIPT,_LayerNumber,_GroupNumber,_CellX,_CellY,_AdjustmentX,_AdjustmentY;
-SCRIPT = GMUI_GroupSetPosition;
-_LayerNumber = argument0;
-_GroupNumber = argument1;
-_CellX = argument2;
-_CellY = argument3;
-_AdjustmentX = argument4;
-_AdjustmentY = argument5;
+var _SCRIPT,_LayerNumber,_GroupNumber,_CellX,_CellY,_AdjustmentX,_AdjustmentY;
+_SCRIPT = GMUI_GroupSetPosition;
+_LayerNumber = (GMUII()).UIAddToLayer;
+_GroupNumber = argument0;
+_CellX = argument1;
+_CellY = argument2;
+_AdjustmentX = argument3;
+_AdjustmentY = argument4;
 
 // Validate
-if (!is_real(_GroupNumber) || !is_real(_LayerNumber) || !is_real(_CellX) || !is_real(_CellY)) {
+if (!is_real(_GroupNumber) || !is_real(_CellX) || !is_real(_CellY)) {
     GMUI_ThrowErrorDetailed("Invalid parameters",SCRIPT);
     return false;
 }
 
-if (!GMUI_LayerExists(_LayerNumber)) {
-    GMUI_ThrowErrorDetailed("Layer " + string(_LayerNumber) + " doesn't exist",SCRIPT);
-    return false;
-}
-
 if (!GMUI_GroupExists(_LayerNumber,_GroupNumber)) {
-    GMUI_ThrowErrorDetailed("Group " + string(_GroupNumber) + " doesn't exist on layer " + string(_LayerNumber),SCRIPT);
+    GMUI_ThrowErrorDetailed("Group " + string(_GroupNumber) + " doesn't exist on layer " + string(_LayerNumber),_SCRIPT);
     return false;
 }
 
 // Set position by anchor of the group
 GMUI_GroupSetPositionAnchored(_LayerNumber, _GroupNumber, _CellX, _CellY, _AdjustmentX, _AdjustmentY, (GMUII()).GMUI_groupAnchor[_LayerNumber,_GroupNumber]);
+
 
 
 #define GMUI_GroupSetPositionActual
@@ -3376,93 +3479,93 @@ _adjy = _ycord - _offsety - GMUI_CellGetActualY(GMUI_GridGetCellY(GMUII(),_Layer
 GMUI_GroupSetPositionAnchored(_LayerNumber,_GroupNumber,GMUI_GridGetCellX(GMUII(),_LayerNumber,_xcord),GMUI_GridGetCellY(GMUII(),_LayerNumber,_ycord),_adjx,_adjy,0);
 
 #define GMUI_GroupSetSize
-///GMUI_GroupSetSize(Layer, Group, cells wide, cells high)
+///GMUI_GroupSetSize(Group, cells wide, cells high)
 ///Set the cell size of the group
 
 var _groupNumber, _CellsW, _CellsH, _layerNumber;
-_layerNumber = argument0;
-_groupNumber = argument1;
-_CellsW = argument2;
-_CellsH = argument3;
+_layerNumber = UIAddToLayer;
+_groupNumber = argument0;
+_CellsW = argument1;
+_CellsH = argument2;
 
 
 GMUI_groupCellsW[_layerNumber,_groupNumber] = _CellsW;
 GMUI_groupCellsH[_layerNumber,_groupNumber] = _CellsH;
 
 #define GMUI_GroupSetSpriteMap
-///GMUI_GroupSetSpriteMap(Layer, Group, sprite top, sprite top right, right, bottom right, bottom, bottom left, left, top left, center, center fixed partial [1] / stretched[0])
+///GMUI_GroupSetSpriteMap(Group, sprite top, sprite top right, right, bottom right, bottom, bottom left, left, top left, center, center fixed partial [1] / stretched[0])
 ///Replace the group drawing with a sprite map of each corner, side, and center
 
 // Arguments
-var SCRIPT,_LayerNumber,_GroupNumber;
-SCRIPT = GMUI_GroupSetSpriteMap;
-_LayerNumber = argument0;
-_GroupNumber = argument1;
+var _SCRIPT,_LayerNumber,_GroupNumber;
+_SCRIPT = GMUI_GroupSetSpriteMap;
+_LayerNumber = UIAddToLayer;
+_GroupNumber = argument0;
 
 // Validate
 if (!is_real(_GroupNumber) || !is_real(_LayerNumber)) {
-    GMUI_ThrowErrorDetailed("Invalid parameters",SCRIPT);
+    GMUI_ThrowErrorDetailed("Invalid parameters",_SCRIPT);
     return false;
 }
 
 if (!GMUI_LayerExists(_LayerNumber)) {
-    GMUI_ThrowErrorDetailed("Layer " + string(_LayerNumber) + " doesn't exist",SCRIPT);
+    GMUI_ThrowErrorDetailed("Layer " + string(_LayerNumber) + " doesn't exist",_SCRIPT);
     return false;
 }
 
 if (!GMUI_GroupExists(_LayerNumber,_GroupNumber)) {
-    GMUI_ThrowErrorDetailed("Group " + string(_GroupNumber) + " doesn't exist on layer " + string(_LayerNumber),SCRIPT);
+    GMUI_ThrowErrorDetailed("Group " + string(_GroupNumber) + " doesn't exist on layer " + string(_LayerNumber),_SCRIPT);
     return false;
 }
 
 
-if (sprite_exists(argument2))
-    (GMUII()).GMUI_groupGraphicTop[_LayerNumber,_GroupNumber] = argument2;
+if (sprite_exists(argument1))
+    (GMUII()).GMUI_groupGraphicTop[_LayerNumber,_GroupNumber] = argument1;
 else
     (GMUII()).GMUI_groupGraphicTop[_LayerNumber,_GroupNumber] = -1;
     
-if (sprite_exists(argument3))
-    (GMUII()).GMUI_groupGraphicTopRight[_LayerNumber,_GroupNumber] = argument3;
+if (sprite_exists(argument2))
+    (GMUII()).GMUI_groupGraphicTopRight[_LayerNumber,_GroupNumber] = argument2;
 else
     (GMUII()).GMUI_groupGraphicTopRight[_LayerNumber,_GroupNumber] = -1;
 
-if (sprite_exists(argument4))
-    (GMUII()).GMUI_groupGraphicRight[_LayerNumber,_GroupNumber] = argument4;
+if (sprite_exists(argument3))
+    (GMUII()).GMUI_groupGraphicRight[_LayerNumber,_GroupNumber] = argument3;
 else
     (GMUII()).GMUI_groupGraphicRight[_LayerNumber,_GroupNumber] = -1;
     
-if (sprite_exists(argument5))
-    (GMUII()).GMUI_groupGraphicBottomRight[_LayerNumber,_GroupNumber] = argument5;
+if (sprite_exists(argument4))
+    (GMUII()).GMUI_groupGraphicBottomRight[_LayerNumber,_GroupNumber] = argument4;
 else
     (GMUII()).GMUI_groupGraphicBottomRight[_LayerNumber,_GroupNumber] = -1;
     
-if (sprite_exists(argument6))
-    (GMUII()).GMUI_groupGraphicBottom[_LayerNumber,_GroupNumber] = argument6;
+if (sprite_exists(argument5))
+    (GMUII()).GMUI_groupGraphicBottom[_LayerNumber,_GroupNumber] = argument5;
 else
     (GMUII()).GMUI_groupGraphicBottom[_LayerNumber,_GroupNumber] = -1;
     
-if (sprite_exists(argument7))
-    (GMUII()).GMUI_groupGraphicBottomLeft[_LayerNumber,_GroupNumber] = argument7;
+if (sprite_exists(argument6))
+    (GMUII()).GMUI_groupGraphicBottomLeft[_LayerNumber,_GroupNumber] = argument6;
 else
     (GMUII()).GMUI_groupGraphicBottomLeft[_LayerNumber,_GroupNumber] = -1;
     
-if (sprite_exists(argument8))
-    (GMUII()).GMUI_groupGraphicLeft[_LayerNumber,_GroupNumber] = argument8;
+if (sprite_exists(argument7))
+    (GMUII()).GMUI_groupGraphicLeft[_LayerNumber,_GroupNumber] = argument7;
 else
     (GMUII()).GMUI_groupGraphicLeft[_LayerNumber,_GroupNumber] = -1;
     
-if (sprite_exists(argument9))
-    (GMUII()).GMUI_groupGraphicTopLeft[_LayerNumber,_GroupNumber] = argument9;
+if (sprite_exists(argument8))
+    (GMUII()).GMUI_groupGraphicTopLeft[_LayerNumber,_GroupNumber] = argument8;
 else
     (GMUII()).GMUI_groupGraphicTopLeft[_LayerNumber,_GroupNumber] = -1;
     
-if (sprite_exists(argument10))
-    (GMUII()).GMUI_groupGraphicCenter[_LayerNumber,_GroupNumber] = argument10;
+if (sprite_exists(argument9))
+    (GMUII()).GMUI_groupGraphicCenter[_LayerNumber,_GroupNumber] = argument9;
 else
     (GMUII()).GMUI_groupGraphicCenter[_LayerNumber,_GroupNumber] = -1;
     
-if (is_real(argument11))
-    (GMUII()).GMUI_groupGraphicCenterIsFixed[_LayerNumber,_GroupNumber] = !(argument11 < 1);
+if (is_real(argument10))
+    (GMUII()).GMUI_groupGraphicCenterIsFixed[_LayerNumber,_GroupNumber] = !(argument10 < 1);
 else
     (GMUII()).GMUI_groupGraphicCenterIsFixed[_LayerNumber,_GroupNumber] = 0;
     
@@ -3474,29 +3577,57 @@ else
 return true;
 
 #define GMUI_GroupSetStyle
-///GMUI_GroupSetStyle(Background Color, Background Alpha, Border color, Border Alpha, Is RoundRect)
+///GMUI_GroupSetStyle(Group, Background Color, Background Alpha, Border color, Border Alpha, Is RoundRect)
 ///Set the style of the controls that will be used for new controls (to override the defaults)
 if (!GMUI_IsControl() && id != GMUII())
 {
-    GMUI_ThrowError("Invalid control for GMUI_ControlSetStyle");
+    GMUI_ThrowError("Invalid control for GMUI_GroupSetStyle");
     return false;
 }
 
-// If any values are given as negative numbers, those values will remain as the control default [Not set in Demo]
+var _Layer, _Group;
+_Layer = UIAddToLayer;
+_Group = argument0;
 
-if (argument0 >= 0)
-GroupBackgroundColor = argument0;
-if (argument1 >= 0)
-GroupBackgroundAlpha = minmax(argument1,0,1);
-if (argument2 >= 0)
-GroupBorderColor = argument2;
-if (argument3 >= 0)
-GroupBorderAlpha = minmax(argument3,0,1);
-if (argument4 >= 0)
-GroupIsRoundRect = minmax(argument4,0,1);
+// Map values if interface is not done being created
+if (!GMUII().UIInterfaceSet) {
+    if ((GMUII()).GMUI_groupSettingsMap[_Layer,_Group] == -1) {
+        (GMUII()).GMUI_groupSettingsMap[_Layer,_Group] = ds_map_create();
+    }
+    
+    ds_map_add((GMUII()).GMUI_groupSettingsMap[_Layer,_Group], "BackgroundColor", argument1);
+    ds_map_add((GMUII()).GMUI_groupSettingsMap[_Layer,_Group], "BackgroundAlpha", argument2);
+    ds_map_add((GMUII()).GMUI_groupSettingsMap[_Layer,_Group], "BorderColor", argument3);
+    ds_map_add((GMUII()).GMUI_groupSettingsMap[_Layer,_Group], "BorderAlpha", argument4);
+    ds_map_add((GMUII()).GMUI_groupSettingsMap[_Layer,_Group], "IsRoundRect", argument5);
 
+    return true;
+}
 
-ControlHasGroupStyle = true;
+// Get master control for menu if it exists
+if ((GMUII()).GMUI_groupMasterControl[UIAddToLayer,_Group] == -1) {
+    GMUI_ThrowErrorDetailed("A control is needed to set style: " + _menuName,_SCRIPT);
+    return false;
+}
+
+// Call group style assign
+with ((GMUII()).GMUI_groupMasterControl[UIAddToLayer,_Group]) {
+    // If any values are given as negative numbers, those values will remain as the control default [Not set in Demo]
+    
+    if (argument1 >= 0)
+    GroupBackgroundColor = argument1;
+    if (argument2 >= 0)
+    GroupBackgroundAlpha = minmax(argument2,0,1);
+    if (argument3 >= 0)
+    GroupBorderColor = argument3;
+    if (argument4 >= 0)
+    GroupBorderAlpha = minmax(argument4,0,1);
+    if (argument5 >= 0)
+    GroupIsRoundRect = minmax(argument5,0,1);
+    
+    
+    ControlHasGroupStyle = true;
+}
 
 return true;
     
@@ -3506,7 +3637,7 @@ return true;
 //
 // !WARNING! MODIFYING THE GMUI SCRIPTS CAN BREAK FUNCTIONALITY AND CAUSE ERRORS! TRY TO EDIT THE OBJECTS INSTEAD!
 //
-// Copyright 2017 Alert Studios (Mark Palnau). Initially designed by Alert Studios and released as Open-Source.
+// Copyright 2017-2018 Alert Studios (Mark Palnau). Initially designed by Alert Studios and released as Open-Source.
 //
 // If you would like to help make GMUI better, please submit a ticket or pull request on the project on GitHub!
 // https://github.com/AlertStudios/GMUI-Framework
@@ -3610,7 +3741,7 @@ return true;
 // Sets menu position to come from and go to when shown or hidden
 
 // Get menu number and check its valid
-var _MenuName, _MenuNumber;
+var _MenuName, _MenuNumber, _prevLayer, _result;
 _MenuName = string(argument0);
 _MenuNumber = ds_map_find_value((GMUII()).GMUI_menu_map,_MenuName);
 
@@ -3619,7 +3750,14 @@ if (string(_MenuNumber) == "0") {
     return false;
 }
 
-GMUI_GroupSetHidePosition(GMUI_GetMenuLayer(GMUII(),_MenuNumber),_MenuNumber,argument1,argument2,argument3,argument4);
+// Set style with the menu, temporary change to setting layer
+_prevLayer = UIAddToLayer;
+UIAddToLayer = GMUI_GetMenuLayer(GMUII(),_MenuNumber);
+
+_result = GMUI_GroupSetHidePosition(_MenuNumber,argument1,argument2,argument3,argument4);
+
+UIAddToLayer = _prevLayer;
+return _result;
 
 #define GMUI_MenuSetFadeOnHide
 ///GMUI_MenuSetFadeOnHide("Menu Name", Speed in steps, Fade Mode [0: alpha-sequential, 1: all-together])
@@ -3627,8 +3765,8 @@ GMUI_GroupSetHidePosition(GMUI_GetMenuLayer(GMUII(),_MenuNumber),_MenuNumber,arg
 ///Fade Mode: 0 = fade dimmest last, 1 = fade all together
 
 // Arguments
-var SCRIPT,_MenuName,_MenuNumber,_Speed,_FadeMode;
-SCRIPT = GMUI_MenuSetFadeOnHide;
+var _SCRIPT,_MenuName,_MenuNumber,_Speed,_FadeMode, _prevLayer, _result;
+_SCRIPT = GMUI_MenuSetFadeOnHide;
 _MenuName = argument0;
 _Speed = max(0,argument1);
 _FadeMode = argument2;
@@ -3637,11 +3775,18 @@ _FadeMode = argument2;
 _MenuNumber = ds_map_find_value((GMUII()).GMUI_menu_map,_MenuName);
 
 if (string(_MenuNumber) == "0") {
-    GMUI_ThrowErrorDetailed("Menu doesn't exist: " + _MenuName,SCRIPT);
+    GMUI_ThrowErrorDetailed("Menu doesn't exist: " + _MenuName,_SCRIPT);
     return false;
 }
 
-return GMUI_GroupSetFadeOnHide(GMUI_GetMenuLayer(GMUII(),_MenuNumber),_MenuNumber,_Speed,_FadeMode);
+// Set style with the menu, temporary change to setting layer
+_prevLayer = UIAddToLayer;
+UIAddToLayer = GMUI_GetMenuLayer(GMUII(),_MenuNumber);
+
+_result = GMUI_GroupSetFadeOnHide(_MenuNumber,_Speed,_FadeMode);
+
+UIAddToLayer = _prevLayer;
+return _result;
 
 #define GMUI_MenuSetPosition
 ///GMUI_MenuSetPosition("menu name", Cell X, Cell Y, X Adjustment, Y Adjustment)
@@ -3666,30 +3811,26 @@ GMUI_GroupSetPositionAnchored(_MenuLayer, _MenuNumber, argument1, argument2, arg
 #define GMUI_MenuSetStyle
 ///GMUI_MenuSetStyle("menu name", Background Color, Background Alpha, Border color, Border Alpha, Is RoundRect)
 
-var SCRIPT, _menuName, _menuNumber, _Layer;
-SCRIPT = GMUI_MenuSetStyle;
-_menuName = string(argument0);
+var _SCRIPT, _MenuName, _MenuNumber, _result, _prevLayer;
+_SCRIPT = GMUI_MenuSetStyle;
+_MenuName = string(argument0);
 
 // Get menu number and check its valid
-_menuNumber = ds_map_find_value((GMUII()).GMUI_menu_map,_menuName);
+_MenuNumber = ds_map_find_value((GMUII()).GMUI_menu_map,_MenuName);
 
-if (string(_menuNumber) == "0") {
-    GMUI_ThrowErrorDetailed("Menu doesn't exist: " + _menuName,SCRIPT);
+if (string(_MenuNumber) == "0") {
+    GMUI_ThrowErrorDetailed("Menu doesn't exist: " + _MenuName,_SCRIPT);
     return false;
 }
 
-_Layer = GMUI_GetMenuLayer(GMUII(),_menuNumber);
+// Set style with the menu, temporary change to setting layer
+_prevLayer = UIAddToLayer;
+UIAddToLayer = GMUI_GetMenuLayer(GMUII(),_MenuNumber);
 
-// Get master control for menu if it exists
-if ((GMUII()).GMUI_groupMasterControl[_Layer,_menuNumber] == -1) {
-    GMUI_ThrowErrorDetailed("Control needed for style of menu: " + _menuName,SCRIPT);
-    return false;
-}
+_result =  GMUI_GroupSetStyle(_MenuNumber, argument1, argument2, argument3, argument4, argument5);
 
-// Call group style assign
-with ((GMUII()).GMUI_groupMasterControl[_Layer,_menuNumber]) {
-    return GMUI_GroupSetStyle(argument1, argument2, argument3, argument4, argument5);
-}
+UIAddToLayer = _prevLayer;
+return _result;
 
 #define GMUI_MouseInGroupRegion
 ///GMUI_MouseInGroupRegion(group number, layer number)
@@ -3813,7 +3954,15 @@ if (string(_MenuNumber) == "0") {
     return false;
 }
 
-GMUI_GroupSetHidePosition(GMUI_GetMenuLayer(GMUII(),_MenuNumber),_MenuNumber,argument1,argument2,argument3,argument4);
+
+// Set style with the menu, temporary change to setting layer
+_prevLayer = UIAddToLayer;
+UIAddToLayer = GMUI_GetMenuLayer(GMUII(),_MenuNumber);
+
+_result = GMUI_GroupSetHidePosition(_MenuNumber,argument1,argument2,argument3,argument4);
+
+UIAddToLayer = _prevLayer;
+return _result;
 
 #define GMUI_PopupSetMessage
 ///GMUI_PopupSetMessage("popup name", "Message", # of Padding Cells, font [or -1], color [or -1])
@@ -3841,7 +3990,7 @@ _wcells = (_G).GMUI_groupCellsW[_Layer,_menuNumber] - _pad * 2;
 _hcells = 2;
 
 // Create label
-with (GMUI_Add("GMUIPopupMessage" + string(_menuNumber), "label", _pad, _pad, _wcells, _hcells, 0, global.GMUIAnchorTopLeft)) {
+with (GMUI_Add("GMUIPopupMessage" + string(_menuNumber), "label", _pad, _pad, _wcells, _hcells, global.GMUIAnchorTopLeft)) {
     GMUI_ControlSetText(_message);
     GMUI_ControlSetFontStyle(argument3,argument4,fa_left);
     GMUI_ControlAddToPopup(_menuName);
@@ -3869,35 +4018,111 @@ if (string(_MenuNumber) == "0") {
     return false;
 }
 
-return GMUI_GroupSetFadeOnHide(GMUI_GetMenuLayer(GMUII(),_MenuNumber),_MenuNumber,_Speed,_FadeMode);
+// Set style with the menu, temporary change to setting layer
+_prevLayer = UIAddToLayer;
+UIAddToLayer = GMUI_GetMenuLayer(GMUII(),_MenuNumber);
+
+_result = GMUI_GroupSetFadeOnHide(_MenuNumber,_Speed,_FadeMode);
+
+UIAddToLayer = _prevLayer;
+return _result;
 
 #define GMUI_PopupSetStyle
 ///GMUI_PopupSetStyle("popup name", Background Color, Background Alpha, Border color, Border Alpha, Is RoundRect)
 
-var SCRIPT, _menuName, _menuNumber, _Layer;
-SCRIPT = GMUI_PopupSetStyle;
+var _SCRIPT, _menuName, _menuNumber, _prevLayer;
+_SCRIPT = GMUI_PopupSetStyle;
 _menuName = string(argument0);
 
 // Get menu number and check its valid
 _menuNumber = ds_map_find_value((GMUII()).GMUI_popup_map,_menuName);
 
 if (string(_menuNumber) == "0") {
-    GMUI_ThrowErrorDetailed("Popup doesn't exist: " + _menuName,SCRIPT);
+    GMUI_ThrowErrorDetailed("Popup doesn't exist: " + _menuName,_SCRIPT);
     return false;
 }
 
-_Layer = GMUI_GetMenuLayer(GMUII(),_menuNumber);
+// Set style with the popup, temporary change to setting layer
+_prevLayer = (GMUII()).UIAddToLayer;
+(GMUII()).UIAddToLayer = GMUI_GetMenuLayer(GMUII(),_menuNumber);
 
-// Get master control for menu if it exists
-if ((GMUII()).GMUI_groupMasterControl[_Layer,_menuNumber] == -1) {
-    GMUI_ThrowErrorDetailed("Control needed for style of popup: " + _menuName,SCRIPT);
+_result =  GMUI_GroupSetStyle(_menuNumber, argument1, argument2, argument3, argument4, argument5);
+
+(GMUII()).UIAddToLayer = _prevLayer;
+return _result;
+
+#define GMUI_SetForm
+/// GMUI_SetForm(name of form script)
+/// Playbook to create all of the UI component objects for the project
+//
+// PLEASE READ THE MANUAL ONLINE FOR INSTRUCTIONS ON HOW TO USE GMUI!
+//
+// Called by GMUI_Create. Argument can be used optionally to have different
+// forms for different GMUI instances to use:
+var OptionalInterfaceName; OptionalInterfaceName = argument0;
+
+//
+//
+// Syntax: GMUI_Add("Name", "Type String", 
+//                  cell# x, cell# y, cells wide (min 1), cells high (min 1), 
+//                  Layer**, Anchor***)
+
+
+// Cell#'s start at 0 and increment by 1 for each size of cell over the x & y axis
+// ** Layer can be used to show pop-up or slide windows and disable lower layers temporarily (0 is default)
+// *** See GMUI_Init for Anchor codes. E.g.: AnchorBottomRight will be determined by cells away from room width/height (0=default)
+
+// Types: textint, textdecimal, textstring, button , slider , dropdown , custom*
+// * To use custom, type the object name you would like to use as a reference to the GMUI cell
+// Note: MUST BE VALID TYPE NAME. If not, it will default to an 'X'
+
+// Assign names to the controls to reference in your code
+// e.g. SizeSlider = GMUI_Add("SizeSlider",...), then use: GMUI_GetValue("SizeSlider");
+
+// Custom controls should call Create: GMUI_ControlInit, Draw: GMUI_ControlDraw
+
+//GMUI_Add("New1" , GMUI_custom , 0 , 0 , 1 , 1 , 0 , 0 , 1 , 0 , AnchorTopLeft );
+// gmuiaddlabel ()
+
+//Group can be used move, disable, or hide a set of controls from within the same layer
+//...
+
+if (is_real(OptionalInterfaceName)) {
+    if (OptionalInterfaceName > -1) {
+        if (script_exists(OptionalInterfaceName)) {
+            script_execute(OptionalInterfaceName);
+        }
+        else {
+            GMUI_ThrowError("Form doesn't exist");
+        }
+    }
+}
+
+#define GMUI_SetOnLayer
+///GMUI_SetOnLayer(Layer number)
+/// Switches the layer to create / modify on
+
+// Arguments
+var _SCRIPT,_LayerNumber;
+_SCRIPT = GMUI_SetOnLayer;
+_LayerNumber = argument0;
+
+// Validate
+if (!is_real(_LayerNumber)) {
+    GMUI_ThrowErrorDetailed("Invalid parameter",_SCRIPT);
     return false;
 }
 
-// Call group style assign
-with ((GMUII()).GMUI_groupMasterControl[_Layer,_menuNumber]) {
-    return GMUI_GroupSetStyle(argument1, argument2, argument3, argument4, argument5);
+if (!GMUI_LayerExists(_LayerNumber)) {
+    GMUI_ThrowErrorDetailed("Layer " + string(_LayerNumber) + " doesn't exist",_SCRIPT);
+    return false;
 }
+
+// Check that the interface has been set, if not it may still be running the interface script
+UIAddToLayer = _LayerNumber;
+
+return true;
+
 
 #define GMUI_SetValue
 ///GMUI_SetValue("ControlName", value, value type - string:0, integer:1, decimal:2)
@@ -3964,53 +4189,6 @@ with (GMUII())
     // If a value was set and a script is assigned to value change, execute it
     if (!_invalid && GMUI_IsScript((control).ValueChangedActionScript)) {
         script_execute((control).ValueChangedActionScript);
-    }
-}
-
-#define GMUI_SetForm
-/// GMUI_SetForm(name of form script)
-/// Playbook to create all of the UI component objects for the project
-//
-// PLEASE READ THE MANUAL ONLINE FOR INSTRUCTIONS ON HOW TO USE GMUI!
-//
-// Called by GMUI_Create. Argument can be used optionally to have different
-// forms for different GMUI instances to use:
-var OptionalInterfaceName; OptionalInterfaceName = argument0;
-
-//
-//
-// Syntax: GMUI_Add("Name", "Type String", 
-//                  cell# x, cell# y, cells wide (min 1), cells high (min 1), 
-//                  Layer**, Anchor***)
-
-
-// Cell#'s start at 0 and increment by 1 for each size of cell over the x & y axis
-// ** Layer can be used to show pop-up or slide windows and disable lower layers temporarily (0 is default)
-// *** See GMUI_Init for Anchor codes. E.g.: AnchorBottomRight will be determined by cells away from room width/height (0=default)
-
-// Types: textint, textdecimal, textstring, button , slider , dropdown , custom*
-// * To use custom, type the object name you would like to use as a reference to the GMUI cell
-// Note: MUST BE VALID TYPE NAME. If not, it will default to an 'X'
-
-// Assign names to the controls to reference in your code
-// e.g. SizeSlider = GMUI_Add("SizeSlider",...), then use: GMUI_GetValue("SizeSlider");
-
-// Custom controls should call Create: GMUI_ControlInit, Draw: GMUI_ControlDraw
-
-//GMUI_Add("New1" , GMUI_custom , 0 , 0 , 1 , 1 , 0 , 0 , 1 , 0 , AnchorTopLeft );
-// gmuiaddlabel ()
-
-//Group can be used move, disable, or hide a set of controls from within the same layer
-//...
-
-if (is_real(OptionalInterfaceName)) {
-    if (OptionalInterfaceName > -1) {
-        if (script_exists(OptionalInterfaceName)) {
-            script_execute(OptionalInterfaceName);
-        }
-        else {
-            GMUI_ThrowError("Form doesn't exist");
-        }
     }
 }
 
@@ -4175,11 +4353,20 @@ if (!GMUI_LayerExists(_LayerNumber)) {
     return false;
 }
 
+// If still running the interface script, also switch the creating on layer
+if (!(GMUII()).UIInterfaceSet) {
+    GMUI_SetOnLayer(_LayerNumber);
+}
+
+
 (GMUII()).UILayerPrevious = (GMUII()).UILayer;
 (GMUII()).UILayer = _LayerNumber;
 
-
 // .... Disable hovering and selection on all controls
+
+
+return true;
+
 
 #define GMUI_TypeDecimal
 ///GMUI_TypeDecimal()
@@ -5979,15 +6166,187 @@ if ((_ctrl).TooltipId != -1) {
     ((_ctrl).TooltipId).NeedsPositionUpdate = true;
 }
 
+#define GMUI_CreateEvent
+///GMUI_CreateEvent(Form Script, Cell Width, Cell Height)
+///Called from creation of new GMUI instance for the grid interfaces and variables
+
+// // Create grid variables
+// Is this already using a GMUI? Assign the instance number as long as its not
+var isOk,G;
+isOk = 1;
+for (G=1;G<=global.GMUIii;G+=1) {
+    if (id = global.GMUIiid[G]) {
+        isOk = 0;
+        break;
+    }
+}
+    
+if (!isOk)
+    return 0;
+else {
+    // New ID
+    global.GMUIii += 1;
+}
+
+// Define the instance & number running GMUI
+global.GMUIiid[global.GMUIii] = id;
+GMUInumber = global.GMUIii;
+// Current grid is now this one. The 0 index is the currently active grid
+global.GMUIiid[0] = id;
+
+
+// Initial time to not execute any actions from the grid
+InitialDisable = floor(room_speed/20); // Default 1/20th of a second
+// Freeing GMUI data
+RemovingGMUI = false;
+// Layer that is currently enabled (0 is the bottom-most)
+UILayer = 0;
+// Highest layer, for reference
+UILayerTop = 0;
+// Layer that was enabled before the current
+UILayerPrevious = 0;
+// Layer that is being added to
+UIAddToLayer = 0;
+// Will only switch layer being added to until complete
+UIInterfaceSet = false;
+
+// Other specific functionality settings that can be turned off if unwanted
+GMUI_Settings(argument0);
+
+// Set the default layering depths
+GMUI_SetLayerDepths();
+
+// Previous values of the mouse to determine if it has moved or not
+mouse_px = 0;
+mouse_py = 0;
+previousHoveringControl = -1;
+
+// Debug information
+if (DebugData) {
+    TestInRegion = -1;
+    TestOnDirection = -1;
+    TestHoverObject = -1;
+}
+    
+// Rather pointless to be redundant but it gives more flexibility if you really need it...
+persistence = persistent;
+
+// Error management (DEBUG)
+GMUI_Error[0] = "";
+GMUI_ErrorNumber = 0;
+
+    
+// Get cellsize arguments (w,h)
+if (argument1 < 1)
+    cellsize = 16;
+else
+    cellsize = argument1;
+if (argument2 < 1)
+    cellsize_h = cellsize;
+else
+    cellsize_h = argument2;
+    
+// Set the interface area for new layers, using view 0 if enabled. Can be adjusted later
+GMUI_CreateSetDefaultArea();
+
+
+
+// Grid setup (New layers will have their own grids)
+GMUI_gridlist = ds_list_create();
+GMUI_defaultX = 0;
+GMUI_defaultY = 0;
+
+GMUI_AddLayer(0,GMUI_defaultX,GMUI_defaultY);
+
+// Navigation settings
+GMUI_navigateDirection = -1;
+GMUI_backKey = -1;
+GMUI_forwardKey = -1;
+GMUI_backAltKey = -1;
+GMUI_forwardAltKey = -1;
+GMUI_enableTab = true;
+
+
+// Map setup for control name keys to instances
+GMUI_map = ds_map_create();
+
+// List of all controls
+GMUI_controlList = ds_list_create();
+
+// Create all of the default control settings
+GMUI_SetControlDefaults();
+
+// Currently hovering or selecting on control for controls to revert if not them
+HoveringControl = -1;
+SelectedControl = -1;
+PreviousSelectedControl = -1;
+
+// An offset change will trigger repositioning controls
+previousXOffset = 0;
+previousYOffset = 0;
+
+
+// Map setup for menu name keys to group id's
+GMUI_menu_map = ds_map_create();
+GMUI_menu_layer = layerDepth_maxLayers;
+
+GMUI_menuLastId = 0;
+GMUI_menuCurrent = 0;
+GMUI_menuOpenCount = 0;
+GMUI_menuResponse = 0; // Cancel:-1, No: 0, Yes: 1
+
+// Popup setup for popup name keys to group id's; uses menu id's for reference
+GMUI_popup_map = ds_map_create();
+
+// Warnings
+GMUI_warnings_map = ds_map_create();
+
+
+// Grouping variables (handled in GMUI_AddLayer())
+// List of groups per layer [layer number; default 0]
+//GMUI_groupList[0] = ds_list_create();
+// List of controls per group [layer number, group number]
+//GMUI_groupControlList[0,0] = ds_list_create();
+
+//Positioning
+GMUI_groupCellX[0,0] = 0;
+GMUI_groupCellY[0,0] = 0;
+GMUI_groupActualX[0,0] = 0;
+GMUI_groupActualY[0,0] = 0;
+GMUI_groupRelativeX[0,0] = 0;
+GMUI_groupRelativeY[0,0] = 0;
+GMUI_groupCellsW[0,0] = 0;
+GMUI_groupCellsH[0,0] = 0;
+GMUI_groupRelativeCellX[0,0] = 0;
+GMUI_groupRelativeCellY[0,0] = 0;
+GMUI_groupAnchor[0,0] = global.GMUIAnchorTopLeft;
+GMUI_groupClickOff[0,0] = false;
+GMUI_groupTransitioning[0,0] = false;
+//GMUI_groupTransitioningControl[0,0] = -1;
+GMUI_groupAction[0,0] = -1;
+GMUI_groupSettingsMap[0,0] = -1;
+
+
+// Call the form code to create the interface
+GMUI_SetForm(argument0);
+UIInterfaceSet = true;
+GMUI_GridSetAllGroupValues(id);
+//GMUI_GridSetAllMenuValues(id);
+GMUI_GridSetRegions();
+
+// Upon success, give the GMUI id back
+return GMUInumber;
+
+
 #define GMUI_CreateMenuType
 ///GMUI_CreateMenuType (Type[script calling], menu name, cell# x, cell# y, cells wide, cells high, Anchor)
 ///Adds a menu to a GMUI layer that controls can be put into
 
 
 // Arguments
-var _SCRIPT,_GMUII,_menuName,_CellX,_CellY,_CW,_CH,_Anchor,_menuNumber,_layerNumber, _menuType;
+var _SCRIPT,_GMUI,_menuName,_CellX,_CellY,_CW,_CH,_Anchor,_menuNumber,_layerNumber, _menuType, _prevLayer;
 _SCRIPT = GMUI_CreateMenuType;
-_GMUII = GMUII();
+_GMUI = GMUII();
 _menuScript = argument0;
 _menuName = string(argument1);
 _CellX = argument2;
@@ -6004,34 +6363,36 @@ if (!is_real(_CellX) || !is_real(_CellY)) {
 }
 
 // Get menu number and assign name to the ID
-(GMUII()).GMUI_menuLastId += 1;
-_menuNumber = (GMUII()).GMUI_menuLastId;
+(_GMUI).GMUI_menuLastId += 1;
+_menuNumber = (_GMUI).GMUI_menuLastId;
 switch (_menuScript) {
-    case GMUI_CreatePopup: ds_map_add((_GMUII).GMUI_popup_map,_menuName,_menuNumber);
+    case GMUI_CreatePopup: ds_map_add((_GMUI).GMUI_popup_map,_menuName,_menuNumber);
         break;
-    case GMUI_CreateWarning: ds_map_add((_GMUII).GMUI_warnings_map,_menuName,_menuNumber);
+    case GMUI_CreateWarning: ds_map_add((_GMUI).GMUI_warnings_map,_menuName,_menuNumber);
         break;
     default:
-    case GMUI_CreateMenu: ds_map_add((_GMUII).GMUI_menu_map,_menuName,_menuNumber);
+    case GMUI_CreateMenu: ds_map_add((_GMUI).GMUI_menu_map,_menuName,_menuNumber);
         break;
 }
 
-
-_layerNumber = GMUI_GetMenuLayer(_GMUII,_menuNumber);
+_prevLayer = (_GMUI).UIAddToLayer;
+_layerNumber = GMUI_GetMenuLayer(_GMUI,_menuNumber);
 if (!GMUI_LayerExists(_layerNumber)) {
-    GMUI_AddLayer(_layerNumber,(_GMUII).GMUI_defaultX,(_GMUII).GMUI_defaultY);
+    GMUI_AddLayer(_layerNumber,(_GMUI).GMUI_defaultX,(_GMUI).GMUI_defaultY);
 }
-
 
 // Create a group with the assigned layer and group numbers
-if (GMUI_CreateGroup(_layerNumber,_menuNumber,_CellX,_CellY,_Anchor)) {
-    (_GMUII).GMUI_groupCellsW[_layerNumber,_menuNumber] = _CW;
-    (_GMUII).GMUI_groupCellsH[_layerNumber,_menuNumber] = _CH;
-    (_GMUII).GMUI_groupClickOff[_layerNumber,_menuNumber] = false;
-    (_GMUII).GMUI_groupAction[_layerNumber,_menuNumber] = -1;
+if (GMUI_CreateGroup(_menuNumber,_CellX,_CellY,_Anchor)) {
+    (_GMUI).GMUI_groupCellsW[_layerNumber,_menuNumber] = _CW;
+    (_GMUI).GMUI_groupCellsH[_layerNumber,_menuNumber] = _CH;
+    (_GMUI).GMUI_groupClickOff[_layerNumber,_menuNumber] = false;
+    (_GMUI).GMUI_groupAction[_layerNumber,_menuNumber] = -1;
+    UIAddToLayer = _prevLayer;
 }
-else
+else {
+    UIAddToLayer = _prevLayer;
     return -1;
+}
 
 
 return _menuNumber;
@@ -6103,8 +6464,8 @@ else if (_bType == 1) {
     // dimensions
     _dbx = (_GMUII).GMUI_groupActualX[_layer,_group] + (_GMUII).GMUI_grid_x[_layer] + _xoffset;
     _dby = (_GMUII).GMUI_groupActualY[_layer,_group] + (_GMUII).GMUI_grid_y[_layer] + _yoffset;
-    _dbw = (_GMUII).GMUI_groupCellsW[_layer,_group]*(_GMUII).cellsize + (_GMUII).GMUI_grid_x[_layer,_group] + _xoffset;
-    _dbh = (_GMUII).GMUI_groupCellsH[_layer,_group]*(_GMUII).cellsize_h + (_GMUII).GMUI_grid_y[_layer,_group] + _yoffset;
+    _dbw = (_GMUII).GMUI_groupCellsW[_layer,_group]*(_GMUII).cellsize + (_GMUII).GMUI_grid_x[_layer,_group];
+    _dbh = (_GMUII).GMUI_groupCellsH[_layer,_group]*(_GMUII).cellsize_h + (_GMUII).GMUI_grid_y[_layer,_group];
     _spr_width = sprite_get_width((_GMUII).GMUI_groupGraphicTopLeft[_layer,_group]);
     _spr_height = sprite_get_height((_GMUII).GMUI_groupGraphicTopLeft[_layer,_group]);
     
@@ -6323,7 +6684,7 @@ if (!GMUI_LayerExists(argument0))
     return false;
 
 
-var _GMUI,_Layer, CW, CH;
+var _GMUI,_Layer, CW, CH, _prevLayer;
 _GMUI = GMUII();
 _Layer = floor(argument0);
 
@@ -6394,8 +6755,11 @@ for(i=0;i<ds_list_size((_GMUI).GMUI_groupList[_Layer]);i+=1) {
     _CellX = (_GMUI).GMUI_groupRelativeCellX[_Layer,_Group];
     _CellY = (_GMUI).GMUI_groupRelativeCellY[_Layer,_Group];
     
-    GMUI_GroupSetPosition(_Layer,_Group,_CellX,_CellY,(_GMUI).GMUI_groupRelativeX[_Layer,_Group],(_GMUI).GMUI_groupRelativeY[_Layer,_Group]);
-
+    _prevLayer = (_GMUI).UIAddToLayer;
+    (_GMUI).UIAddToLayer = _Layer;
+    GMUI_GroupSetPosition(_Group,_CellX,_CellY,(_GMUI).GMUI_groupRelativeX[_Layer,_Group],(_GMUI).GMUI_groupRelativeY[_Layer,_Group]);
+    (_GMUI).UIAddToLayer = _prevLayer;
+    
     // Reset hide position transition values
     (_MasterControl).T_px_group = GMUI_CellGetActualX((_GMUI).GMUI_groupCellX[_Layer,_Group]);
     (_MasterControl).T_py_group = GMUI_CellGetActualY((_GMUI).GMUI_groupCellY[_Layer,_Group]);
@@ -6416,231 +6780,6 @@ GMUI_GridSetRegionsLayer(_Layer);
 
 
 return true;
-
-
-#define GMUI_GridEnabled
-///GMUI_GridEnabled()
-/// Returns if the entire grid is enabled to be used
-
-if (InitialDisable > 0)
-{
-    InitialDisable -= 1;
-    return false;
-}
-else
-{
-    return true;
-}
-
-#define GMUI_GridDraw
-///GMUI_GridDraw()
-///Actions done to operate the grid, executed by the GMUI object in the draw event
-
-
-// Count down initial disable before executing actions
-if (GMUI_GridEnabled())
-{
-    //do grid stuff:
-    
-    // Assign mouse values here to easily switch out later if needed
-    var MX, MY, inRegion, onDirection, mouseHor, mouseVert, ctrlObject, clickOffEvent;
-    MX = mouse_x;
-    MY = mouse_y;
-    inRegion = false;
-    
-    // Check if the mouse has moved before checking for any changed selections
-    if (MX != mouse_px || MY != mouse_py) {
-        // Find if there is a control at that position on the current layer
-        ctrlObject = GMUI_GetControlAtPosition(id,MX,MY);
-        
-        if (ctrlObject != -1) {
-            if (DebugData) TestHoverObject = ctrlObject;
-            
-            if (previousHoveringControl != -1 && ctrlObject != previousHoveringControl) {
-                (previousHoveringControl).Hovering = 0;
-                (previousHoveringControl).HoveringDirection = 0;
-                if (GMUI_IsScript((previousHoveringControl).HoverOffActionScript)) {
-                    script_execute((previousHoveringControl).HoverOffActionScript);
-                }
-                previousHoveringControl = -1;
-            }
-            
-            if (!ctrlObject.Disabled && !ctrlObject.NonClickable) {
-                ctrlObject.Hovering = 0;
-                ctrlObject.HoveringDirection = 0;
-                
-                if (!ctrlObject.IsAdjusted) {
-                    inRegion = true;
-                }
-                else if (GMUI_MouseInAdjustedRegion(ctrlObject,MX,MY)) {
-                    inRegion = true;
-                }
-                    
-                
-                if (inRegion) {
-                    // The picker controls have a region on the sides for up/down
-                    if (ctrlObject.ControlPicker)
-                    {
-                        onDirection = GMUI_MouseInSpecialRegion(ctrlObject,MX,MY);
-                        
-                        if (onDirection != global.GMUIHoveringDirection_None) {
-                            ctrlObject.HoveringDirection = onDirection;
-                        }
-                        else {
-                            ctrlObject.Hovering = 1;
-                        }
-                            
-                    }
-                    else {
-                        ctrlObject.Hovering = 1;
-                    }
-                    
-                    // Set the hovering control and execute optional hover action if set
-                    if (ctrlObject != previousHoveringControl) {
-                        HoveringControl = ctrlObject;
-                        previousHoveringControl = ctrlObject;
-                        
-                        if (GMUI_IsScript(ctrlObject.HoverActionScript)) {
-                            script_execute((ctrlObject).HoverActionScript);
-                        }
-                    }
-                }
-                
-            }
-        }
-        else if (HoveringControl != -1) {
-            if (previousHoveringControl != -1) {
-            global.test = previousHoveringControl;
-                if (GMUI_IsScript((previousHoveringControl).HoverOffActionScript)) {
-                    script_execute((previousHoveringControl).HoverOffActionScript);
-                }
-                previousHoveringControl = -1;
-            }
-            GMUI_ResetControlStatus("Hovering",id);
-            HoveringControl = -1;
-        }
-    
-    
-        // Reset previous position
-        mouse_px = MX;
-        mouse_py = MY;
-    }
-    
-    // Mouse click on grid
-    if (mouse_check_button_pressed(mb_left)) {
-        GMUI_ResetControlStatus("Selected",id);
-        
-        // Check if we are looking at a menu, and if this is a click outside of it first
-        clickOffEvent = false;
-        if (UILayer >= GMUI_menu_layer && UILayer < GMUI_menu_layer + GMUI_menuLastId) {
-            if (GMUI_groupClickOff[UILayer,GMUI_menuCurrent]) {
-                if (!GMUI_MouseInGroupRegion(GMUI_menuCurrent,UILayer)) {
-                    GMUI_ShowMenuId(GMUI_menuCurrent,false,true);
-                    clickOffEvent = true;
-                }
-            }
-        }
-        
-        if (!clickOffEvent) {
-            // Find if there is a control at that position with the current layer
-            ctrlObject = GMUI_GetControlAtPosition(id,MX,MY);
-    
-            if (ctrlObject != -1) {
-                if ((!ctrlObject.Disabled) && (!ctrlObject.NonClickable) && (!ctrlObject.Hidden)) {
-                    if (ctrlObject.IsAdjusted) {
-                        if (GMUI_MouseInAdjustedRegion(ctrlObject,MX,MY))
-                            inRegion = true;
-                    }
-                    else
-                        inRegion = true;
-                    
-                    if (inRegion) {
-                        // Switch between special types, general input types, and other controls
-                        if (ctrlObject.ControlPicker) {
-                            switch (ctrlObject.HoveringDirection) {
-                                case global.GMUIHoveringDirection_Up:
-                                case global.GMUIHoveringDirection_Right:
-                                    if (ctrlObject.ControlType == "intpicker")
-                                        GMUI_SetValue(ctrlObject.valueName,ctrlObject.value + 1,"integer");
-                                    else if (ctrlObject.ControlType == "doublepicker")
-                                        GMUI_SetValue(ctrlObject.valueName,ctrlObject.value + 1,"double");
-                                    else if (ctrlObject.optionsInitialized) {
-                                        if (ctrlObject.value == ctrlObject.OptionsLast)
-                                            ctrlObject.value = ctrlObject.OptionsFirst;
-                                        else
-                                            ctrlObject.value = ds_map_find_next(ctrlObject.OptionsMap,ctrlObject.value);
-                                    }
-                                    break;
-                                case global.GMUIHoveringDirection_Left:
-                                case global.GMUIHoveringDirection_Down:
-                                    if (ctrlObject.ControlType == "intpicker")
-                                        GMUI_SetValue(ctrlObject.valueName,ctrlObject.value - 1,"integer");
-                                    else if (ctrlObject.ControlType == "doublepicker")
-                                        GMUI_SetValue(ctrlObject.valueName,ctrlObject.value - 1,"double");
-                                    else if (ctrlObject.optionsInitialized) {
-                                        if (ctrlObject.value == ctrlObject.OptionsFirst)
-                                            ctrlObject.value = ctrlObject.OptionsLast;
-                                        else
-                                            ctrlObject.value = ds_map_find_previous(ctrlObject.OptionsMap,ctrlObject.value);
-                                    }
-                                    break;
-                                case global.GMUIHoveringDirection_None:
-                                    if (ctrlObject.ControlInput)
-                                        GMUI_GridSelect(ctrlObject);
-                                    break;
-                            }
-                        }
-                        else if (ctrlObject.ControlSelectable) {
-                            // Normal input controls
-                            GMUI_GridSelect(ctrlObject);
-                        }
-                        else if (ctrlObject.ControlType == "checkbox" || ctrlObject.ControlType == "toggle") {
-                            GMUI_SetValue(ctrlObject.valueName,1-ctrlObject.value,"integer");
-                        }
-                        else if (ctrlObject.ActionScript != -1) {
-                            // Control buttons clicked
-                            GMUI_ControlActionScript(ctrlObject);
-                        }
-                    }
-                }
-    
-            }
-            
-        }
-    }
-    
-    // Any key event will trigger a set value on a selected control in GMUI_ControlDraw, so here    ..
-    if (SelectedControl != -1) {
-        if (GMUI_NavigateNextControl(true)) {
-            GMUI_GridNextControl(true);
-        }
-        else if (GMUI_NavigateNextControl(false)) {
-            GMUI_GridNextControl(false);
-        }
-        else if (keyboard_check_pressed(vk_enter)) {
-            GMUI_ResetControlStatus("Selected",id);
-        }
-    }
-    
-    // The grid offset has changed, all controls must update their position
-    if (UIsnaptoview) {
-        if (previousXOffset != view_xview[UIgridview] || previousYOffset != view_yview[UIgridview]) {
-            GMUI_ResetControlStatus("Position",id);
-            previousXOffset = view_xview[UIgridview];
-            previousYOffset = view_yview[UIgridview];
-        }
-    }
-    
-    
-    // Transitioning entire grid
-    
-    
-    
-    // Check if the room size has changed to move any anchored controls positions
-    // each control needs a relative position...
-    
-
-}
 
 
 #define GMUI_GridDrawGroups
@@ -6709,6 +6848,20 @@ for(l=0;l<ds_list_size((_GMUII).GMUI_gridlist);l+=1) {
         }
     
     }
+}
+
+#define GMUI_GridEnabled
+///GMUI_GridEnabled()
+/// Returns if the entire grid is enabled to be used
+
+if (InitialDisable > 0)
+{
+    InitialDisable -= 1;
+    return false;
+}
+else
+{
+    return true;
 }
 
 #define GMUI_GridGetCellX
@@ -6956,6 +7109,130 @@ else if (GMUI_IsScript((argument0).SelectingActionScript)) {
     script_execute((argument0).SelectingActionScript);
 }
 
+#define GMUI_GridSetAllGroupValues
+///GMUI_GridSetAllGroupValues(GMUI instance);
+///Set all mapped values to groups, called after the UI is set
+
+with (argument0) {
+
+    // Cycle through each grid layer
+    var i,l,j,g,k;
+    for(i=0;i<ds_list_size(GMUI_gridlist);i+=1) {
+        l = ds_list_find_value(GMUI_gridlist,i);
+        for(j=0;j<ds_list_size(GMUI_groupList[l]);j+=1) {
+            g = ds_list_find_value(GMUI_groupList[l],j);
+            if (GMUI_groupSettingsMap[l,g] != -1) {
+                // Set group mapped values
+                GMUI_GridSetMappedValues(id,l,g);
+                // Reset map
+                ds_map_destroy(GMUI_groupSettingsMap[l,g]);
+                GMUI_groupSettingsMap[l,g] = -1;
+            }
+        }
+    }
+
+}
+
+#define GMUI_GridSetAllMenuValues
+///GMUI_GridSetAllMenuValues(GMUI instance);
+///Set all mapped values to each type of menu, called after the UI is set
+//
+with (argument0) {
+
+    // Cycle through each grid layer
+    var i,l,j,g,k;
+    for(i=0;i<ds_list_size(GMUI_gridlist);i+=1) {
+        l = ds_list_find_value(GMUI_gridlist,i);
+        for(j=0;j<ds_list_size(GMUI_groupList[l]);j+=1) {
+            g = ds_list_find_value(GMUI_groupList[l],j);
+            if (GMUI_groupSettingsMap[l,g] != -1) {
+                // Set group mapped values
+                //GMUI_GridSetGroupValues(id,l,g);
+                // Reset map
+                ds_map_destroy(GMUI_groupSettingsMap[l,g]);
+                GMUI_groupSettingsMap[l,g] = -1;
+            }
+        }
+    }
+//
+}//
+
+#define GMUI_GridSetMappedValues
+///GMUI_GridSetMappedValues(GMUI instance, layer, group number)
+///Iterate over the value map for the specific group to set values
+
+var _SCRIPT, _Layer, _Map, _Key, _i, _prevLayer;
+_SCRIPT = GMUI_GridSetMappedValues;
+_Layer = argument1;
+_Group = argument2;
+
+with (argument0) {
+    _Map = GMUI_groupSettingsMap[_Layer,_Group];
+    if (_Map == -1) {
+        return false;
+    }
+    
+    _prevLayer = UIAddToLayer;
+    UIAddToLayer = _Layer;
+    
+    _Key = ds_map_find_first(_Map);
+    for (_i=0;_i<ds_map_size(_Map);_i+=1) {
+        // Match key values with the script calls
+        switch (_Key) {
+            //GMUI_GroupSetFadeOnHide, GMUI_MenuSetFadeOnHide, GMUI_PopupSetFadeOnHide
+            case "FadeSpeed":
+                if (ds_map_exists(_Map,"FadeMode")) {
+                    GMUI_GroupSetFadeOnHide(_Group,
+                        ds_map_find_value(_Map,"FadeSpeed"), ds_map_find_value(_Map,"FadeMode"));
+                }
+                else {
+                    GMUI_ThrowErrorDetailed("Missing FadeMode for GroupSetFadeOnHide. Unable to set",_SCRIPT);
+                }
+                break;
+            //GMUI_GroupSetStyle, GMUI_MenuSetStyle, GMUI_PopupSetStyle
+            case "BackgroundColor":
+                if (ds_map_exists(_Map,"BackgroundAlpha")
+                    && ds_map_exists(_Map,"BorderColor")
+                    && ds_map_exists(_Map,"BorderAlpha")
+                    && ds_map_exists(_Map,"IsRoundRect")) {
+                    GMUI_GroupSetStyle(_Group,
+                        ds_map_find_value(_Map, "BackgroundColor"),
+                        ds_map_find_value(_Map, "BackgroundAlpha"),
+                        ds_map_find_value(_Map, "BorderColor"),
+                        ds_map_find_value(_Map, "BorderAlpha"),
+                        ds_map_find_value(_Map, "IsRoundRect"));
+                }
+                else {
+                    GMUI_ThrowErrorDetailed("Missing value for SetStyle. Unable to set",_SCRIPT);
+                }
+                break;
+            //GMUI_GroupSetHidePosition, GMUI_MenuSetHidePosition, GMUI_PopupSetHidePosition
+            case "HideCellX":
+                if (ds_map_exists(_Map,"HideCellY")
+                    && ds_map_exists(_Map,"HideTransition")
+                    && ds_map_exists(_Map,"HideSpeed")) {
+                    GMUI_GroupSetHidePosition(_Group,
+                        ds_map_find_value(_Map, "HideCellX"),
+                        ds_map_find_value(_Map, "HideCellY"),
+                        ds_map_find_value(_Map, "HideTransition"),
+                        ds_map_find_value(_Map, "HideSpeed"));
+                }
+                else {
+                    GMUI_ThrowErrorDetailed("Missing value for SetHidePosition. Unable to set",_SCRIPT);
+                }
+                break;
+            default:
+                break;
+        }
+        _Key = ds_map_find_next(_Map,_Key);
+    }
+    
+    //Restore the previous Add Layer value
+    UIAddToLayer = _prevLayer;
+
+    return true;
+}
+
 #define GMUI_GridSetRegions
 /// Set the control regions for all layers
 
@@ -7043,42 +7320,59 @@ with (argument0) {
 return true;
 
 #define GMUI_GroupSetHidePosition
-///GMUI_GroupSetHidePosition(Layer Number, Group Number, Cell X, Cell Y, Transition_script [or -1], speed in steps)
+///GMUI_GroupSetHidePosition(Group Number, Cell X, Cell Y, Transition_script [or -1], speed in steps)
 // Set a group position to transition from and to when showing or hiding group
 
 //todo: get master control and set coordinates to it
 var _GMUI, _LayerNumber, _GroupNumber, _MasterControl;
 _GMUI = GMUII();
-_LayerNumber = argument0;
-_GroupNumber = argument1;
+_Layer = UIAddToLayer;
+_Group = argument0;
 
-if ((_GMUI).GMUI_groupMasterControl[_LayerNumber,_GroupNumber] == -1) {
+
+// Map values if interface is not done being created
+if (!(_GMUI).UIInterfaceSet) {
+    if ((_GMUI).GMUI_groupSettingsMap[_Layer,_Group] == -1) {
+        (_GMUI).GMUI_groupSettingsMap[_Layer,_Group] = ds_map_create();
+    }
+    
+    ds_map_add((_GMUI).GMUI_groupSettingsMap[_Layer,_Group], "HideCellX", argument1);
+    ds_map_add((_GMUI).GMUI_groupSettingsMap[_Layer,_Group], "HideCellY", argument2);
+    ds_map_add((_GMUI).GMUI_groupSettingsMap[_Layer,_Group], "HideTransition", argument3);
+    ds_map_add((_GMUI).GMUI_groupSettingsMap[_Layer,_Group], "HideSpeed", argument4);
+
+    return true;
+}
+
+
+
+if ((_GMUI).GMUI_groupMasterControl[_Layer,_Group] == -1) {
     GMUI_ThrowErrorDetailed("No controls to assign position", GMUI_GroupSetHidePosition);
     return false;
 }
 else {
     // convert from cell to actual, and call new script to call gmui group transition to cell actual
-    _MasterControl = (_GMUI).GMUI_groupMasterControl[_LayerNumber,_GroupNumber];
+    _MasterControl = (_GMUI).GMUI_groupMasterControl[_Layer,_Group];
     
-    (_MasterControl).T_px_group = GMUI_groupActualX[_LayerNumber,_GroupNumber];
-    (_MasterControl).T_py_group = GMUI_groupActualY[_LayerNumber,_GroupNumber];
+    (_MasterControl).T_px_group = GMUI_groupActualX[_Layer,_Group];
+    (_MasterControl).T_py_group = GMUI_groupActualY[_Layer,_Group];
     
-    (_MasterControl).T_hx_group = GMUI_CellGetActualX(GMUI_GetAnchoredCellX(GMUI_GridGetWidth(GMUII(),_LayerNumber),argument2,(_GMUI).GMUI_groupAnchor[_LayerNumber,_GroupNumber]));
-    (_MasterControl).T_hy_group = GMUI_CellGetActualY(GMUI_GetAnchoredCellY(GMUI_GridGetHeight(GMUII(),_LayerNumber),argument3,(_GMUI).GMUI_groupAnchor[_LayerNumber,_GroupNumber]));
+    (_MasterControl).T_hx_group = GMUI_CellGetActualX(GMUI_GetAnchoredCellX(GMUI_GridGetWidth(GMUII(),_Layer),argument1,(_GMUI).GMUI_groupAnchor[_Layer,_Group]));
+    (_MasterControl).T_hy_group = GMUI_CellGetActualY(GMUI_GetAnchoredCellY(GMUI_GridGetHeight(GMUII(),_Layer),argument2,(_GMUI).GMUI_groupAnchor[_Layer,_Group]));
     
     // If group is currently hidden, start at the hide position
     if ((_MasterControl).GroupHidden) {
-        (_GMUI).GMUI_groupActualX[_LayerNumber,_GroupNumber] = (_MasterControl).T_hx_group;
-        (_GMUI).GMUI_groupActualY[_LayerNumber,_GroupNumber] = (_MasterControl).T_hy_group;
+        (_GMUI).GMUI_groupActualX[_Layer,_Group] = (_MasterControl).T_hx_group;
+        (_GMUI).GMUI_groupActualY[_Layer,_Group] = (_MasterControl).T_hy_group;
         with (_MasterControl) {
             T_hrelx_group = T_hx_group - T_px_group;
             T_hrely_group = T_hy_group - T_py_group;
         }
         
         // Bump all controls to their own hidden positions
-        for(i=0;i<ds_list_size((_GMUI).GMUI_groupControlList[_LayerNumber,_GroupNumber]);i+=1) {
+        for(i=0;i<ds_list_size((_GMUI).GMUI_groupControlList[_Layer,_Group]);i+=1) {
         
-            ctrl = ds_list_find_value((_GMUI).GMUI_groupControlList[_LayerNumber,_GroupNumber],i);
+            ctrl = ds_list_find_value((_GMUI).GMUI_groupControlList[_Layer,_Group],i);
     
             if (instance_exists(ctrl))
             {
@@ -7089,14 +7383,14 @@ else {
         
     }
     
-    (_MasterControl).T_hscript_group = argument4;
-    (_MasterControl).T_hspeed_group = argument5;
+    (_MasterControl).T_hscript_group = argument3;
+    (_MasterControl).T_hspeed_group = argument4;
     return true;
 }
 
 
 #define GMUI_GroupSetPositionAnchored
-///GMUI_GroupSetPositionAnchored(Layer Number, Group Number, Cell X, Cell Y, X Adjustment, Y Adjustment, Anchor)
+///GMUI_GroupSetPositionAnchored(Group Number, Cell X, Cell Y, X Adjustment, Y Adjustment, Anchor)
 ///Change the position of the group (and all of the controls inside it) according to its anchor
 
 // Arguments
@@ -7581,6 +7875,34 @@ else {
     GMUI_ThrowErrorDetailed("Incorrect parameter given",_SCRIPT);
 }
 
+#define GMUI_SetGroupStyle
+///GMUI_SetGroupStyle(Background Color, Background Alpha, Border color, Border Alpha, Is RoundRect)
+///Set the style of the controls that will be used for new controls (to override the defaults)
+if (!GMUI_IsControl() && id != GMUII())
+{
+    GMUI_ThrowError("Invalid control for GMUI_SetGroupStyle");
+    return false;
+}
+
+// If any values are given as negative numbers, those values will remain as the control default [Not set in Demo]
+
+if (argument0 >= 0)
+GroupBackgroundColor = argument0;
+if (argument1 >= 0)
+GroupBackgroundAlpha = minmax(argument1,0,1);
+if (argument2 >= 0)
+GroupBorderColor = argument2;
+if (argument3 >= 0)
+GroupBorderAlpha = minmax(argument3,0,1);
+if (argument4 >= 0)
+GroupIsRoundRect = minmax(argument4,0,1);
+
+
+ControlHasGroupStyle = true;
+
+return true;
+    
+
 #define GMUI_StudioCheckDefined
 ///GMUI_StudioCheckDefined(value) Returns if the argument is defined or not (GM:Studio)
 
@@ -7693,4 +8015,29 @@ return true;
 // (GMUII()).Value
 
 return global.GMUIiid[0];
+
+#define GMUI_ControlPositionToGroup
+///GMUI_ControlPositionToGroup(Control id)
+
+with (argument0) {
+    // Reset positioning to base on group's position
+    CellX = GMUI_GetAnchoredCellX((GMUIP).GMUI_groupCellsW[Layer,Group],RelativeCellX,Anchor) + (GMUIP).GMUI_groupCellX[Layer,Group];
+    CellY = GMUI_GetAnchoredCellY((GMUIP).GMUI_groupCellsH[Layer,Group],RelativeCellY,Anchor) + (GMUIP).GMUI_groupCellY[Layer,Group];
+    
+    ActualX = GMUI_CellGetActualX(CellX);
+    ActualY = GMUI_CellGetActualY(CellY);
+    
+    
+    // If control is outside of the group boundaries, expand the group to fit it
+    if (CellX + CellWide > (GMUIP).GMUI_groupCellX[Layer,Group] + (GMUIP).GMUI_groupCellsW[Layer,Group]) {
+        (GMUIP).GMUI_groupCellsW[Layer,Group] = CellX + CellWide - (GMUIP).GMUI_groupCellX[Layer,Group];
+    }
+    if (CellY + CellHigh > (GMUIP).GMUI_groupCellY[Layer,Group] + (GMUIP).GMUI_groupCellsH[Layer,Group]) {
+        (GMUIP).GMUI_groupCellsH[Layer,Group] = CellY + CellHigh - (GMUIP).GMUI_groupCellY[Layer,Group];
+    }
+    
+    // Update control draw location in the room
+    GMUI_ControlUpdateXY(id);
+}
+
 
