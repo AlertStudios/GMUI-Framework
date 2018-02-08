@@ -86,6 +86,7 @@ GMUI_CreateSetDefaultArea();
 GMUI_gridlist = ds_list_create();
 GMUI_defaultX = 0;
 GMUI_defaultY = 0;
+GMUI_grid_Transition = false; // Any layer is transitioning flag
 
 GMUI_AddLayer(0,GMUI_defaultX,GMUI_defaultY);
 

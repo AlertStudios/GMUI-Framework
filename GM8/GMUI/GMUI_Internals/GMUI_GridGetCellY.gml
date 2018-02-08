@@ -6,11 +6,7 @@
 
 var _GMUII,_offset;
 _GMUII = argument0;
-_offset = 0;
-
-if ((_GMUII).UIsnaptoview) {
-    _offset = view_yview[(_GMUII).UIgridview];
-}
+_offset = GMUI_GridViewOffsetY(_GMUII);
 
 return GMUI_GridGetCellYOffset(_GMUII,argument1,argument2,_offset);
 //return ceil((argument2-(_GMUII).GMUI_grid_y[_LayerNumber]-_offset+1)/(_GMUII).cellsize_h)-1;

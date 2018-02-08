@@ -45,13 +45,8 @@ else
 }
 
 // Adjustments if using views
-_xoffset = 0;
-_yoffset = 0;
-
-if (((_Control).GMUIP).UIsnaptoview) {
-    _xoffset = view_xview[((_Control).GMUIP).UIgridview];
-    _yoffset = view_yview[((_Control).GMUIP).UIgridview];
-}
+_xoffset = GMUI_GridViewOffsetX((_Control).GMUIP);
+_yoffset = GMUI_GridViewOffsetY((_Control).GMUIP);
 
 // Adjustment if grid is offset
 _xoffset += ((_Control).GMUIP).GMUI_grid_x[(_Control).Layer];

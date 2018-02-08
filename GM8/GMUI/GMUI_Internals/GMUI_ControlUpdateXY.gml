@@ -11,10 +11,9 @@ if (!GMUI_IsControlID(_ctrl)) {
     return false;
 }
 
-if ((_GMUIP).UIsnaptoview) {
-    _xoffset = view_xview[(_GMUIP).UIgridview];
-    _yoffset = view_yview[(_GMUIP).UIgridview];
-}
+_xoffset = GMUI_GridViewOffsetX(_GMUIP);
+_yoffset = GMUI_GridViewOffsetY(_GMUIP);
+
 _lw = GMUI_GridGetWidth((_ctrl).GMUIP,(_ctrl).Layer);
 _lh = GMUI_GridGetHeight((_ctrl).GMUIP,(_ctrl).Layer);
 

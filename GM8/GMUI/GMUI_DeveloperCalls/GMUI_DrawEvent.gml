@@ -55,11 +55,13 @@ if (GMUI_GridEnabled())
                         }
                         else {
                             ctrlObject.Hovering = 1;
+                            GMUI_GridUpdateLayer(ctrlObject.GMUIP,ctrlObject.Layer); //test
                         }
                             
                     }
                     else {
                         ctrlObject.Hovering = 1;
+                        GMUI_GridUpdateLayer(ctrlObject.GMUIP,ctrlObject.Layer); //test
                     }
                     
                     // Set the hovering control and execute optional hover action if set
@@ -78,6 +80,7 @@ if (GMUI_GridEnabled())
         else if (HoveringControl != -1) {
             if (previousHoveringControl != -1) {
             global.test = previousHoveringControl;
+            GMUI_GridUpdateLayer(previousHoveringControl.GMUIP,previousHoveringControl.Layer); //test
                 if (GMUI_IsScript((previousHoveringControl).HoverOffActionScript)) {
                     script_execute((previousHoveringControl).HoverOffActionScript);
                 }
@@ -122,6 +125,7 @@ if (GMUI_GridEnabled())
                         inRegion = true;
                     
                     if (inRegion) {
+                        GMUI_GridUpdateLayer(ctrlObject.GMUIP,ctrlObject.Layer); //test
                         // Switch between special types, general input types, and other controls
                         if (ctrlObject.ControlPicker) {
                             switch (ctrlObject.HoveringDirection) {
@@ -182,7 +186,7 @@ if (GMUI_GridEnabled())
         }
     }
     
-    // Any key event will trigger a set value on a selected control in GMUI_ControlDraw, so here    ..
+    // Any key event will trigger a set value on a selected control in GMUI_ControlDraw; navigate to next...
     if (SelectedControl != -1) {
         if (GMUI_NavigateNextControl(true)) {
             GMUI_GridNextControl(true);
@@ -195,8 +199,8 @@ if (GMUI_GridEnabled())
         }
     }
     
-    // The grid offset has changed, all controls must update their position
-    if (UIsnaptoview) {
+    // The grid offset has changed, all controls must update their position if not drawn on surfaces
+    if (UIsnaptoview && !UIEnableSurfaces) {
         if (previousXOffset != view_xview[UIgridview] || previousYOffset != view_yview[UIgridview]) {
             GMUI_ResetControlStatus("Position",id);
             previousXOffset = view_xview[UIgridview];
@@ -205,12 +209,54 @@ if (GMUI_GridEnabled())
     }
     
     
-    // Transitioning entire grid
+    // Draw surface layers, and/or adjust a transitioning layer
+    if (GMUI_grid_Transition || UIEnableSurfaces) {
+        // Loop through each layer
+        var _i, _l;
+        for(_i=0;_i<ds_list_size(GMUI_gridlist);_i+=1) {
+            // Check for transition
+            _l = ds_list_find_value(GMUI_gridlist,_i);
+            
+            if (GMUI_StudioCheckDefined(_l)) {
+                if (GMUI_grid_Transitioning[_l]) {
+                    GMUI_grid_Transition = true;
+                    
+                    if (GMUI_grid_T_t[_l] < GMUI_grid_T_d[_l]) {
+                        GMUI_grid_T_t[_l] += 1;
+                        GMUI_grid_x[_l] = script_execute(GMUI_grid_T_script[_l],GMUI_grid_T_t[_l],GMUI_grid_T_bx[_l],GMUI_grid_T_cx[_l],GMUI_grid_T_d[_l]);
+                        GMUI_grid_y[_l] = script_execute(GMUI_grid_T_script[_l],GMUI_grid_T_t[_l],GMUI_grid_T_by[_l],GMUI_grid_T_cy[_l],GMUI_grid_T_d[_l]);
+                    }
+                    else {
+                        GMUI_grid_T_t[_l] = GMUI_grid_T_d[_l];
+                        GMUI_grid_Transitioning[_l] = false;
+                        GMUI_grid_Transition = false;
+                    }
+                    // Need to redraw the layers of surfaces if enabled
+                    if (UIEnableSurfaces) {
+                        GMUI_gridNeedsDrawUpdate[_l] = 1;
+                    }
+                }
+                
+                if (surface_exists(GMUI_gridSurface[_l])) {
+                    draw_surface(GMUI_gridSurface[_l],GMUI_grid_x[_l],GMUI_grid_y[_l]);
+                    // Reset update flag
+                    if (GMUI_gridNeedsDrawUpdate[_l])
+                        GMUI_gridNeedsDrawUpdate[_l] = false; 
+                }
+            }
+        }
+        
+        // Need to redraw each step if not using surfaces
+        if (!UIEnableSurfaces) {
+            GMUI_ResetControlStatus("Position",id);
+        }
+    }
+    
+    // If using surfaces, we need to draw each layer here
     
     
     
-    // Check if the room size has changed to move any anchored controls positions
-    // each control needs a relative position...
+    // Check if the room size has changed to move any anchored controls positions?
     
 
 }

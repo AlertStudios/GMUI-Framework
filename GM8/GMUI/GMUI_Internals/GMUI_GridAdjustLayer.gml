@@ -1,5 +1,5 @@
 #define GMUI_GridAdjustLayer
-///GMUI_GridAdjustLayer(Layer Number, cells wide, cells high)
+///GMUI_GridAdjustLayer(Layer Number [or all: -1], cells wide, cells high)
 /// Adjusts the layer's grid based on new dimensions and moves the controls according to their anchors
 
 // Layer needs to exist
@@ -44,7 +44,7 @@ for(i=0;i<ds_list_size((_GMUI).GMUI_controlList);i+=1) {
     if (!instance_exists(ctrl)) {
         GMUI_ThrowError("Control no longer exists. GMUI_GridAdjustLayer()");
     }
-    else if ((ctrl).Layer == _Layer && ctrl.Group == 0) {
+    else if (((ctrl).Layer == _Layer || _Layer == -1) && ctrl.Group == 0) {
         // The relative values when the grid is adjusted has four relative positions: Middle X's, Middle Y's, Right X's, Bottom Y's)
     
         // Use the anchor and position relative to it 

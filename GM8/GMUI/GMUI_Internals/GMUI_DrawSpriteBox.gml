@@ -12,10 +12,8 @@ _alpha = minmax(argument4,0,1);
 var _dbx, _dby, _dbw, _dbh, _xoffset, _yoffset, _spr_width, _spr_height, _spr_isFixed,
     _sprTopLeft, _sprTop, _sprTopRight, _sprRight, _sprBottomRight, _sprBottom, _sprBottomLeft, _sprLeft, _sprCenter;
 
-if ((_GMUII).UIsnaptoview) {
-    _xoffset = view_xview[(_GMUII).UIgridview];
-    _yoffset = view_yview[(_GMUII).UIgridview];
-}
+_xoffset = GMUI_GridViewOffsetX(_GMUII);
+_yoffset = GMUI_GridViewOffsetY(_GMUII);
 
 if (_bType == 0) {
     // Control

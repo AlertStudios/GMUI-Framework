@@ -2,13 +2,12 @@
 ///GMUI_ControlTranstionToActual("ControlName",Grid X, Grid Y, Transition Script, Time)
 ///
 
-var _ctrl, _iid, _GridX, _GridY;
-_iid = GMUII();
+var _ctrl, _GridX, _GridY;
 _GridX = argument1;
 _GridY = argument2;
 
 // Retrieve _ctrl from the reference map
-_ctrl = ds_map_find_value((_iid).GMUI_map,string(argument0));
+_ctrl = ds_map_find_value((GMUII()).GMUI_map,string(argument0));
 if (string(_ctrl) == "0")
     return false;
     

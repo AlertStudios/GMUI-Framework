@@ -48,8 +48,9 @@ if (SliderSmoothSnap) {
             Slider_t += 1;
             SliderRelativeXorY = script_execute(SliderMovementScript,Slider_t,Slider_b,Slider_c,Slider_d);
         }
-        else
+        else {
             Slider_t = Slider_d;
+        }
     }
 }
 else {
@@ -61,6 +62,7 @@ else {
     else
         SliderRelativeXorY = SliderRelativeFinalXorY;
 }
+
     
 // Update actual value
 if (!argument0) {

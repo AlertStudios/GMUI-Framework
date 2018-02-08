@@ -31,6 +31,15 @@ ds_list_add((GMUII()).GMUI_gridlist,_Layer);
 (GMUII()).GMUI_grid_x[_Layer] = argument1;
 (GMUII()).GMUI_grid_y[_Layer] = argument2;
 
+// Value to check if transitioning (The rest of the values are defined when called: GMUI_LayerTransitionToActual)
+(GMUII()).GMUI_grid_Transitioning[_Layer] = false;
+
+// If using surfaces, the draw update flag is set on the layer level
+if ((GMUII()).UIEnableSurfaces) {
+    (GMUII()).GMUI_gridSurface[_Layer] = noone;
+    (GMUII()).GMUI_gridNeedsDrawUpdate[_Layer] = 1;
+}
+
 
 if ((GMUII()).UILayerTop < _Layer)
     (GMUII()).UILayerTop = _Layer;

@@ -79,6 +79,7 @@
           <script>scripts\GMUI_GroupTransitionStop.gml</script>
           <script>scripts\GMUI_GroupTransitionToActual.gml</script>
           <script>scripts\GMUI_GroupTransitionToCell.gml</script>
+          <script>scripts\GMUI_LayerTransitionToXY.gml</script>
           <script>scripts\GMUI_Transition.gml</script>
         </scripts>
         <scripts name="GMUI_Shortcuts">
@@ -87,6 +88,7 @@
           <script>scripts\color_alpha.gml</script>
           <script>scripts\align.gml</script>
           <script>scripts\minmax.gml</script>
+          <script>scripts\surface_target.gml</script>
         </scripts>
         <script>scripts\GMUI_Add.gml</script>
         <script>scripts\GMUI_AddLayer.gml</script>
@@ -246,6 +248,9 @@
         <script>scripts\GMUI_GridGetMouseCellX.gml</script>
         <script>scripts\GMUI_GridGetMouseCellY.gml</script>
         <script>scripts\GMUI_GridGetWidth.gml</script>
+        <script>scripts\GMUI_GridUpdateLayer.gml</script>
+        <script>scripts\GMUI_GridViewOffsetX.gml</script>
+        <script>scripts\GMUI_GridViewOffsetY.gml</script>
         <script>scripts\GMUI_GroupExists.gml</script>
         <script>scripts\GMUI_GroupSetHidePosition.gml</script>
         <script>scripts\GMUI_GroupSetPositionAnchored.gml</script>

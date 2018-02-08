@@ -6,10 +6,8 @@
 var _GMUII, layer, l, g, gx, gy, gw, gh, xoffset, yoffset, spr_width, spr_height;
 _GMUII = argument0;
 
-if ((_GMUII).UIsnaptoview) {
-    xoffset = view_xview[(_GMUII).UIgridview];
-    yoffset = view_yview[(_GMUII).UIgridview];
-}
+xoffset = GMUI_GridViewOffsetX(_GMUII);
+yoffset = GMUI_GridViewOffsetY(_GMUII);
 
 for(l=0;l<ds_list_size((_GMUII).GMUI_gridlist);l+=1) {
 

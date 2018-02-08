@@ -7,10 +7,8 @@ if (DebugData && !RemovingGMUI) {
     gridW = GMUI_GridGetWidth(GMUII(),0);
     gridH = GMUI_GridGetHeight(GMUII(),0);
     
-    if ((GMUII()).UIsnaptoview) {
-        xoffset = view_xview[(GMUII()).UIgridview];
-        yoffset = view_yview[(GMUII()).UIgridview];
-    }
+    xoffset = GMUI_GridViewOffsetX(GMUII());
+    yoffset = GMUI_GridViewOffsetY(GMUII());
     
     // draw the grid lines 
     color_alpha(c_black,0.1);

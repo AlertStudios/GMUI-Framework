@@ -22,13 +22,8 @@ if (!GMUI_GroupExists(_LayerNumber,_GroupNumber)) {
     GMUI_ThrowError("Group " + string(_GroupNumber) + " doesn't exist on layer " + string(_LayerNumber) + ". GMUI_GroupSetPositionActual");
 }
 
-_offsetx = 0;
-_offsety = 0;
-
-if ((GMUII()).UIsnaptoview) {
-    _offsetx = view_xview[(GMUII()).UIgridview];
-    _offsety = view_yview[(GMUII()).UIgridview];
-}
+_offsetx = GMUI_GridViewOffsetX(GMUII());
+_offsety = GMUI_GridViewOffsetY(GMUII());
 
 _adjx = _xcord - _offsetx - GMUI_CellGetActualX(GMUI_GridGetCellX(GMUII(),_LayerNumber,_xcord));
 _adjy = _ycord - _offsety - GMUI_CellGetActualY(GMUI_GridGetCellY(GMUII(),_LayerNumber,_ycord));

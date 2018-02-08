@@ -118,6 +118,7 @@
               <file>GMUI_GroupTransitionStop.gml</file>
               <file>GMUI_GroupTransitionToActual.gml</file>
               <file>GMUI_GroupTransitionToCell.gml</file>
+              <file>GMUI_LayerTransitionToXY.gml</file>
               <file>GMUI_Transition.gml</file>
               <folders />
             </folder>
@@ -127,6 +128,7 @@
               <file>hsv.gml</file>
               <file>minmax.gml</file>
               <file>rgb.gml</file>
+              <file>surface_target.gml</file>
               <folders />
             </folder>
           </folders>
@@ -197,6 +199,9 @@
           <file>GMUI_GridSetMappedValues.gml</file>
           <file>GMUI_GridSetRegions.gml</file>
           <file>GMUI_GridSetRegionsLayer.gml</file>
+          <file>GMUI_GridUpdateLayer.gml</file>
+          <file>GMUI_GridViewOffsetX.gml</file>
+          <file>GMUI_GridViewOffsetY.gml</file>
           <file>GMUI_GroupExists.gml</file>
           <file>GMUI_GroupSetClickOff.gml</file>
           <file>GMUI_GroupSetHidePosition.gml</file>

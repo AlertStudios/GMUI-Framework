@@ -59,7 +59,7 @@ else if (string_lower(a0) == "position" || a0 == "2") {
     if (string(ff) == "0")
         GMUI_ThrowErrorDetailed("No controls exist",_SCRIPT);
     else {
-        // Set all controls' hover variable to false
+        // Set all controls' position update to true
         ms = ds_map_size((_GID).GMUI_map);
         for (m=0; m < ms; m+=1) {
             if (string(ff) != "0" && GMUI_StudioCheckDefined(ff)) {

@@ -518,12 +518,20 @@ layerDepth_menus = layerDepth_messages - 1;
 
 
 #define GMUI_Settings
-///GMUI_Settings("OptionalInterfaceArgument") Settings for GMUI - Do not delete! Modify to fit your preferences
+///GMUI_Settings(OptionalInterfaceArgument) Settings for GMUI - Do not delete! Modify to fit your preferences
 ///Called from the initialization of each GMUI interface. Argument can set specific settings depending on the interface.
-
+// Don't change these values in runtime, only change them here.
 
 // Required: Define the controls' object!
 GMUI_controlobject = GMUI_control;
+
+// Required: Snap the grid to the view position in the room
+UIsnaptoview = true;
+// Required: The view number to snap to
+UIgridview = 0;
+
+// Required: Surfaces are needed for listboxes and scrollable menus, but also draws the grid as a surface itself
+UIEnableSurfaces = true;
 
 // Required: Flexibility to add graphical effects settings to the controls: (currently unused)
 var basic, good, best; basic = 0; good = 1; best = 2;
@@ -553,7 +561,7 @@ DebugData = false;
 // Argument can be used optionally for different GMUI instances
 var OptionalInterfaceName; OptionalInterfaceName = argument0;
 switch (OptionalInterfaceName) {
-    case "":
+    case _Test_Form:
         // Do Something
     break;
 }
@@ -823,13 +831,12 @@ GMUI_ControlTransitionToActual(argument0,_ActualX,_ActualY,argument3,argument4);
 ///GMUI_ControlTranstionToActual("ControlName",Grid X, Grid Y, Transition Script, Time)
 ///
 
-var _ctrl, _iid, _GridX, _GridY;
-_iid = GMUII();
+var _ctrl, _GridX, _GridY;
 _GridX = argument1;
 _GridY = argument2;
 
 // Retrieve _ctrl from the reference map
-_ctrl = ds_map_find_value((_iid).GMUI_map,string(argument0));
+_ctrl = ds_map_find_value((GMUII()).GMUI_map,string(argument0));
 if (string(_ctrl) == "0")
     return false;
     
@@ -935,10 +942,42 @@ return true;
 
 
 
-#define GMUI_Transition
-///GMUI_Transition()
+#define GMUI_LayerTransitionToXY
+///GMUI_LayerTransitionToXY(Layer number, Room X, Room Y, Transition Script, Time)
 
-/// will be moved to internals when done
+var _Layer; _Layer = argument0;
+
+if (!GMUI_LayerExists(_Layer)) {
+    GMUI_ThrowErrorDetailed("Layer doesn't exist!", GMUI_LayerTransitionToXY);
+    return false;
+}
+
+if (!GMUI_IsScript(argument3)) {
+    GMUI_ThrowErrorDetailed("Script not found", GMUI_LayerTransitionToXY);
+    return false;
+}
+
+with (GMUII()) {
+    GMUI_grid_Transitioning[_Layer] = true;
+    GMUI_grid_T_script[_Layer] = argument3;
+    
+    GMUI_grid_T_t[_Layer] = 0;
+    
+    if (argument4 > 0)
+        GMUI_grid_T_d[_Layer] = argument4;
+    else
+        GMUI_grid_T_d[_Layer] = room_speed;
+    
+    GMUI_grid_T_bx[_Layer] = GMUI_grid_x[_Layer];
+    GMUI_grid_T_by[_Layer] = GMUI_grid_x[_Layer];
+    GMUI_grid_T_cx[_Layer] = argument1 - GMUI_grid_x[_Layer];
+    GMUI_grid_T_cy[_Layer] = argument2 - GMUI_grid_y[_Layer];
+    
+    // Signal to instance that a layer is transitioning...
+    GMUI_grid_Transition = true;
+}
+
+return true;
 
 #define hsv
 ///hsv(hue, saturation, value) Shortcut for making an hsv based color
@@ -966,6 +1005,23 @@ if (is_real(argument0))
     return min(max(argument0,argument1),argument2);
 else
     return argument1;
+
+#define surface_target
+///surface_target(surface, width if created, height if created)
+///Sets the target to the surface or creates it if it doesn't exist
+
+var _Surface;
+
+if (surface_exists(argument0)) {
+    surface_set_target(argument0);
+    _Surface = argument0;
+}
+else {
+    _Surface = surface_create(argument1,argument2);
+    surface_set_target(_Surface);
+}
+
+return _Surface;
 
 #define GMUI_Add
 ///GMUI_Add("Name", "Type String", cell# x, cell# y, cells wide (min 1), cells high (min 1), Anchor)
@@ -1006,6 +1062,15 @@ ds_list_add((GMUII()).GMUI_gridlist,_Layer);
 (GMUII()).GMUI_grid[_Layer] = ds_grid_create((GMUII()).GMUI_grid_w[_Layer],(GMUII()).GMUI_grid_h[_Layer]);
 (GMUII()).GMUI_grid_x[_Layer] = argument1;
 (GMUII()).GMUI_grid_y[_Layer] = argument2;
+
+// Value to check if transitioning (The rest of the values are defined when called: GMUI_LayerTransitionToActual)
+(GMUII()).GMUI_grid_Transitioning[_Layer] = false;
+
+// If using surfaces, the draw update flag is set on the layer level
+if ((GMUII()).UIEnableSurfaces) {
+    (GMUII()).GMUI_gridSurface[_Layer] = noone;
+    (GMUII()).GMUI_gridNeedsDrawUpdate[_Layer] = 1;
+}
 
 
 if ((GMUII()).UILayerTop < _Layer)
@@ -1574,6 +1639,442 @@ with (GMUII()) {
         return true;
     }
 }
+
+#define GMUI_ControlDraw
+///GMUI_ControlDraw(Draw the control [bool])
+/// The actions done per step for a control added to the grid, along with drawing things
+
+// STEP actions:
+
+// Run transition action
+if (Transitioning) {
+    if (GMUI_IsScript(TransitionScript)) {
+        if (Hovering)
+            Hovering = false;
+        if (TooltipId != -1)
+            GMUI_ControlHide(TooltipId,1);
+            
+        if (T_t < T_d) {
+            T_t += 1;
+            ActualX = script_execute(TransitionScript,T_t,T_bx,T_cx,T_d);
+            ActualY = script_execute(TransitionScript,T_t,T_by,T_cy,T_d);
+            
+            if (TransitioningGroup && (GMUIP).GMUI_groupMasterControl[Layer,Group] == id) {
+                (GMUIP).GMUI_groupActualX[Layer,Group] = script_execute(TransitionScript,T_t,T_bx_group,T_cx_group,T_d);
+                (GMUIP).GMUI_groupActualY[Layer,Group] = script_execute(TransitionScript,T_t,T_by_group,T_cy_group,T_d);
+            }
+        }
+        else {
+            T_t = T_d;
+            Transitioning = false;
+            
+            if (TransitioningGroup) {
+                if ((GMUIP).GMUI_groupMasterControl[Layer,Group] == id) {
+                    var _getGroupX,_getGroupY,_diffX,_diffY, _origRelCellX, _origRelCellY;
+                    _diffX = (GMUIP).GMUI_groupActualX[Layer,Group]-GMUI_CellGetActualX(GMUI_GridGetCellXRoom(GMUIP,Layer,T_dx_group));
+                    _diffY = (GMUIP).GMUI_groupActualY[Layer,Group]-GMUI_CellGetActualY(GMUI_GridGetCellYRoom(GMUIP,Layer,T_dy_group));
+                    
+                    // This part uses a left anchor temporarily
+                    _getGroupX = GMUI_GetAnchoredCellX(GMUI_GridGetWidth(GMUIP,Layer),GMUI_GridGetCellXRoom(GMUIP,Layer,(GMUIP).GMUI_groupActualX[Layer,Group]),global.GMUIAnchorDefault);
+                    _getGroupY = GMUI_GetAnchoredCellY(GMUI_GridGetHeight(GMUIP,Layer),GMUI_GridGetCellYRoom(GMUIP,Layer,(GMUIP).GMUI_groupActualY[Layer,Group]),global.GMUIAnchorDefault);
+                    
+                    _origRelCellX = (GMUIP).GMUI_groupRelativeCellX[Layer,Group];
+                    _origRelCellY = (GMUIP).GMUI_groupRelativeCellY[Layer,Group];
+                    
+                    GMUI_GroupSetPositionAnchored(Layer,Group,_getGroupX,_getGroupY,
+                        _diffX,_diffY,
+                        global.GMUIAnchorDefault);
+                    
+                    // Reassigning original relative-to-anchor coordinates
+                    (GMUIP).GMUI_groupRelativeCellX[Layer,Group] = _origRelCellX;
+                    (GMUIP).GMUI_groupRelativeCellY[Layer,Group] = _origRelCellY;
+                        
+                    TransitioningGroup = false;
+                }
+            }
+            else {
+                CellX = GMUI_GridGetCellX(GMUIP,Layer,ActualX);
+                CellY = GMUI_GridGetCellY(GMUIP,Layer,ActualY);
+                
+                GMUI_ControlSetPositioning(CellX*(GMUIP).cellsize,CellY*(GMUIP).cellsize_h,ActualW,ActualH);
+            }            
+        }
+       
+        // Update control draw location in the room
+        NeedsPositionUpdate = true;
+    }
+    else {
+        Transitioning = false;
+    }
+}
+
+// Run fade in/out action
+if (FadeCalled != 0) {
+    // Fade in, else, fade out
+    if (FadeCalled > 0) {
+        if (FadeAlpha < FadeIn) {
+            FadeAlpha += 1/FadeTime;
+        }
+        else {
+            FadeAlpha = FadeIn;
+            FadeCalled = 0;
+        }
+    }
+    else {
+        if (FadeAlpha > FadeOut) {
+            FadeAlpha -= 1/FadeTime;
+        }
+        else {
+            FadeAlpha = FadeOut;
+            FadeCalled = 0;
+        }
+    }
+    NeedsDrawUpdate = true;
+}
+
+// Set new position if the view offset has changed, or transitioning
+if (NeedsPositionUpdate) {
+    GMUI_ControlUpdateXY(id);
+    NeedsPositionUpdate = false;
+    GMUI_GridUpdateLayer(GMUIP,Layer); //test, currently unused
+}
+
+
+
+// PROCESS INPUT //
+// Don't process any input or drawing if hidden
+if (!Hidden) {
+    // Easing update if slider control
+    if (ControlType == "slider") {
+        if (HoldingTime == 1) {
+            GMUI_ControlSliderMove(true);
+        }
+        else if (Slider_t < Slider_d && sliderComputed) {
+            GMUI_ControlSliderMove(false);
+            
+            if (!SliderSmoothSnap)
+                Slider_t = Slider_d;
+        }
+    }
+    else if (ControlType == "toggle" || ControlType == "checkbox") {
+        // Fade or Slide update if checkbox/toggle control
+        if (Toggle_t < Toggle_d) {
+            Toggle_t += 1;
+            GMUI_GridUpdateLayer(GMUIP,Layer);
+            if (string(value) == "0")
+                ToggleRelativeXorY = ToggleDistance - (Toggle_c * Toggle_t);
+            else if (string(value) == "1")
+                ToggleRelativeXorY = Toggle_c * Toggle_t;
+        }
+    }
+    if (Selected) {
+        // Holding click event
+        if (mouse_check_button(mb_left)) {
+            HoldingTime += 1;            
+            if (!Holding && HoldingTime > HoldingThreshold)
+                Holding = true;
+        }
+        if (Holding) {
+            if (mouse_check_button_released(mb_left)) {
+                Holding = false;
+                HoldingTime = 0;
+            }
+            else if (ControlType == "slider") {
+                // Special case for slider: Holding will move the thumb
+                GMUI_ControlSliderMove(true);
+            }
+        }
+        
+    
+        // Filter keyboard string to type of input allowed
+        if (ControlInput && (keyboard_lastkey > 20 || keyboard_lastkey == vk_backspace)) {
+            if (keyboard_check(vk_anykey)) {
+                //If 'Overwriting', then reset back to just selected
+                if (DoubleSelected) {
+                    if (string_length(keyboard_string) > 0 && string_length(GMUI_ControlFilterInput(ControlType,keyboard_lastchar)) > 0)
+                        keyboard_string = string_copy(keyboard_string,string_length(keyboard_string),1);
+                    else
+                        keyboard_string = "";
+                        
+                    DoubleSelected = false;
+                }
+                else {
+                    // On keypress, sanitize input per the type
+                    keyboard_string = GMUI_ControlFilterInput(ControlType,keyboard_string);
+                    
+                    // Max characters allowed for the control's string
+                    if (ControlMaxStringLength > 0)
+                        keyboard_string = string_copy(keyboard_string,1,ControlMaxStringLength);
+                }
+            }
+            
+            // Only does assignment of the value once the key is released (and not transitioning)
+            if (Transitioning) {
+                keyboard_string = valueString;
+            }
+            else if (keyboard_check_released(vk_anykey)) {
+                // On release, we need to filter again incase somebody "fat-fingers" multiple keys fast enough to miss the first filter.. interesting.
+                keyboard_string = GMUI_ControlFilterInput(ControlType,keyboard_string);
+                
+                // Assign keyboard string as the value string
+                valueString = keyboard_string;
+                
+                if (ControlIsNumeric) {
+                    // As long as the string is valid, assign stripped zeros to value string, and then assign value
+                    if (valueString != "." && valueString != "-") {
+                        valueString = keyboard_string;
+                        value = real(valueString);
+                        if (ControlDataType == global.GMUIDataTypeInteger) {
+                            value = round(value);
+                        }
+                        
+                        // Found the change!
+                        valueChangeDetected = 1;
+                    }
+                }
+                else if (ControlIsString) {
+                    value = valueString;
+                }
+            }
+        }
+    }
+}
+
+if (valueChangeDetected) {
+    // This may need some checks on if it should be allowed to set value... we'll see
+                
+    GMUI_SetValue(valueName,value,ControlDataType);
+    
+    //Reset
+    valueChangeDetected = 0;
+}
+
+
+
+// DRAW //
+// Draw if set, and if using surfaces draw if an update is needed
+if (argument0 == true) {
+    // Call the draw actions for groups if in one and is set to draw
+    if ((GMUIP).GMUI_groupMasterControl[Layer,Group] == id) {
+        if (!GroupHidden || FadeCalled != 0) {
+            GMUI_ControlDrawGroup(GMUIP,Layer,Group,FadeAlpha,FadeMode);
+        }
+    }
+    
+    // Don't process any drawing if hidden or update not needed
+    if (Hidden && FadeCalled == 0)
+        return false;
+        
+    // When using surfaces, check if there actually needs to be a draw update before setting the target
+    if ((GMUIP).UIEnableSurfaces) {//if (0) disable
+        if (NeedsDrawUpdate) {
+            if ((GMUIP).GMUI_gridNeedsDrawUpdate[Layer] == false) {
+                //surface_free((GMUIP).GMUI_gridSurface[Layer])
+                //draw_set_blend_mode(bm_subtract);
+                draw_set_blend_mode_ext(bm_dest_color, bm_zero)
+                color_alpha(c_white,0);
+                draw_rectangle(0,0,(GMUIP).UIgridwidth,(GMUIP).UIgridheight,0);
+                draw_set_blend_mode(bm_normal);
+            }
+            
+            // Set the surface target if it exists, otherwise create it
+            (GMUIP).GMUI_gridSurface[Layer] = surface_target((GMUIP).GMUI_gridSurface[Layer], (GMUIP).UIgridwidth, (GMUIP).UIgridheight);
+            (GMUIP).GMUI_gridNeedsDrawUpdate[Layer] = true;
+            NeedsDrawUpdate = false;
+        }
+        else
+            return false;
+    }
+    
+        
+    // Draw the control based on the type and user-defined settings
+    var padx, _BackgroundAlpha;
+    padx = ControlPaddingX;
+    _BackgroundAlpha = min(ControlBackgroundAlpha,FadeAlpha);
+    _HoverAlpha = min(ControlHoverAlpha,FadeAlpha);
+    _SelectAlpha = min(ControlSelectAlpha,FadeAlpha);
+    _OverwriteAlpha = min(ControlOverwriteAlpha,FadeAlpha);
+    _FontAlpha = min(ControlFontAlpha,FadeAlpha);
+        
+    // Start drawing the control (inputs and buttons)
+    if (ControlInput || ControlPicker || ControlDataType == global.GMUIDataTypeButton || ControlType == "image") {
+        if (ControlGraphicMapIsUsed) {
+            GMUI_DrawSpriteBox(GMUIP,Layer,Group,0,1);
+        }
+        else if (sprite_exists(ControlGraphic)) {
+            // Sprite has been substituted for the default drawing
+            var subi; subi = ControlGraphicIndex;
+            if (Hovering) subi = ControlGraphicHoveringIndex;
+            if (Selected) subi = ControlGraphicSelectedIndex;
+            
+            draw_sprite_ext(ControlGraphic,subi,RoomX,RoomY,ControlGraphicXScale,ControlGraphicYScale,ControlGraphicRotation,ControlGraphicColor,ControlGraphicAlpha);
+        }
+        else if (ControlType != "image") {
+            // Background
+            color_alpha(ControlBackgroundColor,_BackgroundAlpha);
+            draw_rectangle(RoomX, RoomY, RoomW, RoomH, 0);
+            
+            // Border
+            color_alpha(ControlBorderColor,_BackgroundAlpha);
+            draw_rectangle(RoomX, RoomY, RoomW, RoomH, 1);
+        
+    
+            if (Hovering || Selected) {
+                // Draw the hovering effect
+                if (!Selected)
+                    color_alpha(ControlHoverColor,_HoverAlpha);
+                else
+                    color_alpha(ControlSelectColor,_SelectAlpha);
+                draw_rectangle(RoomX+1,RoomY+1,RoomW-1,RoomH-1, ControlHoverBorder);
+            }
+            
+            if (DoubleSelected && ControlInput) {
+                // Draw 'Overwrite' affect
+                color_alpha(ControlOverwriteColor,_OverwriteAlpha);
+                draw_rectangle(RoomX+2,RoomY+2,RoomW-2,RoomH-2,0);
+            }
+        }
+    }
+    else if (ControlType == "tooltip") {
+        GMUI_ControlDrawTooltipById(id);
+    }
+    else if (ControlType == "slider") {
+        GMUI_ControlDrawSlider(id);
+    }
+    else if (ControlType == "checkbox" || ControlType == "toggle") {
+        GMUI_ControlDrawToggle(id);
+    }
+    
+    
+    
+    // Draw special features for the other types
+    // Picker types (integer, double, etc)
+    if (ControlPicker) {
+        // draw arrows (origin should be on the right/left and to the corner it is placed at)
+        var _ax1,_ax2,_ay1,_ay2,_hh,_ax3;
+        _ay1 = RoomY+2;
+        if (ControlPickerDirection == global.GMUIDirectionTypeVertical) {
+            _ax3 = RoomX+1;
+            _ax1 = RoomX + (RoomW-RoomX)/2;
+            _hh = ControlPickerHeight;
+        }
+        else {
+            _ax1 = RoomW-2;
+            _ax3 = _ax1-ControlPickerWidth+1;
+            _hh = (RoomH-RoomY)/2;
+        }
+        if (ControlPickerDirection == global.GMUIDirectionTypeHorizontal) {
+            _ax2 = RoomX+2;
+            _ay2 = _ay1;
+        }
+        else { // GMUIDirectionTypeSideVertical or GMUIDirectionTypeVertical
+            _ax2 = _ax1;
+            _ay2 = RoomH-2;
+        }
+        
+        // Top arrow and bottom arrow
+        draw_sprite_ext(ControlPickerSpriteRightOrUp,0,_ax1,_ay1,1,1,0,c_white,_BackgroundAlpha);
+        draw_sprite_ext(ControlPickerSpriteLeftOrDown,0,_ax2,_ay2,1,1,0,c_white,_BackgroundAlpha);
+        
+        color_alpha(ControlHoverColor,_HoverAlpha);
+        if (ControlPickerDirection == global.GMUIDirectionTypeHorizontal) {
+            if (HoveringDirection == global.GMUIHoveringDirection_Right)
+                draw_rectangle(_ax3,RoomY+1,RoomW-1,RoomH,0);
+            else if (HoveringDirection == global.GMUIHoveringDirection_Left)
+                draw_rectangle(_ax2-1, RoomY+1, _ax2+ControlPickerWidth,RoomH,0);
+        }
+        else { //GMUIDirectionTypeSideVertical or GMUIDirectionTypeVertical
+            if (HoveringDirection == global.GMUIHoveringDirection_Up)
+                draw_rectangle(_ax3,RoomY+1,RoomW-1,RoomY+_hh,0);
+            else if (HoveringDirection == global.GMUIHoveringDirection_Down)
+                draw_rectangle(_ax3,RoomH-_hh,RoomW-1,RoomH,0);
+        }
+        
+    }
+    
+    
+    // Draw the text inside of the keyboard string or value
+    var Text, dtx, midHeight;
+    if (ControlInput) {
+        if (Selected)
+            Text = keyboard_string;
+        else
+            Text = valueString;
+    }
+    else if (ControlDataType == global.GMUIDataTypeButton) {
+        Text = ControlButtonText;
+    }
+    else if (ControlDataType == global.GMUIDataTypeString) {
+        Text = valueString;
+    }
+    else
+        Text = "";
+    
+    // Default is for fa_left:
+    dtx = RoomX + padx;    
+    if (ControlFontAlign == fa_center)
+        dtx = RoomX+(RoomW-RoomX)/2;
+    else if (ControlFontAlign == fa_right)
+        dtx = RoomW - padx;
+    else if (ControlFontAlign != fa_left) {
+        ControlFontAlign = (GMUIP).ControlFontAlign;
+        GMUI_ThrowErrorDetailed("Invalid font align",GMUI_ControlDraw);
+    }
+    
+    if (ActualH > 0)
+        midHeight = ActualH / 2;
+    else
+        midHeight = CellHigh * (GMUIP).cellsize_h / 2;
+        
+    // Set control font and alignment
+    draw_set_font(ControlFont);
+    align(ControlFontAlign,ControlFontAlignV);
+    
+    // Specific controls may override display
+    if (ControlDataType == global.GMUIDataTypeButton && ControlButtonTextHoveringOn && Hovering)
+        color_alpha(ControlButtonTextHoverColor,_FontAlpha);
+    else
+        color_alpha(ControlFontColor,_FontAlpha);
+        
+    // TEMPORARY SOLUTION FOR DISABLED CONTROLS! :
+    if (Disabled)
+        draw_set_alpha(_FontAlpha / 2);
+        
+    // Button with graphic inside
+    if (ControlDataType == global.GMUIDataTypeButton) {
+        if (sprite_exists(ControlButtonGraphic)) {
+            draw_sprite(ControlButtonGraphic,0,dtx, RoomY + midHeight);
+            dtx += sprite_get_width(ControlButtonGraphic) + padx;
+        }
+    }
+    
+    // Draw value string or button text
+    if (Text != "") {
+        if (ControlShowValue) {
+            if (ControlInteraction && ControlShowCursor && Selected && !DoubleSelected)
+                Text = Text + "|";
+                
+            if (ControlType != "label")
+                draw_text(dtx, RoomY + midHeight, Text);
+            else
+                draw_text_ext(dtx, RoomY + midHeight, Text, -1, RoomW-RoomX-padx*2);
+        }
+    }
+    else if (ControlType == "spritepicker" && optionsInitialized) {
+        // Special case for sprite picker
+        var _spr; _spr = ds_map_find_value(OptionsMap,value);
+        draw_sprite(_spr,0,
+            dtx-(sprite_get_width(_spr)/2)+sprite_get_xoffset(_spr),
+            RoomY+midHeight-(sprite_get_height(_spr)/2)+sprite_get_yoffset(_spr));
+    }
+    
+    
+    // Reset the surface if using one
+    if ((GMUIP).UIEnableSurfaces) {
+        surface_reset_target();
+    }
+}
+//
 
 #define GMUI_ControlDrawTooltip
 ///GMUI_ControlDrawTooltip("name of control with the tooltip")
@@ -2902,17 +3403,23 @@ with (argument0) {
     ds_list_destroy(GMUI_controlList);
     
     
-    // For each layer, clear its group lists and control lists
+    // For each layer, clear its group lists, control lists, and surfaces
     var i,l,j,g;
     for(i=0;i<ds_list_size(GMUI_gridlist);i+=1) {
         l = ds_list_find_value(GMUI_gridlist,i);
-        // Remove the groups
-        for (j=0;j<ds_list_size(GMUI_groupList[l]);j+=1) {
-            g = ds_list_find_value(GMUI_groupList[l],j);
-            ds_list_destroy(GMUI_groupControlList[l,g]);
+        if (GMUI_StudioCheckDefined(l)) {
+            // Remove the groups
+            for (j=0;j<ds_list_size(GMUI_groupList[l]);j+=1) {
+                g = ds_list_find_value(GMUI_groupList[l],j);
+                ds_list_destroy(GMUI_groupControlList[l,g]);
+            }
+            
+            if (surface_exists(GMUI_gridSurface[l])) {
+                surface_free(GMUI_gridSurface[l]);
+            }
+            
+            ds_grid_destroy(GMUI_grid[l]);
         }
-        
-        ds_grid_destroy(GMUI_grid[l]);
     }
     
     ds_list_destroy(GMUI_gridlist);
@@ -2994,11 +3501,13 @@ if (GMUI_GridEnabled())
                         }
                         else {
                             ctrlObject.Hovering = 1;
+                            GMUI_GridUpdateLayer(ctrlObject.GMUIP,ctrlObject.Layer); //test
                         }
                             
                     }
                     else {
                         ctrlObject.Hovering = 1;
+                        GMUI_GridUpdateLayer(ctrlObject.GMUIP,ctrlObject.Layer); //test
                     }
                     
                     // Set the hovering control and execute optional hover action if set
@@ -3017,6 +3526,7 @@ if (GMUI_GridEnabled())
         else if (HoveringControl != -1) {
             if (previousHoveringControl != -1) {
             global.test = previousHoveringControl;
+            GMUI_GridUpdateLayer(previousHoveringControl.GMUIP,previousHoveringControl.Layer); //test
                 if (GMUI_IsScript((previousHoveringControl).HoverOffActionScript)) {
                     script_execute((previousHoveringControl).HoverOffActionScript);
                 }
@@ -3061,6 +3571,7 @@ if (GMUI_GridEnabled())
                         inRegion = true;
                     
                     if (inRegion) {
+                        GMUI_GridUpdateLayer(ctrlObject.GMUIP,ctrlObject.Layer); //test
                         // Switch between special types, general input types, and other controls
                         if (ctrlObject.ControlPicker) {
                             switch (ctrlObject.HoveringDirection) {
@@ -3121,7 +3632,7 @@ if (GMUI_GridEnabled())
         }
     }
     
-    // Any key event will trigger a set value on a selected control in GMUI_ControlDraw, so here    ..
+    // Any key event will trigger a set value on a selected control in GMUI_ControlDraw; navigate to next...
     if (SelectedControl != -1) {
         if (GMUI_NavigateNextControl(true)) {
             GMUI_GridNextControl(true);
@@ -3134,8 +3645,8 @@ if (GMUI_GridEnabled())
         }
     }
     
-    // The grid offset has changed, all controls must update their position
-    if (UIsnaptoview) {
+    // The grid offset has changed, all controls must update their position if not drawn on surfaces
+    if (UIsnaptoview && !UIEnableSurfaces) {
         if (previousXOffset != view_xview[UIgridview] || previousYOffset != view_yview[UIgridview]) {
             GMUI_ResetControlStatus("Position",id);
             previousXOffset = view_xview[UIgridview];
@@ -3144,12 +3655,54 @@ if (GMUI_GridEnabled())
     }
     
     
-    // Transitioning entire grid
+    // Draw surface layers, and/or adjust a transitioning layer
+    if (GMUI_grid_Transition || UIEnableSurfaces) {
+        // Loop through each layer
+        var _i, _l;
+        for(_i=0;_i<ds_list_size(GMUI_gridlist);_i+=1) {
+            // Check for transition
+            _l = ds_list_find_value(GMUI_gridlist,_i);
+            
+            if (GMUI_StudioCheckDefined(_l)) {
+                if (GMUI_grid_Transitioning[_l]) {
+                    GMUI_grid_Transition = true;
+                    
+                    if (GMUI_grid_T_t[_l] < GMUI_grid_T_d[_l]) {
+                        GMUI_grid_T_t[_l] += 1;
+                        GMUI_grid_x[_l] = script_execute(GMUI_grid_T_script[_l],GMUI_grid_T_t[_l],GMUI_grid_T_bx[_l],GMUI_grid_T_cx[_l],GMUI_grid_T_d[_l]);
+                        GMUI_grid_y[_l] = script_execute(GMUI_grid_T_script[_l],GMUI_grid_T_t[_l],GMUI_grid_T_by[_l],GMUI_grid_T_cy[_l],GMUI_grid_T_d[_l]);
+                    }
+                    else {
+                        GMUI_grid_T_t[_l] = GMUI_grid_T_d[_l];
+                        GMUI_grid_Transitioning[_l] = false;
+                        GMUI_grid_Transition = false;
+                    }
+                    // Need to redraw the layers of surfaces if enabled
+                    if (UIEnableSurfaces) {
+                        GMUI_gridNeedsDrawUpdate[_l] = 1;
+                    }
+                }
+                
+                if (surface_exists(GMUI_gridSurface[_l])) {
+                    draw_surface(GMUI_gridSurface[_l],GMUI_grid_x[_l],GMUI_grid_y[_l]);
+                    // Reset update flag
+                    if (GMUI_gridNeedsDrawUpdate[_l])
+                        GMUI_gridNeedsDrawUpdate[_l] = false; 
+                }
+            }
+        }
+        
+        // Need to redraw each step if not using surfaces
+        if (!UIEnableSurfaces) {
+            GMUI_ResetControlStatus("Position",id);
+        }
+    }
+    
+    // If using surfaces, we need to draw each layer here
     
     
     
-    // Check if the room size has changed to move any anchored controls positions
-    // each control needs a relative position...
+    // Check if the room size has changed to move any anchored controls positions?
     
 
 }
@@ -3164,10 +3717,8 @@ if (DebugData && !RemovingGMUI) {
     gridW = GMUI_GridGetWidth(GMUII(),0);
     gridH = GMUI_GridGetHeight(GMUII(),0);
     
-    if ((GMUII()).UIsnaptoview) {
-        xoffset = view_xview[(GMUII()).UIgridview];
-        yoffset = view_yview[(GMUII()).UIgridview];
-    }
+    xoffset = GMUI_GridViewOffsetX(GMUII());
+    yoffset = GMUI_GridViewOffsetY(GMUII());
     
     // draw the grid lines 
     color_alpha(c_black,0.1);
@@ -3457,13 +4008,8 @@ if (!GMUI_GroupExists(_LayerNumber,_GroupNumber)) {
     GMUI_ThrowError("Group " + string(_GroupNumber) + " doesn't exist on layer " + string(_LayerNumber) + ". GMUI_GroupSetPositionActual");
 }
 
-_offsetx = 0;
-_offsety = 0;
-
-if ((GMUII()).UIsnaptoview) {
-    _offsetx = view_xview[(GMUII()).UIgridview];
-    _offsety = view_yview[(GMUII()).UIgridview];
-}
+_offsetx = GMUI_GridViewOffsetX(GMUII());
+_offsety = GMUI_GridViewOffsetY(GMUII());
 
 _adjx = _xcord - _offsetx - GMUI_CellGetActualX(GMUI_GridGetCellX(GMUII(),_LayerNumber,_xcord));
 _adjy = _ycord - _offsety - GMUI_CellGetActualY(GMUI_GridGetCellY(GMUII(),_LayerNumber,_ycord));
@@ -4520,414 +5066,6 @@ return true;
     
     
 
-#define GMUI_ControlDraw
-///GMUI_ControlDraw(Draw the control [bool])
-/// The actions done per step for a control added to the grid, along with drawing things
-
-// STEP actions:
-
-// Run transition action
-if (Transitioning) {
-    if (GMUI_IsScript(TransitionScript)) {
-        if (Hovering)
-            Hovering = false;
-        if (TooltipId != -1)
-            GMUI_ControlHide(TooltipId,1);
-            
-        if (T_t < T_d) {
-            T_t += 1;
-            ActualX = script_execute(TransitionScript,T_t,T_bx,T_cx,T_d);
-            ActualY = script_execute(TransitionScript,T_t,T_by,T_cy,T_d);
-            
-            if (TransitioningGroup && (GMUIP).GMUI_groupMasterControl[Layer,Group] == id) {
-                (GMUIP).GMUI_groupActualX[Layer,Group] = script_execute(TransitionScript,T_t,T_bx_group,T_cx_group,T_d);
-                (GMUIP).GMUI_groupActualY[Layer,Group] = script_execute(TransitionScript,T_t,T_by_group,T_cy_group,T_d);
-            }
-        }
-        else {
-            T_t = T_d;
-            Transitioning = false;
-            
-            if (TransitioningGroup) {
-                if ((GMUIP).GMUI_groupMasterControl[Layer,Group] == id) {
-                    var _getGroupX,_getGroupY,_diffX,_diffY, _origRelCellX, _origRelCellY;
-                    _diffX = (GMUIP).GMUI_groupActualX[Layer,Group]-GMUI_CellGetActualX(GMUI_GridGetCellXRoom(GMUIP,Layer,T_dx_group));
-                    _diffY = (GMUIP).GMUI_groupActualY[Layer,Group]-GMUI_CellGetActualY(GMUI_GridGetCellYRoom(GMUIP,Layer,T_dy_group));
-                    
-                    // This part uses a left anchor temporarily
-                    _getGroupX = GMUI_GetAnchoredCellX(GMUI_GridGetWidth(GMUIP,Layer),GMUI_GridGetCellXRoom(GMUIP,Layer,(GMUIP).GMUI_groupActualX[Layer,Group]),global.GMUIAnchorDefault);
-                    _getGroupY = GMUI_GetAnchoredCellY(GMUI_GridGetHeight(GMUIP,Layer),GMUI_GridGetCellYRoom(GMUIP,Layer,(GMUIP).GMUI_groupActualY[Layer,Group]),global.GMUIAnchorDefault);
-                    
-                    _origRelCellX = (GMUIP).GMUI_groupRelativeCellX[Layer,Group];
-                    _origRelCellY = (GMUIP).GMUI_groupRelativeCellY[Layer,Group];
-                    
-                    GMUI_GroupSetPositionAnchored(Layer,Group,_getGroupX,_getGroupY,
-                        _diffX,_diffY,
-                        global.GMUIAnchorDefault);
-                    
-                    // Reassigning original relative-to-anchor coordinates
-                    (GMUIP).GMUI_groupRelativeCellX[Layer,Group] = _origRelCellX;
-                    (GMUIP).GMUI_groupRelativeCellY[Layer,Group] = _origRelCellY;
-                        
-                    TransitioningGroup = false;
-                }
-            }
-            else {
-                CellX = GMUI_GridGetCellX(GMUIP,Layer,ActualX);
-                CellY = GMUI_GridGetCellY(GMUIP,Layer,ActualY);
-                
-                GMUI_ControlSetPositioning(CellX*(GMUIP).cellsize,CellY*(GMUIP).cellsize_h,ActualW,ActualH);
-            }            
-        }
-       
-        // Update control draw location in the room
-        NeedsPositionUpdate = true;
-    }
-    else {
-        Transitioning = false;
-    }
-}
-
-// Run fade in/out action
-if (FadeCalled != 0) {
-    // Fade in, else, fade out
-    if (FadeCalled > 0) {
-        if (FadeAlpha < FadeIn) {
-            FadeAlpha += 1/FadeTime;
-        }
-        else {
-            FadeAlpha = FadeIn;
-            FadeCalled = 0;
-        }
-    }
-    else {
-        if (FadeAlpha > FadeOut) {
-            FadeAlpha -= 1/FadeTime;
-        }
-        else {
-            FadeAlpha = FadeOut;
-            FadeCalled = 0;
-        }
-    }
-    NeedsDrawUpdate = true;
-}
-
-// Set new position if the view offset has changed, or transitioning
-if (NeedsPositionUpdate) {
-    GMUI_ControlUpdateXY(id);
-    NeedsPositionUpdate = false;
-    NeedsDrawUpdate = true;
-}
-
-
-
-// PROCESS INPUT //
-// Don't process any input or drawing if hidden
-if (!Hidden) {
-    // Easing update if slider control
-    if (ControlType == "slider") {
-        if (HoldingTime == 1) {
-            GMUI_ControlSliderMove(true);
-        }
-        else if (Slider_t < Slider_d && sliderComputed) {
-            GMUI_ControlSliderMove(false);
-            
-            if (!SliderSmoothSnap)
-                Slider_t = Slider_d;
-        }
-    }
-    else if (ControlType == "toggle" || ControlType == "checkbox") {
-        // Fade or Slide update if checkbox/toggle control
-        if (Toggle_t < Toggle_d) {
-            Toggle_t += 1;
-            if (string(value) == "0")
-                ToggleRelativeXorY = ToggleDistance - (Toggle_c * Toggle_t);
-            else if (string(value) == "1")
-                ToggleRelativeXorY = Toggle_c * Toggle_t;
-        }
-    }
-    if (Selected) {
-        // Holding click event
-        if (mouse_check_button(mb_left)) {
-            HoldingTime += 1;            
-            if (!Holding && HoldingTime > HoldingThreshold)
-                Holding = true;
-        }
-        if (Holding) {
-            if (mouse_check_button_released(mb_left)) {
-                Holding = false;
-                HoldingTime = 0;
-            }
-            else if (ControlType == "slider") {
-                // Special case for slider: Holding will move the thumb
-                GMUI_ControlSliderMove(true);
-            }
-        }
-        
-    
-        // Filter keyboard string to type of input allowed
-        if (ControlInput && (keyboard_lastkey > 20 || keyboard_lastkey == vk_backspace)) {
-            if (keyboard_check(vk_anykey)) {
-                //If 'Overwriting', then reset back to just selected
-                if (DoubleSelected) {
-                    if (string_length(keyboard_string) > 0 && string_length(GMUI_ControlFilterInput(ControlType,keyboard_lastchar)) > 0)
-                        keyboard_string = string_copy(keyboard_string,string_length(keyboard_string),1);
-                    else
-                        keyboard_string = "";
-                        
-                    DoubleSelected = false;
-                }
-                else {
-                    // On keypress, sanitize input per the type
-                    keyboard_string = GMUI_ControlFilterInput(ControlType,keyboard_string);
-                    
-                    // Max characters allowed for the control's string
-                    if (ControlMaxStringLength > 0)
-                        keyboard_string = string_copy(keyboard_string,1,ControlMaxStringLength);
-                }
-            }
-            
-            // Only does assignment of the value once the key is released (and not transitioning)
-            if (Transitioning) {
-                keyboard_string = valueString;
-            }
-            else if (keyboard_check_released(vk_anykey)) {
-                // On release, we need to filter again incase somebody "fat-fingers" multiple keys fast enough to miss the first filter.. interesting.
-                keyboard_string = GMUI_ControlFilterInput(ControlType,keyboard_string);
-                
-                // Assign keyboard string as the value string
-                valueString = keyboard_string;
-                
-                if (ControlIsNumeric) {
-                    // As long as the string is valid, assign stripped zeros to value string, and then assign value
-                    if (valueString != "." && valueString != "-") {
-                        valueString = keyboard_string;
-                        value = real(valueString);
-                        if (ControlDataType == global.GMUIDataTypeInteger) {
-                            value = round(value);
-                        }
-                        
-                        // Found the change!
-                        valueChangeDetected = 1;
-                    }
-                }
-                else if (ControlIsString) {
-                    value = valueString;
-                }
-            }
-        }
-    }
-}
-
-if (valueChangeDetected) {
-    // This may need some checks on if it should be allowed to set value... we'll see
-                
-    GMUI_SetValue(valueName,value,ControlDataType);
-    
-    //Reset
-    valueChangeDetected = 0;
-}
-
-
-// DRAW //
-
-if (argument0 == true) {
-    // Call the draw actions for groups if in one and is set to draw
-    if (1=1 && (GMUIP).GMUI_groupMasterControl[Layer,Group] == id) {
-        if (!GroupHidden || FadeCalled != 0) {
-            GMUI_ControlDrawGroup(GMUIP,Layer,Group,FadeAlpha,FadeMode);
-        }
-    }
-    
-    //todo: Add a flag for if an update is needed (surfaces):
-    // Don't process any drawing if hidden or update not needed
-    if (Hidden && FadeCalled == 0)
-        return false;
-    
-        
-    // Draw the control based on the type and user-defined settings
-    var padx, _BackgroundAlpha;
-    padx = ControlPaddingX;
-    _BackgroundAlpha = min(ControlBackgroundAlpha,FadeAlpha);
-    _HoverAlpha = min(ControlHoverAlpha,FadeAlpha);
-    _SelectAlpha = min(ControlSelectAlpha,FadeAlpha);
-    _OverwriteAlpha = min(ControlOverwriteAlpha,FadeAlpha);
-    _FontAlpha = min(ControlFontAlpha,FadeAlpha);
-        
-    // Start drawing the control (inputs and buttons)
-    if (ControlInput || ControlPicker || ControlDataType == global.GMUIDataTypeButton || ControlType == "image") {
-        if (ControlGraphicMapIsUsed) {
-            GMUI_DrawSpriteBox(GMUIP,Layer,Group,0,1);
-        }
-        else if (sprite_exists(ControlGraphic)) {
-            // Sprite has been substituted for the default drawing
-            var subi; subi = ControlGraphicIndex;
-            if (Hovering) subi = ControlGraphicHoveringIndex;
-            if (Selected) subi = ControlGraphicSelectedIndex;
-            
-            draw_sprite_ext(ControlGraphic,subi,RoomX,RoomY,ControlGraphicXScale,ControlGraphicYScale,ControlGraphicRotation,ControlGraphicColor,ControlGraphicAlpha);
-        }
-        else if (ControlType != "image") {
-            // Background
-            color_alpha(ControlBackgroundColor,_BackgroundAlpha);
-            draw_rectangle(RoomX, RoomY, RoomW, RoomH, 0);
-            
-            // Border
-            color_alpha(ControlBorderColor,_BackgroundAlpha);
-            draw_rectangle(RoomX, RoomY, RoomW, RoomH, 1);
-        
-    
-            if (Hovering || Selected) {
-                // Draw the hovering effect
-                if (!Selected)
-                    color_alpha(ControlHoverColor,_HoverAlpha);
-                else
-                    color_alpha(ControlSelectColor,_SelectAlpha);
-                draw_rectangle(RoomX+1,RoomY+1,RoomW-1,RoomH-1, ControlHoverBorder);
-            }
-            
-            if (DoubleSelected && ControlInput) {
-                // Draw 'Overwrite' affect
-                color_alpha(ControlOverwriteColor,_OverwriteAlpha);
-                draw_rectangle(RoomX+2,RoomY+2,RoomW-2,RoomH-2,0);
-            }
-        }
-    }
-    else if (ControlType == "tooltip") {
-        GMUI_ControlDrawTooltipById(id);
-    }
-    else if (ControlType == "slider") {
-        GMUI_ControlDrawSlider(id);
-    }
-    else if (ControlType == "checkbox" || ControlType == "toggle") {
-        GMUI_ControlDrawToggle(id);
-    }
-    
-    
-    
-    // Draw special features for the other types
-    // Picker types (integer, double, etc)
-    if (ControlPicker) {
-        // draw arrows (origin should be on the right/left and to the corner it is placed at)
-        var _ax1,_ax2,_ay1,_ay2,_hh,_ax3;
-        _ay1 = RoomY+2;
-        if (ControlPickerDirection == global.GMUIDirectionTypeVertical) {
-            _ax3 = RoomX+1;
-            _ax1 = RoomX + (RoomW-RoomX)/2;
-            _hh = ControlPickerHeight;
-        }
-        else {
-            _ax1 = RoomW-2;
-            _ax3 = _ax1-ControlPickerWidth+1;
-            _hh = (RoomH-RoomY)/2;
-        }
-        if (ControlPickerDirection == global.GMUIDirectionTypeHorizontal) {
-            _ax2 = RoomX+2;
-            _ay2 = _ay1;
-        }
-        else { // GMUIDirectionTypeSideVertical or GMUIDirectionTypeVertical
-            _ax2 = _ax1;
-            _ay2 = RoomH-2;
-        }
-        
-        // Top arrow and bottom arrow
-        draw_sprite_ext(ControlPickerSpriteRightOrUp,0,_ax1,_ay1,1,1,0,c_white,_BackgroundAlpha);
-        draw_sprite_ext(ControlPickerSpriteLeftOrDown,0,_ax2,_ay2,1,1,0,c_white,_BackgroundAlpha);
-        
-        color_alpha(ControlHoverColor,_HoverAlpha);
-        if (ControlPickerDirection == global.GMUIDirectionTypeHorizontal) {
-            if (HoveringDirection == global.GMUIHoveringDirection_Right)
-                draw_rectangle(_ax3,RoomY+1,RoomW-1,RoomH,0);
-            else if (HoveringDirection == global.GMUIHoveringDirection_Left)
-                draw_rectangle(_ax2-1, RoomY+1, _ax2+ControlPickerWidth,RoomH,0);
-        }
-        else { //GMUIDirectionTypeSideVertical or GMUIDirectionTypeVertical
-            if (HoveringDirection == global.GMUIHoveringDirection_Up)
-                draw_rectangle(_ax3,RoomY+1,RoomW-1,RoomY+_hh,0);
-            else if (HoveringDirection == global.GMUIHoveringDirection_Down)
-                draw_rectangle(_ax3,RoomH-_hh,RoomW-1,RoomH,0);
-        }
-        
-    }
-    
-    
-    // Draw the text inside of the keyboard string or value
-    var Text, dtx, midHeight;
-    if (ControlInput) {
-        if (Selected)
-            Text = keyboard_string;
-        else
-            Text = valueString;
-    }
-    else if (ControlDataType == global.GMUIDataTypeButton) {
-        Text = ControlButtonText;
-    }
-    else if (ControlDataType == global.GMUIDataTypeString) {
-        Text = valueString;
-    }
-    else
-        Text = "";
-    
-    // Default is for fa_left:
-    dtx = RoomX + padx;    
-    if (ControlFontAlign == fa_center)
-        dtx = RoomX+(RoomW-RoomX)/2;
-    else if (ControlFontAlign == fa_right)
-        dtx = RoomW - padx;
-    else if (ControlFontAlign != fa_left) {
-        ControlFontAlign = (GMUIP).ControlFontAlign;
-        GMUI_ThrowErrorDetailed("Invalid font align",GMUI_ControlDraw);
-    }
-    
-    if (ActualH > 0)
-        midHeight = ActualH / 2;
-    else
-        midHeight = CellHigh * (GMUIP).cellsize_h / 2;
-        
-    // Set control font and alignment
-    draw_set_font(ControlFont);
-    align(ControlFontAlign,ControlFontAlignV);
-    
-    // Specific controls may override display
-    if (ControlDataType == global.GMUIDataTypeButton && ControlButtonTextHoveringOn && Hovering)
-        color_alpha(ControlButtonTextHoverColor,_FontAlpha);
-    else
-        color_alpha(ControlFontColor,_FontAlpha);
-        
-    // TEMPORARY SOLUTION FOR DISABLED CONTROLS! :
-    if (Disabled)
-        draw_set_alpha(_FontAlpha / 2);
-        
-    // Button with graphic inside
-    if (ControlDataType == global.GMUIDataTypeButton) {
-        if (sprite_exists(ControlButtonGraphic)) {
-            draw_sprite(ControlButtonGraphic,0,dtx, RoomY + midHeight);
-            dtx += sprite_get_width(ControlButtonGraphic) + padx;
-        }
-    }
-    
-    // Draw value string or button text
-    if (Text != "") {
-        if (ControlShowValue) {
-            if (ControlInteraction && ControlShowCursor && Selected && !DoubleSelected)
-                Text = Text + "|";
-                
-            if (ControlType != "label")
-                draw_text(dtx, RoomY + midHeight, Text);
-            else
-                draw_text_ext(dtx, RoomY + midHeight, Text, -1, RoomW-RoomX-padx*2);
-        }
-    }
-    else if (ControlType == "spritepicker" && optionsInitialized) {
-        // Special case for sprite picker
-        var _spr; _spr = ds_map_find_value(OptionsMap,value);
-        draw_sprite(_spr,0,
-            dtx-(sprite_get_width(_spr)/2)+sprite_get_xoffset(_spr),
-            RoomY+midHeight-(sprite_get_height(_spr)/2)+sprite_get_yoffset(_spr));
-    }
-}
-//
-
 #define GMUI_ControlDrawGroup
 ///GMUI_ControlDrawGroup(GMUI instance, Layer, Group, Alpha, FadeMode [0 or 1])
 ///Draws the group if set to do any drawing - Called by master control of group
@@ -4946,10 +5084,8 @@ if ((_GMUII).GMUI_groupGraphicMapIsUsed[_layer,_group]) {
 
 if (ControlHasGroupStyle) {
     var x1,x2,y1,y2,xoffset,yoffset,alphadiff;
-    if ((GMUII()).UIsnaptoview) {
-        xoffset = view_xview[(GMUII()).UIgridview];
-        yoffset = view_yview[(GMUII()).UIgridview];
-    }
+    xoffset = GMUI_GridViewOffsetX(GMUII());
+    yoffset = GMUI_GridViewOffsetY(GMUII());
     
     x1 = (GMUII()).GMUI_groupActualX[_layer,_group] + (GMUII()).GMUI_grid_x[_layer] + xoffset;
     y1 = (GMUII()).GMUI_groupActualY[_layer,_group] + (GMUII()).GMUI_grid_y[_layer] + yoffset;
@@ -5363,8 +5499,9 @@ with (_tt_id) {
         _tp = ToggleThumbPad; // padding between 'thumb' and slide edge
         _tt = ToggleThumbSize; // width/height of the 'thumb'
         
-        if (Toggle_t < Toggle_d)
+        if (Toggle_t < Toggle_d) {
             TSC = merge_color(ToggleSlideColorOff,ToggleSlideColorOn,ToggleRelativeXorY/(ToggleFinalXorY-ToggleInitialXorY));
+        }
         else if (value)
             TSC = ToggleSlideColorOn;
         else
@@ -5446,8 +5583,10 @@ with (_tt_id) {
         // Draw checkbox control
         var TSC,TA,TC,SII;
         TC = ToggleColorOff;
-        if (Toggle_t < Toggle_d)
+        if (Toggle_t < Toggle_d) {
             TSC = merge_color(ToggleSlideColorOff,ToggleSlideColorOn,ToggleRelativeXorY);
+            GMUI_GridUpdateLayer(GMUIP,Layer);
+        }
         else if (value)
             TSC = ToggleSlideColorOn;
         else
@@ -6096,8 +6235,9 @@ if (SliderSmoothSnap) {
             Slider_t += 1;
             SliderRelativeXorY = script_execute(SliderMovementScript,Slider_t,Slider_b,Slider_c,Slider_d);
         }
-        else
+        else {
             Slider_t = Slider_d;
+        }
     }
 }
 else {
@@ -6109,6 +6249,7 @@ else {
     else
         SliderRelativeXorY = SliderRelativeFinalXorY;
 }
+
     
 // Update actual value
 if (!argument0) {
@@ -6153,10 +6294,9 @@ if (!GMUI_IsControlID(_ctrl)) {
     return false;
 }
 
-if ((_GMUIP).UIsnaptoview) {
-    _xoffset = view_xview[(_GMUIP).UIgridview];
-    _yoffset = view_yview[(_GMUIP).UIgridview];
-}
+_xoffset = GMUI_GridViewOffsetX(_GMUIP);
+_yoffset = GMUI_GridViewOffsetY(_GMUIP);
+
 _lw = GMUI_GridGetWidth((_ctrl).GMUIP,(_ctrl).Layer);
 _lh = GMUI_GridGetHeight((_ctrl).GMUIP,(_ctrl).Layer);
 
@@ -6275,6 +6415,7 @@ GMUI_CreateSetDefaultArea();
 GMUI_gridlist = ds_list_create();
 GMUI_defaultX = 0;
 GMUI_defaultY = 0;
+GMUI_grid_Transition = false; // Any layer is transitioning flag
 
 GMUI_AddLayer(0,GMUI_defaultX,GMUI_defaultY);
 
@@ -6421,8 +6562,8 @@ return _menuNumber;
 ///GMUI_CreateSetDefaultArea() Set the default area to use to set the grid size for layers called by GMUI_Create()
 ///This depends on views or room size to set the grid size
 
-UIsnaptoview = true;
-UIgridview = 0;
+//UIsnaptoview = true;
+//UIgridview = 0;
 
 UIgridwidth = room_width;
 UIgridheight = room_height;
@@ -6446,10 +6587,8 @@ _alpha = minmax(argument4,0,1);
 var _dbx, _dby, _dbw, _dbh, _xoffset, _yoffset, _spr_width, _spr_height, _spr_isFixed,
     _sprTopLeft, _sprTop, _sprTopRight, _sprRight, _sprBottomRight, _sprBottom, _sprBottomLeft, _sprLeft, _sprCenter;
 
-if ((_GMUII).UIsnaptoview) {
-    _xoffset = view_xview[(_GMUII).UIgridview];
-    _yoffset = view_yview[(_GMUII).UIgridview];
-}
+_xoffset = GMUI_GridViewOffsetX(_GMUII);
+_yoffset = GMUI_GridViewOffsetY(_GMUII);
 
 if (_bType == 0) {
     // Control
@@ -6685,18 +6824,20 @@ return (argument0).GMUI_menu_layer + argument1 - 1;
 ///GMUI_GridAdjust(cells wide , cells high)
 /// Adjusts grid for all layers of the GMUI instance
 
-var layer, i;
-for(i=0;i<ds_list_size((GMUII()).GMUI_gridlist);i+=1) {
+//var layer, i;
+//for(i=0;i<ds_list_size((GMUII()).GMUI_gridlist);i+=1) {
+//
+//    layer = ds_list_find_value((GMUII()).GMUI_gridlist,i);
+//    
+//    if (layer >= 0) {
+//        GMUI_GridAdjustLayer(layer,argument0,argument1);
+//    }
+//}
 
-    layer = ds_list_find_value((GMUII()).GMUI_gridlist,i);
-    
-    if (layer >= 0) {
-        GMUI_GridAdjustLayer(layer,argument0,argument1);
-    }
-}
+GMUI_GridAdjustLayer(-1,argument0,argument1);
 
 #define GMUI_GridAdjustLayer
-///GMUI_GridAdjustLayer(Layer Number, cells wide, cells high)
+///GMUI_GridAdjustLayer(Layer Number [or all: -1], cells wide, cells high)
 /// Adjusts the layer's grid based on new dimensions and moves the controls according to their anchors
 
 // Layer needs to exist
@@ -6741,7 +6882,7 @@ for(i=0;i<ds_list_size((_GMUI).GMUI_controlList);i+=1) {
     if (!instance_exists(ctrl)) {
         GMUI_ThrowError("Control no longer exists. GMUI_GridAdjustLayer()");
     }
-    else if ((ctrl).Layer == _Layer && ctrl.Group == 0) {
+    else if (((ctrl).Layer == _Layer || _Layer == -1) && ctrl.Group == 0) {
         // The relative values when the grid is adjusted has four relative positions: Middle X's, Middle Y's, Right X's, Bottom Y's)
     
         // Use the anchor and position relative to it 
@@ -6810,10 +6951,8 @@ return true;
 var _GMUII, layer, l, g, gx, gy, gw, gh, xoffset, yoffset, spr_width, spr_height;
 _GMUII = argument0;
 
-if ((_GMUII).UIsnaptoview) {
-    xoffset = view_xview[(_GMUII).UIgridview];
-    yoffset = view_yview[(_GMUII).UIgridview];
-}
+xoffset = GMUI_GridViewOffsetX(_GMUII);
+yoffset = GMUI_GridViewOffsetY(_GMUII);
 
 for(l=0;l<ds_list_size((_GMUII).GMUI_gridlist);l+=1) {
 
@@ -6892,14 +7031,10 @@ else
 
 var _GMUII,_offset;
 _GMUII = argument0;
-_offset = 0;
-
-if ((_GMUII).UIsnaptoview) {
-    _offset = view_xview[(_GMUII).UIgridview];
-}
+_offset = GMUI_GridViewOffsetX(_GMUII);
 
 return GMUI_GridGetCellXOffset(_GMUII,argument1,argument2,_offset);
-//return ceil((argument2-(_GMUII).GMUI_grid_x[_LayerNumber]-_offset+1)/(_GMUII).cellsize)-1;
+//return ceil((argument2-(_GMUI).GMUI_grid_x[_LayerNumber]-_offset+1)/(_GMUI).cellsize)-1;
 
 
 
@@ -6940,11 +7075,7 @@ return GMUI_GridGetCellXOffset(_GMUII,argument1,argument2,0);
 
 var _GMUII,_offset;
 _GMUII = argument0;
-_offset = 0;
-
-if ((_GMUII).UIsnaptoview) {
-    _offset = view_yview[(_GMUII).UIgridview];
-}
+_offset = GMUI_GridViewOffsetY(_GMUII);
 
 return GMUI_GridGetCellYOffset(_GMUII,argument1,argument2,_offset);
 //return ceil((argument2-(_GMUII).GMUI_grid_y[_LayerNumber]-_offset+1)/(_GMUII).cellsize_h)-1;
@@ -6984,16 +7115,12 @@ return GMUI_GridGetCellYOffset(_GMUII,argument1,argument2,0);
 ///GMUI_GridGetMouseCellX(GMUI instance)  Returns the horizontal cell block that the mouse is on
 // argument0 is the GMUI instance
 
-var _GMUII, _offset;
-_GMUII = argument0;
-_offset = 0;
-
-if ((_GMUII).UIsnaptoview) {
-    _offset = view_xview[(_GMUII).UIgridview];
-}
+var _GMUI, _offset;
+_GMUI = argument0;
+_offset = GMUI_GridViewOffsetX(_GMUI);
 
 
-return ceil((mouse_x-(_GMUII).GMUI_grid_x[(_GMUII).UILayer]-_offset+1)/(_GMUII).cellsize)-1;
+return ceil((mouse_x-(_GMUI).GMUI_grid_x[(_GMUI).UILayer]-_offset+1)/(_GMUI).cellsize)-1;
 
 
 
@@ -7001,15 +7128,11 @@ return ceil((mouse_x-(_GMUII).GMUI_grid_x[(_GMUII).UILayer]-_offset+1)/(_GMUII).
 ///GMUI_GridGetMouseCellY(GMUI instance)  Returns the vertical cell block that the mouse is on
 // argument0 is the GMUI instance
 
-var _GMUII, _offset;
-_GMUII = argument0;
-_offset = 0;
+var _GMUI, _offset;
+_GMUI = argument0;
+_offset = GMUI_GridViewOffsetY(_GMUI);
 
-if ((_GMUII).UIsnaptoview) {
-    _offset = view_yview[(_GMUII).UIgridview];
-}
-
-return ceil((mouse_y-(GMUII()).GMUI_grid_y[(GMUII()).UILayer]-_offset+1)/(GMUII()).cellsize_h)-1;
+return ceil((mouse_y-(_GMUI).GMUI_grid_y[(_GMUI).UILayer]-_offset+1)/(_GMUI).cellsize_h)-1;
 
 
 
@@ -7272,6 +7395,52 @@ for(i=0;i<ds_list_size((GMUII()).GMUI_controlList);i+=1) {
     }
     
 }
+
+#define GMUI_GridUpdateLayer
+///GMUI_GridUpdateLayer(GMUI instance, Layer)
+///[BETA]Update the draw flag for all controls on the layer
+var _i,_ctrl,_Layer;
+_Layer = argument1;
+
+// Currently disabled.
+//return true;
+
+with (argument0) {
+    // Loop through all controls in the layer
+    for(_i=0;_i<ds_list_size(GMUI_controlList);_i+=1) {
+        // Get control value
+        _ctrl = ds_list_find_value(GMUI_controlList,_i);
+    
+        if (!instance_exists(_ctrl)) {
+            GMUI_ThrowErrorDetailed("Control no longer exists", GMUI_GridUpdateLayer);
+        }
+        else if (GMUI_ControlIsInLayer(_ctrl,_Layer)) {
+            _ctrl.NeedsDrawUpdate = true;
+        }
+    }
+} 
+
+#define GMUI_GridViewOffsetX
+///GMUI_GridViewOffsetX(GMUI instance)
+///Returns the offset value of the grid, based on UIsnaptoview and UIEnableSurfaces settings
+
+with (argument0) {
+    if (UIsnaptoview && !UIEnableSurfaces)
+        return view_xview[UIgridview];
+    else
+        return 0;
+} 
+
+#define GMUI_GridViewOffsetY
+///GMUI_GridViewOffsetY(GMUI instance)
+///Returns the offset value of the grid, based on UIsnaptoview and UIEnableSurfaces settings
+
+with (argument0) {
+    if (UIsnaptoview && !UIEnableSurfaces)
+        return view_yview[UIgridview];
+    else
+        return 0;
+} 
 
 #define GMUI_GroupExists
 ///GMUI_GroupExists(Layer Number, Group Number)
@@ -7621,13 +7790,8 @@ else
     _CH = GMUI_CellGetActualY((_Control).CellHigh);
     
 // Adjustments if using views
-_xoffset = 0;
-_yoffset = 0;
-
-if (((_Control).GMUIP).UIsnaptoview) {
-    _xoffset = view_xview[((_Control).GMUIP).UIgridview];
-    _yoffset = view_yview[((_Control).GMUIP).UIgridview];
-}
+_xoffset = GMUI_GridViewOffsetX((_Control).GMUIP);
+_yoffset = GMUI_GridViewOffsetY((_Control).GMUIP);
 
 // Adjustment if grid is offset
 _xoffset += ((_Control).GMUIP).GMUI_grid_x[(_Control).Layer];
@@ -7690,13 +7854,8 @@ else
 }
 
 // Adjustments if using views
-_xoffset = 0;
-_yoffset = 0;
-
-if (((_Control).GMUIP).UIsnaptoview) {
-    _xoffset = view_xview[((_Control).GMUIP).UIgridview];
-    _yoffset = view_yview[((_Control).GMUIP).UIgridview];
-}
+_xoffset = GMUI_GridViewOffsetX((_Control).GMUIP);
+_yoffset = GMUI_GridViewOffsetY((_Control).GMUIP);
 
 // Adjustment if grid is offset
 _xoffset += ((_Control).GMUIP).GMUI_grid_x[(_Control).Layer];
@@ -7827,7 +7986,7 @@ else if (string_lower(a0) == "position" || a0 == "2") {
     if (string(ff) == "0")
         GMUI_ThrowErrorDetailed("No controls exist",_SCRIPT);
     else {
-        // Set all controls' hover variable to false
+        // Set all controls' position update to true
         ms = ds_map_size((_GID).GMUI_map);
         for (m=0; m < ms; m+=1) {
             if (string(ff) != "0" && GMUI_StudioCheckDefined(ff)) {

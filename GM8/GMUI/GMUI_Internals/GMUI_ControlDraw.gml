@@ -94,7 +94,7 @@ if (FadeCalled != 0) {
 if (NeedsPositionUpdate) {
     GMUI_ControlUpdateXY(id);
     NeedsPositionUpdate = false;
-    NeedsDrawUpdate = true;
+    GMUI_GridUpdateLayer(GMUIP,Layer); //test, currently unused
 }
 
 
@@ -118,6 +118,7 @@ if (!Hidden) {
         // Fade or Slide update if checkbox/toggle control
         if (Toggle_t < Toggle_d) {
             Toggle_t += 1;
+            GMUI_GridUpdateLayer(GMUIP,Layer);
             if (string(value) == "0")
                 ToggleRelativeXorY = ToggleDistance - (Toggle_c * Toggle_t);
             else if (string(value) == "1")
@@ -207,20 +208,41 @@ if (valueChangeDetected) {
 }
 
 
-// DRAW //
 
+// DRAW //
+// Draw if set, and if using surfaces draw if an update is needed
 if (argument0 == true) {
     // Call the draw actions for groups if in one and is set to draw
-    if (1=1 && (GMUIP).GMUI_groupMasterControl[Layer,Group] == id) {
+    if ((GMUIP).GMUI_groupMasterControl[Layer,Group] == id) {
         if (!GroupHidden || FadeCalled != 0) {
             GMUI_ControlDrawGroup(GMUIP,Layer,Group,FadeAlpha,FadeMode);
         }
     }
     
-    //todo: Add a flag for if an update is needed (surfaces):
     // Don't process any drawing if hidden or update not needed
     if (Hidden && FadeCalled == 0)
         return false;
+        
+    // When using surfaces, check if there actually needs to be a draw update before setting the target
+    if ((GMUIP).UIEnableSurfaces) {//if (0) disable
+        if (NeedsDrawUpdate) {
+            if ((GMUIP).GMUI_gridNeedsDrawUpdate[Layer] == false) {
+                //surface_free((GMUIP).GMUI_gridSurface[Layer])
+                //draw_set_blend_mode(bm_subtract);
+                draw_set_blend_mode_ext(bm_dest_color, bm_zero)
+                color_alpha(c_white,0);
+                draw_rectangle(0,0,(GMUIP).UIgridwidth,(GMUIP).UIgridheight,0);
+                draw_set_blend_mode(bm_normal);
+            }
+            
+            // Set the surface target if it exists, otherwise create it
+            (GMUIP).GMUI_gridSurface[Layer] = surface_target((GMUIP).GMUI_gridSurface[Layer], (GMUIP).UIgridwidth, (GMUIP).UIgridheight);
+            (GMUIP).GMUI_gridNeedsDrawUpdate[Layer] = true;
+            NeedsDrawUpdate = false;
+        }
+        else
+            return false;
+    }
     
         
     // Draw the control based on the type and user-defined settings
@@ -402,6 +424,12 @@ if (argument0 == true) {
         draw_sprite(_spr,0,
             dtx-(sprite_get_width(_spr)/2)+sprite_get_xoffset(_spr),
             RoomY+midHeight-(sprite_get_height(_spr)/2)+sprite_get_yoffset(_spr));
+    }
+    
+    
+    // Reset the surface if using one
+    if ((GMUIP).UIEnableSurfaces) {
+        surface_reset_target();
     }
 }
 //

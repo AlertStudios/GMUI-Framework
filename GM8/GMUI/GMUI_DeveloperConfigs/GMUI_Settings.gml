@@ -1,10 +1,18 @@
 #define GMUI_Settings
-///GMUI_Settings("OptionalInterfaceArgument") Settings for GMUI - Do not delete! Modify to fit your preferences
+///GMUI_Settings(OptionalInterfaceArgument) Settings for GMUI - Do not delete! Modify to fit your preferences
 ///Called from the initialization of each GMUI interface. Argument can set specific settings depending on the interface.
-
+// Don't change these values in runtime, only change them here.
 
 // Required: Define the controls' object!
 GMUI_controlobject = GMUI_control;
+
+// Required: Snap the grid to the view position in the room
+UIsnaptoview = true;
+// Required: The view number to snap to
+UIgridview = 0;
+
+// Required: Surfaces are needed for listboxes and scrollable menus, but also draws the grid as a surface itself
+UIEnableSurfaces = true;
 
 // Required: Flexibility to add graphical effects settings to the controls: (currently unused)
 var basic, good, best; basic = 0; good = 1; best = 2;
@@ -34,7 +42,7 @@ DebugData = false;
 // Argument can be used optionally for different GMUI instances
 var OptionalInterfaceName; OptionalInterfaceName = argument0;
 switch (OptionalInterfaceName) {
-    case "":
+    case _Test_Form:
         // Do Something
     break;
 }

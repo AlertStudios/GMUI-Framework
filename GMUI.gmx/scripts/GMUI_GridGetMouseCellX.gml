@@ -1,15 +1,11 @@
 ///GMUI_GridGetMouseCellX(GMUI instance)  Returns the horizontal cell block that the mouse is on
 // argument0 is the GMUI instance
 
-var _GMUII, _offset;
-_GMUII = argument0;
-_offset = 0;
-
-if ((_GMUII).UIsnaptoview) {
-    _offset = view_xview[(_GMUII).UIgridview];
-}
+var _GMUI, _offset;
+_GMUI = argument0;
+_offset = GMUI_GridViewOffsetX(_GMUI);
 
 
-return ceil((mouse_x-(_GMUII).GMUI_grid_x[(_GMUII).UILayer]-_offset+1)/(_GMUII).cellsize)-1;
+return ceil((mouse_x-(_GMUI).GMUI_grid_x[(_GMUI).UILayer]-_offset+1)/(_GMUI).cellsize)-1;
 
 

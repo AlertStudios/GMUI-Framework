@@ -15,10 +15,8 @@ if ((_GMUII).GMUI_groupGraphicMapIsUsed[_layer,_group]) {
 
 if (ControlHasGroupStyle) {
     var x1,x2,y1,y2,xoffset,yoffset,alphadiff;
-    if ((GMUII()).UIsnaptoview) {
-        xoffset = view_xview[(GMUII()).UIgridview];
-        yoffset = view_yview[(GMUII()).UIgridview];
-    }
+    xoffset = GMUI_GridViewOffsetX(GMUII());
+    yoffset = GMUI_GridViewOffsetY(GMUII());
     
     x1 = (GMUII()).GMUI_groupActualX[_layer,_group] + (GMUII()).GMUI_grid_x[_layer] + xoffset;
     y1 = (GMUII()).GMUI_groupActualY[_layer,_group] + (GMUII()).GMUI_grid_y[_layer] + yoffset;
