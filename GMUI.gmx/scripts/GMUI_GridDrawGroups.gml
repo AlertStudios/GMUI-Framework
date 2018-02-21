@@ -1,4 +1,3 @@
-#define GMUI_GridDrawGroups
 ///GMUI_GridDrawGroups(GMUI instance)
 ///Draws the groups if set to do so
 // CURRENTLY NOT USED!!!!! //
@@ -63,4 +62,3 @@ for(l=0;l<ds_list_size((_GMUII).GMUI_gridlist);l+=1) {
     
     }
 }
-

@@ -1,4 +1,3 @@
-#define GMUI_GetDataType
 ///GMUI_GetDataType("Control Type")
 ///Takes the control type and returns the data type it is
 // Datatypes are defined in GMUI_Init()
@@ -36,4 +35,3 @@ switch (_controlType) {
         return -1;
         break;
 }
-

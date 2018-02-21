@@ -1,4 +1,3 @@
-#define GMUI_ControlDraw
 ///GMUI_ControlDraw(Draw the control [bool])
 /// The actions done per step for a control added to the grid, along with drawing things
 
@@ -649,4 +648,3 @@ if (argument0 == true) {
     }
 }
 //
-

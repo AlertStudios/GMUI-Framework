@@ -1,4 +1,3 @@
-#define GMUI_ShowPopupId
 ///GMUI_ShowPopupId(popup id, show[1] or hide[0], animate [bool])
 
 // Arguments
@@ -21,5 +20,4 @@ if (string(_popupNumber) == "0")
 
 // Call the show menu to handle the layer switch
 GMUI_ShowMenuId(_popupNumber, _show, _animate);
-
 

@@ -1,4 +1,3 @@
-#define GMUI_GroupExists
 ///GMUI_GroupExists(Layer Number, Group Number)
 ///Checks that the group number given exists in the layer in GMUI
 
@@ -13,4 +12,3 @@ L = floor(argument0);
 G = floor(argument1);
 
 return (ds_list_find_index((GMUII()).GMUI_groupList[L],G) != -1);
-

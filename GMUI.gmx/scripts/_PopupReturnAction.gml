@@ -1,4 +1,3 @@
-#define _PopupReturnAction
 // Show result
 var str;
 
@@ -12,5 +11,4 @@ switch (GMUI_PopupGetResponse()) {
 with (GMUI_GetControl("ResponseLabel")) {
     GMUI_ControlSetText("Responded with: " + str);
 }
-
 

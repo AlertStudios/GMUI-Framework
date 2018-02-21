@@ -1,4 +1,3 @@
-#define GMUI_DestroyNumber
 ///GMUI_Destroy(GMUI number)
 ///Only call this when you want to remove all traces of the GMUI instance provided, including the object itself
 
@@ -64,4 +63,3 @@ with (argument0) {
     RemovingGMUI = true;
     instance_destroy();
 }
-

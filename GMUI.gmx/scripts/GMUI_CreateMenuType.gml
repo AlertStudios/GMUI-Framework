@@ -1,4 +1,3 @@
-#define GMUI_CreateMenuType
 ///GMUI_CreateMenuType (Type[script calling], menu name, cell# x, cell# y, cells wide, cells high, Anchor)
 ///Adds a menu to a GMUI layer that controls can be put into
 
@@ -56,4 +55,3 @@ else {
 
 
 return _menuNumber;
-

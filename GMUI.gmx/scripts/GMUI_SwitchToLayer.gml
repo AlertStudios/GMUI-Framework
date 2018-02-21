@@ -1,4 +1,3 @@
-#define GMUI_SwitchToLayer
 ///GMUI_SwitchToLayer(Layer number)
 ///Switches the active layer
 
@@ -35,5 +34,4 @@ if (!(GMUII()).UIInterfaceSet) {
 
 
 return true;
-
 

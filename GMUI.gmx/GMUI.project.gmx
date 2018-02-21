@@ -32,6 +32,7 @@
         <script>scripts\_Enlarge_Button.gml</script>
         <script>scripts\_Exit_Button.gml</script>
         <script>scripts\_Hide_Button.gml</script>
+        <script>scripts\_Hide_Button2.gml</script>
         <script>scripts\_Hover_Checkbox.gml</script>
         <script>scripts\_Hover_Int.gml</script>
         <script>scripts\_HoverOff_Checkbox.gml</script>
@@ -45,6 +46,7 @@
         <script>scripts\_SliderMid_Button.gml</script>
         <script>scripts\_SliderSnap_Button.gml</script>
         <script>scripts\_SliderValue_Changed.gml</script>
+        <script>scripts\_Swipe_Button.gml</script>
         <script>scripts\_Switch_Button.gml</script>
         <script>scripts\_Test_Button.gml</script>
       </scripts>
@@ -88,6 +90,7 @@
           <script>scripts\color_alpha.gml</script>
           <script>scripts\align.gml</script>
           <script>scripts\minmax.gml</script>
+          <script>scripts\surface_clear.gml</script>
           <script>scripts\surface_target.gml</script>
         </scripts>
         <script>scripts\GMUI_Add.gml</script>

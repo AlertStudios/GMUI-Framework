@@ -1,4 +1,3 @@
-#define GMUI_LayerTransitionToXY
 ///GMUI_LayerTransitionToXY(Layer number, Room X, Room Y, Transition Script, Time)
 
 var _Layer; _Layer = argument0;
@@ -34,4 +33,3 @@ with (GMUII()) {
 }
 
 return true;
-

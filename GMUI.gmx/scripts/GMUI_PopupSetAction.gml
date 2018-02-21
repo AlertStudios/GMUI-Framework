@@ -1,4 +1,3 @@
-#define GMUI_PopupSetAction
 ///GMUI_PopupSetAction("popup name", Script to execute)
 ///Action to execute after responding to the popup
 
@@ -17,4 +16,3 @@ if (string(_menuNumber) == "0") {
 (GMUII()).GMUI_groupAction[GMUI_GetMenuLayer(GMUII(),_menuNumber),_menuNumber] = argument1;
 
 return true;
-

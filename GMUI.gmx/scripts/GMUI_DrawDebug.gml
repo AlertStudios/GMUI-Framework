@@ -1,4 +1,3 @@
-#define GMUI_DrawDebug
 // DEBUGGING SCRIPT! Call this in the draw event of the GMUI main object 
 // Run only if DebugData is on
 if (DebugData && !RemovingGMUI) {
@@ -74,4 +73,3 @@ if (DebugData && !RemovingGMUI) {
     
 
 }
-

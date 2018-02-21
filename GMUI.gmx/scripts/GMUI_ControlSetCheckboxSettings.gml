@@ -1,4 +1,3 @@
-#define GMUI_ControlSetCheckboxSettings
 ///GMUI_ControlSetCheckboxSettings(padding [pixels], color on, color off, outline shape/sprite, outline color on, outline color off, transition speed)
 ///Required to be called to set the SETTINGS of the checkbox
 
@@ -66,4 +65,3 @@ if (argument5 >= 0)
 
 return true;
     
-

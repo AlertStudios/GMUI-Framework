@@ -1,4 +1,3 @@
-#define GMUI_GridSetMappedValues
 ///GMUI_GridSetMappedValues(GMUI instance, layer, group number)
 ///Iterate over the value map for the specific group to set values
 
@@ -73,4 +72,3 @@ with (argument0) {
 
     return true;
 }
-

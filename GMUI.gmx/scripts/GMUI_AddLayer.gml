@@ -1,4 +1,3 @@
-#define GMUI_AddLayer
 ///GMUI_AddLayer(Layer Number,x offset, y offset)
 /// Adds a new grid layer to GMUI for controls to exist on
 // returns false on failure (bad params)
@@ -48,4 +47,3 @@ if ((GMUII()).UILayerTop < _Layer)
     (GMUII()).UILayerTop = _Layer;
 
 return true;
-

@@ -1,4 +1,3 @@
-#define GMUI_GridUpdateLayer
 ///GMUI_GridUpdateLayer(GMUI instance, Layer)
 ///[BETA]Update the draw flag for all controls on the layer
 var _i, _g,_ctrl, _Layer;
@@ -33,4 +32,3 @@ with (argument0) {
         }
     }
 } 
-

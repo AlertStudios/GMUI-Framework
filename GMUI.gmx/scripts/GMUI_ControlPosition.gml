@@ -1,4 +1,3 @@
-#define GMUI_ControlPosition
 ///GMUI_ControlPosition("control name" or id, cell x, cell y, relative x, relative y, Anchor)
 ///Set the relative positioning and sizing of the control within its cell
 
@@ -67,6 +66,5 @@ else
     _ctrl.NeedsPositionUpdate = true;
 
 return true;
-
 
 

@@ -1,4 +1,3 @@
-#define GMUI_ControlIsInLayer
 ///GMUI_ControlIsInLayer(control, layer)
 var _ctl,_L;
 
@@ -23,4 +22,3 @@ if ((_ctl).AdditionalLayer != -1) {
 }
     
 return false;
-

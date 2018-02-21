@@ -1,4 +1,3 @@
-#define GMUI_ControlSetHoverAction
 ///GMUI_ControlSetHoverAction(Action Script)
 ///When hovering, execute script (can also draw)
 
@@ -18,4 +17,3 @@ else {
 
 return false;
     
-

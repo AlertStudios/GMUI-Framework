@@ -1,4 +1,3 @@
-#define GMUI_DrawSpriteBox
 ///GMUI_DrawSpriteBox(GMUI instance, Layer, Group, Control[0] / Group [1] / Menu[2], Alpha)
 ///Draws the box of the specified type
 
@@ -104,4 +103,3 @@ if (_spr_isFixed) {
 else {
     draw_sprite_stretched_ext(_sprCenter,-1,_dbx+_spr_width,_dby+_spr_height,_dbw-_spr_width*2,_dbh-_spr_height*2,c_white,_alpha);
 }
-

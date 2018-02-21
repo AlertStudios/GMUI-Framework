@@ -1,4 +1,3 @@
-#define GMUI_GroupHide
 ///GMUI_GroupHide(group number, layer number, Hide(1) or show(0))
 /// Hide all of the controls within the specified group
 
@@ -32,4 +31,3 @@ for(i=0;i<ds_list_size((GMUII()).GMUI_groupControlList[_Layer,_Group]);i+=1) {
         }
     }
 }
-

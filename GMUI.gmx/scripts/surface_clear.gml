@@ -1,4 +1,3 @@
-#define surface_clear
 ///surface_clear(surface)
 ///Draws a subtracting rectangle over the whole surface
 
@@ -11,4 +10,3 @@ if (surface_exists(argument0)) {
     draw_rectangle(0,0,surface_get_width(argument0),surface_get_height(argument0),0);
     draw_set_blend_mode(bm_normal);
 }
-

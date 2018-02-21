@@ -1,4 +1,3 @@
-#define GMUI_AddTooltipToControl
 ///GMUI_AddTooltipToControl(Control id, "message string", direction/side of control, width cells [or -1], height cells [or -1], max cells width, max cells height, adjustment x [or -1], adjustment y [or -1])
 ///Adds a tooltip to the specified control
 
@@ -124,5 +123,4 @@ with (newCtrl) {
 (_ctrl).TooltipId = newCtrl;
 
 return newCtrl;
-
 

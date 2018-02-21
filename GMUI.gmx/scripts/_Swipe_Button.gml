@@ -1,5 +1,3 @@
-#define _Swipe_Button
-
 var MyButton;
 MyButton = GMUI_GetControl("SwipeButton");
 
@@ -13,4 +11,3 @@ else {
     global.Swiped = false;
     with (MyButton) GMUI_ControlSetButton("Swipe"+chr(13)+"Out",-1,-1,-1);
 }
-
