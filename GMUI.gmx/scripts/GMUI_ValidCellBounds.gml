@@ -1,3 +1,4 @@
+#define GMUI_ValidCellBounds
 ///GMUI_ValidCellBounds(anchor,cellX,cellY,gridW,gridH)
 ///This procedure will lightly check the boundaries for each anchor position, as controls outside the grid will not be recognized properly
 // Only checks for max bounds such as negative or over the width/height. User should notice anything else, so I don't think it needs to be a strict check.... for now at least.
@@ -27,3 +28,4 @@ argument0 == global.GMUIAnchorBottomLeft || argument0 == global.GMUIAnchorBottom
 
 // Passed
 return true;
+

@@ -1,3 +1,4 @@
+#define GMUI_CreateEvent
 ///GMUI_CreateEvent(Form Script, Cell Width, Cell Height)
 ///Called from creation of new GMUI instance for the grid interfaces and variables
 
@@ -168,4 +169,5 @@ GMUI_GridSetRegions();
 
 // Upon success, give the GMUI id back
 return GMUInumber;
+
 

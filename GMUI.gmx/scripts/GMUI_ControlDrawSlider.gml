@@ -1,3 +1,4 @@
+#define GMUI_ControlDrawSlider
 ///GMUI_ControlDrawSlider(id of slider control object)
 /// Draw the control as a slider
 
@@ -280,3 +281,4 @@ with (_tt_id) {
     
     //draw_text_ext(_dtx,cy + (chy-cy)/2,_txt,-1,cwx);
 }
+

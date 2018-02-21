@@ -1,3 +1,4 @@
+#define surface_target
 ///surface_target(surface, width if created, height if created)
 ///Sets the target to the surface or creates it if it doesn't exist
 
@@ -13,3 +14,4 @@ else {
 }
 
 return _Surface;
+

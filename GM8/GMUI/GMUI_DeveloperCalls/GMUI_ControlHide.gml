@@ -20,6 +20,10 @@ with (GMUII()) {
             else
                 GMUI_ControlFadeIn(argument0,(_ctrl).FadeTime);
         }
+        else {
+            GMUI_GridUpdateLayer((_ctrl).GMUIP,(_ctrl).Layer);
+            (_ctrl).NeedsDrawUpdate = true;
+        }
         return true;
     }
 }

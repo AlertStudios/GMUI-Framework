@@ -1,3 +1,4 @@
+#define GMUI_ControlPositionToGroup
 ///GMUI_ControlPositionToGroup(Control id)
 
 with (argument0) {
@@ -20,4 +21,5 @@ with (argument0) {
     // Update control draw location in the room
     GMUI_ControlUpdateXY(id);
 }
+
 

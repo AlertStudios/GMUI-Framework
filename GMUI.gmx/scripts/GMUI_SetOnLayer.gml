@@ -1,3 +1,4 @@
+#define GMUI_SetOnLayer
 ///GMUI_SetOnLayer(Layer number)
 /// Switches the layer to create / modify on
 
@@ -21,4 +22,5 @@ if (!GMUI_LayerExists(_LayerNumber)) {
 UIAddToLayer = _LayerNumber;
 
 return true;
+
 

@@ -1,3 +1,4 @@
+#define GMUI_GetAnchoredCellY
 ///GMUI_GetAnchoredCellY(GMUII, Layer, Cell Y given, Anchor Type)
 /// Returns the new X cell position in the grid based on the anchoring
 
@@ -25,3 +26,4 @@ else {
     else
         return __CellY;
 }
+

@@ -1,3 +1,4 @@
+#define GMUI_ControlAddToGroup
 ///GMUI_ControlAddToGroup(group number)
 ///Adds control to a group if it exists in the layer
 
@@ -43,6 +44,12 @@ Group = _Group;
 if ((GMUIP).GMUI_groupMasterControl[_Layer,_Group] == -1 || (GMUIP).GMUI_groupMasterControl[_Layer,_Group] > id) {
     (GMUIP).GMUI_groupMasterControl[_Layer,_Group] = id;
 }
+if ((GMUII()).UIEnableSurfaces) {
+    if ((GMUIP).GMUI_groupDrawingControl[_Layer,_Group] == -1 || (GMUIP).GMUI_groupDrawingControl[_Layer,_Group] < id) {
+        (GMUIP).GMUI_groupDrawingControl[_Layer,_Group] = id;
+        NeedsGroupUpdate = true;
+    }
+}
 
 GMUI_ControlPositionToGroup(id);
 
@@ -50,3 +57,4 @@ GMUI_ControlPositionToGroup(id);
 return true;
     
     
+

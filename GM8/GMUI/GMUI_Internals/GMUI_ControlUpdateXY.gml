@@ -11,8 +11,14 @@ if (!GMUI_IsControlID(_ctrl)) {
     return false;
 }
 
-_xoffset = GMUI_GridViewOffsetX(_GMUIP);
-_yoffset = GMUI_GridViewOffsetY(_GMUIP);
+if (_GMUIP.UIEnableSurfaces) {
+    _xoffset = 0 - _GMUIP.GMUI_groupActualX[_ctrl.Layer,_ctrl.Group];
+    _yoffset = 0 - _GMUIP.GMUI_groupActualY[_ctrl.Layer,_ctrl.Group];
+}
+else {
+    _xoffset = GMUI_GridViewOffsetX(_GMUIP);
+    _yoffset = GMUI_GridViewOffsetY(_GMUIP);
+}
 
 _lw = GMUI_GridGetWidth((_ctrl).GMUIP,(_ctrl).Layer);
 _lh = GMUI_GridGetHeight((_ctrl).GMUIP,(_ctrl).Layer);

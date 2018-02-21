@@ -1,3 +1,4 @@
+#define GMUI_ControlActionScript
 ///GMUI_ControlActionScript(control object) Runs the script assigned to the control, if there is one
 
 if (!GMUI_IsControlID(argument0))
@@ -18,3 +19,4 @@ else {
 }
 
 return false;
+

@@ -1,3 +1,4 @@
+#define GMUI_PopupSetMessage
 ///GMUI_PopupSetMessage("popup name", "Message", # of Padding Cells, font [or -1], color [or -1])
 ///Creates a message label inside of the popup
 
@@ -30,3 +31,4 @@ with (GMUI_Add("GMUIPopupMessage" + string(_menuNumber), "label", _pad, _pad, _w
 }
 
 return true;
+

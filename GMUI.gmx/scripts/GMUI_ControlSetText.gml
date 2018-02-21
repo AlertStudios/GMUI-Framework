@@ -1,3 +1,4 @@
+#define GMUI_ControlSetText
 ///GMUI_ControlSetText(string)
 ///Similar to setting the value for the label, but will adjust the height to fit as well
 
@@ -13,6 +14,9 @@ str_h = string_height_ext(argument0,-1,CellWide*GMUIP.cellsize-ControlPaddingX*2
 
 CellHigh = minmax(ceil(str_h/GMUIP.cellsize_h),CellHigh,CellHighMax);
 
+GMUI_GridUpdateLayer(GMUIP,Layer);
+
 return GMUI_ControlSetInitValue(argument0);
+
 
 

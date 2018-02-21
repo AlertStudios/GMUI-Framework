@@ -14,6 +14,8 @@ str_h = string_height_ext(argument0,-1,CellWide*GMUIP.cellsize-ControlPaddingX*2
 
 CellHigh = minmax(ceil(str_h/GMUIP.cellsize_h),CellHigh,CellHighMax);
 
+GMUI_GridUpdateLayer(GMUIP,Layer);
+
 return GMUI_ControlSetInitValue(argument0);
 
 

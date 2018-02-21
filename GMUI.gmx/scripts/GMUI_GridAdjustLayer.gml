@@ -1,3 +1,4 @@
+#define GMUI_GridAdjustLayer
 ///GMUI_GridAdjustLayer(Layer Number [or all: -1], cells wide, cells high)
 /// Adjusts the layer's grid based on new dimensions and moves the controls according to their anchors
 
@@ -28,6 +29,13 @@ ds_grid_resize((_GMUI).GMUI_grid[_Layer],CW,CH);
 (_GMUI).GMUI_grid_w[_Layer] = CW * (_GMUI).cellsize;
 (_GMUI).GMUI_grid_h[_Layer] = CH * (_GMUI).cellsize_h;
 
+// Reset any surfaces
+if ((_GMUI).UIEnableSurfaces) {
+    if (surface_exists((_GMUI).GMUI_gridSurface[_Layer]))
+        surface_free((_GMUI).GMUI_gridSurface[_Layer]);
+    (_GMUI).GMUI_gridSurface[_Layer] = surface_create((_GMUI).UIgridwidth,(_GMUI).UIgridheight);
+}
+
 
 // Get grid dimensions
 var gridW, gridH, anc, relX, relY, pCellX, pCellY;
@@ -43,7 +51,7 @@ for(i=0;i<ds_list_size((_GMUI).GMUI_controlList);i+=1) {
     if (!instance_exists(ctrl)) {
         GMUI_ThrowError("Control no longer exists. GMUI_GridAdjustLayer()");
     }
-    else if (((ctrl).Layer == _Layer || _Layer == -1) && ctrl.Group == 0) {
+    else if (((ctrl).Layer == _Layer) && ctrl.Group == 0) {
         // The relative values when the grid is adjusted has four relative positions: Middle X's, Middle Y's, Right X's, Bottom Y's)
     
         // Use the anchor and position relative to it 
@@ -102,4 +110,5 @@ GMUI_GridSetRegionsLayer(_Layer);
 
 
 return true;
+
 

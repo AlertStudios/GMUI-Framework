@@ -1,3 +1,4 @@
+#define GMUI_ControlDrawGroup
 ///GMUI_ControlDrawGroup(GMUI instance, Layer, Group, Alpha, FadeMode [0 or 1])
 ///Draws the group if set to do any drawing - Called by master control of group
 
@@ -14,16 +15,18 @@ if ((_GMUII).GMUI_groupGraphicMapIsUsed[_layer,_group]) {
 }            
 
 if (ControlHasGroupStyle) {
-    var x1,x2,y1,y2,xoffset,yoffset,alphadiff;
-    xoffset = GMUI_GridViewOffsetX(GMUII());
-    yoffset = GMUI_GridViewOffsetY(GMUII());
+    var x1,x2,y1,y2,alphadiff;
+    if (_GMUII.UIEnableSurfaces) {
+        x1 = 0;
+        y1 = 0;
+    }
+    else {
+        x1 = (GMUII()).GMUI_groupActualX[_layer,_group] + (GMUII()).GMUI_grid_x[_layer] + GMUI_GridViewOffsetX(GMUII());
+        y1 = (GMUII()).GMUI_groupActualY[_layer,_group] + (GMUII()).GMUI_grid_y[_layer] + GMUI_GridViewOffsetY(GMUII());
+    }
+    x2 = x1 + (GMUII()).GMUI_groupCellsW[_layer,_group]*(GMUII()).cellsize;
+    y2 = y1 + (GMUII()).GMUI_groupCellsH[_layer,_group]*(GMUII()).cellsize_h;
     
-    x1 = (GMUII()).GMUI_groupActualX[_layer,_group] + (GMUII()).GMUI_grid_x[_layer] + xoffset;
-    y1 = (GMUII()).GMUI_groupActualY[_layer,_group] + (GMUII()).GMUI_grid_y[_layer] + yoffset;
-    x2 = (GMUII()).GMUI_groupActualX[_layer,_group] + 
-            (GMUII()).GMUI_groupCellsW[_layer,_group]*(GMUII()).cellsize + (GMUII()).GMUI_grid_x[_layer] + xoffset;
-    y2 = (GMUII()).GMUI_groupActualY[_layer,_group] + 
-            (GMUII()).GMUI_groupCellsH[_layer,_group]*(GMUII()).cellsize_h + (GMUII()).GMUI_grid_y[_layer] + yoffset;
     alphadiff = GroupBackgroundAlpha - GroupBorderAlpha;
     // Background
     color_alpha(GroupBackgroundColor,min(GroupBackgroundAlpha, _alpha+(alphadiff*(alphadiff<0))*_fadeMode ));
@@ -40,3 +43,4 @@ if (ControlHasGroupStyle) {
         draw_rectangle(x1,y1,x2,y2,true);
         
 }
+

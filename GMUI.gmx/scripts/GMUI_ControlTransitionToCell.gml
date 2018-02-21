@@ -1,3 +1,4 @@
+#define GMUI_ControlTransitionToCell
 ///GMUI_ControlTransitionToCell("ControlName",Cell X, Cell Y, Transition Script, Time)
 ///
 
@@ -8,3 +9,4 @@ _ActualX = GMUI_CellGetActualX(argument1);
 _ActualY = GMUI_CellGetActualY(argument2);
 
 GMUI_ControlTransitionToActual(argument0,_ActualX,_ActualY,argument3,argument4);
+

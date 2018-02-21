@@ -28,6 +28,8 @@ i.ControlDataType = global.GMUIDataTypeString; // Default (0)
 
 i.NeedsPositionUpdate = false;
 i.NeedsDrawUpdate = false;
+i.NeedsHideUpdate = false; //not needed?
+i.NeedsGroupUpdate = false;
 
 // Redundant control options based on the datatype
 i.ControlIsNumeric = false;
@@ -52,6 +54,7 @@ i.Hidden = 0;
 
 // Group Status (if master control)
 i.GroupHidden = false;
+i.GroupIsFading = false;
 
 // NonClickable may be used when a control is moving, for instance. It does not show disabled, but will not register a click
 i.NonClickable = 0;

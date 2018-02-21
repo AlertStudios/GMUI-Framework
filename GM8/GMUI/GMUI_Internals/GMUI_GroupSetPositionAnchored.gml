@@ -57,6 +57,9 @@ if (!(_MasterControl).TransitioningGroup) {
         (GMUII()).GMUI_groupActualX[_LayerNumber,_GroupNumber] = (_MasterControl).T_hx_group;
         (GMUII()).GMUI_groupActualY[_LayerNumber,_GroupNumber] = (_MasterControl).T_hy_group;
     }
+    else if ((GMUII()).UIEnableSurfaces) {
+        GMUI_GridUpdateLayer(GMUII(),_LayerNumber);
+    }
 }
 
 
@@ -95,6 +98,7 @@ for(i=0;i<ds_list_size((GMUII()).GMUI_groupControlList[_LayerNumber,_GroupNumber
         }
     }
 }
+
 
 // Reset all control regions for the layer
 GMUI_GridSetRegionsLayer(_LayerNumber);

@@ -25,7 +25,7 @@ with (GMUII()) {
         GMUI_grid_T_d[_Layer] = room_speed;
     
     GMUI_grid_T_bx[_Layer] = GMUI_grid_x[_Layer];
-    GMUI_grid_T_by[_Layer] = GMUI_grid_x[_Layer];
+    GMUI_grid_T_by[_Layer] = GMUI_grid_y[_Layer];
     GMUI_grid_T_cx[_Layer] = argument1 - GMUI_grid_x[_Layer];
     GMUI_grid_T_cy[_Layer] = argument2 - GMUI_grid_y[_Layer];
     

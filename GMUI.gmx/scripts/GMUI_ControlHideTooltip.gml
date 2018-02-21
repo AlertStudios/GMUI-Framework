@@ -1,3 +1,4 @@
+#define GMUI_ControlHideTooltip
 ///GMUI_ControlHideTooltip("ControlName that has tooltip", Hide?)
 ///Hide or show a control's tooltip
 // argument1 is to hide (1) or show (0)
@@ -19,3 +20,4 @@ with (GMUII()) {
         return true;
     }
 }
+

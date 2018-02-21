@@ -1,3 +1,4 @@
+#define GMUI_ControlInit
 ///GMUI_ControlInit(control object to instantiate)
 /// Initialize the values to use with a GMUI control
 // These values are controlled by the GMUI controller, and if commented, they are actually intialized by the Add script.
@@ -27,6 +28,8 @@ i.ControlDataType = global.GMUIDataTypeString; // Default (0)
 
 i.NeedsPositionUpdate = false;
 i.NeedsDrawUpdate = false;
+i.NeedsHideUpdate = false; //not needed?
+i.NeedsGroupUpdate = false;
 
 // Redundant control options based on the datatype
 i.ControlIsNumeric = false;
@@ -51,6 +54,7 @@ i.Hidden = 0;
 
 // Group Status (if master control)
 i.GroupHidden = false;
+i.GroupIsFading = false;
 
 // NonClickable may be used when a control is moving, for instance. It does not show disabled, but will not register a click
 i.NonClickable = 0;
@@ -183,3 +187,4 @@ i.valueChangeDetected = 0;
 /// ???:
 // The control will be disabled for this many steps before allowing action
 //i.Disable = floor(room_speed/20);
+

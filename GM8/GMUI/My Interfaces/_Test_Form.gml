@@ -20,13 +20,14 @@ GMUI_SetOnLayer(0);
 // Right side group
 GMUI_CreateGroup(1,      20,3,   global.GMUIAnchorTopRight);
 GMUI_GroupSetSize(1,     18,4);
-GMUI_GroupSetStyle(1, c_black, 0.2, c_black, 0.1, 0);
+GMUI_GroupSetStyle(1, c_black, .2, c_black, .3, 0);
+GMUI_GroupSetFadeOnHide(1, room_speed, 0);
 
 //GMUI_GroupSetSpriteMap(1, s2,s3,s4,s5,s6,s7,s8,s1,s9,false);
 
 // Left side group
 GMUI_CreateGroup(2,      2,3,    global.GMUIAnchorTopLeft);
-GMUI_GroupSetFadeOnHide(2, room_speed/4, 0);
+GMUI_GroupSetFadeOnHide(2, room_speed, 0);
 
 /*
 
@@ -44,7 +45,7 @@ with (GMUI_Add("Test1","textstring",            1,0,    16,2,   global.GMUIAncho
 
 with (GMUI_Add("Test2", "textint",              0,0,    10,2,   global.GMUIAnchorTopLeft)) {
     GMUI_ControlSetAttributes(5,0,-1000,1000);
-    GMUI_ControlSetStyle(hsv(120,120,120),rgb(20,20,20),-1,-1,-1,-1,-1,-1,-1,-1);
+    GMUI_ControlSetStyle(hsv(85,55,255),rgb(20,20,20),-1,-1,-1,-1,-1,-1,-1,-1);
     GMUI_ControlAddToGroup(2);
 }
 
@@ -88,14 +89,24 @@ with (GMUI_Add("DebugButton", "textbutton",     1,3,    5,3,    global.GMUIAncho
     GMUI_ControlSetStyle(-1, -1, c_gray, 1, 0.85, -1, -1, -1, -1, -1);
 }
 
+with (GMUI_Add("SwipeButton", "textbutton",      8,7,   5,3,    global.GMUIAnchorBottomLeft)) {
+    GMUI_ControlSetButtonAction(_Swipe_Button);
+    GMUI_ControlSetButton("Swipe"+chr(13)+"Out",-1,-1,-1);
+}
+
 with (GMUI_Add("DisableButton", "textbutton",   8,3,    5,3,    global.GMUIAnchorBottomLeft)) {
     GMUI_ControlSetButtonAction(_Disable_Button);
     GMUI_ControlSetButton("Disable"+chr(13)+"Test",-1,-1,-1);
 }
 
+with (GMUI_Add("HideButton2", "textbutton",      15,7,   5,3,    global.GMUIAnchorBottomLeft)) {
+    GMUI_ControlSetButtonAction(_Hide_Button2);
+    GMUI_ControlSetButton("Hide"+chr(13)+"Group 2",-1,-1,-1);
+}
+
 with (GMUI_Add("HideButton", "textbutton",      15,3,   5,3,    global.GMUIAnchorBottomLeft)) {
     GMUI_ControlSetButtonAction(_Hide_Button);
-    GMUI_ControlSetButton("Hide"+chr(13)+"Group",-1,-1,-1);
+    GMUI_ControlSetButton("Hide"+chr(13)+"Group 1",-1,-1,-1);
 }
 
 with (GMUI_Add("MoveButton", "textbutton",      22,3,   6,3,    global.GMUIAnchorBottomLeft)) {
@@ -201,6 +212,7 @@ GMUI_ControlSelectOption("SpritePicker",2);
 GMUI_AddLayer(1,0,0);
 
 GMUI_CreateGroup(3,          0,0,    global.GMUIAnchorTopLeft);
+//GMUI_GroupSetFadeOnHide(3,room_speed/8,1)
 
 
 with (GMUI_Add("MenuInt", "intpicker",          0,0,    3,2,    global.GMUIAnchorTopLeft)) {
@@ -267,7 +279,8 @@ with (GMUI_Add("PopupTestButton","textbutton",  -3,8,   8,1,    global.GMUIAncho
 
 with (GMUI_Add("ResponseLabel", "label", -8, 10, 16, 2, global.GMUIAnchorTop)) {
     // This value will be set by the popup
-    GMUI_ControlSetFontStyle(fontNumeric,c_white,fa_center);
+    ControlBackgroundColor = c_black;
+    GMUI_ControlSetFontStyle(fontNumericBold,c_white,fa_center);
     GMUI_ControlAddToMenu("Test Menu 2");
 }
 

@@ -33,7 +33,6 @@ if (SliderRoundValuesToSnap) {
 if (SliderSmoothSnap) {
     if (script_exists(SliderMovementScript)) {
         if (round(Slider_c) != round(SliderRelativeFinalXorY-SliderRelativeXorY)) {
-            Slider_t = 0;
             Slider_b = SliderRelativeXorY;
             if (SliderSnap){
                 Slider_c = round((SliderRelativeFinalXorY-SliderStartEndPadding)/SliderSnapDistance)*SliderSnapDistance
@@ -42,6 +41,9 @@ if (SliderSmoothSnap) {
             else {
                 Slider_c = SliderRelativeFinalXorY-SliderRelativeXorY;
             }
+            
+            if (Slider_c != 0)
+                Slider_t = 0;
         }
         
         if (Slider_t < Slider_d) {

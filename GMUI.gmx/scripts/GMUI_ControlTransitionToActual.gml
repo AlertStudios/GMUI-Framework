@@ -1,3 +1,4 @@
+#define GMUI_ControlTransitionToActual
 ///GMUI_ControlTranstionToActual("ControlName",Grid X, Grid Y, Transition Script, Time)
 ///
 
@@ -26,4 +27,5 @@ if (!GMUI_IsScript(argument3))
 
 (_ctrl).TransitionScript = argument3;
 (_ctrl).Transitioning = true;
+
 

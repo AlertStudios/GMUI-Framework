@@ -1,3 +1,4 @@
+#define GMUI_CreatePopup
 ///GMUI_CreatePopup (popup name, cell# x, cell# y, cells wide, cells high, Anchor, global.GMUIPopup...)
 ///Adds a popup to a GMUI layer that has typical control options for prompt
 
@@ -68,4 +69,5 @@ else {
     GMUI_ThrowErrorDetailed("Unable to create popup "+_name,_SCRIPT);
     return -1;
 }
+
 

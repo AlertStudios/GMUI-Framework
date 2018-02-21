@@ -1,3 +1,4 @@
+#define GMUI_Settings
 ///GMUI_Settings(OptionalInterfaceArgument) Settings for GMUI - Do not delete! Modify to fit your preferences
 ///Called from the initialization of each GMUI interface. Argument can set specific settings depending on the interface.
 // Don't change these values in runtime, only change them here.
@@ -11,7 +12,7 @@ UIsnaptoview = true;
 UIgridview = 0;
 
 // Required: Surfaces are needed for listboxes and scrollable menus, but also draws the grid as a surface itself
-UIEnableSurfaces = true;
+UIEnableSurfaces = false;
 
 // Required: Flexibility to add graphical effects settings to the controls: (currently unused)
 var basic, good, best; basic = 0; good = 1; best = 2;
@@ -45,6 +46,7 @@ switch (OptionalInterfaceName) {
         // Do Something
     break;
 }
+
 
 
 

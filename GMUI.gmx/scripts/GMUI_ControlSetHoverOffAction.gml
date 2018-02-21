@@ -1,3 +1,4 @@
+#define GMUI_ControlSetHoverOffAction
 ///GMUI_ControlSetHoverOffAction(Action Script)
 ///When hovering off, execute script (can also draw)
 
@@ -17,3 +18,4 @@ else {
 
 return false;
     
+

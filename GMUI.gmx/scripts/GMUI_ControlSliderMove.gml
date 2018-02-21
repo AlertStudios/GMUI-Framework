@@ -1,3 +1,4 @@
+#define GMUI_ControlSliderMove
 ///GMUI_ControlSliderMove([bool] Move to mouse, else stop and set)
 ///Called by control. Move the position of the thumb based on mouse position or stop where the mouse is
 
@@ -32,7 +33,6 @@ if (SliderRoundValuesToSnap) {
 if (SliderSmoothSnap) {
     if (script_exists(SliderMovementScript)) {
         if (round(Slider_c) != round(SliderRelativeFinalXorY-SliderRelativeXorY)) {
-            Slider_t = 0;
             Slider_b = SliderRelativeXorY;
             if (SliderSnap){
                 Slider_c = round((SliderRelativeFinalXorY-SliderStartEndPadding)/SliderSnapDistance)*SliderSnapDistance
@@ -41,6 +41,9 @@ if (SliderSmoothSnap) {
             else {
                 Slider_c = SliderRelativeFinalXorY-SliderRelativeXorY;
             }
+            
+            if (Slider_c != 0)
+                Slider_t = 0;
         }
         
         if (Slider_t < Slider_d) {
@@ -68,4 +71,5 @@ if (!argument0) {
     if (real(value) != valueSetting)
         GMUI_SetValue(valueName,valueSetting,2);
 }
+
 

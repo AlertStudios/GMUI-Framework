@@ -128,10 +128,8 @@ with (_tt_id) {
         // Draw checkbox control
         var TSC,TA,TC,SII;
         TC = ToggleColorOff;
-        if (Toggle_t < Toggle_d) {
+        if (Toggle_t < Toggle_d)
             TSC = merge_color(ToggleSlideColorOff,ToggleSlideColorOn,ToggleRelativeXorY);
-            GMUI_GridUpdateLayer(GMUIP,Layer);
-        }
         else if (value)
             TSC = ToggleSlideColorOn;
         else

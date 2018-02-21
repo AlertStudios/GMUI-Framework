@@ -1,3 +1,4 @@
+#define GMUI_ControlSetButtonAction
 ///GMUI_ControlSetButtonAction(Action Script)
 if (!GMUI_IsControl() && id != GMUII())
 {
@@ -15,3 +16,4 @@ else {
 
 return false;
     
+

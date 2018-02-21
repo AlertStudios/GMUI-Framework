@@ -1,3 +1,4 @@
+#define GMUI_ControlCenterX
 ///GMUI_ControlCenterX("control name" or id)
 ///Centers the control in its layer horizontally
 
@@ -25,3 +26,4 @@ else {
         
     return true;
 }
+

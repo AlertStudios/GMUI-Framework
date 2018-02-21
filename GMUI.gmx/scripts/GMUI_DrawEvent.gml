@@ -1,3 +1,4 @@
+#define GMUI_DrawEvent
 ///GMUI_GridDraw()
 ///Actions done to operate the grid, executed by the GMUI object in the draw event
 
@@ -31,7 +32,7 @@ if (GMUI_GridEnabled())
                 previousHoveringControl = -1;
             }
             
-            if (!ctrlObject.Disabled && !ctrlObject.NonClickable) {
+            if (!ctrlObject.Disabled && !ctrlObject.NonClickable && !ctrlObject.Hidden) {
                 ctrlObject.Hovering = 0;
                 ctrlObject.HoveringDirection = 0;
                 
@@ -54,14 +55,15 @@ if (GMUI_GridEnabled())
                         }
                         else {
                             ctrlObject.Hovering = 1;
-                            GMUI_GridUpdateLayer(ctrlObject.GMUIP,ctrlObject.Layer); //test
                         }
                             
                     }
                     else {
                         ctrlObject.Hovering = 1;
-                        GMUI_GridUpdateLayer(ctrlObject.GMUIP,ctrlObject.Layer); //test
                     }
+                    
+                    if (!ctrlObject.Hidden)
+                        GMUI_GridUpdateLayer(ctrlObject.GMUIP,ctrlObject.Layer);
                     
                     // Set the hovering control and execute optional hover action if set
                     if (ctrlObject != previousHoveringControl) {
@@ -79,7 +81,7 @@ if (GMUI_GridEnabled())
         else if (HoveringControl != -1) {
             if (previousHoveringControl != -1) {
             global.test = previousHoveringControl;
-            GMUI_GridUpdateLayer(previousHoveringControl.GMUIP,previousHoveringControl.Layer); //test
+            GMUI_GridUpdateLayer(previousHoveringControl.GMUIP,previousHoveringControl.Layer);
                 if (GMUI_IsScript((previousHoveringControl).HoverOffActionScript)) {
                     script_execute((previousHoveringControl).HoverOffActionScript);
                 }
@@ -124,7 +126,7 @@ if (GMUI_GridEnabled())
                         inRegion = true;
                     
                     if (inRegion) {
-                        GMUI_GridUpdateLayer(ctrlObject.GMUIP,ctrlObject.Layer); //test
+                        GMUI_GridUpdateLayer(ctrlObject.GMUIP,ctrlObject.Layer);
                         // Switch between special types, general input types, and other controls
                         if (ctrlObject.ControlPicker) {
                             switch (ctrlObject.HoveringDirection) {
@@ -181,7 +183,9 @@ if (GMUI_GridEnabled())
                 }
     
             }
-            
+            else {
+                GMUI_GridUpdateLayer(id,GMUI_GetCurrentLayer());
+            }
         }
     }
     
@@ -189,12 +193,15 @@ if (GMUI_GridEnabled())
     if (SelectedControl != -1) {
         if (GMUI_NavigateNextControl(true)) {
             GMUI_GridNextControl(true);
+            GMUI_GridUpdateLayer(id,GMUI_GetCurrentLayer());
         }
         else if (GMUI_NavigateNextControl(false)) {
             GMUI_GridNextControl(false);
+            GMUI_GridUpdateLayer(id,GMUI_GetCurrentLayer());
         }
         else if (keyboard_check_pressed(vk_enter)) {
             GMUI_ResetControlStatus("Selected",id);
+            GMUI_GridUpdateLayer(id,GMUI_GetCurrentLayer());
         }
     }
     
@@ -211,7 +218,7 @@ if (GMUI_GridEnabled())
     // Draw surface layers, and/or adjust a transitioning layer
     if (GMUI_grid_Transition || UIEnableSurfaces) {
         // Loop through each layer
-        var _i, _l;
+        var _i, _l, _j, _g, _c;
         for(_i=0;_i<ds_list_size(GMUI_gridlist);_i+=1) {
             // Check for transition
             _l = ds_list_find_value(GMUI_gridlist,_i);
@@ -230,28 +237,28 @@ if (GMUI_GridEnabled())
                         GMUI_grid_Transitioning[_l] = false;
                         GMUI_grid_Transition = false;
                     }
-                    // Need to redraw the layers of surfaces if enabled
-                    if (UIEnableSurfaces) {
-                        GMUI_gridNeedsDrawUpdate[_l] = 1;
-                    }
                 }
                 
-                if (surface_exists(GMUI_gridSurface[_l])) {
-                    draw_surface(GMUI_gridSurface[_l],GMUI_grid_x[_l],GMUI_grid_y[_l]);
-                    // Reset update flag
-                    if (GMUI_gridNeedsDrawUpdate[_l])
-                        GMUI_gridNeedsDrawUpdate[_l] = false; 
+                // Draw layer surface
+                if (UIEnableSurfaces) {
+                    if (surface_exists(GMUI_gridSurface[_l])) {
+                        // Adjust surface position to view if enabled
+                        draw_surface(GMUI_gridSurface[_l],
+                            GMUI_grid_x[_l]+view_xview[UIgridview]*UIsnaptoview,
+                            GMUI_grid_y[_l]+view_yview[UIgridview]*UIsnaptoview);
+                        // Reset update flag
+                        if (GMUI_gridNeedsDrawUpdate[_l] == 1)
+                            GMUI_gridNeedsDrawUpdate[_l] = 2;
+                    }
                 }
             }
         }
         
         // Need to redraw each step if not using surfaces
-        if (!UIEnableSurfaces) {
+        if (!UIEnableSurfaces) { // This was used for layer surfaces... but couldn't get it to work
             GMUI_ResetControlStatus("Position",id);
         }
     }
-    
-    // If using surfaces, we need to draw each layer here
     
     
     
@@ -259,4 +266,5 @@ if (GMUI_GridEnabled())
     
 
 }
+
 

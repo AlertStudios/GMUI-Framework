@@ -1,3 +1,4 @@
+#define GMUI_GroupHide
 ///GMUI_GroupHide(group number, layer number, Hide(1) or show(0))
 /// Hide all of the controls within the specified group
 
@@ -6,6 +7,8 @@ _Group = argument0;
 _Layer = argument1;
 _Hide = argument2;
 
+(GMUII()).GMUI_groupNeedsDrawUpdate[_Layer,_Group] = true;
+
 // Change the value for each of the controls within the group
 for(i=0;i<ds_list_size((GMUII()).GMUI_groupControlList[_Layer,_Group]);i+=1) {
     // Get the control id
@@ -13,9 +16,20 @@ for(i=0;i<ds_list_size((GMUII()).GMUI_groupControlList[_Layer,_Group]);i+=1) {
     
     if (!instance_exists(ctrl))
     {
-        GMUI_ThrowErrorDetailed("Control no longer exists layer, group: (" + _Layer + "," + _Group + ")",GMUI_GroupHide);
+        GMUI_ThrowErrorDetailed("Control no longer exists layer, group: (" + string(_Layer) + "," + string(_Group) + ")",GMUI_GroupHide);
     }
     else {
         GMUI_ControlHide(ctrl,_Hide);
+        ctrl.GroupHidden = _Hide;
+        
+        if ((GMUII()).UIEnableSurfaces) {
+            if (ctrl.FadeOnHide && (GMUII()).GMUI_gridTransitioner[_Layer] == -1  && (GMUII()).GMUI_groupMasterControl[_Layer,_Group] == (ctrl)) {
+                (GMUII()).GMUI_gridTransitioner[_Layer] = ctrl;
+            }
+            else
+                ctrl.NeedsDrawUpdate = !_Hide;
+                ctrl.NeedsGroupUpdate = !_Hide;
+        }
     }
 }
+

@@ -44,6 +44,12 @@ Group = _Group;
 if ((GMUIP).GMUI_groupMasterControl[_Layer,_Group] == -1 || (GMUIP).GMUI_groupMasterControl[_Layer,_Group] > id) {
     (GMUIP).GMUI_groupMasterControl[_Layer,_Group] = id;
 }
+if ((GMUII()).UIEnableSurfaces) {
+    if ((GMUIP).GMUI_groupDrawingControl[_Layer,_Group] == -1 || (GMUIP).GMUI_groupDrawingControl[_Layer,_Group] < id) {
+        (GMUIP).GMUI_groupDrawingControl[_Layer,_Group] = id;
+        NeedsGroupUpdate = true;
+    }
+}
 
 GMUI_ControlPositionToGroup(id);
 

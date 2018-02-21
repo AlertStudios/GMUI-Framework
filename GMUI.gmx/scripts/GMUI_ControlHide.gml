@@ -1,3 +1,4 @@
+#define GMUI_ControlHide
 ///GMUI_ControlHide("ControlName", Hide?)
 ///Hide or show a control
 // argument1 is to hide (1) or show (0)
@@ -19,6 +20,11 @@ with (GMUII()) {
             else
                 GMUI_ControlFadeIn(argument0,(_ctrl).FadeTime);
         }
+        else {
+            GMUI_GridUpdateLayer((_ctrl).GMUIP,(_ctrl).Layer);
+            (_ctrl).NeedsDrawUpdate = true;
+        }
         return true;
     }
 }
+

@@ -1,3 +1,4 @@
+#define GMUI_CenterX
 ///GMUI_CenterX(Layer, Control Width Cells #, Anchor)
 ///Get X Cell of Anchor for centering on layer
 
@@ -24,3 +25,4 @@ else if (_Anchor == global.GMUIAnchorTopRight || _Anchor == global.GMUIAnchorRig
     return _LayerWidth - _CenterCell + _HalfWidth - 1;
 else
     return _CenterCell - _HalfWidth;
+
