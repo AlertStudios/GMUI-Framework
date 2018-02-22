@@ -26,16 +26,17 @@
           <argument>
             <kind>1</kind>
             <string>///Create GMUI
-// This is typically in your game's controller object
+// This would typically be in your game's controller object
 // You must call the initialization script before making any GMUI interfaces
 
-// EXAMPLE: Call only once in the game
+// EXAMPLE: Make sure its only called once
+// It calling more than once will just silently fail, so this is optional:
 if (instance_number(self) &gt; 1) {
     instance_destroy();
     exit;
 }
 
-// Start GMUI (once per game)
+// Start GMUI (only needed once per game)
 GMUI_Init();
 
 // GMUI_Init also calls GMUI_Settings() and GMUI_SetLayerDepths()
@@ -47,12 +48,16 @@ GMUI_Init();
 // JUST ADD GMUI_Draw() TO THE DRAW EVENT OF THE GMUI OBJECT
 // AND ADD GMUI_ControlDraw(true) TO THE DRAW EVENT OF THE CONTROL OBJECT
 
-// Just using a Demo varible in _Switch_Button
+// Just using a Demo varible for _Switch_Button and _Swipe_Button
 global.Switched = false;
+global.Swiped = false;
+global.showsurface = 0;
 
 
 // Call initiation script with name and cell size of 16 (or use 0 for default size). Returns the GMUI id.
-GMUI_Create(GMUI,_Test_Form,16,0)
+newGMUI = GMUI_Create(GMUI,_Test_Form,16,0); // e.g. newGMUI will have id of 1
+
+
 
 </string>
           </argument>

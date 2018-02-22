@@ -20,6 +20,7 @@ GMUI_SetOnLayer(0);
 GMUI_CreateGroup(1,      20,3,   GMUIAnchor.TopRight);
 GMUI_GroupSetSize(1,     18,4);
 GMUI_GroupSetStyle(1, c_black, 0.2, c_black, 0.1, 0);
+GMUI_GroupSetFadeOnHide(1, room_speed/4, 0);
 
 //GMUI_GroupSetSpriteMap(1, s2,s3,s4,s5,s6,s7,s8,s1,s9,false);
 
@@ -86,9 +87,19 @@ with (GMUI_Add("DebugButton", "textbutton",     1,3,    5,3,    GMUIAnchor.Botto
     GMUI_ControlSetStyle(-1, -1, c_gray, 1, 0.85, -1, -1, -1, -1, -1);
 }
 
+with (GMUI_Add("SwipeButton", "textbutton",      8,7,   5,3,    global.GMUIAnchorBottomLeft)) {
+    GMUI_ControlSetButtonAction(_Swipe_Button);
+    GMUI_ControlSetButton("Swipe"+chr(13)+"Out",-1,-1,-1);
+}
+
 with (GMUI_Add("DisableButton", "textbutton",   8,3,    5,3,    GMUIAnchor.BottomLeft)) {
     GMUI_ControlSetButtonAction(_Disable_Button);
     GMUI_ControlSetButton("Disable"+chr(13)+"Test",-1,-1,-1);
+}
+
+with (GMUI_Add("HideButton2", "textbutton",      15,7,   5,3,    GMUIAnchor.BottomLeft)) {
+    GMUI_ControlSetButtonAction(_Hide_Button2);
+    GMUI_ControlSetButton("Hide"+chr(13)+"Group 2",-1,-1,-1);
 }
 
 with (GMUI_Add("HideButton", "textbutton",      15,3,   5,3,    GMUIAnchor.BottomLeft)) {
