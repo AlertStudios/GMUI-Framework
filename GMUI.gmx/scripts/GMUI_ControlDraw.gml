@@ -418,7 +418,7 @@ if (argument0 == true) {
         //else if (!NeedsDrawUpdate)
         //    Break = true;
     }
-    else if (Group > 0 && GMUIP.GMUI_groupMasterControl[Layer,Group] == id && !GroupHidden) {
+    else if (Group > 0 && GMUIP.GMUI_groupMasterControl[Layer,Group] == id && (!GroupHidden || FadeCalled != 0)) {
         // Draw non-surface group
         GMUI_ControlDrawGroup(GMUIP,Layer,Group,FadeAlpha,FadeMode);
     }
