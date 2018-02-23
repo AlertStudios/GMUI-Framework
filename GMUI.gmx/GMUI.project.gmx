@@ -108,6 +108,7 @@
         <script>scripts\GMUI_ControlCenterX.gml</script>
         <script>scripts\GMUI_ControlCenterY.gml</script>
         <script>scripts\GMUI_ControlDisable.gml</script>
+        <script>scripts\GMUI_ControlDraw.gml</script>
         <script>scripts\GMUI_ControlDrawTooltip.gml</script>
         <script>scripts\GMUI_ControlFadeIn.gml</script>
         <script>scripts\GMUI_ControlFadeOut.gml</script>
@@ -199,7 +200,6 @@
         <script>scripts\GMUI_CellGetActualY.gml</script>
         <script>scripts\GMUI_ControlActionScript.gml</script>
         <script>scripts\GMUI_ControlAddToMenuType.gml</script>
-        <script>scripts\GMUI_ControlDraw.gml</script>
         <script>scripts\GMUI_ControlDrawGroup.gml</script>
         <script>scripts\GMUI_ControlDrawSlider.gml</script>
         <script>scripts\GMUI_ControlDrawToggle.gml</script>

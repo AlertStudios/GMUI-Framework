@@ -27,8 +27,8 @@ if (!GMUII().UIInterfaceSet) {
 }
 
 // Get master control for menu if it exists
-if ((GMUII()).GMUI_groupMasterControl[UIAddToLayer,_Group] == -1) {
-    GMUI_ThrowErrorDetailed("A control is needed to set style: " + _menuName, _SCRIPT);
+if ((GMUII()).GMUI_groupMasterControl[_Layer,_Group] == -1) {
+    GMUI_ThrowErrorDetailed("A control is needed to set style: ", _SCRIPT);
     return false;
 }
 

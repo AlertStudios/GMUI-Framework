@@ -129,6 +129,19 @@ if (mouseHor &gt;= (GMUII()).GMUI_grid_x[(GMUII()).UILayer]
             draw_text(0+xoffset,10+yoffset,string_format(GMUI_GetValue((ctrl).valueName),1,6));
     }
 }
+
+
+// Notifying when the surface is updating
+if (UIEnableSurfaces) {
+    if (GMUI_gridNeedsDrawUpdate[(GMUII()).UILayer] &gt; 0) {
+        draw_set_color(c_red);
+        draw_set_alpha(0.5);
+        draw_set_valign(fa_middle);
+        draw_set_halign(fa_left);
+        draw_text(117+xoffset,10+yoffset, "Updating Surface");
+    }
+}
+
 </string>
           </argument>
         </arguments>

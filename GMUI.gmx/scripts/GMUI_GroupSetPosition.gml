@@ -13,7 +13,7 @@ _AdjustmentY = argument4;
 
 // Validate
 if (!is_real(_GroupNumber) || !is_real(_CellX) || !is_real(_CellY)) {
-    GMUI_ThrowErrorDetailed("Invalid parameters",SCRIPT);
+    GMUI_ThrowErrorDetailed("Invalid parameters",_SCRIPT);
     return false;
 }
 
