@@ -241,7 +241,7 @@ with (GMUI_Add("MenuIntInstructions", "label",  20,21,  12,2,   global.GMUIAncho
 var menuID; //-9,2 
 menuID = GMUI_CreateMenu("Test Menu",   GMUI_CenterX(0, 18, global.GMUIAnchorTop) ,2,   18,24,   global.GMUIAnchorTop);
 GMUI_MenuSetClickOff("Test Menu", true);
-GMUI_MenuSetStyle("Test Menu", c_black, 0.25, c_white, 0.75, true);
+GMUI_MenuSetStyle("Test Menu", c_black, 0.3, c_white, 0.75, true);
 GMUI_MenuSetFadeOnHide("Test Menu", room_speed/4, 0);
 GMUI_MenuSetHidePosition("Test Menu", -9, 6, easeExpOut, room_speed/2);
 //GMUI_MenuSetActionIn("Test Menu",...)
@@ -262,7 +262,7 @@ with (GMUI_Add("OpenButton", "textbutton",   -3,8,   8,1,    global.GMUIAnchorTo
 // Test Menu 2
 menuID = GMUI_CreateMenu("Test Menu 2",   -6,8,   18,24,   global.GMUIAnchorTop);
 GMUI_MenuSetClickOff("Test Menu 2", true);
-GMUI_MenuSetStyle("Test Menu 2", c_black, 0.25, c_white, 0.75, true);
+GMUI_MenuSetStyle("Test Menu 2", c_black, 0.3, c_white, 0.75, true);
 GMUI_MenuSetFadeOnHide("Test Menu 2", room_speed/4, 0);
 
 with (GMUI_Add("CloseButton2", "textbutton",   4,1,   4,1,    global.GMUIAnchorTopRight)) {

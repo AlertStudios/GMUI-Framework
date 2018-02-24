@@ -251,13 +251,14 @@ if (argument0 == true) {
     //    return false;
     //}
     
-    //var Draw;Draw = false;
+    var SurfaceSet;SurfaceSet = false;
         
     // If using surfaces for layers and groups
     if (GMUIP.UIEnableSurfaces) {
         // Check for grid update
         if (GMUIP.GMUI_gridNeedsDrawUpdate[Layer] == 2 || GMUIP.GMUI_gridTransitioner[Layer] == id || NeedsDrawUpdate || NeedsGroupUpdate) {
             GMUIP.GMUI_gridSurface[Layer] = surface_target(GMUIP.GMUI_gridSurface[Layer], GMUIP.UIgridwidth, GMUIP.UIgridheight);
+            SurfaceSet = true;
             
             if (GMUIP.GMUI_gridNeedsDrawUpdate[Layer] == 2 || (GMUIP).GMUI_gridTransitioner[Layer] == id) {
                 surface_clear(GMUIP.GMUI_gridSurface[Layer]);
@@ -268,6 +269,8 @@ if (argument0 == true) {
             // Update group if in one and visible or fading in/out
             if (Group > 0){// && (!GroupHidden || FadeCalled != 0)) {
                 if (GMUIP.GMUI_groupMasterControl[Layer,Group] == id) {
+                    if (SurfaceSet)
+                        surface_reset_target();
                     GMUIP.GMUI_groupSurface[Layer,Group] = 
                         surface_target(GMUIP.GMUI_groupSurface[Layer,Group],
                         (GMUIP).GMUI_groupCellsW[Layer,Group] * (GMUIP).cellsize + 1, //(GMUIP).GMUI_groupActualX[Layer,Group]
@@ -286,6 +289,8 @@ if (argument0 == true) {
                     
                 }
                 else if (surface_exists(GMUIP.GMUI_groupSurface[Layer,Group])) {
+                    if (SurfaceSet)
+                        surface_reset_target();
                     surface_set_target(GMUIP.GMUI_groupSurface[Layer,Group]);
                 }
             }
@@ -293,133 +298,9 @@ if (argument0 == true) {
                 NeedsDrawUpdate = false;
             }
         }
-    //}
     
-    
-        //if (Group == 0) {
-        if (0) {
-            if (NeedsDrawUpdate) {
-                // Set the surface target if it exists, otherwise create it
-                (GMUIP).GMUI_gridSurface[Layer] = 
-                    surface_target(GMUIP.GMUI_gridSurface[Layer], GMUIP.UIgridwidth, GMUIP.UIgridheight);
-                
-                if (GMUIP.GMUI_gridNeedsDrawUpdate[Layer] == 2 || GMUIP.GMUI_gridTransitioner[Layer] == id) {
-                    //surface_clear(GMUIP.GMUI_gridSurface[Layer]);
-                    
-                    GMUIP.GMUI_gridNeedsDrawUpdate[Layer] = 0;
-                    NeedsDrawUpdate = false;
-                    
-                    //if (GMUIP.GMUI_groupMasterControl[Layer,Group] == id)
-                    //    GMUIP.GMUI_groupNeedsDrawUpdate[Layer,Group] = true;
-    
-                }
-                else if (GMUIP.GMUI_gridNeedsDrawUpdate[Layer] = 0)
-                    NeedsDrawUpdate = false;
-            }
-            else
-                Break = true;
-        }
-        //else 
-        //if (Group > 0 && (!GroupHidden || FadeCalled != 0)) {
-        if (0) {
-            //if (GMUIP.GMUI_groupMasterControl[Layer,Group] == id)
-                //GMUI_ControlDrawGroup(GMUIP,Layer,Group,FadeAlpha,FadeMode);
-            if (GMUIP.GMUI_groupNeedsDrawUpdate[Layer,Group] > 0 && GMUIP.GMUI_groupMasterControl[Layer,Group] == id) {
-                if (surface_exists(GMUIP.GMUI_groupSurface[Layer,Group])) {
-                    GMUIP.GMUI_groupSurface[Layer,Group] = 
-                        surface_target(GMUIP.GMUI_groupSurface[Layer,Group],
-                        (GMUIP).GMUI_groupCellsW[Layer,Group] * (GMUIP).cellsize + 1, //(GMUIP).GMUI_groupActualX[Layer,Group]
-                        (GMUIP).GMUI_groupCellsH[Layer,Group] * (GMUIP).cellsize_h + 1);
-                    
-                    if (TransitioningGroup && GMUIP.GMUI_groupMasterControl[Layer,Group] == id) {
-                        //surface_clear(GMUIP.GMUI_groupSurface[Layer,Group]);
-                        GMUIP.GMUI_groupNeedsDrawUpdate[Layer,Group] = 1;
-                    }
-                    if (!NeedsDrawUpdate)
-                    surface_reset_target();
-                }
-            }
-            if (NeedsDrawUpdate) {
-                
-                if (GMUIP.GMUI_gridNeedsDrawUpdate[Layer] == 2 || GMUIP.GMUI_gridTransitioner[Layer] == id) {
-                    (GMUIP).GMUI_gridSurface[Layer] = 
-                    surface_target(GMUIP.GMUI_gridSurface[Layer], GMUIP.UIgridwidth, GMUIP.UIgridheight);
-                    //surface_clear(GMUIP.GMUI_gridSurface[Layer]);
-                    
-                    GMUIP.GMUI_gridNeedsDrawUpdate[Layer] = 0;
-                    NeedsDrawUpdate = false;
-                }
-                    
-                GMUIP.GMUI_groupSurface[Layer,Group] = 
-                    surface_target(GMUIP.GMUI_groupSurface[Layer,Group], //GMUIP.UIgridwidth, GMUIP.UIgridheight);
-                        (GMUIP).GMUI_groupCellsW[Layer,Group] * (GMUIP).cellsize + 1, //(GMUIP).GMUI_groupActualX[Layer,Group]
-                        (GMUIP).GMUI_groupCellsH[Layer,Group] * (GMUIP).cellsize_h + 1);
-                    
-                if (GMUIP.GMUI_groupMasterControl[Layer,Group] == id) {
-                    //surface_clear(GMUIP.GMUI_groupSurface[Layer,Group]);
-                    var i;
-                    for(i=0;i<ds_list_size((GMUII()).GMUI_groupControlList[Layer,Group]);i+=1) {
-                        // Get the control id
-                        ctrl = ds_list_find_value((GMUII()).GMUI_groupControlList[Layer,Group],i);
-                        
-                        if (instance_exists(ctrl)) {
-                            ctrl.NeedsDrawUpdate = true;
-                        }
-                    }
-                    //draw_set_blend_mode_ext(bm_one,bm_inv_src_alpha); // Tricky...
-                    //GMUI_ControlDrawGroup(GMUIP,Layer,Group,FadeAlpha,FadeMode);
-                    //draw_set_blend_mode(bm_normal);
-                }
-                
-                //GMUIP.GMUI_groupNeedsDrawUpdate[Layer,Group] = false;
-                
-                if (!NeedsDrawUpdate) {
-                    surface_reset_target();
-                    Break = true;
-                }
-                NeedsDrawUpdate = false;
-            }
-            else
-                Break = true;
-                
-            
-            if (0) {
-                if (GMUIP.GMUI_groupMasterControl[Layer,Group] == id) {
-                    if (surface_exists((GMUIP).GMUI_groupSurface[Layer,Group])) {
-                        GMUIP.GMUI_gridSurface[Layer] = 
-                        surface_target(GMUIP.GMUI_gridSurface[Layer], GMUIP.UIgridwidth, GMUIP.UIgridheight);
-                    
-                        if (GMUIP.GMUI_gridNeedsDrawUpdate[Layer] == 2 || GMUIP.GMUI_gridTransitioner[Layer] == id) {
-                            surface_clear(GMUIP.GMUI_gridSurface[Layer]);
-                            GMUIP.GMUI_gridNeedsDrawUpdate[Layer] = 0;
-                        }
-                        var xoffset, yoffset;
-                        xoffset = GMUI_GridViewOffsetX(GMUIP);
-                        yoffset = GMUI_GridViewOffsetY(GMUIP);
-                        //draw_set_blend_mode_ext(bm_one,bm_dest_alpha); // Tricky...
-                        draw_surface(GMUIP.GMUI_groupSurface[Layer,Group],
-                            //0,global.showsurface,surface_get_width(GMUIP.GMUI_groupSurface[Layer,Group]),surface_get_height(GMUIP.GMUI_groupSurface[Layer,Group])-50+global.showsurface, //example
-                            GMUIP.GMUI_groupActualX[Layer,Group] + xoffset,GMUIP.GMUI_groupActualY[Layer,Group] + yoffset);
-                            //draw_set_blend_mode(bm_normal);
-                        surface_reset_target();
-                        Break = false;
-                        GMUIP.GMUI_groupSurface[Layer,Group] = 
-                    surface_target(GMUIP.GMUI_groupSurface[Layer,Group], //GMUIP.UIgridwidth, GMUIP.UIgridheight);
-                        GMUIP.GMUI_groupCellsW[Layer,Group] * GMUIP.cellsize + 1, //(GMUIP).GMUI_groupActualX[Layer,Group]
-                        GMUIP.GMUI_groupCellsH[Layer,Group] * GMUIP.cellsize_h + 1);
-                    }
-                    GMUIP.GMUI_groupNeedsDrawUpdate[Layer,Group] -= 1//false;
-                }
-                // group needs update, but control itself does not, so stop here
-                //Break = true;
-            }
-            //else if (!NeedsDrawUpdate)
-            //    Break = true;
-        }
-        //else if (!NeedsDrawUpdate)
-        //    Break = true;
     }
-    else if (Group > 0 && GMUIP.GMUI_groupMasterControl[Layer,Group] == id && !GroupHidden) {
+    else if (Group > 0 && GMUIP.GMUI_groupMasterControl[Layer,Group] == id && (!GroupHidden || FadeCalled != 0)) {
         // Draw non-surface group
         GMUI_ControlDrawGroup(GMUIP,Layer,Group,FadeAlpha,FadeMode);
     }
@@ -431,18 +312,6 @@ if (argument0 == true) {
     else if (!GMUIP.UIEnableSurfaces) {
         NeedsDrawUpdate = true;
     }
-    
-    
-    // Surface has already been updated
-    //if (Break) 
-    //    return false;
-    
-        
-        
-    // TODO:
-    // SUBTRACT THE GROUP X AND GROUP Y FROM ROOM X AND ROOM Y FOR DRAWING, IF USING GROUP DRAW ABOVE
-    // MOVE SECOND HALF OF GROUP DRAWING ABOVE TO THE BOTTOM OF THIS SCRIPT
-    // DRAW THE GROUP AT THE GROUP X AND GROUP Y
         
         
     // Draw the control based on the type and user-defined settings

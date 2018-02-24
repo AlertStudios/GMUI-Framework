@@ -118,9 +118,9 @@ with (_tt_id) {
         }
         else {
             if (ToggleOrientation == global.GMUIDirectionTypeHorizontal)
-                draw_roundrect(cpx+tp+chh/2, cpy+tp+chh, cpx-tp+chh, cpy-tp+chh, 0);
+                draw_roundrect(cx1+_tp+chh/2, cy1+_tp+chh, cx1-_tp+chh, cy1-_tp+chh, 0);
             else
-                draw_roundrect(cpx+tp+chh, cpy+tp+chh/2, cpx-tp+chh*1.5, cpy-tp+chh*1.5, 0);
+                draw_roundrect(cx1+_tp+chh, cy1+_tp+chh/2, cx1-_tp+chh*1.5, cy1-_tp+chh*1.5, 0);
         }
         
     }

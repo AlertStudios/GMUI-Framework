@@ -12,7 +12,7 @@ UIsnaptoview = true;
 UIgridview = 0;
 
 // Required: Surfaces are needed for listboxes and scrollable menus, but also draws the grid as a surface itself
-UIEnableSurfaces = false;
+UIEnableSurfaces = true;
 
 // Required: Flexibility to add graphical effects settings to the controls: (currently unused)
 var basic, good, best; basic = 0; good = 1; best = 2;

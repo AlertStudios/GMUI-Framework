@@ -71,7 +71,7 @@ thecontrol.CellWide = _CellWide;
 thecontrol.CellHigh = _CellHigh;
 thecontrol.CellWideMax = gridW-_CellX;//_CellWide;
 thecontrol.CellHighMax = gridH-_CellY;//_CellHigh;
-thecontrol.depth = (GMUII()).layerDepth_layers-(_Layer*3)-(thetype=="tooltip");
+thecontrol.depth = (GMUII()).layerDepth_layers-(_Layer*3)-(thetype=="tooltip")*2;
 thecontrol.persistent = (GMUII()).persistence; // This is kind of unnecessary but could be used at some point?
 
 // Specific setup for particular types

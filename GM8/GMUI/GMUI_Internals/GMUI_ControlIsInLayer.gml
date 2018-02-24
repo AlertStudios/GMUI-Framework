@@ -16,7 +16,7 @@ if ((_ctl).AdditionalLayer != -1) {
                 return true;
         }
     }
-    else if (_L >= (_ctl).AddtionalLayer) {
+    else if (_L >= (_ctl).AdditionalLayer) {
         if (_L < (_ctl).Layer)
             return true;
     }
