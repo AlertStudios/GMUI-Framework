@@ -2,7 +2,7 @@
 ///GMUI_ControlAddToGroup(group number)
 ///Adds control to a group if it exists in the layer
 
-var _SCRIPT, _Group, _Layer, _Depth;
+var _SCRIPT, _Group, _Layer, _Depth, _prev;
 _SCRIPT = GMUI_ControlAddToGroup;
 _Group = argument0;
 
@@ -47,9 +47,22 @@ if (GMUIP.GMUI_groupMasterControl[_Layer,_Group] == -1 || GMUIP.GMUI_groupMaster
         with (GMUIP.GMUI_groupMasterControl[_Layer,_Group]) {
             depth = _Depth-1;
         }
+        // Reset scrollbar list if necessary
+        _prev = ds_list_find_index(GMUIP.GMUI_groupScrollbars,GMUIP.GMUI_groupMasterControl[_Layer,_Group]);
+        if (GMUI_StudioCheckDefined(_prev)) {
+            if (_prev != -1) {
+                if ((GMUIP.GMUI_groupMasterControl[_Layer,_Group]).GroupHasScrollbar) {
+                    ds_list_delete(GMUIP.GMUI_groupScrollbars,_prev);
+                    (GMUIP.GMUI_groupMasterControl[_Layer,_Group]).GroupHasScrollbar = false;
+                }
+            }
+        }
     }
+    
+    
     GMUIP.GMUI_groupMasterControl[_Layer,_Group] = id;
     depth = _Depth;
+    
 }
 else
     depth = _Depth-1;

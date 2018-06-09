@@ -134,6 +134,9 @@ GMUI_popup_map = ds_map_create();
 // Warnings
 GMUI_warnings_map = ds_map_create();
 
+// Group scrollbars
+GMUI_groupScrollbars = ds_list_create();
+
 
 // Grouping variables (handled in GMUI_AddLayer())
 // List of groups per layer [layer number; default 0]
@@ -152,12 +155,13 @@ GMUI_groupCellsW[0,0] = 0;
 GMUI_groupCellsH[0,0] = 0;
 GMUI_groupRelativeCellX[0,0] = 0;
 GMUI_groupRelativeCellY[0,0] = 0;
-GMUI_groupAnchor[0,0] = global.GMUIAnchorTopLeft;
+GMUI_groupAnchor[0,0] = global.GMUIAnchorDefault;
 GMUI_groupClickOff[0,0] = false;
 GMUI_groupTransitioning[0,0] = false;
 //GMUI_groupTransitioningControl[0,0] = -1;
 GMUI_groupAction[0,0] = -1;
 GMUI_groupSettingsMap[0,0] = -1;
+GMUI_groupStretch[0,0] = global.GMUIAnchorDefault;
 
 
 // Call the form code to create the interface

@@ -60,17 +60,24 @@ thecontrol.Group = 0;
 // Add control to control list for reference
 ds_list_add((GMUII()).GMUI_controlList,thecontrol);
 
-// First the control type vars must be set
-thetype = GMUI_ControlSetType(thecontrol,string(argument2));
+if ((GMUII()).UIEnableSurfaces) {
+    if ((GMUII()).GMUI_gridMasterControl[_Layer] == -1)
+        (GMUII()).GMUI_gridMasterControl[_Layer] = thecontrol;
+}
 
-// Then set the relative and actual position, and Anchor and IsAdjusted status
-GMUI_ControlPosition(thecontrol,_CellX,_CellY,0,0,_Anchor);
-
+// Set name of value and width/height
 thecontrol.valueName = argument1;
 thecontrol.CellWide = _CellWide;
 thecontrol.CellHigh = _CellHigh;
 thecontrol.CellWideMax = gridW-_CellX;//_CellWide;
 thecontrol.CellHighMax = gridH-_CellY;//_CellHigh;
+
+// Then set the relative and actual position, and Anchor and IsAdjusted status
+GMUI_ControlPosition(thecontrol,_CellX,_CellY,0,0,_Anchor);
+
+// The control type vars must also be set
+thetype = GMUI_ControlSetType(thecontrol,string(argument2));
+
 thecontrol.depth = (GMUII()).layerDepth_layers-(_Layer*3)-(thetype=="tooltip")*2;
 thecontrol.persistent = (GMUII()).persistence; // This is kind of unnecessary but could be used at some point?
 
@@ -87,7 +94,10 @@ ds_map_add((GMUII()).GMUI_map,argument1,thecontrol);
 // SET ALL DEFAULTS (set from the gmui controller):
 
 // Set the default style properties
-GMUI_ControlSetDefaultStyle(thecontrol);
+if (thecontrol.ControlType != "label")
+    GMUI_ControlSetDefaultStyle(thecontrol,false);
+else
+    GMUI_ControlSetDefaultStyle(thecontrol,true);
 
 // Set the default optional sprite override vars
 GMUI_ControlSetDefaultSprite(thecontrol);

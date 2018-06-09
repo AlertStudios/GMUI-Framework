@@ -37,6 +37,7 @@
         <script>scripts\_Hover_Int.gml</script>
         <script>scripts\_HoverOff_Checkbox.gml</script>
         <script>scripts\_HoverOff_Int.gml</script>
+        <script>scripts\_ListAction.gml</script>
         <script>scripts\_Move_Button.gml</script>
         <script>scripts\_Popup_Button.gml</script>
         <script>scripts\_PopupClose_Button.gml</script>
@@ -94,6 +95,7 @@
           <script>scripts\surface_target.gml</script>
         </scripts>
         <script>scripts\GMUI_Add.gml</script>
+        <script>scripts\GMUI_AddItem.gml</script>
         <script>scripts\GMUI_AddLayer.gml</script>
         <script>scripts\GMUI_AddToLayer.gml</script>
         <script>scripts\GMUI_AddTooltipToControl.gml</script>
@@ -129,6 +131,7 @@
         <script>scripts\GMUI_ControlSetHoverOffAction.gml</script>
         <script>scripts\GMUI_ControlSetPicker.gml</script>
         <script>scripts\GMUI_ControlSetPositioning.gml</script>
+        <script>scripts\GMUI_ControlSetScrollbarStyle.gml</script>
         <script>scripts\GMUI_ControlSetSelectingAction.gml</script>
         <script>scripts\GMUI_ControlSetSliderMovement.gml</script>
         <script>scripts\GMUI_ControlSetSliderSettings.gml</script>
@@ -137,6 +140,7 @@
         <script>scripts\GMUI_ControlSetSprite.gml</script>
         <script>scripts\GMUI_ControlSetSpriteExt.gml</script>
         <script>scripts\GMUI_ControlSetSpriteMap.gml</script>
+        <script>scripts\GMUI_ControlSetStretchToGrid.gml</script>
         <script>scripts\GMUI_ControlSetStyle.gml</script>
         <script>scripts\GMUI_ControlSetText.gml</script>
         <script>scripts\GMUI_ControlSetToggleSettings.gml</script>
@@ -156,6 +160,7 @@
         <script>scripts\GMUI_GetValue.gml</script>
         <script>scripts\GMUI_GetValueString.gml</script>
         <script>scripts\GMUI_GroupHide.gml</script>
+        <script>scripts\GMUI_GroupHideOverflow.gml</script>
         <script>scripts\GMUI_GroupSetStyle.gml</script>
         <script>scripts\GMUI_GridSetNavigation.gml</script>
         <script>scripts\GMUI_GroupSetClickOff.gml</script>
@@ -164,8 +169,13 @@
         <script>scripts\GMUI_GroupSetSpriteMap.gml</script>
         <script>scripts\GMUI_GroupSetPosition.gml</script>
         <script>scripts\GMUI_GroupSetPositionActual.gml</script>
+        <script>scripts\GMUI_GroupSetStretchToGrid.gml</script>
         <script>scripts\GMUI_Init.gml</script>
         <script>scripts\GMUI_IsMenuOpen.gml</script>
+        <script>scripts\GMUI_ItemListBackground.gml</script>
+        <script>scripts\GMUI_ItemListFont.gml</script>
+        <script>scripts\GMUI_ItemListSelectAction.gml</script>
+        <script>scripts\GMUI_ItemListSettings.gml</script>
         <script>scripts\GMUI_MenuSetClickOff.gml</script>
         <script>scripts\GMUI_MenuSetFadeOnHide.gml</script>
         <script>scripts\GMUI_MenuSetHidePosition.gml</script>
@@ -196,26 +206,31 @@
         <script>scripts\GMUIself.gml</script>
       </scripts>
       <scripts name="GMUI_Internals">
+        <script>scripts\GMUI_AddItemDefaults.gml</script>
         <script>scripts\GMUI_CellGetActualX.gml</script>
         <script>scripts\GMUI_CellGetActualY.gml</script>
         <script>scripts\GMUI_ControlActionScript.gml</script>
         <script>scripts\GMUI_ControlAddToMenuType.gml</script>
         <script>scripts\GMUI_ControlDrawGroup.gml</script>
+        <script>scripts\GMUI_ControlDrawItemList.gml</script>
         <script>scripts\GMUI_ControlDrawSlider.gml</script>
         <script>scripts\GMUI_ControlDrawToggle.gml</script>
         <script>scripts\GMUI_ControlDrawTooltipById.gml</script>
         <script>scripts\GMUI_ControlFilterInput.gml</script>
         <script>scripts\GMUI_ControlInit.gml</script>
         <script>scripts\GMUI_ControlIsInLayer.gml</script>
+        <script>scripts\GMUI_ControlListOffset.gml</script>
         <script>scripts\GMUI_ControlPositionToGroup.gml</script>
         <script>scripts\GMUI_ControlSetInitValue.gml</script>
         <script>scripts\GMUI_ControlSetDefaultAttributes.gml</script>
         <script>scripts\GMUI_ControlSetDefaultButton.gml</script>
         <script>scripts\GMUI_ControlSetDefaultFontStyle.gml</script>
+        <script>scripts\GMUI_ControlSetDefaultItemList.gml</script>
         <script>scripts\GMUI_ControlSetDefaultPicker.gml</script>
         <script>scripts\GMUI_ControlSetDefaultSprite.gml</script>
         <script>scripts\GMUI_ControlSetDefaultSpriteMap.gml</script>
         <script>scripts\GMUI_ControlSetDefaultStyle.gml</script>
+        <script>scripts\GMUI_ControlSetScrollbarDefaults.gml</script>
         <script>scripts\GMUI_ControlSetType.gml</script>
         <script>scripts\GMUI_ControlSliderMove.gml</script>
         <script>scripts\GMUI_ControlSliderUpdate.gml</script>
@@ -255,11 +270,16 @@
         <script>scripts\GMUI_GridViewOffsetX.gml</script>
         <script>scripts\GMUI_GridViewOffsetY.gml</script>
         <script>scripts\GMUI_GroupExists.gml</script>
+        <script>scripts\GMUI_GroupMouseOnScrollbar.gml</script>
         <script>scripts\GMUI_GroupSetHidePosition.gml</script>
+        <script>scripts\GMUI_GroupSetOverflow.gml</script>
         <script>scripts\GMUI_GroupSetPositionAnchored.gml</script>
+        <script>scripts\GMUI_GroupSetScrollbar.gml</script>
+        <script>scripts\GMUI_GroupSetScrollbarX.gml</script>
         <script>scripts\GMUI_InitStudio.gml</script>
         <script>scripts\GMUI_IsControl.gml</script>
         <script>scripts\GMUI_IsControlID.gml</script>
+        <script>scripts\GMUI_ControlScrollbarSelect.gml</script>
         <script>scripts\GMUI_IsScript.gml</script>
         <script>scripts\GMUI_LastError.gml</script>
         <script>scripts\GMUI_LayerExists.gml</script>

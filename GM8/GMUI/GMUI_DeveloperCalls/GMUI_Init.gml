@@ -66,6 +66,11 @@ global.GMUISlideRect = -3;
 global.GMUISlideRoundRect = -4;
 global.GMUISlideFullRoundRect = -5;
 
+// Overflow types
+global.GMUIOverflowNone = 0;
+global.GMUIOverflowResize = 1;
+global.GMUIOverflowScroll = 2;
+
 
 // If studio, run the script to create enum versions of these
 if (!global.GMUIGameMaker8) {

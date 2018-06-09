@@ -9,14 +9,26 @@ with (argument0) {
     ActualX = GMUI_CellGetActualX(CellX);
     ActualY = GMUI_CellGetActualY(CellY);
     
+    var expand; expand = true;
+    if (GMUIP.UIEnableSurfaces) {
+        if (GMUIP.GMUI_groupOverflow[Layer,Group] == global.GMUIOverflowScroll) {
+            expand = false;
+        }
+    }
     
     // If control is outside of the group boundaries, expand the group to fit it
-    if (CellX + CellWide > (GMUIP).GMUI_groupCellX[Layer,Group] + (GMUIP).GMUI_groupCellsW[Layer,Group]) {
-        (GMUIP).GMUI_groupCellsW[Layer,Group] = CellX + CellWide - (GMUIP).GMUI_groupCellX[Layer,Group];
+    if (expand) {
+        if (CellX + CellWide > (GMUIP).GMUI_groupCellX[Layer,Group] + (GMUIP).GMUI_groupCellsW[Layer,Group]) {
+            GMUIP.GMUI_groupCellsW[Layer,Group] = CellX + CellWide - (GMUIP).GMUI_groupCellX[Layer,Group];
+        }
+        if (CellY + CellHigh > (GMUIP).GMUI_groupCellY[Layer,Group] + (GMUIP).GMUI_groupCellsH[Layer,Group]) {
+            GMUIP.GMUI_groupCellsH[Layer,Group] = CellY + CellHigh - (GMUIP).GMUI_groupCellY[Layer,Group];
+        }
     }
-    if (CellY + CellHigh > (GMUIP).GMUI_groupCellY[Layer,Group] + (GMUIP).GMUI_groupCellsH[Layer,Group]) {
-        (GMUIP).GMUI_groupCellsH[Layer,Group] = CellY + CellHigh - (GMUIP).GMUI_groupCellY[Layer,Group];
+    else if (CellY + CellHigh > (GMUIP).GMUI_groupCellY[Layer,Group] + (GMUIP).GMUI_groupCellsH[Layer,Group]) {
+        GMUIP.GMUI_groupOverflowCellsH[Layer,Group] = CellY + CellHigh - (GMUIP).GMUI_groupCellY[Layer,Group];
     }
+    
     
     // Update control draw location in the room
     GMUI_ControlUpdateXY(id);

@@ -2314,17 +2314,15 @@ if (argument0 == true) {
             if (GMUIP.UIEnableSurfaces) {
                 surface_reset_target();
                 //surface_target(CurrentSurface,CurrentSurfaceW,CurrentSurfaceH);
+                //draw using select list surface
+                if (surface_exists(SelectListSurface))
+                    draw_surface_part(SelectListSurface,0,ItemListOffsetY,RoomW-RoomX,RoomH-RoomY,RoomX,RoomY);
+                else
+                    draw_text(200,160,"d: DNE");//debug
             }
-            
-            //draw using select list surface
-            if (surface_exists(SelectListSurface))
-                draw_surface_part(SelectListSurface,0,ItemListOffsetY,RoomW-RoomX,RoomH-RoomY,RoomX,RoomY);
-            else
-                draw_text(200,160,"d: DNE");//debug
             
             // todo: SET VARIABLE FOR UPDATE:
             // NeedsItemListUpdate = false;
-            
             
             
         }
@@ -5963,7 +5961,7 @@ if (!_UsingSurface) {
 else {
     //surface_reset_target();
     _Surface = surface_target(noone,_Ctrl.RoomW-_Ctrl.RoomX,max(_Ctrl.RoomH-_Ctrl.RoomY,ItemListHeight*ItemListSize));
-    draw_clear_alpha(c_white,0);
+    surface_clear(_Surface);
 }
 
 _sbw = 0;

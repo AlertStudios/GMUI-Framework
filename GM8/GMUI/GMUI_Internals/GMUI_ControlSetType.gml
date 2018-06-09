@@ -16,45 +16,49 @@ _type = string_lower(string_replace(_type," ",""));
 // Set if input, or button, or etc 
 switch (_type) {
     case "spritepicker":
-        (IID).ControlPicker = true;
-        (IID).optionsInitialized = false;
+        IID.ControlPicker = true;
+        IID.optionsInitialized = false;
         break;
     case "intpicker":
     case "doublepicker":
-        (IID).ControlPicker = true;
+        IID.ControlPicker = true;
         
     case "textint":
     case "textdecimal":
     case "textstring":
-        (IID).ControlInput = true;
+        IID.ControlInput = true;
         
         break;
     case "button":
     case "textbutton":
-        (IID).ControlSelectable = false;
+        IID.ControlSelectable = false;
         break;
     case "slider":
-        (IID).sliderInitialized = false;
-        (IID).sliderComputed = false;
-        (IID).ControlShowValue = false;
+        IID.sliderInitialized = false;
+        IID.sliderComputed = false;
+        IID.ControlShowValue = false;
         break;
     case "toggle":
     case "checkbox":
-        (IID).toggleInitialized = false;
-        (IID).ControlSelectable = false;
+        IID.toggleInitialized = false;
+        IID.ControlSelectable = false;
         break;
     case "sprite":
         _type = "image";
     case "image":
-        (IID).ControlInput = false;
-        (IID).ControlSelectable = false;
+        IID.ControlInput = false;
+        IID.ControlSelectable = false;
         break;
     case "dropdown":
-        
+    case "selectlist":
+        IID.ControlItemList = true;
+        GMUI_ControlSetDefaultItemList(IID);
+        with (IID) { GMUI_ControlSetScrollbarDefaults(true); }
         break;
     case "label":
     case "tooltip":
-        (IID).ControlInteraction = false;
+        IID.ControlInteraction = false;
+        IID.ControlStyleDefined = false;
         break;
     default:
         // no match; override to show invalid:
@@ -63,20 +67,19 @@ switch (_type) {
         break;
 }
 
-(IID).ControlType = _type;
-
+IID.ControlType = _type;
 
 // Set the data type
 _getType = GMUI_GetDataType(_type);
-(IID).ControlDataType = _getType;
+IID.ControlDataType = _getType;
 
 if (_getType == global.GMUIDataTypeInteger || _getType == global.GMUIDataTypeDecimal || _getType == global.GMUIDataTypeBoolean) {
-    (IID).ControlIsNumeric = true;
-    (IID).ControlIsString = false;
+    IID.ControlIsNumeric = true;
+    IID.ControlIsString = false;
 }
 else if (_getType == global.GMUIDataTypeString) {
-    (IID).ControlIsString = true;
-    (IID).ControlIsNumeric = false;
+    IID.ControlIsString = true;
+    IID.ControlIsNumeric = false;
 }
 
 // Return sanitized and processed type back

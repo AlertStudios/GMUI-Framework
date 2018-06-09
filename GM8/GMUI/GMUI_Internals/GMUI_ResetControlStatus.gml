@@ -47,6 +47,11 @@ else if (string_lower(a0) == "hovering" || a0 == "0") {
                 if (GMUI_StudioCheckDefined(ffo)) {
                     (ffo).Hovering = 0;
                     (ffo).HoveringDirection = 0;
+                    
+                    if ((ffo).ControlHasScrollbar) {
+                        if (!(ffo).Scrollbar_dragging)
+                            (ffo).Scrollbar_hover = false;
+                    }
                 }
             }
             

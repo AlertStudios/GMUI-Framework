@@ -17,6 +17,15 @@ with (argument0) {
                 ds_map_destroy(GMUI_groupSettingsMap[l,g]);
                 GMUI_groupSettingsMap[l,g] = -1;
             }
+            // Set scrollbar option if necessary
+            if (UIEnableSurfaces) {
+                with (GMUI_groupDrawingControl[l,g]) {
+                    if (GMUIP.GMUI_groupOverflow[l,g] == global.GMUIOverflowScroll) {
+                        GroupHasScrollbar = true;
+                        GMUI_ControlSetScrollbarDefaults(false); // false: set for group
+                    }
+                }
+            }
         }
     }
 

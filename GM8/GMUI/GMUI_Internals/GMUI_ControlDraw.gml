@@ -24,17 +24,21 @@ if (Transitioning) {
             
             // Only one control needs to refresh the surface when transitioning, if it can
             if (GMUIP.UIEnableSurfaces) {
-                if (GMUIP.GMUI_gridTransitioner[Layer] == -1 && ((!Hidden && !GroupHidden) || (GroupHidden && FadeCalled != 0))) {
-                    GMUIP.GMUI_gridTransitioner[Layer] = id;
+            GMUI_GridUpdateLayer(GMUIP,Layer);
+                if (GMUIP.GMUI_gridMasterControl[Layer] == id && ((!Hidden && !GroupHidden) || (GroupHidden && FadeCalled != 0))) {
+                    //GMUIP.GMUI_gridMasterControl[Layer] = id;
+                    GMUIP.GMUI_gridNeedsDrawUpdate[Layer] = 2;
                 }
-                GMUI_GridUpdateLayer(GMUIP,Layer);
+                
             }
         }
         else {
             T_t = T_d;
             Transitioning = false;
             if (GMUIP.UIEnableSurfaces) {
-                GMUIP.GMUI_gridTransitioner[Layer] = -1;
+                //GMUIP.GMUI_gridMasterControl[Layer] = -1;
+                if (GMUIP.GMUI_gridMasterControl[Layer] == id)
+                GMUIP.GMUI_gridNeedsDrawUpdate[Layer] = 2;
             }
             
             if (TransitioningGroup) {
@@ -101,15 +105,43 @@ if (FadeCalled != 0) {
     
     if (GMUIP.UIEnableSurfaces) {
         GMUI_GridUpdateLayer(GMUIP,Layer);
-        //GMUIP.GMUI_gridNeedsDrawUpdate[Layer] = 2;
+        if (GMUIP.GMUI_gridMasterControl[Layer] == id)
+            GMUIP.GMUI_gridNeedsDrawUpdate[Layer] = 2;
         
-        if (GMUIP.GMUI_gridTransitioner[Layer] != -1) {
+        if (GMUIP.GMUI_gridMasterControl[Layer] != -1) {
             //GMUIP.GMUI_groupNeedsDrawUpdate[Layer,Group] = 2;
             NeedsDrawUpdate = true;
             if (FadeCalled == 0) {
                 //GMUIP.GMUI_gridFader[Layer] = -1;//GroupIsFading = false;
                 if (!Transitioning) {
-                    (GMUIP).GMUI_gridTransitioner[Layer] = -1;
+                    //(GMUIP).GMUI_gridMasterControl[Layer] = -1;
+                }
+            }
+        }
+    }
+}
+
+// Handle scrollbar actions, if there is one
+if (Group > 0) {
+    if (GMUIP.GMUI_groupMasterControl[Layer,Group] == id) {
+        if (GroupHasScrollbar) {
+            if (Scrollbar_dragging) {
+                if (mouse_check_button(mb_left)) {
+                    // Recalculate drag position (from GMUI_GridGetCellYOffset)
+                    // may need to apply offset here
+                    Scrollbar_y = minmax(Scrollbar_padding,Scrollbar_maxtop,
+                        mouse_y - GMUIP.GMUI_grid_y[Layer] - GMUI_groupActualY[Layer,Group] - Scrollbar_drag_y);
+                }
+                else {
+                    Scrollbar_dragging = false;
+                }
+            }
+            else if (Scrollbar_hover) {
+                if (mouse_x != GMUIP.mouse_px || mouse_y != GMUIP.mouse_py) {
+                    // Check to un-hover
+                    if (GMUI_GroupMouseOnScrollbar(GMUIP, MX) != id) {
+                        Scrollbar_hover = false;
+                    }
                 }
             }
         }
@@ -124,7 +156,7 @@ if (NeedsPositionUpdate) {
     //NeedsDrawUpdate = true;
 }
 
-
+var skipgroup; skipgroup = false;
 
 // PROCESS INPUT //
 // Don't process any input or drawing if hidden
@@ -197,7 +229,12 @@ if (!Hidden) {
                 }
                 
                 GMUI_GridUpdateLayer(GMUIP,Layer);
-                GMUIP.GMUI_gridNeedsDrawUpdate[Layer] = 2;
+                //if (Group < 1)
+                //skipgroup = true;
+                //if (Group > 0) {
+                //    if (GMUIP.GMUI_groupMasterControl[Layer,Group] == id)
+                //        GMUIP.GMUI_gridNeedsDrawUpdate[Layer] = 2;
+                //}
             }
             
             // Only does assignment of the value once the key is released (and not transitioning)
@@ -232,6 +269,20 @@ if (!Hidden) {
     }
 }
 
+// Check release of control scrollbar, if this has one
+if (ControlHasScrollbar) {
+    if (Scrollbar_dragging) {
+        if (mouse_check_button_released(mb_left)) {
+            Scrollbar_dragging = false;
+            Scrollbar_hover = false;
+        }
+        else {
+            GMUI_ControlScrollbarSelect(id,mouse_x,mouse_y);
+        }
+        NeedsDrawUpdate = true;
+    }
+}
+
 if (valueChangeDetected) {
     // This may need some checks on if it should be allowed to set value... we'll see
                 
@@ -251,39 +302,44 @@ if (argument0 == true) {
     //    return false;
     //}
     
-    var SurfaceSet;SurfaceSet = false;
+    var SurfaceSet, CurrentSurface, CurrentSurfaceW, CurrentSurfaceH;
+    SurfaceSet = false; CurrentSurface = -1; CurrentSurfaceW = 0; CurrentSurfaceH = 0;
         
     // If using surfaces for layers and groups
     if (GMUIP.UIEnableSurfaces) {
         // Check for grid update
-        if (GMUIP.GMUI_gridNeedsDrawUpdate[Layer] == 2 || GMUIP.GMUI_gridTransitioner[Layer] == id || NeedsDrawUpdate || NeedsGroupUpdate) {
-            GMUIP.GMUI_gridSurface[Layer] = surface_target(GMUIP.GMUI_gridSurface[Layer], GMUIP.UIgridwidth, GMUIP.UIgridheight);
+        if (GMUIP.GMUI_gridNeedsDrawUpdate[Layer] == 2 || GMUIP.GMUI_gridMasterControl[Layer] == id || NeedsDrawUpdate || NeedsGroupUpdate) {
+            CurrentSurfaceW = GMUIP.UIgridwidth;
+            CurrentSurfaceH = GMUIP.UIgridheight;
+            CurrentSurface = surface_target(GMUIP.GMUI_gridSurface[Layer], CurrentSurfaceW, CurrentSurfaceH);
+            GMUIP.GMUI_gridSurface[Layer] = CurrentSurface;
             SurfaceSet = true;
             
-            if (GMUIP.GMUI_gridNeedsDrawUpdate[Layer] == 2 || (GMUIP).GMUI_gridTransitioner[Layer] == id) {
+            if (GMUIP.GMUI_gridNeedsDrawUpdate[Layer] == 2 && (GMUIP).GMUI_gridMasterControl[Layer] == id) {
                 surface_clear(GMUIP.GMUI_gridSurface[Layer]);
                 GMUIP.GMUI_gridNeedsDrawUpdate[Layer] = 0;
             }
         }
         if (NeedsDrawUpdate || NeedsGroupUpdate) {
             // Update group if in one and visible or fading in/out
-            if (Group > 0){// && (!GroupHidden || FadeCalled != 0)) {
+            if (Group > 0) {// && (!GroupHidden || FadeCalled != 0)) {
                 if (GMUIP.GMUI_groupMasterControl[Layer,Group] == id) {
                     if (SurfaceSet)
                         surface_reset_target();
-                    GMUIP.GMUI_groupSurface[Layer,Group] = 
-                        surface_target(GMUIP.GMUI_groupSurface[Layer,Group],
-                        (GMUIP).GMUI_groupCellsW[Layer,Group] * (GMUIP).cellsize + 1, //(GMUIP).GMUI_groupActualX[Layer,Group]
-                        (GMUIP).GMUI_groupCellsH[Layer,Group] * (GMUIP).cellsize_h + 1);
+                    CurrentSurfaceW = (GMUIP).GMUI_groupCellsW[Layer,Group] * (GMUIP).cellsize + 1; //(GMUIP).GMUI_groupActualX[Layer,Group]
+                    CurrentSurfaceH = (GMUIP).GMUI_groupCellsH[Layer,Group] * (GMUIP).cellsize_h + 1;
+                    CurrentSurface = surface_target(GMUIP.GMUI_groupSurface[Layer,Group], CurrentSurfaceW, CurrentSurfaceH);
+                    GMUIP.GMUI_groupSurface[Layer,Group] = CurrentSurface;
                     
-                    if ((NeedsGroupUpdate || (GMUIP).GMUI_gridTransitioner[Layer] == id) && GMUIP.GMUI_groupMasterControl[Layer,Group] == id) {
+                    //(GMUIP).GMUI_gridMasterControl[Layer] == id
+                    if (NeedsGroupUpdate && GMUIP.GMUI_groupMasterControl[Layer,Group] == id) {
                         surface_clear(GMUIP.GMUI_groupSurface[Layer,Group]);
-                        
-                        if (!GroupHidden || FadeCalled != 0) {
+                        //if (!skipgroup) {
+                        if (!GroupHidden || FadeCalled != 0){
                             draw_set_blend_mode_ext(bm_one,bm_inv_src_alpha); // Tricky...
                             GMUI_ControlDrawGroup(GMUIP,Layer,Group,FadeAlpha,FadeMode);
                             draw_set_blend_mode(bm_normal);
-                        }
+                        }//}
                     }
                     
                     
@@ -326,7 +382,8 @@ if (argument0 == true) {
         _SpriteAlpha = min(ControlGraphicAlpha,FadeAlpha);
             
         // Start drawing the control (inputs and buttons)
-        if (ControlInput || ControlPicker || ControlDataType == global.GMUIDataTypeButton || ControlType == "image") {
+        if (ControlInput || ControlPicker || ControlDataType == global.GMUIDataTypeButton 
+            || ControlType == "image" || ControlType == "label") {
             if (ControlGraphicMapIsUsed) {
                 GMUI_DrawSpriteBox(GMUIP,Layer,Group,0,1);
             }
@@ -340,12 +397,16 @@ if (argument0 == true) {
             }
             else if (ControlType != "image") {
                 // Background
-                color_alpha(ControlBackgroundColor,_BackgroundAlpha);
-                draw_rectangle(RoomX, RoomY, RoomW, RoomH, 0);
+                if (ControlBackgroundColor > -1) {
+                    color_alpha(ControlBackgroundColor,_BackgroundAlpha);
+                    draw_rectangle(RoomX, RoomY, RoomW, RoomH, 0);
+                }
                 
                 // Border
-                color_alpha(ControlBorderColor,_BackgroundAlpha);
-                draw_rectangle(RoomX, RoomY, RoomW, RoomH, 1);
+                if (ControlBorderColor > -1) {
+                    color_alpha(ControlBorderColor,_BackgroundAlpha);
+                    draw_rectangle(RoomX, RoomY, RoomW, RoomH, 1);
+                }
             
         
                 if (Hovering || Selected) {
@@ -372,6 +433,31 @@ if (argument0 == true) {
         }
         else if (ControlType == "checkbox" || ControlType == "toggle") {
             GMUI_ControlDrawToggle(id);
+        }
+        else if (ControlType == "selectlist") {
+            // Get the current surface used
+            //todo:...
+            // Only create the surface of the list and return
+            SelectListSurface = GMUI_ControlDrawItemList(id, GMUIP.UIEnableSurfaces);
+
+            // Restore surface if used, draw other components, then draw surface
+            if (GMUIP.UIEnableSurfaces) {
+                surface_reset_target();
+                //surface_target(CurrentSurface,CurrentSurfaceW,CurrentSurfaceH);
+                //draw using select list surface
+                if (surface_exists(SelectListSurface))
+                    draw_surface_part(SelectListSurface,0,ItemListOffsetY,RoomW-RoomX,RoomH-RoomY,RoomX,RoomY);
+                else
+                    draw_text(200,160,"d: DNE");//debug
+            }
+            
+            // todo: SET VARIABLE FOR UPDATE:
+            // NeedsItemListUpdate = false;
+            
+            
+        }
+        else if (ControlType == "dropdown") {
+        
         }
         
         
@@ -497,6 +583,48 @@ if (argument0 == true) {
                 RoomY+midHeight-(sprite_get_height(_spr)/2)+sprite_get_yoffset(_spr));
         }
         
+        
+        // Draw scrollbar for group if it has one
+        if (ControlHasScrollbar || GroupHasScrollbar) {
+            var cy1,cy2,cy3,cx1,_sbw;
+            
+            if (GroupHasScrollbar) {
+                cy1 = GMUIP.GMUI_groupActualY[Layer,Group]+GMUIP.GMUI_grid_y[Layer]+GMUI_GridViewOffsetY(GMUIP);
+                cy2 = cy1 + GMUIP.GMUI_groupCellsH[Layer,Group]*GMUIP.cellsize_h;
+                _sbw = GMUIP.GMUI_groupScrollWidth[Layer,Group];
+            }
+            else {
+                cy1 = Scrollbar_y+GMUIP.GMUI_grid_y[Layer]+GMUI_GridViewOffsetY(GMUIP);
+                cy2 = cy1 + CellHigh*GMUIP.cellsize_h;
+                _sbw = Scrollbar_width;
+            }
+            cy3 = Scrollbar_pos_y+GMUIP.GMUI_grid_y[Layer]+GMUI_GridViewOffsetY(GMUIP);
+            cx1 = Scrollbar_x+GMUIP.GMUI_grid_x[Layer]+GMUI_GridViewOffsetX(GMUIP);
+            
+            // draw scrollbar area
+            if (Scrollbar_hover) {
+                draw_set_color(Scrollbar_bgcolor_hover);
+                draw_set_alpha(Scrollbar_bgalpha_hover);
+            }
+            else {
+                draw_set_color(Scrollbar_bgcolor);
+                draw_set_alpha(Scrollbar_bgalpha);
+            }
+            
+            draw_rectangle(cx1,cy1,cx1+_sbw,cy2,0);
+            
+            // draw scrollbar select area
+            if (Scrollbar_hover) {
+                draw_set_color(Scrollbar_color_hover);
+                draw_set_alpha(Scrollbar_alpha_hover);
+            }
+            else {
+                draw_set_color(Scrollbar_color);
+                draw_set_alpha(Scrollbar_alpha);
+            }
+            
+            draw_rectangle(cx1 + 1,cy3,cx1+_sbw - 1,cy3+Scrollbar_height, 0);
+        }
     }
     
     // Reset the surface if using one, draw the group if needed
@@ -511,6 +639,8 @@ if (argument0 == true) {
                 surface_reset_target();
             }
         }
+        //if (!No)
+        //    No = true;
         if (GMUIP.GMUI_gridNeedsDrawUpdate[Layer] != 1) {
             NeedsDrawUpdate = false;
             NeedsGroupUpdate = false;

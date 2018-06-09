@@ -19,9 +19,11 @@ GMUI_SetOnLayer(0);
 
 // Right side group
 GMUI_CreateGroup(1,      20,3,   global.GMUIAnchorTopRight);
-GMUI_GroupSetSize(1,     18,4);
+GMUI_GroupSetSize(1,     20,4);
 GMUI_GroupSetStyle(1, c_black, .2, c_black, .3, 0);
 GMUI_GroupSetFadeOnHide(1, room_speed, 0);
+//GMUI_GroupSetOverflow(1, global.GMUIOverflowScroll, -1);
+GMUI_GroupHideOverflow(global.GMUIOverflowScroll);
 
 //GMUI_GroupSetSpriteMap(1, s2,s3,s4,s5,s6,s7,s8,s1,s9,false);
 
@@ -35,20 +37,40 @@ GMUI_GroupSetFadeOnHide(2, room_speed, 0);
     NOTE:   To switch layers, use GMUI_SwitchToLayer(#);
 
 */
-
+/*
+with (GMUI_Add("test15","textstring",26,1,12,2,global.GMUIAnchorTopLeft)) {
+    GMUI_ControlSetAttributes(14,0,0,0);
+}
+*/
 with (GMUI_Add("Test1","textstring",            1,0,    16,2,   global.GMUIAnchorTopLeft)) {
     GMUI_ControlSetAttributes(20,0,0,0);
     GMUI_ControlSetInitValue("Select");
     GMUI_ControlAddToGroup(1);
-    GMUI_ControlSetSprite(GMUIspr_input,0,1,0);
+    GMUI_ControlSetSprite(sprite24,0,1,0);//GMUIspr_input
 }
+
+/*
+with (GMUI_Add("Test12","textstring", 1,4, 12,2, global.GMUIAnchorTopLeft)) {
+    GMUI_ControlSetAttributes(14,0,0,0);
+    GMUI_ControlSetInitValue("test");
+    GMUI_ControlAddToGroup(1);
+}
+
+with (GMUI_Add("test13","textstring",10,1,12,2,global.GMUIAnchorTopLeft)) {
+    GMUI_ControlSetAttributes(14,0,0,0);
+}
+*/
 
 with (GMUI_Add("Test2", "textint",              0,0,    10,2,   global.GMUIAnchorTopLeft)) {
     GMUI_ControlSetAttributes(5,0,-1000,1000);
     GMUI_ControlSetStyle(hsv(85,55,255),rgb(20,20,20),-1,-1,-1,-1,-1,-1,-1,-1);
     GMUI_ControlAddToGroup(2);
 }
-
+/*
+with (GMUI_Add("test14","textstring",20,1,12,2,global.GMUIAnchorTopLeft)) {
+    GMUI_ControlSetAttributes(14,0,0,0);
+}
+*/
 with (GMUI_Add("Test3", "textdecimal",          0,3,    10,2,   global.GMUIAnchorTopLeft)) {
     GMUI_ControlSetAttributes(10,10,-999,999);
     GMUI_ControlAddToGroup(2);
@@ -76,6 +98,27 @@ with (GMUI_Add("TestButton", "textbutton",      3,9,    5,3,    global.GMUIAncho
     GMUI_ControlSetStyle(-1, -1, c_red, 1, 0.85, -1, -1, -1, -1, -1);
     GMUI_ControlAddToGroup(2);
 }
+
+// SELECT LIST TEST
+with (GMUI_Add("TestSelectList", "selectlist",            8,16,    10,5,   global.GMUIAnchorTopLeft)) {
+    GMUI_ItemListSettings(26, $E3E3E3, -1, -1);
+    GMUI_ItemListBackground($DEDEDE, $EAEAEA, 0.8, 1);
+    GMUI_ItemListSelectAction(_ListAction);
+    GMUI_AddItem(2,10,"2-One","",-1);
+    GMUI_AddItem(4,20,"4-Two","",-1);
+    GMUI_AddItem(6,30,"6-Three","",-1);
+    GMUI_AddItem(8,40,"8-Four","",-1);
+    GMUI_AddItem(10,50,"10-Five","",-1);
+    GMUI_AddItem(12,60,"12-Six","",-1);
+    GMUI_AddItem(14,70,"14-Seven","",-1);
+    GMUI_AddItem(16,70,"16-Eight","",-1);
+    GMUI_AddItem(18,70,"18-Nine","",-1);
+    GMUI_AddItem(20,70,"20-Ten","",-1);
+    GMUI_AddItem(22,70,"22-Eleven","",-1);
+    GMUI_AddItem(24,70,"24-Twelve","",-1);
+    GMUI_AddItem(26,80,"26-Thirteen","",-1);
+}
+
 
 with (GMUI_Add("PopupMenuButton", "textbutton",     1,7,    5,3,    global.GMUIAnchorBottomLeft)) {
     GMUI_ControlSetButtonAction(_PopupMenu_Button);
@@ -166,6 +209,8 @@ with (GMUI_Add("SnapSlider", "button",          23,12,  3,2,    global.GMUIAncho
 // Display of slider value to the side
 with (GMUI_Add("SliderVal", "label",            5,12,   2,2,    global.GMUIAnchorBottomRight)) {
     GMUI_ControlSetText(string(round(GMUI_GetValue("Slider"))));
+    GMUI_ControlSetStyle($606060,c_gray,-1,-1,-1,-1,-1,-1,-1,-1);
+    GMUI_ControlSetFontStyle(fontNumericBold,$D9D9D9,fa_middle);
 }
 
 // Test checkbox and toggle
@@ -225,7 +270,7 @@ with (GMUI_Add("MenuInt", "intpicker",          0,0,    3,2,    global.GMUIAncho
 // Switch back to make instructions on layer 0
 GMUI_SetOnLayer(0);
 
-with (GMUI_Add("MenuIntInstructions", "label",  20,21,  12,2,   global.GMUIAnchorTopLeft)) {
+with (GMUI_Add("MenuIntInstructions", "label",  20,23,  12,2,   global.GMUIAnchorTopLeft)) {
     GMUI_ControlSetInitValue("Click square to open sub menu");
 }
 
@@ -258,6 +303,11 @@ with (GMUI_Add("OpenButton", "textbutton",   -3,8,   8,1,    global.GMUIAnchorTo
     GMUI_ControlAddToMenu("Test Menu");
 }
 
+with (GMUI_Add("Toggle2", "toggle",              2,4,   3,2,    global.GMUIAnchorBottomLeft)) {
+    GMUI_ControlSetToggleSettings(1, c_lime, c_gray, global.GMUISlideFullRoundRect, $808080, $505050, room_speed/4, global.GMUIDirectionTypeHorizontal, 0);
+    GMUI_ControlAddToMenu("Test Menu");
+}
+
 
 // Test Menu 2
 menuID = GMUI_CreateMenu("Test Menu 2",   -6,8,   18,24,   global.GMUIAnchorTop);
@@ -279,7 +329,7 @@ with (GMUI_Add("PopupTestButton","textbutton",  -3,8,   8,1,    global.GMUIAncho
 
 with (GMUI_Add("ResponseLabel", "label", -8, 10, 16, 2, global.GMUIAnchorTop)) {
     // This value will be set by the popup
-    ControlBackgroundColor = c_black;
+    //ControlBackgroundColor = c_black;
     GMUI_ControlSetFontStyle(fontNumericBold,c_white,fa_center);
     GMUI_ControlAddToMenu("Test Menu 2");
 }
