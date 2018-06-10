@@ -38,8 +38,7 @@ ds_list_add((GMUII()).GMUI_gridlist,_Layer);
 if ((GMUII()).UIEnableSurfaces) {
     (GMUII()).GMUI_gridSurface[_Layer] = noone;
     (GMUII()).GMUI_gridNeedsDrawUpdate[_Layer] = true;
-    (GMUII()).GMUI_gridTransitioner[_Layer] = -1;
-    (GMUII()).GMUI_gridFader[_Layer] = -1;
+    (GMUII()).GMUI_gridMasterControl[_Layer] = -1;
 }
 
 

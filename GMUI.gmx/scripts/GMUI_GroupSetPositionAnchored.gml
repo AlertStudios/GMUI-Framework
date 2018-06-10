@@ -61,6 +61,9 @@ if (!(_MasterControl).TransitioningGroup) {
     }
 }
 
+// Calculate the scrollbar position if set
+GMUI_GroupSetScrollbarX(GMUII(),_LayerNumber,_GroupNumber);
+
 
 // Re-position all controls within the group
 var i;

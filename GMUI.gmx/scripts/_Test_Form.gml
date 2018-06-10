@@ -75,6 +75,26 @@ with (GMUI_Add("TestButton", "textbutton",      3,9,    5,3,    GMUIAnchor.TopLe
     GMUI_ControlAddToGroup(2);
 }
 
+// SELECT LIST TEST
+with (GMUI_Add("TestSelectList", "selectlist",            8,16,    10,5,   GMUIAnchor.TopLeft)) {
+    GMUI_ItemListSettings(26, $E3E3E3, -1, -1);
+    GMUI_ItemListBackground($DEDEDE, $EAEAEA, 0.8, 1);
+    GMUI_ItemListSelectAction(_ListAction);
+    GMUI_AddItem(2,10,"2-One","",-1);
+    GMUI_AddItem(4,20,"4-Two","",-1);
+    GMUI_AddItem(6,30,"6-Three","",-1);
+    GMUI_AddItem(8,40,"8-Four","",-1);
+    GMUI_AddItem(10,50,"10-Five","",-1);
+    GMUI_AddItem(12,60,"12-Six","",-1);
+    GMUI_AddItem(14,70,"14-Seven","",-1);
+    GMUI_AddItem(16,70,"16-Eight","",-1);
+    GMUI_AddItem(18,70,"18-Nine","",-1);
+    GMUI_AddItem(20,70,"20-Ten","",-1);
+    GMUI_AddItem(22,70,"22-Eleven","",-1);
+    GMUI_AddItem(24,70,"24-Twelve","",-1);
+    GMUI_AddItem(26,80,"26-Thirteen","",-1);
+}
+
 with (GMUI_Add("PopupMenuButton", "textbutton",     1,7,    5,3,    GMUIAnchor.BottomLeft)) {
     GMUI_ControlSetButtonAction(_PopupMenu_Button);
     GMUI_ControlSetButton("Show"+chr(13)+"Menu", -1, -1, -1);

@@ -9,7 +9,7 @@ if (!instance_exists(i))
     
 // The parent GMUI Instance
 i.GMUIP = -1;
-
+i.No=true;
 // Previous menu if control is in a menu
 i.PreviousMenu = 0;
 i.PreviousMenuLayer = 0;
@@ -27,7 +27,6 @@ i.ControlDataType = global.GMUIDataTypeString; // Default (0)
 
 i.NeedsPositionUpdate = false;
 i.NeedsDrawUpdate = false;
-i.NeedsHideUpdate = false; //not needed?
 i.NeedsGroupUpdate = false;
 
 // Redundant control options based on the datatype
@@ -35,15 +34,17 @@ i.ControlIsNumeric = false;
 i.ControlIsString = true;
 i.ControlInput = false;
 i.ControlPicker = false;
+i.ControlItemList = false;
 
 i.ControlShowValue = true;
 i.ControlInteraction = true;
 i.ControlSelectable = true;
+i.ControlHasScrollbar = false;
 
 // For specific controls
+i.HoveringDirection = 0; // 0 = middle/none (HoveringDirection_None), HoveringDirection_Right=1;HoveringDirection_Up=2;HoveringDirection_Left=3;HoveringDirection_Down=4;
 i.checkMouseX = 0;
 i.checkMouseY = 0;
-i.HoveringDirection = 0; // 0 = middle/none (HoveringDirection_None), HoveringDirection_Right=1;HoveringDirection_Up=2;HoveringDirection_Left=3;HoveringDirection_Down=4;
 i.toggleInitialized = true; // default skip toggle values
 i.optionsInitialized = true; // default skip option values
 
@@ -54,6 +55,7 @@ i.Hidden = 0;
 // Group Status (if master control)
 i.GroupHidden = false;
 i.GroupIsFading = false;
+i.GroupHasScrollbar = false;
 
 // NonClickable may be used when a control is moving, for instance. It does not show disabled, but will not register a click
 i.NonClickable = 0;
@@ -98,6 +100,8 @@ i.IsAdjusted = false;
 // Actual size may be used to use pixel-baised boundary box for the control; still must be within cell block (0 is full cell)
 i.ActualW = 0;
 i.ActualH = 0;
+
+i.ControlStretch = global.GMUIOverflowResize;
 
 // Relative position is used if the boundary box should be adjusted
 i.RelativeX = 0;

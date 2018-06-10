@@ -1,3 +1,4 @@
+
 var MyButton;
 MyButton = GMUI_GetControl("SwipeButton");
 

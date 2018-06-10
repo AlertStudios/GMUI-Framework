@@ -63,6 +63,11 @@ with (GMUII()) {
     GMUI_groupMasterControl[_Layer,_Group] = -1;
     GMUI_groupSettingsMap[_Layer,_Group] = -1;
     
+    GMUI_groupStretch[_Layer,_Group] = global.GMUIAnchorDefault;
+    GMUI_groupOverflow[_Layer,_Group] = global.GMUIOverflowResize;
+    GMUI_groupOverflowCellsH[_Layer,_Group] = 1;
+    GMUI_groupScrollWidth[_Layer,_Group] = cellsize;
+    
     // Surface specific
     if (UIEnableSurfaces) {
         GMUI_groupSurface[_Layer,_Group] = noone;

@@ -22,8 +22,8 @@ for(i=0;i<ds_list_size((GMUII()).GMUI_groupControlList[_Layer,_Group]);i+=1) {
         ctrl.GroupHidden = _Hide;
         
         if ((GMUII()).UIEnableSurfaces) {
-            if (ctrl.FadeOnHide && (GMUII()).GMUI_gridTransitioner[_Layer] == -1  && (GMUII()).GMUI_groupMasterControl[_Layer,_Group] == (ctrl)) {
-                (GMUII()).GMUI_gridTransitioner[_Layer] = ctrl;
+            if (ctrl.FadeOnHide && (GMUII()).GMUI_gridMasterControl[_Layer] == -1  && (GMUII()).GMUI_groupMasterControl[_Layer,_Group] == (ctrl)) {
+                (GMUII()).GMUI_gridMasterControl[_Layer] = ctrl;
             }
             else
                 ctrl.NeedsDrawUpdate = !_Hide;

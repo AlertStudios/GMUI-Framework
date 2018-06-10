@@ -32,6 +32,10 @@ if (GMUI_GridEnabled())
             }
             
             if (!ctrlObject.Disabled && !ctrlObject.NonClickable && !ctrlObject.Hidden) {
+                if (ctrlObject.ControlHasScrollbar) {
+                    if (!ctrlObject.Scrollbar_dragging)
+                        ctrlObject.Scrollbar_hover = false;
+                }
                 ctrlObject.Hovering = 0;
                 ctrlObject.HoveringDirection = 0;
                 
@@ -57,6 +61,14 @@ if (GMUI_GridEnabled())
                         }
                             
                     }
+                    else if (ctrlObject.ControlHasScrollbar) {
+                        if (MX >= ctrlObject.Scrollbar_x) {
+                            ctrlObject.Scrollbar_hover = true;
+                        }
+                        else {
+                            ctrlObject.Hovering = 1;
+                        }
+                    }
                     else {
                         ctrlObject.Hovering = 1;
                     }
@@ -77,17 +89,26 @@ if (GMUI_GridEnabled())
                 
             }
         }
-        else if (HoveringControl != -1) {
-            if (previousHoveringControl != -1) {
-            global.test = previousHoveringControl;
-            GMUI_GridUpdateLayer(previousHoveringControl.GMUIP,previousHoveringControl.Layer);
-                if (GMUI_IsScript((previousHoveringControl).HoverOffActionScript)) {
-                    script_execute((previousHoveringControl).HoverOffActionScript);
+        else {
+            // No control at mouse, reset hover
+            if (HoveringControl != -1) {
+                if (previousHoveringControl != -1) {
+                global.test = previousHoveringControl;
+                GMUI_GridUpdateLayer(previousHoveringControl.GMUIP,previousHoveringControl.Layer);
+                    if (GMUI_IsScript((previousHoveringControl).HoverOffActionScript)) {
+                        script_execute((previousHoveringControl).HoverOffActionScript);
+                    }
+                    previousHoveringControl = -1;
                 }
-                previousHoveringControl = -1;
+                GMUI_ResetControlStatus("Hovering",id);
+                HoveringControl = -1;
             }
-            GMUI_ResetControlStatus("Hovering",id);
-            HoveringControl = -1;
+            
+            // Check for scrollbar actions
+            var _MC; _MC = GMUI_GroupMouseOnScrollbar(id, MX);
+            if (_MC > -1) {
+                _MC.Scrollbar_hover = true;
+            }
         }
     
     
@@ -161,6 +182,42 @@ if (GMUI_GridEnabled())
                                     break;
                             }
                         }
+                        else if (ctrlObject.ControlItemList) {
+                            // For lists that have a scrollbar, check which region we are in
+                            if (ctrlObject.ControlHasScrollbar) {
+                                if (MX >= ctrlObject.Scrollbar_x) {
+                                    // Drag the scrollbar
+                                    var _MPos,_SPos;
+                                    _MPos = MY - ctrlObject.ActualY;
+                                    _SPos = ctrlObject.Scrollbar_pos_y - ctrlObject.Scrollbar_y;
+                                    ctrlObject.Scrollbar_dragging = true;
+                                    
+                                    if (_MPos >= _SPos && _MPos < _SPos + ctrlObject.Scrollbar_height)
+                                        ctrlObject.Scrollbar_drag_y = _MPos - _SPos;
+                                    else
+                                        ctrlObject.Scrollbar_drag_y = ctrlObject.Scrollbar_height/2;
+                                        
+                                }
+                                else {
+                                    // Select List Region click
+                                    GMUI_ControlListOffset(ctrlObject, UIEnableSurfaces, MX, MY);
+                                    if (ctrlObject.ItemListHoverIndex > 0) {
+                                        ctrlObject.ItemListSelectedId = ctrlObject.ItemListId[ctrlObject.ItemListHoverIndex];
+                                        if (script_exists(ctrlObject.ItemListActionScript))
+                                            script_execute(ctrlObject.ItemListActionScript,ctrlObject.ItemListSelectedId);
+                                    }
+                                }
+                            }
+                            else {
+                                // Select List Region click
+                                GMUI_ControlListOffset(ctrlObject, UIEnableSurfaces, MX, MY);
+                                if (ctrlObject.ItemListHoverIndex > 0) {
+                                    ctrlObject.ItemListSelectedId = ctrlObject.ItemListId[ctrlObject.ItemListHoverIndex];
+                                    if (script_exists(ctrlObject.ItemListActionScript))
+                                        script_execute(ctrlObject.ItemListActionScript,ctrlObject.ItemListSelectedId);
+                                }
+                            }
+                        }
                         else if (ctrlObject.ControlSelectable) {
                             // Normal input controls
                             GMUI_GridSelect(ctrlObject);
@@ -183,7 +240,19 @@ if (GMUI_GridEnabled())
     
             }
             else {
+                // No control on mouse
                 GMUI_GridUpdateLayer(id,GMUI_GetCurrentLayer());
+                
+                // Check for scrollbar actions
+                var _MC, _MPos; _MC = GMUI_GroupMouseOnScrollbar(id, MX);
+                if (_MC > -1) {
+                    _MC.Scrollbar_dragging = true;
+                    _MPos = MY - GMUI_groupActualY[_MC.Layer,_MC.Group];
+                    if (_MPos > _MC.Scrollbar_y && _MPos < _MC.Scrollbar_y + _MC.Scrollbar_height)
+                        _MC.Scrollbar_drag_y = _MPos - _MC.Scrollbar_y;
+                    else
+                        _MC.Scrollbar_drag_y = _MC.Scrollbar_height/2;
+                }
             }
         }
     }

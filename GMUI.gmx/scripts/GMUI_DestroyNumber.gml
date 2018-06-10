@@ -8,7 +8,7 @@ with (argument0) {
     var c, ctrl;
     for(c=0;c<ds_list_size(GMUI_controlList);c+=1) {
         // Get the control id
-        ctrl = ds_list_find_value((GMUII()).GMUI_controlList,c);
+        ctrl = ds_list_find_value(GMUI_controlList,c);
         
         if (instance_exists(ctrl)) {
             with (ctrl) {
@@ -51,6 +51,8 @@ with (argument0) {
     ds_map_destroy(GMUI_popup_map);
     
     ds_map_destroy(GMUI_warnings_map);
+    
+    ds_map_destroy(GMUI_groupScrollbars);
     
     ds_map_destroy(GMUI_map);
     
