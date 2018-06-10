@@ -2,10 +2,11 @@
 ///GMUI_ControlListOffset(control id with List, Using Surface[bool], Mouse X, Mouse Y)
 ///Return the offset amount of the list and update the hover index based on mouse position
 
-var _SCRIPT, _Ctrl, _offset, _relMY, _UsingSurface;
+var _SCRIPT, _Ctrl, _offset, _relMY, _UsingSurface, _MX;
 _SCRIPT = GMUI_ControlListOffset;
 _Ctrl = argument0;
 _UsingSurface = argument1;
+_MX = argument2;
 _offset = 0;
 _relMY = 0;
 
