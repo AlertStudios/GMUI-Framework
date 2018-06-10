@@ -1,7 +1,7 @@
 ///GMUI_ControlDrawItemList(Control ID, Using Surface[bool])
 ///Draws the group if set to do any drawing; Called by master control of group
 
-var _GMUII, _Ctrl, _UsingSurface, _Surface, _i, _id, _relMY, _ _cx, _cy, _sbw, _canDraw, _offPos;
+var _GMUII, _Ctrl, _UsingSurface, _Surface, _i, _id, _relMY, _cx, _cy, _sbw, _canDraw, _offPos;
 _Ctrl = argument0;
 _UsingSurface = argument1;
 _GMUII = _Ctrl.GMUIP;
