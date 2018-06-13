@@ -62,6 +62,9 @@ ds_list_add((GMUII()).GMUI_controlList,thecontrol);
 if ((GMUII()).UIEnableSurfaces) {
     if ((GMUII()).GMUI_gridMasterControl[_Layer] == -1)
         (GMUII()).GMUI_gridMasterControl[_Layer] = thecontrol;
+    
+    // Also set possible surface defaults
+    thecontrol.SelectListSurface = noone;
 }
 
 // Set name of value and width/height

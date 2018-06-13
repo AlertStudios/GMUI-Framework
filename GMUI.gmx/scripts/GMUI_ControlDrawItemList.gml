@@ -14,7 +14,7 @@ if (!_UsingSurface) {
 }
 else {
     //surface_reset_target();
-    _Surface = surface_target(noone,_Ctrl.RoomW-_Ctrl.RoomX,max(_Ctrl.RoomH-_Ctrl.RoomY,ItemListHeight*ItemListSize));
+    _Surface = surface_target(_Ctrl.SelectListSurface,_Ctrl.RoomW-_Ctrl.RoomX,max(_Ctrl.RoomH-_Ctrl.RoomY,ItemListHeight*ItemListSize));
     surface_clear(_Surface);
 }
 

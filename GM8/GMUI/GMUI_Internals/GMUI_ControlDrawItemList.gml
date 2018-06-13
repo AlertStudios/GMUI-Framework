@@ -2,7 +2,7 @@
 ///GMUI_ControlDrawItemList(Control ID, Using Surface[bool])
 ///Draws the group if set to do any drawing - Called by master control of group
 
-var _GMUII, _Ctrl, _UsingSurface, _Surface, _i, _id, _relMY, _ _cx, _cy, _sbw, _canDraw, _offPos;
+var _GMUII, _Ctrl, _UsingSurface, _Surface, _i, _id, _relMY, _cx, _cy, _sbw, _canDraw, _offPos;
 _Ctrl = argument0;
 _UsingSurface = argument1;
 _GMUII = _Ctrl.GMUIP;
@@ -15,7 +15,7 @@ if (!_UsingSurface) {
 }
 else {
     //surface_reset_target();
-    _Surface = surface_target(noone,_Ctrl.RoomW-_Ctrl.RoomX,max(_Ctrl.RoomH-_Ctrl.RoomY,ItemListHeight*ItemListSize));
+    _Surface = surface_target(_Ctrl.SelectListSurface,_Ctrl.RoomW-_Ctrl.RoomX,max(_Ctrl.RoomH-_Ctrl.RoomY,ItemListHeight*ItemListSize));
     surface_clear(_Surface);
 }
 

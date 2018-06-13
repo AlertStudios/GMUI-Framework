@@ -74,7 +74,7 @@ global.GMUIOverflowScroll = 2;
 
 // If studio, run the script to create enum versions of these
 if (!global.GMUIGameMaker8) {
-GMUI_InitStudio();
+    GMUI_InitStudio();
 }
 
 

@@ -307,6 +307,18 @@ if (argument0 == true) {
         
     // If using surfaces for layers and groups
     if (GMUIP.UIEnableSurfaces) {
+        // Create surfaces for controls that use them first, and later draw to grid
+        if (NeedsDrawUpdate || NeedsGroupUpdate) {
+            if (ControlType == "selectlist") {
+                // Only create the surface of the list and return
+                SelectListSurface = GMUI_ControlDrawItemList(id, true);
+                surface_reset_target();
+            }
+            else if (ControlType == "dropdown") {
+            
+            }
+        }
+        
         // Check for grid update
         if (GMUIP.GMUI_gridNeedsDrawUpdate[Layer] == 2 || GMUIP.GMUI_gridMasterControl[Layer] == id || NeedsDrawUpdate || NeedsGroupUpdate) {
             CurrentSurfaceW = GMUIP.UIgridwidth;
@@ -435,31 +447,16 @@ if (argument0 == true) {
             GMUI_ControlDrawToggle(id);
         }
         else if (ControlType == "selectlist") {
-            // Get the current surface used
-            //todo:...
-            // Only create the surface of the list and return
-            SelectListSurface = GMUI_ControlDrawItemList(id, GMUIP.UIEnableSurfaces);
-
-            // Restore surface if used, draw other components, then draw surface
             if (GMUIP.UIEnableSurfaces) {
-                surface_reset_target();
-                //surface_target(CurrentSurface,CurrentSurfaceW,CurrentSurfaceH);
-                //draw using select list surface
                 if (surface_exists(SelectListSurface))
                     draw_surface_part(SelectListSurface,0,ItemListOffsetY,RoomW-RoomX,RoomH-RoomY,RoomX,RoomY);
-                else
-                    draw_text(200,160,"d: DNE");//debug
             }
-            
-            // todo: SET VARIABLE FOR UPDATE:
-            // NeedsItemListUpdate = false;
-            
-            
+            else
+                GMUI_ControlDrawItemList(id, false);
         }
         else if (ControlType == "dropdown") {
         
         }
-        
         
         
         // Draw special features for the other types
