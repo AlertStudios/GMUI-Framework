@@ -307,6 +307,28 @@ if (argument0 == true) {
         
     // If using surfaces for layers and groups
     if (GMUIP.UIEnableSurfaces) {
+        // If we need to update something, we need to check the drawing order
+        if (GMUIP.GMUI_gridDrawFirst[Layer] == noone) {
+            GMUIP.GMUI_gridMasterControl[Layer] = id;
+            GMUIP.GMUI_gridDrawFirst[Layer] = id;
+        }
+        if (Group > 0) {
+            if (GMUIP.GMUI_groupDrawingFirst[Layer,Group] != noone) {
+                if (GMUIP.GMUI_groupDrawingFirst[Layer,Group] == -1) {
+                    GMUIP.GMUI_groupDrawingFirst[Layer,Group] = id;
+                    GMUIP.GMUI_groupDrawingLast[Layer,Group] = id;
+                }
+                else if (GMUIP.GMUI_groupDrawingFirst[Layer,Group] == id) {
+                    GMUIP.GMUI_groupMasterControl[Layer,Group] = id;
+                    GMUIP.GMUI_groupDrawingControl[Layer,Group] = GMUIP.GMUI_groupDrawingLast[Layer,Group];
+                    GMUIP.GMUI_groupDrawingFirst[Layer,Group] = noone;
+                }
+                else {
+                    GMUIP.GMUI_groupDrawingLast[Layer,Group] = id;
+                }
+            }
+        }
+        
         // Create surfaces for controls that use them first, and later draw to grid
         if (NeedsDrawUpdate || NeedsGroupUpdate) {
             if (ControlType == "selectlist") {

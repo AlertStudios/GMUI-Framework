@@ -319,6 +319,11 @@ if (GMUI_GridEnabled())
                         if (GMUI_gridNeedsDrawUpdate[_l] == 1)
                             GMUI_gridNeedsDrawUpdate[_l] = 2;
                     }
+                    
+                    // Reset master control if requested (-1)
+                    if (GMUI_gridDrawFirst[_l] == -1) {
+                        GMUI_gridDrawFirst[_l] = noone;
+                    }
                 }
             }
         }

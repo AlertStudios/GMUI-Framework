@@ -1259,6 +1259,7 @@ if ((GMUII()).UIEnableSurfaces) {
     (GMUII()).GMUI_gridSurface[_Layer] = noone;
     (GMUII()).GMUI_gridNeedsDrawUpdate[_Layer] = true;
     (GMUII()).GMUI_gridMasterControl[_Layer] = -1;
+    (GMUII()).GMUI_gridDrawFirst[_Layer] = noone;
 }
 
 
@@ -2180,6 +2181,28 @@ if (argument0 == true) {
         
     // If using surfaces for layers and groups
     if (GMUIP.UIEnableSurfaces) {
+        // If we need to update something, we need to check the drawing order
+        if (GMUIP.GMUI_gridDrawFirst[Layer] == noone) {
+            GMUIP.GMUI_gridMasterControl[Layer] = id;
+            GMUIP.GMUI_gridDrawFirst[Layer] = id;
+        }
+        if (Group > 0) {
+            if (GMUIP.GMUI_groupDrawingFirst[Layer,Group] != noone) {
+                if (GMUIP.GMUI_groupDrawingFirst[Layer,Group] == -1) {
+                    GMUIP.GMUI_groupDrawingFirst[Layer,Group] = id;
+                    GMUIP.GMUI_groupDrawingLast[Layer,Group] = id;
+                }
+                else if (GMUIP.GMUI_groupDrawingFirst[Layer,Group] == id) {
+                    GMUIP.GMUI_groupMasterControl[Layer,Group] = id;
+                    GMUIP.GMUI_groupDrawingControl[Layer,Group] = GMUIP.GMUI_groupDrawingLast[Layer,Group];
+                    GMUIP.GMUI_groupDrawingFirst[Layer,Group] = noone;
+                }
+                else {
+                    GMUIP.GMUI_groupDrawingLast[Layer,Group] = id;
+                }
+            }
+        }
+        
         // Create surfaces for controls that use them first, and later draw to grid
         if (NeedsDrawUpdate || NeedsGroupUpdate) {
             if (ControlType == "selectlist") {
@@ -3776,6 +3799,8 @@ with (GMUII()) {
         GMUI_groupSurface[_Layer,_Group] = noone;
         //GMUI_groupNeedsDrawUpdate[_Layer,_Group] = true;
         GMUI_groupDrawingControl[_Layer,_Group] = -1;
+        GMUI_groupDrawingFirst[_Layer,_Group] = -1;
+        GMUI_groupDrawingLast[_Layer,_Group] = -1;
     }
 }
 
@@ -4302,6 +4327,11 @@ if (GMUI_GridEnabled())
                         // Reset update flag
                         if (GMUI_gridNeedsDrawUpdate[_l] == 1)
                             GMUI_gridNeedsDrawUpdate[_l] = 2;
+                    }
+                    
+                    // Reset master control if requested (-1)
+                    if (GMUI_gridDrawFirst[_l] == -1) {
+                        GMUI_gridDrawFirst[_l] = noone;
                     }
                 }
             }
