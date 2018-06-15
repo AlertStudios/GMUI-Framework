@@ -107,7 +107,7 @@ with (GMUI_Add("DebugButton", "textbutton",     1,3,    5,3,    GMUIAnchor.Botto
     GMUI_ControlSetStyle(-1, -1, c_gray, 1, 0.85, -1, -1, -1, -1, -1);
 }
 
-with (GMUI_Add("SwipeButton", "textbutton",      8,7,   5,3,    global.GMUIAnchorBottomLeft)) {
+with (GMUI_Add("SwipeButton", "textbutton",      8,7,   5,3,    GMUIAnchor.BottomLeft)) {
     GMUI_ControlSetButtonAction(_Swipe_Button);
     GMUI_ControlSetButton("Swipe"+chr(13)+"Out",-1,-1,-1);
 }
@@ -242,7 +242,7 @@ with (GMUI_Add("MenuInt", "intpicker",          0,0,    3,2,    GMUIAnchor.TopLe
 // Switch back to make instructions on layer 0
 GMUI_SetOnLayer(0);
 
-with (GMUI_Add("MenuIntInstructions", "label",  20,21,  12,2,   GMUIAnchor.TopLeft)) {
+with (GMUI_Add("MenuIntInstructions", "label",  22,24,  12,2,   GMUIAnchor.TopLeft)) {
     GMUI_ControlSetInitValue("Click square to open sub menu");
 }
 

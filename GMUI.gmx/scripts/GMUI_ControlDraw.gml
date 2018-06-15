@@ -302,10 +302,31 @@ if (argument0 == true) {
     //}
     
     var SurfaceSet, CurrentSurface, CurrentSurfaceW, CurrentSurfaceH;
-    SurfaceSet = false; CurrentSurface = -1; CurrentSurfaceW = 0; CurrentSurfaceH = 0;
+    SurfaceSet = false; CurrentSurface = noone; CurrentSurfaceW = 0; CurrentSurfaceH = 0;
         
     // If using surfaces for layers and groups
     if (GMUIP.UIEnableSurfaces) {
+        // If we need to update something, we need to check the drawing order
+        if (GMUIP.GMUI_gridDrawFirst[Layer] == noone) {
+            GMUIP.GMUI_gridMasterControl[Layer] = id;
+            GMUIP.GMUI_gridDrawFirst[Layer] = id;
+        }
+        if (Group > 0) {
+            if (GMUIP.GMUI_groupDrawingFirst[Layer,Group] != noone) {
+                if (GMUIP.GMUI_groupDrawingFirst[Layer,Group] == -1) {
+                    GMUIP.GMUI_groupDrawingFirst[Layer,Group] = id;
+                    GMUIP.GMUI_groupDrawingLast[Layer,Group] = id;
+                }
+                else if (GMUIP.GMUI_groupDrawingFirst[Layer,Group] == id) {
+                    GMUIP.GMUI_groupMasterControl[Layer,Group] = id;
+                    GMUIP.GMUI_groupDrawingControl[Layer,Group] = GMUIP.GMUI_groupDrawingLast[Layer,Group];
+                    GMUIP.GMUI_groupDrawingFirst[Layer,Group] = noone;
+                }
+                else {
+                    GMUIP.GMUI_groupDrawingLast[Layer,Group] = id;
+                }
+            }
+        }
         // Create surfaces for controls that use them first, and later draw to grid
         if (NeedsDrawUpdate || NeedsGroupUpdate) {
             if (ControlType == "selectlist") {
@@ -319,7 +340,7 @@ if (argument0 == true) {
         }
         
         // Check for grid update
-        if (GMUIP.GMUI_gridNeedsDrawUpdate[Layer] == 2 || GMUIP.GMUI_gridMasterControl[Layer] == id || NeedsDrawUpdate || NeedsGroupUpdate) {
+        if ((GMUIP.GMUI_gridNeedsDrawUpdate[Layer] == 2 && GMUIP.GMUI_gridMasterControl[Layer] == id) || NeedsDrawUpdate || NeedsGroupUpdate) {
             CurrentSurfaceW = GMUIP.UIgridwidth;
             CurrentSurfaceH = GMUIP.UIgridheight;
             CurrentSurface = surface_target(GMUIP.GMUI_gridSurface[Layer], CurrentSurfaceW, CurrentSurfaceH);
@@ -380,7 +401,7 @@ if (argument0 == true) {
         NeedsDrawUpdate = true;
     }
         
-        
+
     // Draw the control based on the type and user-defined settings
     if (NeedsDrawUpdate) {
         var padx;

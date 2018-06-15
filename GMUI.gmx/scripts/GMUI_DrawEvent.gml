@@ -284,7 +284,7 @@ if (GMUI_GridEnabled())
     
     
     // Draw surface layers, and/or adjust a transitioning layer
-    if (GMUI_grid_Transition || UIEnableSurfaces) {
+    if (UIEnableSurfaces | GMUI_grid_Transition) {
         // Loop through each layer
         var _i, _l, _j, _g, _c;
         for(_i=0;_i<ds_list_size(GMUI_gridlist);_i+=1) {
@@ -317,6 +317,10 @@ if (GMUI_GridEnabled())
                         // Reset update flag
                         if (GMUI_gridNeedsDrawUpdate[_l] == 1)
                             GMUI_gridNeedsDrawUpdate[_l] = 2;
+                    }
+                    // Reset master control if requested (-1)
+                    if (GMUI_gridDrawFirst[_l] == -1) {
+                        GMUI_gridDrawFirst[_l] = noone;
                     }
                 }
             }

@@ -250,12 +250,6 @@
         <script>scripts\GMUI_GridSelect.gml</script>
         <script>scripts\GMUI_GridAdjust.gml</script>
         <script>scripts\GMUI_GridAdjustLayer.gml</script>
-        <script>scripts\GMUI_GridSetAllGroupValues.gml</script>
-        <script>scripts\GMUI_GridSetMappedValues.gml</script>
-        <script>scripts\GMUI_GridSetRegions.gml</script>
-        <script>scripts\GMUI_GridSetRegionsLayer.gml</script>
-        <script>scripts\GMUI_GridResetControlRegion.gml</script>
-        <script>scripts\GMUI_GridNextControl.gml</script>
         <script>scripts\GMUI_GridGetCellX.gml</script>
         <script>scripts\GMUI_GridGetCellXOffset.gml</script>
         <script>scripts\GMUI_GridGetCellXRoom.gml</script>
@@ -266,6 +260,12 @@
         <script>scripts\GMUI_GridGetMouseCellX.gml</script>
         <script>scripts\GMUI_GridGetMouseCellY.gml</script>
         <script>scripts\GMUI_GridGetWidth.gml</script>
+        <script>scripts\GMUI_GridNextControl.gml</script>
+        <script>scripts\GMUI_GridResetControlRegion.gml</script>
+        <script>scripts\GMUI_GridSetAllGroupValues.gml</script>
+        <script>scripts\GMUI_GridSetMappedValues.gml</script>
+        <script>scripts\GMUI_GridSetRegions.gml</script>
+        <script>scripts\GMUI_GridSetRegionsLayer.gml</script>
         <script>scripts\GMUI_GridUpdateLayer.gml</script>
         <script>scripts\GMUI_GridViewOffsetX.gml</script>
         <script>scripts\GMUI_GridViewOffsetY.gml</script>

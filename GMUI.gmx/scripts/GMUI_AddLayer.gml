@@ -39,6 +39,7 @@ if ((GMUII()).UIEnableSurfaces) {
     (GMUII()).GMUI_gridSurface[_Layer] = noone;
     (GMUII()).GMUI_gridNeedsDrawUpdate[_Layer] = true;
     (GMUII()).GMUI_gridMasterControl[_Layer] = -1;
+    (GMUII()).GMUI_gridDrawFirst[_Layer] = noone;
 }
 
 
