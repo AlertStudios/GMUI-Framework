@@ -184,6 +184,8 @@ with (GMUI_Add("SnapSlider", "button",          23,12,  3,2,    GMUIAnchor.Botto
 // Display of slider value to the side
 with (GMUI_Add("SliderVal", "label",            5,12,   2,2,    GMUIAnchor.BottomRight)) {
     GMUI_ControlSetText(string(round(GMUI_GetValue("Slider"))));
+    GMUI_ControlSetStyle($606060,c_gray,-1,-1,-1,-1,-1,-1,-1,-1);
+    GMUI_ControlSetFontStyle(fontNumericBold,$D9D9D9,fa_middle);
 }
 
 // Test checkbox and toggle
