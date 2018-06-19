@@ -43,6 +43,7 @@ global.GMUIDirectionTypeHorizontal = 0;
 global.GMUIDirectionTypeVertical = 1;
 global.GMUIDirectionTypeSideVertical = 2;
 global.GMUIDirectionTypeBoth = 3;
+global.GMUIDirectionTypeNone = -1;
 
 // Control datatypes
 global.GMUIDataTypeString = 0;
