@@ -15,7 +15,7 @@ if (__Anchor == global.GMUIAnchorTopLeft || __Anchor == global.GMUIAnchorLeft ||
 }
 else {
     // The Mid X's, else the Right X's 
-    if (__Anchor == global.GMUIAnchorTop || __Anchor == global.GMUIAnchorBottom) {
+    if (__Anchor == global.GMUIAnchorTop || __Anchor == global.GMUIAnchorBottom || __Anchor == global.GMUIAnchorCenter) {
         // Half-width accounts for the cell 0 added to the width.
         // (On even widths, 0 is left of the middle and 1 is right of the middle)
         return floor(__GridW / 2 - 0.5) + __CellX;

@@ -16,7 +16,7 @@ if (__Anchor == global.GMUIAnchorTopLeft || __Anchor == global.GMUIAnchorTop || 
 }
 else {  
     // The Mid Y's else the Bottom Y's
-    if (__Anchor == global.GMUIAnchorLeft || __Anchor == global.GMUIAnchorRight) {
+    if (__Anchor == global.GMUIAnchorLeft || __Anchor == global.GMUIAnchorRight || __Anchor == global.GMUIAnchorCenter) {
         // Half-height accounts for the cell 0 added to the height.
         // (On even height, 0 is top of the middle and 1 is bottom of the middle)
         return floor(__GridH / 2 - 0.5) + __CellY;
