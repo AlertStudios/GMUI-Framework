@@ -55,6 +55,7 @@
           <file>GMUI_ControlSetText.gml</file>
           <file>GMUI_ControlSetToggleSettings.gml</file>
           <file>GMUI_ControlSetValueChangedAction.gml</file>
+          <file>GMUI_ControlStretchToGrid.gml</file>
           <file>GMUI_Create.gml</file>
           <file>GMUI_CreateGroup.gml</file>
           <file>GMUI_CreateGroupInLayer.gml</file>
@@ -78,12 +79,14 @@
           <file>GMUI_GroupSetSize.gml</file>
           <file>GMUI_GroupSetSpriteMap.gml</file>
           <file>GMUI_GroupSetStretchToGrid.gml</file>
+          <file>GMUI_GroupStretchToGrid.gml</file>
           <file>GMUI_Init.gml</file>
           <file>GMUI_IsMenuOpen.gml</file>
           <file>GMUI_ItemListBackground.gml</file>
           <file>GMUI_ItemListFont.gml</file>
           <file>GMUI_ItemListSelectAction.gml</file>
           <file>GMUI_ItemListSettings.gml</file>
+          <file>GMUI_LayerHide.gml</file>
           <file>GMUI_MenuControlDepth.gml</file>
           <file>GMUI_MenuSetHidePosition.gml</file>
           <file>GMUI_MenuSetPosition.gml</file>

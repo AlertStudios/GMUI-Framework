@@ -12,12 +12,11 @@ if (is_string(argument0))
 else
     _ctrl = argument0;
     
-if (!GMUI_IsControlID(_ctrl))
-{
-    GMUI_ThrowErrorDetailed("Invalid control",GMUI_ControlPosition);
+if (!GMUI_IsControlID(_ctrl)) {
+    GMUI_ThrowErrorDetailed("Invalid control", GMUI_ControlPosition);
     return false;
 }
-    
+
 // Store the relative values provided that reference against the anchor position
 if (_Anchor >= 0)
     _ctrl.Anchor = _Anchor;
@@ -28,10 +27,40 @@ _ctrl.RelativeCellY = _CellY;
 _gridW = GMUI_GridGetWidth(_ctrl.GMUIP,_ctrl.Layer);
 _gridH = GMUI_GridGetHeight(_ctrl.GMUIP,_ctrl.Layer);
 
+// If stretch flag is set, then re-calculate the size&position acording to the anchor
+if (_ctrl.StretchToGrid) {
+    switch (_Anchor) {
+        case global.GMUIAnchorTop:
+        case global.GMUIAnchorBottom:
+            _CellX = 0 - GMUI_GetAnchoredCellX(_gridW,0 - _ctrl.RelativeCellX,_Anchor);
+            _ctrl.CellWide = _gridW - _ctrl.RelativeCellX * 2;
+            break;
+        case global.GMUIAnchorLeft:
+        case global.GMUIAnchorRight:
+            _CellY = 0 - GMUI_GetAnchoredCellY(_gridH,0 - _ctrl.RelativeCellY,_Anchor);
+            _ctrl.CellHigh = _gridH - _ctrl.RelativeCellY * 2;
+            break;
+        case global.GMUIAnchorCenter:
+            _CellX = 0 - GMUI_GetAnchoredCellX(_gridW,0 - _ctrl.RelativeCellX,_Anchor);
+            _ctrl.CellWide = _gridW - _ctrl.RelativeCellX * 2;
+            _CellY = 0 - GMUI_GetAnchoredCellY(_gridH,0 - _ctrl.RelativeCellY,_Anchor);
+            _ctrl.CellHigh = _gridH - _ctrl.RelativeCellY * 2;
+            break;
+        case global.GMUIAnchorTopLeft:
+            break;
+        case global.GMUIAnchorTopRight:
+            break;
+        case global.GMUIAnchorBottomRight:
+            break;
+        case global.GMUIAnchorBottomLeft:
+            break;
+    }
+}
+
 // Check grid positioning if it is an interactable control
 if (_ctrl.ControlInteraction) {
     if (!GMUI_ValidCellBounds(_Anchor,_CellX,_CellY,_gridW,_gridH)) {
-        GMUI_ThrowErrorDetailed("Cell values out of bounds for " + string(argument0),"GMUI_ControlPosition");
+        GMUI_ThrowErrorDetailed("Cell values out of bounds for " + string(argument0),GMUI_ControlPosition);
         return false;
     }
 }

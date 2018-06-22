@@ -145,6 +145,7 @@
         <script>scripts\GMUI_ControlSetText.gml</script>
         <script>scripts\GMUI_ControlSetToggleSettings.gml</script>
         <script>scripts\GMUI_ControlSetValueChangedAction.gml</script>
+        <script>scripts\GMUI_ControlStretchToGrid.gml</script>
         <script>scripts\GMUI_Create.gml</script>
         <script>scripts\GMUI_CreateGroup.gml</script>
         <script>scripts\GMUI_CreateGroupInLayer.gml</script>
@@ -162,6 +163,7 @@
         <script>scripts\GMUI_GroupHide.gml</script>
         <script>scripts\GMUI_GroupHideOverflow.gml</script>
         <script>scripts\GMUI_GroupSetStyle.gml</script>
+        <script>scripts\GMUI_GroupStretchToGrid.gml</script>
         <script>scripts\GMUI_GridSetNavigation.gml</script>
         <script>scripts\GMUI_GroupSetClickOff.gml</script>
         <script>scripts\GMUI_GroupSetFadeOnHide.gml</script>
@@ -176,6 +178,7 @@
         <script>scripts\GMUI_ItemListFont.gml</script>
         <script>scripts\GMUI_ItemListSelectAction.gml</script>
         <script>scripts\GMUI_ItemListSettings.gml</script>
+        <script>scripts\GMUI_LayerHide.gml</script>
         <script>scripts\GMUI_MenuSetClickOff.gml</script>
         <script>scripts\GMUI_MenuSetFadeOnHide.gml</script>
         <script>scripts\GMUI_MenuSetHidePosition.gml</script>

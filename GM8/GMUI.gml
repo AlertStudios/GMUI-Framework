@@ -23,7 +23,8 @@ GMUI_GroupSetSize(1,     20,4);
 GMUI_GroupSetStyle(1, c_black, .2, c_black, .3, 0);
 GMUI_GroupSetFadeOnHide(1, room_speed, 0);
 //GMUI_GroupSetOverflow(1, global.GMUIOverflowScroll, -1);
-GMUI_GroupHideOverflow(global.GMUIOverflowScroll);
+//GMUI_GroupHideOverflow(global.GMUIOverflowScroll);
+GMUI_GroupStretchToGrid(1,true);
 
 //GMUI_GroupSetSpriteMap(1, s2,s3,s4,s5,s6,s7,s8,s1,s9,false);
 
@@ -37,11 +38,12 @@ GMUI_GroupSetFadeOnHide(2, room_speed, 0);
     NOTE:   To switch layers, use GMUI_SwitchToLayer(#);
 
 */
-/*
-with (GMUI_Add("test15","textstring",26,1,12,2,global.GMUIAnchorTopLeft)) {
+
+/*with (GMUI_Add("test15","textstring",2,1,6,6,global.GMUIAnchorTop)) {
     GMUI_ControlSetAttributes(14,0,0,0);
-}
-*/
+    GMUI_ControlStretchToGrid(true);
+}*/
+
 with (GMUI_Add("Test1","textstring",            1,0,    16,2,   global.GMUIAnchorTopLeft)) {
     GMUI_ControlSetAttributes(20,0,0,0);
     GMUI_ControlSetInitValue("Select");
@@ -49,13 +51,13 @@ with (GMUI_Add("Test1","textstring",            1,0,    16,2,   global.GMUIAncho
     GMUI_ControlSetSprite(sprite24,0,1,0);//GMUIspr_input
 }
 
-/*
+
 with (GMUI_Add("Test12","textstring", 1,4, 12,2, global.GMUIAnchorTopLeft)) {
     GMUI_ControlSetAttributes(14,0,0,0);
     GMUI_ControlSetInitValue("test");
     GMUI_ControlAddToGroup(1);
 }
-
+/*
 with (GMUI_Add("test13","textstring",10,1,12,2,global.GMUIAnchorTopLeft)) {
     GMUI_ControlSetAttributes(14,0,0,0);
 }
@@ -485,12 +487,12 @@ var MyButton;
 MyButton = GMUI_GetControl("SwipeButton");
 
 if (!global.Swiped) {
-    GMUI_LayerTransitionToXY(0, 420, 0, easeExpOut, room_speed);
+    GMUI_LayerTransitionToXY(0, 420, 0, .1, easeExpOut, room_speed);
     global.Swiped = true;
     with (MyButton) GMUI_ControlSetButton("Swipe"+chr(13)+"Back",-1,-1,-1);
 }
 else {
-    GMUI_LayerTransitionToXY(0, 0, 0, easeExpOut, room_speed);
+    GMUI_LayerTransitionToXY(0, 0, 0, 1, easeExpOut, room_speed);
     global.Swiped = false;
     with (MyButton) GMUI_ControlSetButton("Swipe"+chr(13)+"Out",-1,-1,-1);
 }
@@ -617,7 +619,7 @@ UIsnaptoview = true;
 // Required: The view number to snap to
 UIgridview = 0;
 
-// Required: Surfaces are needed for listboxes and scrollable menus, but also draws the grid as a surface itself
+// Required: Surfaces are needed to portions of controls and menus and draws the grid as a surface itself
 UIEnableSurfaces = true;
 
 // Required: Flexibility to add graphical effects settings to the controls: (currently unused)
@@ -1068,7 +1070,7 @@ return true;
 
 
 #define GMUI_LayerTransitionToXY
-///GMUI_LayerTransitionToXY(Layer number, Room X, Room Y, Transition Script, Time)
+///GMUI_LayerTransitionToXY(Layer number, Room X, Room Y, Alpha [or -1], Transition Script, Time)
 
 var _Layer; _Layer = argument0;
 
@@ -1077,21 +1079,27 @@ if (!GMUI_LayerExists(_Layer)) {
     return false;
 }
 
-if (!GMUI_IsScript(argument3)) {
+if (!GMUI_IsScript(argument4)) {
     GMUI_ThrowErrorDetailed("Script not found", GMUI_LayerTransitionToXY);
     return false;
 }
 
 with (GMUII()) {
     GMUI_grid_Transitioning[_Layer] = true;
-    GMUI_grid_T_script[_Layer] = argument3;
+    GMUI_grid_T_script[_Layer] = argument4;
     
     GMUI_grid_T_t[_Layer] = 0;
     
-    if (argument4 > 0)
-        GMUI_grid_T_d[_Layer] = argument4;
+    if (argument5 > 0)
+        GMUI_grid_T_d[_Layer] = argument5;
     else
         GMUI_grid_T_d[_Layer] = room_speed;
+        
+    GMUI_grid_T_ba[_Layer] = GMUI_grid_alpha[_Layer];
+    if (argument3 >= 0)
+        GMUI_grid_T_ca[_Layer] = argument3 - GMUI_grid_T_ba[_Layer];
+    else
+        GMUI_grid_T_ca[_Layer] = 0;
     
     GMUI_grid_T_bx[_Layer] = GMUI_grid_x[_Layer];
     GMUI_grid_T_by[_Layer] = GMUI_grid_y[_Layer];
@@ -1253,6 +1261,8 @@ ds_list_add((GMUII()).GMUI_gridlist,_Layer);
 
 // Value to check if transitioning (The rest of the values are defined when called: GMUI_LayerTransitionToActual)
 (GMUII()).GMUI_grid_Transitioning[_Layer] = false;
+// Value to check and display if alpha is not 1
+(GMUII()).GMUI_grid_alpha[_Layer] = 1;
 
 // If using surfaces, the draw update flag is set on the layer level
 if ((GMUII()).UIEnableSurfaces) {
@@ -1294,10 +1304,11 @@ var gridW, gridH;
 gridW = GMUI_GridGetWidth(GMUII(),_Layer);
 gridH = GMUI_GridGetHeight(GMUII(),_Layer);
 
-//if (!GMUI_ValidCellBounds(_Anchor,_CellX,_CellY,gridW,gridH)) {
-//    GMUI_ThrowErrorDetailed("Cell values out of bounds for " + string(argument0) + " (" + string(argument1) + "," + string(_CellX) + ",...",_SCRIPT);
-//    return -1;
-//}
+if (!GMUI_ValidCellBounds(_Anchor,_CellX,_CellY,gridW,gridH)) {
+    GMUI_ThrowErrorDetailed("Cell values out of bounds for " + string(argument1) + " (" + string(_CellX) + "," + string(_CellY) + ",...",_SCRIPT);
+    show_error(GMUI_LastError(),false);
+    return -1;
+}
 
 // Check that it hasn't already been created
 if (ds_map_exists((GMUII()).GMUI_map,argument1)) {
@@ -2695,12 +2706,11 @@ if (is_string(argument0))
 else
     _ctrl = argument0;
     
-if (!GMUI_IsControlID(_ctrl))
-{
-    GMUI_ThrowErrorDetailed("Invalid control",GMUI_ControlPosition);
+if (!GMUI_IsControlID(_ctrl)) {
+    GMUI_ThrowErrorDetailed("Invalid control", GMUI_ControlPosition);
     return false;
 }
-    
+
 // Store the relative values provided that reference against the anchor position
 if (_Anchor >= 0)
     _ctrl.Anchor = _Anchor;
@@ -2711,10 +2721,40 @@ _ctrl.RelativeCellY = _CellY;
 _gridW = GMUI_GridGetWidth(_ctrl.GMUIP,_ctrl.Layer);
 _gridH = GMUI_GridGetHeight(_ctrl.GMUIP,_ctrl.Layer);
 
+// If stretch flag is set, then re-calculate the size&position acording to the anchor
+if (_ctrl.StretchToGrid) {
+    switch (_Anchor) {
+        case global.GMUIAnchorTop:
+        case global.GMUIAnchorBottom:
+            _CellX = 0 - GMUI_GetAnchoredCellX(_gridW,0 - _ctrl.RelativeCellX,_Anchor);
+            _ctrl.CellWide = _gridW - _ctrl.RelativeCellX * 2;
+            break;
+        case global.GMUIAnchorLeft:
+        case global.GMUIAnchorRight:
+            _CellY = 0 - GMUI_GetAnchoredCellY(_gridH,0 - _ctrl.RelativeCellY,_Anchor);
+            _ctrl.CellHigh = _gridH - _ctrl.RelativeCellY * 2;
+            break;
+        case global.GMUIAnchorCenter:
+            _CellX = 0 - GMUI_GetAnchoredCellX(_gridW,0 - _ctrl.RelativeCellX,_Anchor);
+            _ctrl.CellWide = _gridW - _ctrl.RelativeCellX * 2;
+            _CellY = 0 - GMUI_GetAnchoredCellY(_gridH,0 - _ctrl.RelativeCellY,_Anchor);
+            _ctrl.CellHigh = _gridH - _ctrl.RelativeCellY * 2;
+            break;
+        case global.GMUIAnchorTopLeft:
+            break;
+        case global.GMUIAnchorTopRight:
+            break;
+        case global.GMUIAnchorBottomRight:
+            break;
+        case global.GMUIAnchorBottomLeft:
+            break;
+    }
+}
+
 // Check grid positioning if it is an interactable control
 if (_ctrl.ControlInteraction) {
     if (!GMUI_ValidCellBounds(_Anchor,_CellX,_CellY,_gridW,_gridH)) {
-        GMUI_ThrowErrorDetailed("Cell values out of bounds for " + string(argument0),"GMUI_ControlPosition");
+        GMUI_ThrowErrorDetailed("Cell values out of bounds for " + string(argument0),GMUI_ControlPosition);
         return false;
     }
 }
@@ -3643,23 +3683,6 @@ ControlBackgroundAlpha = 1;
 return true;
     
 
-#define GMUI_ControlSetStretchToGrid
-///GMUI_ControlSetStretchToGrid(Stretch Direction)
-///Set the style of the controls that will be used for new controls (to override the defaults)
-if (!GMUI_IsControl() && id != GMUII())
-{
-    GMUI_ThrowErrorDetailed("Invalid control", GMUI_ControlSetStretchToGrid);
-    return false;
-}
-
-// If any values are given as negative numbers, those values will remain as the control default
-
-if (argument0 >= 0)
-    ControlStretch = min(2,argument0);
-
-return true;
-    
-
 #define GMUI_ControlSetText
 ///GMUI_ControlSetText(string)
 ///Similar to setting the value for the label, but will adjust the height to fit as well
@@ -3703,6 +3726,37 @@ else {
 return false;
     
 
+#define GMUI_ControlStretchToGrid
+///GMUI_ControlStretchToGrid(true/false)
+///Set the control to stretch across the grid on the opposite anchor axis, offset by the X/Y cell
+
+if (!GMUI_IsControl() && id != GMUII())
+{
+    GMUI_ThrowErrorDetailed("Invalid control", GMUI_ControlStretchToGrid);
+    return false;
+}
+
+// Set the stretch flag
+StretchToGrid = false;
+if (is_string(argument0)) {
+    if (string_lower(argument0) == "true")
+        StretchToGrid = true;
+}
+else {
+    if (argument0)
+        StretchToGrid = true;
+}
+    
+
+
+// Reset control position
+GMUI_ControlPosition(id,RelativeCellX,RelativeCellY,RelativeX,RelativeY,Anchor);
+    
+
+return true;
+
+
+
 #define GMUI_Create
 ///GMUI_Create(GMUI-compatible Object, Interface Script, cell size width [0: default], cell size height [0: default])
 
@@ -3716,6 +3770,183 @@ if (!object_exists(argument0)) {
 with (instance_create(0,0,argument0)) {
     return GMUI_CreateEvent(argument1, argument2, argument3);
 }
+
+#define GMUI_CreateEvent
+///GMUI_CreateEvent(Form Script, Cell Width, Cell Height)
+///Called from creation of new GMUI instance for the grid interfaces and variables
+
+// // Create grid variables
+// Is this already using a GMUI? Assign the instance number as long as its not
+var isOk,G;
+isOk = true;
+for (G=1;G<=global.GMUIii;G+=1) {
+    if (id = global.GMUIiid[G]) {
+        isOk = false;
+        break;
+    }
+}
+    
+if (!isOk)
+    return 0;
+else {
+    // New ID
+    global.GMUIii += 1;
+}
+
+// Define the instance & number running GMUI
+global.GMUIiid[global.GMUIii] = id;
+GMUInumber = global.GMUIii;
+// Current grid is now this one. The 0 index is the currently active grid
+global.GMUIiid[0] = id;
+
+
+// Initial time to not execute any actions from the grid
+InitialDisable = floor(room_speed/20); // Default 1/20th of a second
+// Freeing GMUI data
+RemovingGMUI = false;
+// Layer that is currently enabled (0 is the bottom-most)
+UILayer = 0;
+// Highest layer, for reference
+UILayerTop = 0;
+// Layer that was enabled before the current
+UILayerPrevious = 0;
+// Layer that is being added to
+UIAddToLayer = 0;
+// Will only switch layer being added to until complete
+UIInterfaceSet = false;
+
+// Other specific functionality settings that can be turned off if unwanted
+GMUI_Settings(argument0);
+
+// Set the default layering depths
+GMUI_SetLayerDepths();
+
+// Previous values of the mouse to determine if it has moved or not
+mouse_px = 0;
+mouse_py = 0;
+previousHoveringControl = -1;
+
+// Debug information
+if (DebugData) {
+    TestInRegion = -1;
+    TestOnDirection = -1;
+    TestHoverObject = -1;
+}
+    
+// Rather pointless to be redundant but it gives more flexibility if you really need it...
+persistence = persistent;
+
+// Error management (DEBUG)
+GMUI_Error[0] = "";
+GMUI_ErrorNumber = 0;
+
+    
+// Get cellsize arguments (w,h)
+if (argument1 < 1)
+    cellsize = 16;
+else
+    cellsize = argument1;
+if (argument2 < 1)
+    cellsize_h = cellsize;
+else
+    cellsize_h = argument2;
+    
+// Set the interface area for new layers, using view 0 if enabled. Can be adjusted later
+GMUI_CreateSetDefaultArea();
+
+
+
+// Grid setup (New layers will have their own grids)
+GMUI_gridlist = ds_list_create();
+GMUI_defaultX = 0;
+GMUI_defaultY = 0;
+GMUI_grid_Transition = false; // Any layer is transitioning flag
+
+GMUI_AddLayer(0,GMUI_defaultX,GMUI_defaultY);
+
+// Navigation settings
+GMUI_navigateDirection = -1;
+GMUI_backKey = -1;
+GMUI_forwardKey = -1;
+GMUI_backAltKey = -1;
+GMUI_forwardAltKey = -1;
+GMUI_enableTab = true;
+
+
+// Map setup for control name keys to instances
+GMUI_map = ds_map_create();
+
+// List of all controls
+GMUI_controlList = ds_list_create();
+
+// Create all of the default control settings
+GMUI_SetControlDefaults();
+
+// Currently hovering or selecting on control for controls to revert if not them
+HoveringControl = -1;
+SelectedControl = -1;
+PreviousSelectedControl = -1;
+
+// An offset change will trigger repositioning controls
+previousXOffset = 0;
+previousYOffset = 0;
+
+
+// Map setup for menu name keys to group id's
+GMUI_menu_map = ds_map_create();
+GMUI_menu_layer = layerDepth_maxLayers;
+
+GMUI_menuLastId = 0;
+GMUI_menuCurrent = 0;
+GMUI_menuOpenCount = 0;
+GMUI_menuResponse = 0; // Cancel:-1, No: 0, Yes: 1
+
+// Popup setup for popup name keys to group id's; uses menu id's for reference
+GMUI_popup_map = ds_map_create();
+
+// Warnings
+GMUI_warnings_map = ds_map_create();
+
+// Group scrollbars
+GMUI_groupScrollbars = ds_list_create();
+
+
+// Grouping variables (handled in GMUI_AddLayer())
+// List of groups per layer [layer number; default 0]
+//GMUI_groupList[0] = ds_list_create();
+// List of controls per group [layer number, group number]
+//GMUI_groupControlList[0,0] = ds_list_create();
+
+//Positioning
+GMUI_groupCellX[0,0] = 0;
+GMUI_groupCellY[0,0] = 0;
+GMUI_groupActualX[0,0] = 0;
+GMUI_groupActualY[0,0] = 0;
+GMUI_groupRelativeX[0,0] = 0;
+GMUI_groupRelativeY[0,0] = 0;
+GMUI_groupCellsW[0,0] = 0;
+GMUI_groupCellsH[0,0] = 0;
+GMUI_groupRelativeCellX[0,0] = 0;
+GMUI_groupRelativeCellY[0,0] = 0;
+GMUI_groupAnchor[0,0] = global.GMUIAnchorDefault;
+GMUI_groupClickOff[0,0] = false;
+GMUI_groupTransitioning[0,0] = false;
+//GMUI_groupTransitioningControl[0,0] = -1;
+GMUI_groupAction[0,0] = -1;
+GMUI_groupSettingsMap[0,0] = -1;
+GMUI_groupStretch[0,0] = global.GMUIAnchorCenter;
+
+
+// Call the form code to create the interface
+GMUI_SetForm(argument0);
+UIInterfaceSet = true;
+GMUI_GridSetAllGroupValues(id);
+//GMUI_GridSetAllMenuValues(id);
+GMUI_GridSetRegions();
+
+// Upon success, give the GMUI id back
+return GMUInumber;
+
 
 #define GMUI_CreateGroup
 ///GMUI_CreateGroup(group number, cell# x, cell# y, cells wide, cells high, Anchor)
@@ -4307,8 +4538,12 @@ if (GMUI_GridEnabled())
                     
                     if (GMUI_grid_T_t[_l] < GMUI_grid_T_d[_l]) {
                         GMUI_grid_T_t[_l] += 1;
-                        GMUI_grid_x[_l] = script_execute(GMUI_grid_T_script[_l],GMUI_grid_T_t[_l],GMUI_grid_T_bx[_l],GMUI_grid_T_cx[_l],GMUI_grid_T_d[_l]);
-                        GMUI_grid_y[_l] = script_execute(GMUI_grid_T_script[_l],GMUI_grid_T_t[_l],GMUI_grid_T_by[_l],GMUI_grid_T_cy[_l],GMUI_grid_T_d[_l]);
+                        if (GMUI_grid_T_cx[_l] != 0)
+                            GMUI_grid_x[_l] = script_execute(GMUI_grid_T_script[_l],GMUI_grid_T_t[_l],GMUI_grid_T_bx[_l],GMUI_grid_T_cx[_l],GMUI_grid_T_d[_l]);
+                        if (GMUI_grid_T_cy[_l] != 0)
+                            GMUI_grid_y[_l] = script_execute(GMUI_grid_T_script[_l],GMUI_grid_T_t[_l],GMUI_grid_T_by[_l],GMUI_grid_T_cy[_l],GMUI_grid_T_d[_l]);
+                        if (GMUI_grid_T_ca[_l] != 0)
+                            GMUI_grid_alpha[_l] = script_execute(GMUI_grid_T_script[_l],GMUI_grid_T_t[_l],GMUI_grid_T_ba[_l],GMUI_grid_T_ca[_l],GMUI_grid_T_d[_l]);
                     }
                     else {
                         GMUI_grid_T_t[_l] = GMUI_grid_T_d[_l];
@@ -4320,10 +4555,18 @@ if (GMUI_GridEnabled())
                 // Draw layer surface
                 if (UIEnableSurfaces) {
                     if (surface_exists(GMUI_gridSurface[_l])) {
-                        // Adjust surface position to view if enabled
-                        draw_surface(GMUI_gridSurface[_l],
-                            GMUI_grid_x[_l]+view_xview[UIgridview]*UIsnaptoview,
-                            GMUI_grid_y[_l]+view_yview[UIgridview]*UIsnaptoview);
+                        // Adjust surface position to view if enabled, with alpha if set
+                        if (GMUI_grid_alpha[_l] == 1) {
+                            draw_surface(GMUI_gridSurface[_l],
+                                GMUI_grid_x[_l]+view_xview[UIgridview]*UIsnaptoview,
+                                GMUI_grid_y[_l]+view_yview[UIgridview]*UIsnaptoview);
+                        }
+                        else {
+                            draw_surface_ext(GMUI_gridSurface[_l],
+                                GMUI_grid_x[_l]+view_xview[UIgridview]*UIsnaptoview,
+                                GMUI_grid_y[_l]+view_yview[UIgridview]*UIsnaptoview,
+                                1,1,0,c_white,GMUI_grid_alpha[_l]);
+                        }
                         // Reset update flag
                         if (GMUI_gridNeedsDrawUpdate[_l] == 1)
                             GMUI_gridNeedsDrawUpdate[_l] = 2;
@@ -4705,27 +4948,6 @@ _CellsH = argument2;
 GMUI_groupCellsW[_layerNumber,_groupNumber] = _CellsW;
 GMUI_groupCellsH[_layerNumber,_groupNumber] = _CellsH;
 
-#define GMUI_GroupSetStretchToGrid
-///GMUI_GroupSetStretchToGrid(Group, Stretch Direction)
-///Stretch group to edges
-
-var _Layer, _Group, _Direction;
-_Layer = UIAddToLayer;
-_Group = argument0;
-_Direction = argument1;
-
-GMUI_groupStretch[_Layer,_Group] = _Direction;
-
-// Left/Right: Stretches to height
-// Top/Bottom: Stretches to width
-// TopLeft/TopRight/BottomLeft/BottomRight: Stretches to its corner
-// Center: Stretches to make square
-
-// Resize group?
-// (Also resize if setting size after)
-
-
-
 #define GMUI_GroupSetSpriteMap
 ///GMUI_GroupSetSpriteMap(Group, sprite top, sprite top right, right, bottom right, bottom, bottom left, left, top left, center, center fixed partial [1] / stretched[0])
 ///Replace the group drawing with a sprite map of each corner, side, and center
@@ -4867,6 +5089,46 @@ with ((GMUII()).GMUI_groupMasterControl[UIAddToLayer,_Group]) {
 return true;
     
 
+#define GMUI_GroupStretchToGrid
+///GMUI_GroupStretchToGrid(Group, true/false)
+///Stretch group to edges
+
+var _Layer, _Group, _Stretch;
+_Layer = (GMUII()).UIAddToLayer;
+_Group = argument0;
+
+// Set the stretch flag
+_Stretch = false;
+if (is_string(argument1)) {
+    if (string_lower(argument1) == "true")
+        _Stretch = true;
+}
+else {
+    if (argument1)
+        _Stretch = true;
+}
+
+(GMUII()).GMUI_groupStretch[_Layer,_Group] = _Stretch;
+
+GMUI_GroupSetPositionAnchored(_Layer, _Group,
+    (GMUII()).GMUI_groupCellX[_Layer,_Group],
+    (GMUII()).GMUI_groupCellY[_Layer,_Group],
+    (GMUII()).GMUI_groupRelativeX[_Layer,_Group],
+    (GMUII()).GMUI_groupRelativeY[_Layer,_Group],
+    (GMUII()).GMUI_groupAnchor[_Layer,_Group]);
+
+// GMUIDirectionType.Vertical: Stretches to height
+// GMUIDirectionType.Horizontal: Stretches to width
+
+
+// TopLeft/TopRight/BottomLeft/BottomRight: Stretches to its corner
+// Center: No stretching (default)
+
+// Resize group?
+// (Also resize if setting size after)
+
+
+
 #define GMUI_Init
 ///GMUI_Init() Call this initialization script before creating any GMUI interfaces
 //
@@ -4913,6 +5175,7 @@ global.GMUIDirectionTypeHorizontal = 0;
 global.GMUIDirectionTypeVertical = 1;
 global.GMUIDirectionTypeSideVertical = 2;
 global.GMUIDirectionTypeBoth = 3;
+global.GMUIDirectionTypeNone = -1;
 
 // Control datatypes
 global.GMUIDataTypeString = 0;
@@ -5062,6 +5325,59 @@ ItemListThirdHeight = floor(ItemListHeight / 3);
 ///GMUI_IsMenuOpen() Returns how many menus are open for the current interface
 
 return (GMUII()).GMUI_menuCurrent;
+
+#define GMUI_LayerHide
+///GMUI_LayerHide(layer number, Hide(1) or show(0))
+/// Hide all of the controls within the specified layer
+
+var _Layer, _Hide, i, j, ctrl, _GMUI;
+_GMUI = GMUII();
+_Layer = argument0;
+_Hide = argument1;
+
+
+// Get grid dimensions
+var ctrl;
+for(i=0;i<ds_list_size((_GMUI).GMUI_controlList);i+=1) {
+    // Get control value
+    ctrl = ds_list_find_value((_GMUI).GMUI_controlList,i);
+    
+    if (!instance_exists(ctrl)) {
+        GMUI_ThrowError("Control no longer exists. GMUI_GridAdjustLayer()");
+    }
+    else if (((ctrl).Layer == _Layer) && ctrl.Group == 0) {
+        ctrl.Hidden = _Hide;
+        ctrl.NeedsDrawUpdate = true;
+    }
+}
+
+
+var _Group;
+for(i=0;i<ds_list_size((_GMUI).GMUI_groupList[_Layer]);i+=1) {
+    _Group = ds_list_find_value((_GMUI).GMUI_groupList[_Layer],i);
+    
+    if (GMUI_StudioCheckDefined(_Group)) {
+        (GMUII()).GMUI_groupNeedsDrawUpdate[_Layer,_Group] = true;
+        
+        // Change the value for each of the controls within the group
+        for(j=0;j<ds_list_size((GMUII()).GMUI_groupControlList[_Layer,_Group]);j+=1) {
+            // Get the control id
+            ctrl = ds_list_find_value((GMUII()).GMUI_groupControlList[_Layer,_Group],j);
+            
+            if (!instance_exists(ctrl))
+            {
+                GMUI_ThrowErrorDetailed("Control no longer exists layer, group: (" + string(_Layer) + "," + string(_Group) + ")",GMUI_LayerHide);
+            }
+            else {
+                ctrl.Hidden = _Hide;
+                ctrl.GroupHidden = _Hide;
+            }
+        }
+    }
+}
+
+GMUI_GridUpdateLayer(_GMUI,_Layer);
+
 
 #define GMUI_MenuSetClickOff
 ///GMUI_MenuSetClickOff("menu name", Click off to close [1] or not [0])
@@ -6741,6 +7057,7 @@ i.ActualW = 0;
 i.ActualH = 0;
 
 i.ControlStretch = global.GMUIOverflowResize;
+i.StretchToGrid = false;
 
 // Relative position is used if the boundary box should be adjusted
 i.RelativeX = 0;
@@ -7642,183 +7959,6 @@ if ((_ctrl).TooltipId != -1) {
         global.GMUIAnchorTopLeft);
     ((_ctrl).TooltipId).NeedsPositionUpdate = true;
 }
-
-#define GMUI_CreateEvent
-///GMUI_CreateEvent(Form Script, Cell Width, Cell Height)
-///Called from creation of new GMUI instance for the grid interfaces and variables
-
-// // Create grid variables
-// Is this already using a GMUI? Assign the instance number as long as its not
-var isOk,G;
-isOk = 1;
-for (G=1;G<=global.GMUIii;G+=1) {
-    if (id = global.GMUIiid[G]) {
-        isOk = 0;
-        break;
-    }
-}
-    
-if (!isOk)
-    return 0;
-else {
-    // New ID
-    global.GMUIii += 1;
-}
-
-// Define the instance & number running GMUI
-global.GMUIiid[global.GMUIii] = id;
-GMUInumber = global.GMUIii;
-// Current grid is now this one. The 0 index is the currently active grid
-global.GMUIiid[0] = id;
-
-
-// Initial time to not execute any actions from the grid
-InitialDisable = floor(room_speed/20); // Default 1/20th of a second
-// Freeing GMUI data
-RemovingGMUI = false;
-// Layer that is currently enabled (0 is the bottom-most)
-UILayer = 0;
-// Highest layer, for reference
-UILayerTop = 0;
-// Layer that was enabled before the current
-UILayerPrevious = 0;
-// Layer that is being added to
-UIAddToLayer = 0;
-// Will only switch layer being added to until complete
-UIInterfaceSet = false;
-
-// Other specific functionality settings that can be turned off if unwanted
-GMUI_Settings(argument0);
-
-// Set the default layering depths
-GMUI_SetLayerDepths();
-
-// Previous values of the mouse to determine if it has moved or not
-mouse_px = 0;
-mouse_py = 0;
-previousHoveringControl = -1;
-
-// Debug information
-if (DebugData) {
-    TestInRegion = -1;
-    TestOnDirection = -1;
-    TestHoverObject = -1;
-}
-    
-// Rather pointless to be redundant but it gives more flexibility if you really need it...
-persistence = persistent;
-
-// Error management (DEBUG)
-GMUI_Error[0] = "";
-GMUI_ErrorNumber = 0;
-
-    
-// Get cellsize arguments (w,h)
-if (argument1 < 1)
-    cellsize = 16;
-else
-    cellsize = argument1;
-if (argument2 < 1)
-    cellsize_h = cellsize;
-else
-    cellsize_h = argument2;
-    
-// Set the interface area for new layers, using view 0 if enabled. Can be adjusted later
-GMUI_CreateSetDefaultArea();
-
-
-
-// Grid setup (New layers will have their own grids)
-GMUI_gridlist = ds_list_create();
-GMUI_defaultX = 0;
-GMUI_defaultY = 0;
-GMUI_grid_Transition = false; // Any layer is transitioning flag
-
-GMUI_AddLayer(0,GMUI_defaultX,GMUI_defaultY);
-
-// Navigation settings
-GMUI_navigateDirection = -1;
-GMUI_backKey = -1;
-GMUI_forwardKey = -1;
-GMUI_backAltKey = -1;
-GMUI_forwardAltKey = -1;
-GMUI_enableTab = true;
-
-
-// Map setup for control name keys to instances
-GMUI_map = ds_map_create();
-
-// List of all controls
-GMUI_controlList = ds_list_create();
-
-// Create all of the default control settings
-GMUI_SetControlDefaults();
-
-// Currently hovering or selecting on control for controls to revert if not them
-HoveringControl = -1;
-SelectedControl = -1;
-PreviousSelectedControl = -1;
-
-// An offset change will trigger repositioning controls
-previousXOffset = 0;
-previousYOffset = 0;
-
-
-// Map setup for menu name keys to group id's
-GMUI_menu_map = ds_map_create();
-GMUI_menu_layer = layerDepth_maxLayers;
-
-GMUI_menuLastId = 0;
-GMUI_menuCurrent = 0;
-GMUI_menuOpenCount = 0;
-GMUI_menuResponse = 0; // Cancel:-1, No: 0, Yes: 1
-
-// Popup setup for popup name keys to group id's; uses menu id's for reference
-GMUI_popup_map = ds_map_create();
-
-// Warnings
-GMUI_warnings_map = ds_map_create();
-
-// Group scrollbars
-GMUI_groupScrollbars = ds_list_create();
-
-
-// Grouping variables (handled in GMUI_AddLayer())
-// List of groups per layer [layer number; default 0]
-//GMUI_groupList[0] = ds_list_create();
-// List of controls per group [layer number, group number]
-//GMUI_groupControlList[0,0] = ds_list_create();
-
-//Positioning
-GMUI_groupCellX[0,0] = 0;
-GMUI_groupCellY[0,0] = 0;
-GMUI_groupActualX[0,0] = 0;
-GMUI_groupActualY[0,0] = 0;
-GMUI_groupRelativeX[0,0] = 0;
-GMUI_groupRelativeY[0,0] = 0;
-GMUI_groupCellsW[0,0] = 0;
-GMUI_groupCellsH[0,0] = 0;
-GMUI_groupRelativeCellX[0,0] = 0;
-GMUI_groupRelativeCellY[0,0] = 0;
-GMUI_groupAnchor[0,0] = global.GMUIAnchorDefault;
-GMUI_groupClickOff[0,0] = false;
-GMUI_groupTransitioning[0,0] = false;
-//GMUI_groupTransitioningControl[0,0] = -1;
-GMUI_groupAction[0,0] = -1;
-GMUI_groupSettingsMap[0,0] = -1;
-GMUI_groupStretch[0,0] = global.GMUIAnchorDefault;
-
-
-// Call the form code to create the interface
-GMUI_SetForm(argument0);
-UIInterfaceSet = true;
-GMUI_GridSetAllGroupValues(id);
-//GMUI_GridSetAllMenuValues(id);
-GMUI_GridSetRegions();
-
-// Upon success, give the GMUI id back
-return GMUInumber;
-
 
 #define GMUI_CreateMenuType
 ///GMUI_CreateMenuType (Type[script calling], menu name, cell# x, cell# y, cells wide, cells high, Anchor)
@@ -8946,11 +9086,11 @@ if (argument2 > 0) {
 
 
 #define GMUI_GroupSetPositionAnchored
-///GMUI_GroupSetPositionAnchored(Group Number, Cell X, Cell Y, X Adjustment, Y Adjustment, Anchor)
+///GMUI_GroupSetPositionAnchored(Layer, Group Number, Cell X, Cell Y, X Adjustment, Y Adjustment, Anchor)
 ///Change the position of the group (and all of the controls inside it) according to its anchor
 
 // Arguments
-var _SCRIPT, _LayerNumber,_GroupNumber,_CellX,_CellY,_AdjustmentX,_AdjustmentY, ctrl, _MasterControl;
+var _SCRIPT, _LayerNumber,_GroupNumber,_CellX,_CellY,_AdjustmentX,_AdjustmentY, _gridW, _gridH, ctrl, _MasterControl;
 _SCRIPT = GMUI_GroupSetPositionAnchored;
 _LayerNumber = argument0;
 _GroupNumber = argument1;
@@ -8977,35 +9117,73 @@ if (!GMUI_GroupExists(_LayerNumber,_GroupNumber)) {
     return false;
 }
 
+// Get the dimensions and round down for grids that have even grid sizes
+_gridW = GMUI_GridGetWidth(GMUII(),_LayerNumber);
+_gridH = GMUI_GridGetHeight(GMUII(),_LayerNumber);
+
 // Max adjustment values
 _AdjustmentX = min(_AdjustmentX, (GMUII()).cellsize - 1);
 _AdjustmentY = min(_AdjustmentY, (GMUII()).cellsize_h - 1);
 
 _MasterControl = (GMUII()).GMUI_groupMasterControl[_LayerNumber,_GroupNumber];
 
-// Change group position
+// Store relative position to anchor
 (GMUII()).GMUI_groupRelativeCellX[_LayerNumber,_GroupNumber] = _CellX;
 (GMUII()).GMUI_groupRelativeCellY[_LayerNumber,_GroupNumber] = _CellY;
-(GMUII()).GMUI_groupCellX[_LayerNumber,_GroupNumber] = GMUI_GetAnchoredCellX(GMUI_GridGetWidth(GMUII(),_LayerNumber),_CellX,_Anchor);
-(GMUII()).GMUI_groupCellY[_LayerNumber,_GroupNumber] = GMUI_GetAnchoredCellY(GMUI_GridGetHeight(GMUII(),_LayerNumber),_CellY,_Anchor);
+
+// Adjust positioning based on anchor if stretch is true
+if ((GMUII()).GMUI_groupStretch[_LayerNumber,_GroupNumber]) {
+    switch (_Anchor) {
+        case global.GMUIAnchorTop:
+        case global.GMUIAnchorBottom:
+            _CellX = 0 - GMUI_GetAnchoredCellX(_gridW,0 - _CellX,_Anchor);
+            (GMUII()).GMUI_groupCellsW[_LayerNumber,_GroupNumber] = _gridW - _CellX * 2;
+            break;
+        case global.GMUIAnchorLeft:
+        case global.GMUIAnchorRight:
+            _CellY = 0 - GMUI_GetAnchoredCellY(_gridH,0 - _CellY,_Anchor);
+            (GMUII()).GMUI_groupCellsH[_LayerNumber,_GroupNumber] = _gridH - _CellY * 2;
+            break;
+        case global.GMUIAnchorCenter:
+            _CellX = 0 - GMUI_GetAnchoredCellX(_gridW,0 - _CellX,_Anchor);
+            (GMUII()).GMUI_groupCellsW[_LayerNumber,_GroupNumber] = _gridW - _CellX * 2;
+            _CellY = 0 - GMUI_GetAnchoredCellY(_gridH,0 - _CellY,_Anchor);
+            (GMUII()).GMUI_groupCellsH[_LayerNumber,_GroupNumber] = _gridH - _CellY * 2;
+            break;
+        case global.GMUIAnchorTopLeft:
+            break;
+        case global.GMUIAnchorTopRight:
+            break;
+        case global.GMUIAnchorBottomRight:
+            break;
+        case global.GMUIAnchorBottomLeft:
+            break;
+    }
+}
+
+// Set positioning of group
+(GMUII()).GMUI_groupCellX[_LayerNumber,_GroupNumber] = GMUI_GetAnchoredCellX(_gridW,_CellX,_Anchor);
+(GMUII()).GMUI_groupCellY[_LayerNumber,_GroupNumber] = GMUI_GetAnchoredCellY(_gridH,_CellY,_Anchor);
 (GMUII()).GMUI_groupRelativeX[_LayerNumber,_GroupNumber] = _AdjustmentX;
 (GMUII()).GMUI_groupRelativeY[_LayerNumber,_GroupNumber] = _AdjustmentY;
 (GMUII()).GMUI_groupActualX[_LayerNumber,_GroupNumber] = GMUI_CellGetActualX((GMUII()).GMUI_groupCellX[_LayerNumber,_GroupNumber]) + _AdjustmentX;
 (GMUII()).GMUI_groupActualY[_LayerNumber,_GroupNumber] = GMUI_CellGetActualY((GMUII()).GMUI_groupCellY[_LayerNumber,_GroupNumber]) + _AdjustmentY;
 
 // If not a transition move, then set the new primary (aka previous) location to this new one
-if (!(_MasterControl).TransitioningGroup) {
-    (_MasterControl).T_px_group = (GMUII()).GMUI_groupActualX[_LayerNumber,_GroupNumber];
-    (_MasterControl).T_py_group = (GMUII()).GMUI_groupActualY[_LayerNumber,_GroupNumber];
-    (_MasterControl).T_hx_group = (_MasterControl).T_px_group + (_MasterControl).T_hrelx_group;
-    (_MasterControl).T_hy_group = (_MasterControl).T_py_group + (_MasterControl).T_hrely_group;
-    
-    if ((_MasterControl).GroupHidden) {
-        (GMUII()).GMUI_groupActualX[_LayerNumber,_GroupNumber] = (_MasterControl).T_hx_group;
-        (GMUII()).GMUI_groupActualY[_LayerNumber,_GroupNumber] = (_MasterControl).T_hy_group;
-    }
-    else if ((GMUII()).UIEnableSurfaces) {
-        GMUI_GridUpdateLayer(GMUII(),_LayerNumber);
+if (_MasterControl > -1) {
+    if (!(_MasterControl).TransitioningGroup) {
+        (_MasterControl).T_px_group = (GMUII()).GMUI_groupActualX[_LayerNumber,_GroupNumber];
+        (_MasterControl).T_py_group = (GMUII()).GMUI_groupActualY[_LayerNumber,_GroupNumber];
+        (_MasterControl).T_hx_group = (_MasterControl).T_px_group + (_MasterControl).T_hrelx_group;
+        (_MasterControl).T_hy_group = (_MasterControl).T_py_group + (_MasterControl).T_hrely_group;
+        
+        if ((_MasterControl).GroupHidden) {
+            (GMUII()).GMUI_groupActualX[_LayerNumber,_GroupNumber] = (_MasterControl).T_hx_group;
+            (GMUII()).GMUI_groupActualY[_LayerNumber,_GroupNumber] = (_MasterControl).T_hy_group;
+        }
+        else if ((GMUII()).UIEnableSurfaces) {
+            GMUI_GridUpdateLayer(GMUII(),_LayerNumber);
+        }
     }
 }
 

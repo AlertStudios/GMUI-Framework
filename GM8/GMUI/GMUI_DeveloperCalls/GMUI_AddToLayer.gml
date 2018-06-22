@@ -24,10 +24,11 @@ var gridW, gridH;
 gridW = GMUI_GridGetWidth(GMUII(),_Layer);
 gridH = GMUI_GridGetHeight(GMUII(),_Layer);
 
-//if (!GMUI_ValidCellBounds(_Anchor,_CellX,_CellY,gridW,gridH)) {
-//    GMUI_ThrowErrorDetailed("Cell values out of bounds for " + string(argument0) + " (" + string(argument1) + "," + string(_CellX) + ",...",_SCRIPT);
-//    return -1;
-//}
+if (!GMUI_ValidCellBounds(_Anchor,_CellX,_CellY,gridW,gridH)) {
+    GMUI_ThrowErrorDetailed("Cell values out of bounds for " + string(argument1) + " (" + string(_CellX) + "," + string(_CellY) + ",...",_SCRIPT);
+    show_error(GMUI_LastError(),false);
+    return -1;
+}
 
 // Check that it hasn't already been created
 if (ds_map_exists((GMUII()).GMUI_map,argument1)) {

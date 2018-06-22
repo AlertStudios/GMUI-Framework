@@ -23,7 +23,8 @@ GMUI_GroupSetSize(1,     20,4);
 GMUI_GroupSetStyle(1, c_black, .2, c_black, .3, 0);
 GMUI_GroupSetFadeOnHide(1, room_speed, 0);
 //GMUI_GroupSetOverflow(1, global.GMUIOverflowScroll, -1);
-GMUI_GroupHideOverflow(global.GMUIOverflowScroll);
+//GMUI_GroupHideOverflow(global.GMUIOverflowScroll);
+GMUI_GroupStretchToGrid(1,true);
 
 //GMUI_GroupSetSpriteMap(1, s2,s3,s4,s5,s6,s7,s8,s1,s9,false);
 
@@ -37,11 +38,12 @@ GMUI_GroupSetFadeOnHide(2, room_speed, 0);
     NOTE:   To switch layers, use GMUI_SwitchToLayer(#);
 
 */
-/*
-with (GMUI_Add("test15","textstring",26,1,12,2,global.GMUIAnchorTopLeft)) {
+
+/*with (GMUI_Add("test15","textstring",2,1,6,6,global.GMUIAnchorTop)) {
     GMUI_ControlSetAttributes(14,0,0,0);
-}
-*/
+    GMUI_ControlStretchToGrid(true);
+}*/
+
 with (GMUI_Add("Test1","textstring",            1,0,    16,2,   global.GMUIAnchorTopLeft)) {
     GMUI_ControlSetAttributes(20,0,0,0);
     GMUI_ControlSetInitValue("Select");
@@ -49,13 +51,13 @@ with (GMUI_Add("Test1","textstring",            1,0,    16,2,   global.GMUIAncho
     GMUI_ControlSetSprite(sprite24,0,1,0);//GMUIspr_input
 }
 
-/*
+
 with (GMUI_Add("Test12","textstring", 1,4, 12,2, global.GMUIAnchorTopLeft)) {
     GMUI_ControlSetAttributes(14,0,0,0);
     GMUI_ControlSetInitValue("test");
     GMUI_ControlAddToGroup(1);
 }
-
+/*
 with (GMUI_Add("test13","textstring",10,1,12,2,global.GMUIAnchorTopLeft)) {
     GMUI_ControlSetAttributes(14,0,0,0);
 }

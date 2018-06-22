@@ -298,8 +298,12 @@ if (GMUI_GridEnabled())
                     
                     if (GMUI_grid_T_t[_l] < GMUI_grid_T_d[_l]) {
                         GMUI_grid_T_t[_l] += 1;
-                        GMUI_grid_x[_l] = script_execute(GMUI_grid_T_script[_l],GMUI_grid_T_t[_l],GMUI_grid_T_bx[_l],GMUI_grid_T_cx[_l],GMUI_grid_T_d[_l]);
-                        GMUI_grid_y[_l] = script_execute(GMUI_grid_T_script[_l],GMUI_grid_T_t[_l],GMUI_grid_T_by[_l],GMUI_grid_T_cy[_l],GMUI_grid_T_d[_l]);
+                        if (GMUI_grid_T_cx[_l] != 0)
+                            GMUI_grid_x[_l] = script_execute(GMUI_grid_T_script[_l],GMUI_grid_T_t[_l],GMUI_grid_T_bx[_l],GMUI_grid_T_cx[_l],GMUI_grid_T_d[_l]);
+                        if (GMUI_grid_T_cy[_l] != 0)
+                            GMUI_grid_y[_l] = script_execute(GMUI_grid_T_script[_l],GMUI_grid_T_t[_l],GMUI_grid_T_by[_l],GMUI_grid_T_cy[_l],GMUI_grid_T_d[_l]);
+                        if (GMUI_grid_T_ca[_l] != 0)
+                            GMUI_grid_alpha[_l] = script_execute(GMUI_grid_T_script[_l],GMUI_grid_T_t[_l],GMUI_grid_T_ba[_l],GMUI_grid_T_ca[_l],GMUI_grid_T_d[_l]);
                     }
                     else {
                         GMUI_grid_T_t[_l] = GMUI_grid_T_d[_l];
@@ -311,10 +315,18 @@ if (GMUI_GridEnabled())
                 // Draw layer surface
                 if (UIEnableSurfaces) {
                     if (surface_exists(GMUI_gridSurface[_l])) {
-                        // Adjust surface position to view if enabled
-                        draw_surface(GMUI_gridSurface[_l],
-                            GMUI_grid_x[_l]+view_xview[UIgridview]*UIsnaptoview,
-                            GMUI_grid_y[_l]+view_yview[UIgridview]*UIsnaptoview);
+                        // Adjust surface position to view if enabled, with alpha if set
+                        if (GMUI_grid_alpha[_l] == 1) {
+                            draw_surface(GMUI_gridSurface[_l],
+                                GMUI_grid_x[_l]+view_xview[UIgridview]*UIsnaptoview,
+                                GMUI_grid_y[_l]+view_yview[UIgridview]*UIsnaptoview);
+                        }
+                        else {
+                            draw_surface_ext(GMUI_gridSurface[_l],
+                                GMUI_grid_x[_l]+view_xview[UIgridview]*UIsnaptoview,
+                                GMUI_grid_y[_l]+view_yview[UIgridview]*UIsnaptoview,
+                                1,1,0,c_white,GMUI_grid_alpha[_l]);
+                        }
                         // Reset update flag
                         if (GMUI_gridNeedsDrawUpdate[_l] == 1)
                             GMUI_gridNeedsDrawUpdate[_l] = 2;
