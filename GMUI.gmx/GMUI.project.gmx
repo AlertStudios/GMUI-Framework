@@ -23,34 +23,6 @@
   <paths name="paths"/>
   <scripts name="scripts">
     <scripts name="GMUI">
-      <scripts name="My Interfaces">
-        <script>scripts\_Test_Form.gml</script>
-      </scripts>
-      <scripts name="My Actions">
-        <script>scripts\_Debug_Button.gml</script>
-        <script>scripts\_Disable_Button.gml</script>
-        <script>scripts\_Enlarge_Button.gml</script>
-        <script>scripts\_Exit_Button.gml</script>
-        <script>scripts\_Hide_Button.gml</script>
-        <script>scripts\_Hide_Button2.gml</script>
-        <script>scripts\_Hover_Checkbox.gml</script>
-        <script>scripts\_Hover_Int.gml</script>
-        <script>scripts\_HoverOff_Checkbox.gml</script>
-        <script>scripts\_HoverOff_Int.gml</script>
-        <script>scripts\_ListAction.gml</script>
-        <script>scripts\_Move_Button.gml</script>
-        <script>scripts\_Popup_Button.gml</script>
-        <script>scripts\_PopupClose_Button.gml</script>
-        <script>scripts\_PopupMenu_Button.gml</script>
-        <script>scripts\_PopupMenu2_Button.gml</script>
-        <script>scripts\_PopupReturnAction.gml</script>
-        <script>scripts\_SliderMid_Button.gml</script>
-        <script>scripts\_SliderSnap_Button.gml</script>
-        <script>scripts\_SliderValue_Changed.gml</script>
-        <script>scripts\_Swipe_Button.gml</script>
-        <script>scripts\_Switch_Button.gml</script>
-        <script>scripts\_Test_Button.gml</script>
-      </scripts>
       <scripts name="GMUI_DeveloperConfigs">
         <script>scripts\GMUI_SetControlDefaults.gml</script>
         <script>scripts\GMUI_SetLayerDepths.gml</script>
@@ -298,6 +270,34 @@
         <script>scripts\GMUI_ValidCellBounds.gml</script>
         <script>scripts\GMUII.gml</script>
       </scripts>
+    </scripts>
+    <scripts name="My Actions">
+      <script>scripts\_Debug_Button.gml</script>
+      <script>scripts\_Disable_Button.gml</script>
+      <script>scripts\_Enlarge_Button.gml</script>
+      <script>scripts\_Exit_Button.gml</script>
+      <script>scripts\_Hide_Button.gml</script>
+      <script>scripts\_Hide_Button2.gml</script>
+      <script>scripts\_Hover_Checkbox.gml</script>
+      <script>scripts\_Hover_Int.gml</script>
+      <script>scripts\_HoverOff_Checkbox.gml</script>
+      <script>scripts\_HoverOff_Int.gml</script>
+      <script>scripts\_ListAction.gml</script>
+      <script>scripts\_Move_Button.gml</script>
+      <script>scripts\_Popup_Button.gml</script>
+      <script>scripts\_PopupClose_Button.gml</script>
+      <script>scripts\_PopupMenu_Button.gml</script>
+      <script>scripts\_PopupMenu2_Button.gml</script>
+      <script>scripts\_PopupReturnAction.gml</script>
+      <script>scripts\_SliderMid_Button.gml</script>
+      <script>scripts\_SliderSnap_Button.gml</script>
+      <script>scripts\_SliderValue_Changed.gml</script>
+      <script>scripts\_Swipe_Button.gml</script>
+      <script>scripts\_Switch_Button.gml</script>
+      <script>scripts\_Test_Button.gml</script>
+    </scripts>
+    <scripts name="My Interfaces">
+      <script>scripts\_Test_Form.gml</script>
     </scripts>
   </scripts>
   <fonts name="fonts">
