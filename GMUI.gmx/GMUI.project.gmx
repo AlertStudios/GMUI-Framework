@@ -304,6 +304,7 @@
     <font>fonts\fontNumeric</font>
     <font>fonts\fontNumeric2</font>
     <font>fonts\fontNumeric3</font>
+    <font>fonts\fontNumericBold</font>
   </fonts>
   <objects name="objects">
     <object>objects\CREATOR</object>
