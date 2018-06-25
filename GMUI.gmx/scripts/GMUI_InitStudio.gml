@@ -19,21 +19,23 @@ if (global.GMUIGameMaker8)
 
 // Common GMUI values:
 enum GMUIControl {
-    IntPicker,
-    DoublePicker,
-    TextInt,
-    TextDecimal,
-    TextString,
-    Button,
-    TextButton,
-    Slider,
-    Toggle,
-    Checkbox,
-    Sprite,
-    Image,
-    Dropdown,
-    Label,
-    Tooltip
+    IntPicker = 1,
+    DoublePicker = 2,
+    SpritePicker = 3,
+    TextInt = 4,
+    TextDecimal = 5,
+    TextString = 6,
+    Button= 7,
+    TextButton = 8,
+    Slider = 9,
+    Toggle = 10,
+    Checkbox = 11,
+    Sprite = 12,
+    Image = 13,
+    Dropdown = 14,
+    SelectList = 15,
+    Label = 16,
+    Tooltip = 17
 }
 
 // AHOY MATEYS - Please note that the cell#'s for new controls are relative to their anchor position
@@ -64,7 +66,7 @@ enum GMUIPopup {
     ThreeOptions = 2 //global.GMUIPopupThreeOptions
 }
 
-enum GMUIType {
+enum GMUIData {
     String = 0,//global.GMUIDataTypeString
     Integer = 1,//global.GMUIDataTypeInteger
     Decimal = 2,//global.GMUIDataTypeDecimal
