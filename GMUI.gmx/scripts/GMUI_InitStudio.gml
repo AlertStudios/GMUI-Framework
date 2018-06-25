@@ -64,6 +64,15 @@ enum GMUIPopup {
     ThreeOptions = 2 //global.GMUIPopupThreeOptions
 }
 
+enum GMUIType {
+    String = 0,//global.GMUIDataTypeString
+    Integer = 1,//global.GMUIDataTypeInteger
+    Decimal = 2,//global.GMUIDataTypeDecimal
+    Button = 3,//global.GMUIDataTypeButton
+    Info = 4,//global.GMUIDataTypeInfo
+    Boolean = 5//global.GMUIDataTypeBoolean
+}
+
 enum GMUISlideShape {
     None = -1, //global.GMUISlideNone
     Line = -2, //global.GMUISlideLine
