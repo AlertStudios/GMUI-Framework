@@ -1,9 +1,10 @@
 ///GMUI_AddToLayer(Layer, "Name", "Type String", cell# x, cell# y, cells wide (min 1), cells high (min 1), Anchor)
 ///Adds a component(instance) to the GMUI grid on the given layer
 
-var _SCRIPT,_Layer,_Anchor,_CellX,_CellY,_CellWide,_CellHigh;
+var _SCRIPT,_Layer,_IsString,_Anchor,_CellX,_CellY,_CellWide,_CellHigh;
 _SCRIPT = GMUI_AddToLayer;
 _Layer = argument0;
+_IsObject = is_real(argument2);
 _Anchor = argument7;
 _CellX = argument3;
 _CellY = argument4;
@@ -38,7 +39,11 @@ if (ds_map_exists((GMUII()).GMUI_map,argument1)) {
 
 // Check for type and either reference provided instance or create a new one. MUST BE A VALID TYPE
 var thetype,thecontrol;
-if (is_string(argument2)) {  
+if (_IsObject) {
+    if (argument2 < 0)
+        _IsObject = false;
+}
+if (!_IsObject) {  
     thecontrol = instance_create(0,0,(GMUII()).GMUI_controlobject); // Default is: GMUI_control , set in GMUI_Settings(...)
 }
 else {

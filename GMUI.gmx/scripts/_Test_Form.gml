@@ -35,7 +35,7 @@ GMUI_GroupSetFadeOnHide(2, room_speed/4, 0);
 
 */
 
-with (GMUI_Add("Test1","textstring",            1,0,    16,2,   GMUIAnchor.TopLeft)) {
+with (GMUI_Add("Test1",GMUIControl.TextString,            1,0,    16,2,   GMUIAnchor.TopLeft)) {
     GMUI_ControlSetAttributes(20,0,0,0);
     GMUI_ControlSetInitValue("Select");
     GMUI_ControlAddToGroup(1);

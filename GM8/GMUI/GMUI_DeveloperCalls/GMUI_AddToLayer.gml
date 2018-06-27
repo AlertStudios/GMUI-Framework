@@ -1,10 +1,11 @@
 #define GMUI_AddToLayer
-///GMUI_AddToLayer(Layer, "Name", "Type String", cell# x, cell# y, cells wide (min 1), cells high (min 1), Anchor)
+///GMUI_AddToLayer(Layer, "Name", "Type String" or GMUIControl.[], cell# x, cell# y, cells wide (min 1), cells high (min 1), Anchor)
 ///Adds a component(instance) to the GMUI grid on the given layer
 
-var _SCRIPT,_Layer,_Anchor,_CellX,_CellY,_CellWide,_CellHigh;
+var _SCRIPT,_Layer,_IsString,_Anchor,_CellX,_CellY,_CellWide,_CellHigh;
 _SCRIPT = GMUI_AddToLayer;
 _Layer = argument0;
+_IsObject = is_real(argument2);
 _Anchor = argument7;
 _CellX = argument3;
 _CellY = argument4;
@@ -24,11 +25,10 @@ var gridW, gridH;
 gridW = GMUI_GridGetWidth(GMUII(),_Layer);
 gridH = GMUI_GridGetHeight(GMUII(),_Layer);
 
-if (!GMUI_ValidCellBounds(_Anchor,_CellX,_CellY,gridW,gridH)) {
-    GMUI_ThrowErrorDetailed("Cell values out of bounds for " + string(argument1) + " (" + string(_CellX) + "," + string(_CellY) + ",...",_SCRIPT);
-    show_error(GMUI_LastError(),false);
-    return -1;
-}
+//if (!GMUI_ValidCellBounds(_Anchor,_CellX,_CellY,gridW,gridH)) {
+//    GMUI_ThrowErrorDetailed("Cell values out of bounds for " + string(argument0) + " (" + string(argument1) + "," + string(_CellX) + ",...",_SCRIPT);
+//    return -1;
+//}
 
 // Check that it hasn't already been created
 if (ds_map_exists((GMUII()).GMUI_map,argument1)) {
@@ -40,7 +40,11 @@ if (ds_map_exists((GMUII()).GMUI_map,argument1)) {
 
 // Check for type and either reference provided instance or create a new one. MUST BE A VALID TYPE
 var thetype,thecontrol;
-if (is_string(argument2)) {  
+if (_IsObject) {
+    if (argument2 < 0)
+        _IsObject = false;
+}
+if (!_IsObject) {  
     thecontrol = instance_create(0,0,(GMUII()).GMUI_controlobject); // Default is: GMUI_control , set in GMUI_Settings(...)
 }
 else {
