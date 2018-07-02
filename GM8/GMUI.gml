@@ -1535,7 +1535,7 @@ if (!Hidden) {
         // Fade or Slide update if checkbox/toggle control
         if (Toggle_t < Toggle_d) {
             Toggle_t += 1;
-            //GMUI_GridUpdateLayer(GMUIP,Layer);
+            GMUI_GridUpdateLayer(GMUIP,Layer);
             NeedsDrawUpdate = true;
             if (string(value) == "0")
                 ToggleRelativeXorY = ToggleDistance - (Toggle_c * Toggle_t);
@@ -1963,17 +1963,23 @@ if (argument0 == true) {
             var cy1,cy2,cy3,cx1,_sbw;
             
             if (GroupHasScrollbar) {
-                cy1 = GMUIP.GMUI_groupActualY[Layer,Group]+GMUIP.GMUI_grid_y[Layer]+GMUI_GridViewOffsetY(GMUIP);
+                cy1 = GMUIP.GMUI_groupActualY[Layer,Group]+GMUI_GridViewOffsetY(GMUIP)+GMUIP.GMUI_grid_y[Layer]*!GMUIP.UIEnableSurfaces;
                 cy2 = cy1 + GMUIP.GMUI_groupCellsH[Layer,Group]*GMUIP.cellsize_h;
                 _sbw = GMUIP.GMUI_groupScrollWidth[Layer,Group];
             }
             else {
-                cy1 = Scrollbar_y+GMUIP.GMUI_grid_y[Layer]+GMUI_GridViewOffsetY(GMUIP);
+                cy1 = Scrollbar_y+GMUIP.GMUI_grid_y[Layer]*!GMUIP.UIEnableSurfaces;
+                if (!GMUIP.UIEnableSurfaces)
+                    cy1 += GMUI_GridViewOffsetY(GMUIP);
                 cy2 = cy1 + CellHigh*GMUIP.cellsize_h;
                 _sbw = Scrollbar_width;
             }
-            cy3 = Scrollbar_pos_y+GMUIP.GMUI_grid_y[Layer]+GMUI_GridViewOffsetY(GMUIP);
-            cx1 = Scrollbar_x+GMUIP.GMUI_grid_x[Layer]+GMUI_GridViewOffsetX(GMUIP);
+            cy3 = Scrollbar_pos_y+GMUIP.GMUI_grid_y[Layer]*!GMUIP.UIEnableSurfaces;
+            cx1 = Scrollbar_x+GMUIP.GMUI_grid_x[Layer]*!GMUIP.UIEnableSurfaces;
+            if (!GMUIP.UIEnableSurfaces) {
+                cy3 += GMUI_GridViewOffsetY(GMUIP);
+                cx1 += GMUI_GridViewOffsetX(GMUIP);
+            }
             
             // draw scrollbar area
             if (Scrollbar_hover) {
@@ -3773,7 +3779,7 @@ if (GMUI_GridEnabled())
                             
                     }
                     else if (ctrlObject.ControlHasScrollbar) {
-                        if (MX >= ctrlObject.Scrollbar_x) {
+                        if (MX >= ctrlObject.Scrollbar_x+GMUI_grid_x[ctrlObject.Layer] + GMUI_GridViewOffsetX(id)) {
                             ctrlObject.Scrollbar_hover = true;
                         }
                         else {
@@ -3896,11 +3902,11 @@ if (GMUI_GridEnabled())
                         else if (ctrlObject.ControlItemList) {
                             // For lists that have a scrollbar, check which region we are in
                             if (ctrlObject.ControlHasScrollbar) {
-                                if (MX >= ctrlObject.Scrollbar_x) {
+                                if (MX >= ctrlObject.Scrollbar_x + GMUI_grid_x[ctrlObject.Layer] + GMUI_GridViewOffsetX(id)) {                                    
                                     // Drag the scrollbar
                                     var _MPos,_SPos;
                                     _MPos = MY - ctrlObject.ActualY;
-                                    _SPos = ctrlObject.Scrollbar_pos_y - ctrlObject.Scrollbar_y;
+                                    _SPos = ctrlObject.Scrollbar_pos_y - ctrlObject.Scrollbar_y + GMUI_grid_y[ctrlObject.Layer] + GMUI_GridViewOffsetY(id);
                                     ctrlObject.Scrollbar_dragging = true;
                                     
                                     if (_MPos >= _SPos && _MPos < _SPos + ctrlObject.Scrollbar_height)
@@ -5754,7 +5760,7 @@ _cx = 0; _cy = 0;
 if (!_UsingSurface) {
     _Surface = -1;
     _cx = _Ctrl.ActualX+_Ctrl.GMUIP.GMUI_grid_x[_Ctrl.Layer]+GMUI_GridViewOffsetX(_Ctrl.GMUIP);
-    _cy = _Ctrl.ActualY+_Ctrl.GMUIP.GMUI_grid_y[_Ctrl.Layer]+GMUI_GridViewOffsetY(_Ctrl.GMUIP);;
+    _cy = _Ctrl.ActualY+_Ctrl.GMUIP.GMUI_grid_y[_Ctrl.Layer]+GMUI_GridViewOffsetY(_Ctrl.GMUIP);
 }
 else {
     //surface_reset_target();
@@ -6698,7 +6704,7 @@ if (!instance_exists(_Ctrl)) {
 
 if (_Ctrl.ControlItemList) {
     // Get the relative mouse position to the control
-    _relMY = argument3 - _Ctrl.RoomY;
+    _relMY = argument3 - _Ctrl.RoomY - (_Ctrl.GMUIP.GMUI_grid_y[_Ctrl.Layer] + GMUI_GridViewOffsetY(_Ctrl.GMUIP))*_UsingSurface;
     
     with (_Ctrl) {
         // Return index offset for non-surface, or Y offset for surfaces
@@ -6712,7 +6718,7 @@ if (_Ctrl.ControlItemList) {
                 _offset = ItemListOffsetY;
         }
         else if (Hovering)
-            _offset = minmax(_relMY,0,RoomY + RoomH) / (RoomY - RoomH)
+            _offset = minmax(_relMY,0,RoomY + RoomH + GMUI_GridViewOffsetY(_Ctrl.GMUIP)*_UsingSurface) / (RoomY - RoomH)
                 * ((ItemListSize - ceil(ItemListAreaHeight / ItemListHeight)) * ItemListHeight);
         else
             _offset = ItemListOffsetY;
@@ -6736,40 +6742,6 @@ else
     
 return 0;
 
-
-/***************************************************
-    var _MC, _MPos; _MC = GMUI_GroupMouseOnScrollbar(id, MX);
-    if (_MC > -1) {
-        _MC.Scrollbar_dragging = true;
-        _MPos = MY - GMUI_groupActualY[_MC.Layer,_MC.Group];
-        if (_MPos > _MC.Scrollbar_y && _MPos < _MC.Scrollbar_y + _MC.Scrollbar_height)
-            _MC.Scrollbar_drag_y = _MPos - _MC.Scrollbar_y;
-        else
-            _MC.Scrollbar_drag_y = _MC.Scrollbar_height/2;
-    }
- ***************************************************/
-
-// Calculate sizing of scrollbar
-//if (_GH > 0) {
-//    Scrollbar_max = _GH * _CH;
-
-//    Scrollbar_height = max((_GMUI).cellsize_h, _GH / _OF * Scrollbar_max) - Scrollbar_padding*2;
-    
-//    Scrollbar_maxtop = Scrollbar_max - Scrollbar_height - Scrollbar_padding;
-    
-//    // Calculate the scrollbar position: X + W - scrollbar W - gridX - offset
-//    if (argument0) {
-//        Scrollbar_x = ActualX + CellWide * (_GMUI).cellsize
-//            - Scrollbar_width
-//            - _GMUI.GMUI_grid_x[_Layer] - GMUI_GridViewOffsetX(_GMUI);
-//        Scrollbar_y = ActualY - _GMUI.GMUI_grid_y[_Layer] - GMUI_GridViewOffsetY(_GMUI);
-//    }
-//    else {
-//        GMUI_GroupSetScrollbarX(_GMUI,_Layer,_Group);
-//        
-//        GMUI_GroupSetScrollbar(_GMUI, id);
-//    }
-//}
 
 #define GMUI_ControlPositionToGroup
 ///GMUI_ControlPositionToGroup(Control id)
@@ -6818,13 +6790,6 @@ _Ctrl = argument0;
 _MX = argument1;
 _MY = argument2;
 
-//Scrollbar_x
-//Scrollbar_y
-//Scrollbar_drag_y
-//Scrollbar_max = 0;
-//Scrollbar_maxtop = 0;
-//Scrollbar_height = 0;
-//Scrollbar_padding = 0;
 if (_Ctrl.ControlHasScrollbar) {
     // Calculate the relative positioning, if able
     with (_Ctrl) {
@@ -6838,52 +6803,12 @@ if (_Ctrl.ControlHasScrollbar) {
             (ItemListHeight * (ItemListSize - floor(ItemListAreaHeight/ItemListHeight)));
     }
     }
-        //draw_text(200,100,string(_relY));
-        //draw_text(200,116,string(_Ctrl.Scrollbar_pos_y));
-        //draw_text(200,132,string(_Ctrl.ItemListOffsetY));
-        //draw_text(200,148,string(_Ctrl.Scrollbar_maxtop));
-        //draw_text(264,148,string(_Ctrl.Scrollbar_height));
     return true;
 }
 else
     GMUI_ThrowErrorDetailed("Control " + _Ctrl.valueName + " does not have scrollbar",_SCRIPT);
     
 return false;
-
-
-/***************************************************
-    var _MC, _MPos; _MC = GMUI_GroupMouseOnScrollbar(id, MX);
-    if (_MC > -1) {
-        _MC.Scrollbar_dragging = true;
-        _MPos = MY - GMUI_groupActualY[_MC.Layer,_MC.Group];
-        if (_MPos > _MC.Scrollbar_y && _MPos < _MC.Scrollbar_y + _MC.Scrollbar_height)
-            _MC.Scrollbar_drag_y = _MPos - _MC.Scrollbar_y;
-        else
-            _MC.Scrollbar_drag_y = _MC.Scrollbar_height/2;
-    }
- ***************************************************/
-
-// Calculate sizing of scrollbar
-//if (_GH > 0) {
-//    Scrollbar_max = _GH * _CH;
-
-//    Scrollbar_height = max((_GMUI).cellsize_h, _GH / _OF * Scrollbar_max) - Scrollbar_padding*2;
-    
-//    Scrollbar_maxtop = Scrollbar_max - Scrollbar_height - Scrollbar_padding;
-    
-//    // Calculate the scrollbar position: X + W - scrollbar W - gridX - offset
-//    if (argument0) {
-//        Scrollbar_x = ActualX + CellWide * (_GMUI).cellsize
-//            - Scrollbar_width
-//            - _GMUI.GMUI_grid_x[_Layer] - GMUI_GridViewOffsetX(_GMUI);
-//        Scrollbar_y = ActualY - _GMUI.GMUI_grid_y[_Layer] - GMUI_GridViewOffsetY(_GMUI);
-//    }
-//    else {
-//        GMUI_GroupSetScrollbarX(_GMUI,_Layer,_Group);
-//        
-//        GMUI_GroupSetScrollbar(_GMUI, id);
-//    }
-//}
 
 #define GMUI_ControlSetDefaultAttributes
 ///GMUI_ControlSetDefaultAttributes(id)
@@ -9400,7 +9325,7 @@ var MyButton;
 MyButton = GMUI_GetControl("SwipeButton");
 
 if (!global.Swiped) {
-    GMUI_LayerTransitionToXY(0, 420, 0, .1, easeExpOut, room_speed);
+    GMUI_LayerTransitionToXY(0, 320, 20, .1, easeExpOut, room_speed);
     global.Swiped = true;
     with (MyButton) GMUI_ControlSetButton("Swipe"+chr(13)+"Back",-1,-1,-1);
 }
@@ -9497,7 +9422,10 @@ with (GMUI_Add("Test1","textstring",            1,0,    16,2,   global.GMUIAncho
     GMUI_ControlAddToGroup(1);
     GMUI_ControlSetSprite(sprite24,0,1,0);//GMUIspr_input
 }
-
+with (GMUI_Add("Toggle3", "toggle",              3,3,   3,2,    global.GMUIAnchorTopLeft)) {
+    GMUI_ControlSetToggleSettings(1, c_lime, c_gray, global.GMUISlideFullRoundRect, $808080, $505050, room_speed/4, global.GMUIDirectionTypeHorizontal, 0);
+    GMUI_ControlAddToGroup(1);
+}
 /*
 with (GMUI_Add("Test12","textstring", 1,4, 12,2, global.GMUIAnchorTopLeft)) {
     GMUI_ControlSetAttributes(14,0,0,0);
@@ -9736,7 +9664,7 @@ with (GMUI_Add("MenuIntInstructions", "label",  20,23,  12,2,   global.GMUIAncho
 var menuID; //-9,2 
 menuID = GMUI_CreateMenu("Test Menu",   GMUI_CenterX(0, 18, global.GMUIAnchorTop) ,2,   18,24,   global.GMUIAnchorTop);
 GMUI_MenuSetClickOff("Test Menu", true);
-GMUI_MenuSetStyle("Test Menu", c_black, 0.3, c_white, 0.75, true);
+GMUI_MenuSetStyle("Test Menu", c_black, .3, c_white, 0.75, true);
 GMUI_MenuSetFadeOnHide("Test Menu", room_speed/4, 0);
 GMUI_MenuSetHidePosition("Test Menu", -9, 6, easeExpOut, room_speed/2);
 //GMUI_MenuSetActionIn("Test Menu",...)

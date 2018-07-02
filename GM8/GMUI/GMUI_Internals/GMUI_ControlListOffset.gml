@@ -17,7 +17,7 @@ if (!instance_exists(_Ctrl)) {
 
 if (_Ctrl.ControlItemList) {
     // Get the relative mouse position to the control
-    _relMY = argument3 - _Ctrl.RoomY;
+    _relMY = argument3 - _Ctrl.RoomY - (_Ctrl.GMUIP.GMUI_grid_y[_Ctrl.Layer] + GMUI_GridViewOffsetY(_Ctrl.GMUIP))*_UsingSurface;
     
     with (_Ctrl) {
         // Return index offset for non-surface, or Y offset for surfaces
@@ -31,7 +31,7 @@ if (_Ctrl.ControlItemList) {
                 _offset = ItemListOffsetY;
         }
         else if (Hovering)
-            _offset = minmax(_relMY,0,RoomY + RoomH) / (RoomY - RoomH)
+            _offset = minmax(_relMY,0,RoomY + RoomH + GMUI_GridViewOffsetY(_Ctrl.GMUIP)*_UsingSurface) / (RoomY - RoomH)
                 * ((ItemListSize - ceil(ItemListAreaHeight / ItemListHeight)) * ItemListHeight);
         else
             _offset = ItemListOffsetY;
@@ -55,38 +55,4 @@ else
     
 return 0;
 
-
-/***************************************************
-    var _MC, _MPos; _MC = GMUI_GroupMouseOnScrollbar(id, MX);
-    if (_MC > -1) {
-        _MC.Scrollbar_dragging = true;
-        _MPos = MY - GMUI_groupActualY[_MC.Layer,_MC.Group];
-        if (_MPos > _MC.Scrollbar_y && _MPos < _MC.Scrollbar_y + _MC.Scrollbar_height)
-            _MC.Scrollbar_drag_y = _MPos - _MC.Scrollbar_y;
-        else
-            _MC.Scrollbar_drag_y = _MC.Scrollbar_height/2;
-    }
- ***************************************************/
-
-// Calculate sizing of scrollbar
-//if (_GH > 0) {
-//    Scrollbar_max = _GH * _CH;
-
-//    Scrollbar_height = max((_GMUI).cellsize_h, _GH / _OF * Scrollbar_max) - Scrollbar_padding*2;
-    
-//    Scrollbar_maxtop = Scrollbar_max - Scrollbar_height - Scrollbar_padding;
-    
-//    // Calculate the scrollbar position: X + W - scrollbar W - gridX - offset
-//    if (argument0) {
-//        Scrollbar_x = ActualX + CellWide * (_GMUI).cellsize
-//            - Scrollbar_width
-//            - _GMUI.GMUI_grid_x[_Layer] - GMUI_GridViewOffsetX(_GMUI);
-//        Scrollbar_y = ActualY - _GMUI.GMUI_grid_y[_Layer] - GMUI_GridViewOffsetY(_GMUI);
-//    }
-//    else {
-//        GMUI_GroupSetScrollbarX(_GMUI,_Layer,_Group);
-//        
-//        GMUI_GroupSetScrollbar(_GMUI, id);
-//    }
-//}
 

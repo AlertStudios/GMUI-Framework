@@ -63,7 +63,7 @@ if (GMUI_GridEnabled())
                             
                     }
                     else if (ctrlObject.ControlHasScrollbar) {
-                        if (MX >= ctrlObject.Scrollbar_x) {
+                        if (MX >= ctrlObject.Scrollbar_x+GMUI_grid_x[ctrlObject.Layer] + GMUI_GridViewOffsetX(id)) {
                             ctrlObject.Scrollbar_hover = true;
                         }
                         else {
@@ -186,11 +186,11 @@ if (GMUI_GridEnabled())
                         else if (ctrlObject.ControlItemList) {
                             // For lists that have a scrollbar, check which region we are in
                             if (ctrlObject.ControlHasScrollbar) {
-                                if (MX >= ctrlObject.Scrollbar_x) {
+                                if (MX >= ctrlObject.Scrollbar_x + GMUI_grid_x[ctrlObject.Layer] + GMUI_GridViewOffsetX(id)) {                                    
                                     // Drag the scrollbar
                                     var _MPos,_SPos;
                                     _MPos = MY - ctrlObject.ActualY;
-                                    _SPos = ctrlObject.Scrollbar_pos_y - ctrlObject.Scrollbar_y;
+                                    _SPos = ctrlObject.Scrollbar_pos_y - ctrlObject.Scrollbar_y + GMUI_grid_y[ctrlObject.Layer] + GMUI_GridViewOffsetY(id);
                                     ctrlObject.Scrollbar_dragging = true;
                                     
                                     if (_MPos >= _SPos && _MPos < _SPos + ctrlObject.Scrollbar_height)

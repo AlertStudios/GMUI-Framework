@@ -50,7 +50,10 @@ with (GMUI_Add("Test1","textstring",            1,0,    16,2,   global.GMUIAncho
     GMUI_ControlAddToGroup(1);
     GMUI_ControlSetSprite(sprite24,0,1,0);//GMUIspr_input
 }
-
+with (GMUI_Add("Toggle3", "toggle",              3,3,   3,2,    global.GMUIAnchorTopLeft)) {
+    GMUI_ControlSetToggleSettings(1, c_lime, c_gray, global.GMUISlideFullRoundRect, $808080, $505050, room_speed/4, global.GMUIDirectionTypeHorizontal, 0);
+    GMUI_ControlAddToGroup(1);
+}
 /*
 with (GMUI_Add("Test12","textstring", 1,4, 12,2, global.GMUIAnchorTopLeft)) {
     GMUI_ControlSetAttributes(14,0,0,0);
@@ -289,7 +292,7 @@ with (GMUI_Add("MenuIntInstructions", "label",  20,23,  12,2,   global.GMUIAncho
 var menuID; //-9,2 
 menuID = GMUI_CreateMenu("Test Menu",   GMUI_CenterX(0, 18, global.GMUIAnchorTop) ,2,   18,24,   global.GMUIAnchorTop);
 GMUI_MenuSetClickOff("Test Menu", true);
-GMUI_MenuSetStyle("Test Menu", c_black, 0.3, c_white, 0.75, true);
+GMUI_MenuSetStyle("Test Menu", c_black, .3, c_white, 0.75, true);
 GMUI_MenuSetFadeOnHide("Test Menu", room_speed/4, 0);
 GMUI_MenuSetHidePosition("Test Menu", -9, 6, easeExpOut, room_speed/2);
 //GMUI_MenuSetActionIn("Test Menu",...)
