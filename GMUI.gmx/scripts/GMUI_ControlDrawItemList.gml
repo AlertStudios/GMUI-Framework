@@ -10,7 +10,7 @@ _cx = 0; _cy = 0;
 if (!_UsingSurface) {
     _Surface = -1;
     _cx = _Ctrl.ActualX+_Ctrl.GMUIP.GMUI_grid_x[_Ctrl.Layer]+GMUI_GridViewOffsetX(_Ctrl.GMUIP);
-    _cy = _Ctrl.ActualY+_Ctrl.GMUIP.GMUI_grid_y[_Ctrl.Layer]+GMUI_GridViewOffsetY(_Ctrl.GMUIP);;
+    _cy = _Ctrl.ActualY+_Ctrl.GMUIP.GMUI_grid_y[_Ctrl.Layer]+GMUI_GridViewOffsetY(_Ctrl.GMUIP);
 }
 else {
     //surface_reset_target();

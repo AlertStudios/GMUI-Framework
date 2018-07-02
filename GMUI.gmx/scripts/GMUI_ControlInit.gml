@@ -102,6 +102,7 @@ i.ActualW = 0;
 i.ActualH = 0;
 
 i.ControlStretch = global.GMUIOverflowResize;
+i.StretchToGrid = false;
 
 // Relative position is used if the boundary box should be adjusted
 i.RelativeX = 0;

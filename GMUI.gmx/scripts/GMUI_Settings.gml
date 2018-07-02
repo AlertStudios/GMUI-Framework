@@ -10,7 +10,7 @@ UIsnaptoview = true;
 // Required: The view number to snap to
 UIgridview = 0;
 
-// Required: Surfaces are needed for listboxes and scrollable menus, but also draws the grid as a surface itself
+// Required: Surfaces are needed to portions of controls and menus and draws the grid as a surface itself
 UIEnableSurfaces = true;
 
 // Required: Flexibility to add graphical effects settings to the controls: (currently unused)

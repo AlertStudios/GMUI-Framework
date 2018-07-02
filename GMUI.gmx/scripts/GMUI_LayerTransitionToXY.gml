@@ -1,4 +1,4 @@
-///GMUI_LayerTransitionToXY(Layer number, Room X, Room Y, Transition Script, Time)
+///GMUI_LayerTransitionToXY(Layer number, Room X, Room Y, Alpha [or -1], Transition Script, Time)
 
 var _Layer; _Layer = argument0;
 
@@ -7,21 +7,27 @@ if (!GMUI_LayerExists(_Layer)) {
     return false;
 }
 
-if (!GMUI_IsScript(argument3)) {
+if (!GMUI_IsScript(argument4)) {
     GMUI_ThrowErrorDetailed("Script not found", GMUI_LayerTransitionToXY);
     return false;
 }
 
 with (GMUII()) {
     GMUI_grid_Transitioning[_Layer] = true;
-    GMUI_grid_T_script[_Layer] = argument3;
+    GMUI_grid_T_script[_Layer] = argument4;
     
     GMUI_grid_T_t[_Layer] = 0;
     
-    if (argument4 > 0)
-        GMUI_grid_T_d[_Layer] = argument4;
+    if (argument5 > 0)
+        GMUI_grid_T_d[_Layer] = argument5;
     else
         GMUI_grid_T_d[_Layer] = room_speed;
+        
+    GMUI_grid_T_ba[_Layer] = GMUI_grid_alpha[_Layer];
+    if (argument3 >= 0)
+        GMUI_grid_T_ca[_Layer] = argument3 - GMUI_grid_T_ba[_Layer];
+    else
+        GMUI_grid_T_ca[_Layer] = 0;
     
     GMUI_grid_T_bx[_Layer] = GMUI_grid_x[_Layer];
     GMUI_grid_T_by[_Layer] = GMUI_grid_y[_Layer];

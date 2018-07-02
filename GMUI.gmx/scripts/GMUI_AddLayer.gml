@@ -33,6 +33,8 @@ ds_list_add((GMUII()).GMUI_gridlist,_Layer);
 
 // Value to check if transitioning (The rest of the values are defined when called: GMUI_LayerTransitionToActual)
 (GMUII()).GMUI_grid_Transitioning[_Layer] = false;
+// Value to check and display if alpha is not 1
+(GMUII()).GMUI_grid_alpha[_Layer] = 1;
 
 // If using surfaces, the draw update flag is set on the layer level
 if ((GMUII()).UIEnableSurfaces) {

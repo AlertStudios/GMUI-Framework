@@ -1,8 +1,8 @@
-///GMUI_GroupSetPositionAnchored(Group Number, Cell X, Cell Y, X Adjustment, Y Adjustment, Anchor)
+///GMUI_GroupSetPositionAnchored(Layer, Group Number, Cell X, Cell Y, X Adjustment, Y Adjustment, Anchor)
 ///Change the position of the group (and all of the controls inside it) according to its anchor
 
 // Arguments
-var _SCRIPT, _LayerNumber,_GroupNumber,_CellX,_CellY,_AdjustmentX,_AdjustmentY, ctrl, _MasterControl;
+var _SCRIPT, _LayerNumber,_GroupNumber,_CellX,_CellY,_AdjustmentX,_AdjustmentY, _gridW, _gridH, ctrl, _MasterControl;
 _SCRIPT = GMUI_GroupSetPositionAnchored;
 _LayerNumber = argument0;
 _GroupNumber = argument1;
@@ -29,35 +29,73 @@ if (!GMUI_GroupExists(_LayerNumber,_GroupNumber)) {
     return false;
 }
 
+// Get the dimensions and round down for grids that have even grid sizes
+_gridW = GMUI_GridGetWidth(GMUII(),_LayerNumber);
+_gridH = GMUI_GridGetHeight(GMUII(),_LayerNumber);
+
 // Max adjustment values
 _AdjustmentX = min(_AdjustmentX, (GMUII()).cellsize - 1);
 _AdjustmentY = min(_AdjustmentY, (GMUII()).cellsize_h - 1);
 
 _MasterControl = (GMUII()).GMUI_groupMasterControl[_LayerNumber,_GroupNumber];
 
-// Change group position
+// Store relative position to anchor
 (GMUII()).GMUI_groupRelativeCellX[_LayerNumber,_GroupNumber] = _CellX;
 (GMUII()).GMUI_groupRelativeCellY[_LayerNumber,_GroupNumber] = _CellY;
-(GMUII()).GMUI_groupCellX[_LayerNumber,_GroupNumber] = GMUI_GetAnchoredCellX(GMUI_GridGetWidth(GMUII(),_LayerNumber),_CellX,_Anchor);
-(GMUII()).GMUI_groupCellY[_LayerNumber,_GroupNumber] = GMUI_GetAnchoredCellY(GMUI_GridGetHeight(GMUII(),_LayerNumber),_CellY,_Anchor);
+
+// Adjust positioning based on anchor if stretch is true
+if ((GMUII()).GMUI_groupStretch[_LayerNumber,_GroupNumber]) {
+    switch (_Anchor) {
+        case global.GMUIAnchorTop:
+        case global.GMUIAnchorBottom:
+            _CellX = 0 - GMUI_GetAnchoredCellX(_gridW,0 - _CellX,_Anchor);
+            (GMUII()).GMUI_groupCellsW[_LayerNumber,_GroupNumber] = _gridW - _CellX * 2;
+            break;
+        case global.GMUIAnchorLeft:
+        case global.GMUIAnchorRight:
+            _CellY = 0 - GMUI_GetAnchoredCellY(_gridH,0 - _CellY,_Anchor);
+            (GMUII()).GMUI_groupCellsH[_LayerNumber,_GroupNumber] = _gridH - _CellY * 2;
+            break;
+        case global.GMUIAnchorCenter:
+            _CellX = 0 - GMUI_GetAnchoredCellX(_gridW,0 - _CellX,_Anchor);
+            (GMUII()).GMUI_groupCellsW[_LayerNumber,_GroupNumber] = _gridW - _CellX * 2;
+            _CellY = 0 - GMUI_GetAnchoredCellY(_gridH,0 - _CellY,_Anchor);
+            (GMUII()).GMUI_groupCellsH[_LayerNumber,_GroupNumber] = _gridH - _CellY * 2;
+            break;
+        case global.GMUIAnchorTopLeft:
+            break;
+        case global.GMUIAnchorTopRight:
+            break;
+        case global.GMUIAnchorBottomRight:
+            break;
+        case global.GMUIAnchorBottomLeft:
+            break;
+    }
+}
+
+// Set positioning of group
+(GMUII()).GMUI_groupCellX[_LayerNumber,_GroupNumber] = GMUI_GetAnchoredCellX(_gridW,_CellX,_Anchor);
+(GMUII()).GMUI_groupCellY[_LayerNumber,_GroupNumber] = GMUI_GetAnchoredCellY(_gridH,_CellY,_Anchor);
 (GMUII()).GMUI_groupRelativeX[_LayerNumber,_GroupNumber] = _AdjustmentX;
 (GMUII()).GMUI_groupRelativeY[_LayerNumber,_GroupNumber] = _AdjustmentY;
 (GMUII()).GMUI_groupActualX[_LayerNumber,_GroupNumber] = GMUI_CellGetActualX((GMUII()).GMUI_groupCellX[_LayerNumber,_GroupNumber]) + _AdjustmentX;
 (GMUII()).GMUI_groupActualY[_LayerNumber,_GroupNumber] = GMUI_CellGetActualY((GMUII()).GMUI_groupCellY[_LayerNumber,_GroupNumber]) + _AdjustmentY;
 
 // If not a transition move, then set the new primary (aka previous) location to this new one
-if (!(_MasterControl).TransitioningGroup) {
-    (_MasterControl).T_px_group = (GMUII()).GMUI_groupActualX[_LayerNumber,_GroupNumber];
-    (_MasterControl).T_py_group = (GMUII()).GMUI_groupActualY[_LayerNumber,_GroupNumber];
-    (_MasterControl).T_hx_group = (_MasterControl).T_px_group + (_MasterControl).T_hrelx_group;
-    (_MasterControl).T_hy_group = (_MasterControl).T_py_group + (_MasterControl).T_hrely_group;
-    
-    if ((_MasterControl).GroupHidden) {
-        (GMUII()).GMUI_groupActualX[_LayerNumber,_GroupNumber] = (_MasterControl).T_hx_group;
-        (GMUII()).GMUI_groupActualY[_LayerNumber,_GroupNumber] = (_MasterControl).T_hy_group;
-    }
-    else if ((GMUII()).UIEnableSurfaces) {
-        GMUI_GridUpdateLayer(GMUII(),_LayerNumber);
+if (_MasterControl > -1) {
+    if (!(_MasterControl).TransitioningGroup) {
+        (_MasterControl).T_px_group = (GMUII()).GMUI_groupActualX[_LayerNumber,_GroupNumber];
+        (_MasterControl).T_py_group = (GMUII()).GMUI_groupActualY[_LayerNumber,_GroupNumber];
+        (_MasterControl).T_hx_group = (_MasterControl).T_px_group + (_MasterControl).T_hrelx_group;
+        (_MasterControl).T_hy_group = (_MasterControl).T_py_group + (_MasterControl).T_hrely_group;
+        
+        if ((_MasterControl).GroupHidden) {
+            (GMUII()).GMUI_groupActualX[_LayerNumber,_GroupNumber] = (_MasterControl).T_hx_group;
+            (GMUII()).GMUI_groupActualY[_LayerNumber,_GroupNumber] = (_MasterControl).T_hy_group;
+        }
+        else if ((GMUII()).UIEnableSurfaces) {
+            GMUI_GridUpdateLayer(GMUII(),_LayerNumber);
+        }
     }
 }
 

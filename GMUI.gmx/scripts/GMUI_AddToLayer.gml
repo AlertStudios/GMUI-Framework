@@ -1,4 +1,4 @@
-///GMUI_AddToLayer(Layer, "Name", "Type String", cell# x, cell# y, cells wide (min 1), cells high (min 1), Anchor)
+///GMUI_AddToLayer(Layer, "Name", "Type String" or GMUIControl.[], cell# x, cell# y, cells wide (min 1), cells high (min 1), Anchor)
 ///Adds a component(instance) to the GMUI grid on the given layer
 
 var _SCRIPT,_Layer,_IsString,_Anchor,_CellX,_CellY,_CellWide,_CellHigh;

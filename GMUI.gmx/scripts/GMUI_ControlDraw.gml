@@ -179,7 +179,7 @@ if (!Hidden) {
         // Fade or Slide update if checkbox/toggle control
         if (Toggle_t < Toggle_d) {
             Toggle_t += 1;
-            //GMUI_GridUpdateLayer(GMUIP,Layer);
+            GMUI_GridUpdateLayer(GMUIP,Layer);
             NeedsDrawUpdate = true;
             if (string(value) == "0")
                 ToggleRelativeXorY = ToggleDistance - (Toggle_c * Toggle_t);
@@ -302,7 +302,7 @@ if (argument0 == true) {
     //}
     
     var SurfaceSet, CurrentSurface, CurrentSurfaceW, CurrentSurfaceH;
-    SurfaceSet = false; CurrentSurface = noone; CurrentSurfaceW = 0; CurrentSurfaceH = 0;
+    SurfaceSet = false; CurrentSurface = -1; CurrentSurfaceW = 0; CurrentSurfaceH = 0;
         
     // If using surfaces for layers and groups
     if (GMUIP.UIEnableSurfaces) {
@@ -327,6 +327,7 @@ if (argument0 == true) {
                 }
             }
         }
+        
         // Create surfaces for controls that use them first, and later draw to grid
         if (NeedsDrawUpdate || NeedsGroupUpdate) {
             if (ControlType == "selectlist") {
@@ -340,7 +341,7 @@ if (argument0 == true) {
         }
         
         // Check for grid update
-        if ((GMUIP.GMUI_gridNeedsDrawUpdate[Layer] == 2 && GMUIP.GMUI_gridMasterControl[Layer] == id) || NeedsDrawUpdate || NeedsGroupUpdate) {
+        if (GMUIP.GMUI_gridNeedsDrawUpdate[Layer] == 2 || GMUIP.GMUI_gridMasterControl[Layer] == id || NeedsDrawUpdate || NeedsGroupUpdate) {
             CurrentSurfaceW = GMUIP.UIgridwidth;
             CurrentSurfaceH = GMUIP.UIgridheight;
             CurrentSurface = surface_target(GMUIP.GMUI_gridSurface[Layer], CurrentSurfaceW, CurrentSurfaceH);
@@ -401,7 +402,7 @@ if (argument0 == true) {
         NeedsDrawUpdate = true;
     }
         
-
+        
     // Draw the control based on the type and user-defined settings
     if (NeedsDrawUpdate) {
         var padx;
@@ -606,17 +607,23 @@ if (argument0 == true) {
             var cy1,cy2,cy3,cx1,_sbw;
             
             if (GroupHasScrollbar) {
-                cy1 = GMUIP.GMUI_groupActualY[Layer,Group]+GMUIP.GMUI_grid_y[Layer]+GMUI_GridViewOffsetY(GMUIP);
+                cy1 = GMUIP.GMUI_groupActualY[Layer,Group]+GMUI_GridViewOffsetY(GMUIP)+GMUIP.GMUI_grid_y[Layer]*!GMUIP.UIEnableSurfaces;
                 cy2 = cy1 + GMUIP.GMUI_groupCellsH[Layer,Group]*GMUIP.cellsize_h;
                 _sbw = GMUIP.GMUI_groupScrollWidth[Layer,Group];
             }
             else {
-                cy1 = Scrollbar_y+GMUIP.GMUI_grid_y[Layer]+GMUI_GridViewOffsetY(GMUIP);
+                cy1 = Scrollbar_y+GMUIP.GMUI_grid_y[Layer]*!GMUIP.UIEnableSurfaces;
+                if (!GMUIP.UIEnableSurfaces)
+                    cy1 += GMUI_GridViewOffsetY(GMUIP);
                 cy2 = cy1 + CellHigh*GMUIP.cellsize_h;
                 _sbw = Scrollbar_width;
             }
-            cy3 = Scrollbar_pos_y+GMUIP.GMUI_grid_y[Layer]+GMUI_GridViewOffsetY(GMUIP);
-            cx1 = Scrollbar_x+GMUIP.GMUI_grid_x[Layer]+GMUI_GridViewOffsetX(GMUIP);
+            cy3 = Scrollbar_pos_y+GMUIP.GMUI_grid_y[Layer]*!GMUIP.UIEnableSurfaces;
+            cx1 = Scrollbar_x+GMUIP.GMUI_grid_x[Layer]*!GMUIP.UIEnableSurfaces;
+            if (!GMUIP.UIEnableSurfaces) {
+                cy3 += GMUI_GridViewOffsetY(GMUIP);
+                cx1 += GMUI_GridViewOffsetX(GMUIP);
+            }
             
             // draw scrollbar area
             if (Scrollbar_hover) {

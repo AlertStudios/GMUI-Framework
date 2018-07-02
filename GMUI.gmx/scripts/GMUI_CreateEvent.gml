@@ -4,10 +4,10 @@
 // // Create grid variables
 // Is this already using a GMUI? Assign the instance number as long as its not
 var isOk,G;
-isOk = 1;
+isOk = true;
 for (G=1;G<=global.GMUIii;G+=1) {
     if (id = global.GMUIiid[G]) {
-        isOk = 0;
+        isOk = false;
         break;
     }
 }
@@ -160,7 +160,7 @@ GMUI_groupTransitioning[0,0] = false;
 //GMUI_groupTransitioningControl[0,0] = -1;
 GMUI_groupAction[0,0] = -1;
 GMUI_groupSettingsMap[0,0] = -1;
-GMUI_groupStretch[0,0] = global.GMUIAnchorDefault;
+GMUI_groupStretch[0,0] = global.GMUIAnchorCenter;
 
 
 // Call the form code to create the interface
