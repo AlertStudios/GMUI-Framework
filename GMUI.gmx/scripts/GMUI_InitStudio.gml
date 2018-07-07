@@ -9,12 +9,9 @@
 //
 //
 
-if (global.GMUIGameMaker8)
-    return false;
+// THIS SCRIPT ONLY RUNS IN GM:STUDIO:
 
-    
-    
-// THE REST OF THIS SCRIPT ONLY EXISTS IN GM:STUDIO:
+global.GMUIGameMaker8 = false;
 
 
 // Common GMUI values:
