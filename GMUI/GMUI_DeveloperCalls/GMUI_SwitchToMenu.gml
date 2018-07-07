@@ -1,4 +1,3 @@
-#define GMUI_SwitchToMenu
 ///GMUI_SwitchToMenu(GMUI, Menu number)
 ///Switches the depth of all controls in the menu of the current layer
 

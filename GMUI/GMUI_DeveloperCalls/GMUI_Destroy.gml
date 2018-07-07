@@ -1,4 +1,3 @@
-#define GMUI_Destroy
 ///GMUI_Destroy()
 ///Only call this when you want to remove all traces of this GMUI instance, including the object itself and all its controls
 

@@ -1,4 +1,3 @@
-#define GMUI_ControlSetDefaultStyle
 ///GMUI_ControlSetDefaultStyle(id, SetBlank[bool])
 /// Get the default style values from the grid controller
 

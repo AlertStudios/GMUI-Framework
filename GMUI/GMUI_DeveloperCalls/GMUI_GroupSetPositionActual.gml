@@ -1,4 +1,3 @@
-#define GMUI_GroupSetPositionActual
 ///GMUI_GroupSetPositionActual(Layer Number, Group Number, x, y)
 ///Set a group to a position in the room by x, y
 

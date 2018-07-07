@@ -1,4 +1,3 @@
-#define GMUI_GridGetCellY
 ///GMUI_GridGetCellY(GMUI instance, Layer, Y)  Returns the vertical cell block by coordinate
 // argument0 is the GMUI instance
 // argument1 is the layer

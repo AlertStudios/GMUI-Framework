@@ -1,4 +1,3 @@
-#define GMUI_GroupSetScrollbarX
 ///GMUI_GroupSetScrollbarX(GMUI instance, Layer number, Group number)
 ///Set the scrollbar x position to the master control of group
 

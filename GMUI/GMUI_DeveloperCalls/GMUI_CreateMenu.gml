@@ -1,4 +1,3 @@
-#define GMUI_CreateMenu
 ///GMUI_CreateMenu (menu name, cell# x, cell# y, cells wide, cells high, Anchor)
 ///Adds a menu to a GMUI layer that controls can be put into
 

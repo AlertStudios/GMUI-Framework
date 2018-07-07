@@ -1,4 +1,3 @@
-#define GMUI_CreateWarning
 ///GMUI_CreateWarning (warning name, cell# x, cell# y, cells wide, cells high, Anchor)
 ///Adds a popup to a GMUI layer that has typical control options for prompt
 

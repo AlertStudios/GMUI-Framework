@@ -1,4 +1,3 @@
-#define GMUI_ControlSetAttributes
 ///GMUI_ControlSetAttributes(max string length(or 0 for none), max decimal length (if applicable), min value, max value, )
 ///Set the attributes of the control for the different types (to override the defaults)
 if (!GMUI_IsControl() && id != GMUII())

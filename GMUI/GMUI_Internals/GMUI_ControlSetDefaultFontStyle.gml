@@ -1,4 +1,3 @@
-#define GMUI_ControlSetDefaultFontStyle
 ///GMUI_ControlSetFontStyle(id)
 /// Get the default style values from the grid controller
 

@@ -1,4 +1,3 @@
-#define GMUI_GridAdjustLayer
 ///GMUI_GridAdjustLayer(Layer Number [or all: -1], cells wide, cells high)
 /// Adjusts the layer's grid based on new dimensions and moves the controls according to their anchors
 

@@ -1,4 +1,3 @@
-#define GMUI_LayerExists
 ///GMUI_LayerExists(Layer Number)
 /// Checks that the layer number given exists in GMUI
 

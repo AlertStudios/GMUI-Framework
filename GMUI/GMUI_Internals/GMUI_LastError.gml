@@ -1,4 +1,3 @@
-#define GMUI_LastError
 ///GMUI_LastError()
 /// Return the last error reported from the error list
 

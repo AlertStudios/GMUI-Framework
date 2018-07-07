@@ -1,4 +1,3 @@
-#define GMUI_ControlSetValueChangedAction
 ///GMUI_ControlSetValueChangedAction(Action Script)
 ///On changed value, execute script (can also draw)
 

@@ -1,4 +1,3 @@
-#define GMUI_InitStudio
 ///GMUI_InitStudio() This internal script is called by GMUI_Init, if running GM:Studio 1.x,2.x
 //
 // !WARNING! MODIFYING THE GMUI SCRIPTS CAN BREAK FUNCTIONALITY AND CAUSE ERRORS! EDIT THE OBJECTS INSTEAD!

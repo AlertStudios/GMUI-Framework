@@ -1,4 +1,3 @@
-#define GMUI_DefaultActionCancel
 // Set value of popup return to Cancel
 (GMUII()).GMUI_menuResponse = -1;
 

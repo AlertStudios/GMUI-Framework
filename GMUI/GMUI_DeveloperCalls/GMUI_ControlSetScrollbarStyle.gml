@@ -1,4 +1,3 @@
-#define GMUI_ControlSetScrollbarStyle
 ///GMUI_ControlSetScrollbarStyle(Background Color, Alpha, Hover Color, Hover Alpha, Scrollbar Color, Alpha, Hover Color, Hover Alpha)
 /// Set the scrollbar styling
 

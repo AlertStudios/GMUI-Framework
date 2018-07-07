@@ -1,4 +1,3 @@
-#define GMUI_PopupSetStyle
 ///GMUI_PopupSetStyle("popup name", Background Color, Background Alpha, Border color, Border Alpha, Is RoundRect)
 
 var _SCRIPT, _menuName, _menuNumber, _prevLayer;

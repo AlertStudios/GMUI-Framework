@@ -1,4 +1,3 @@
-#define GMUI_PopupSetAction
 ///GMUI_PopupSetAction("popup name", Script to execute)
 ///Action to execute after responding to the popup
 

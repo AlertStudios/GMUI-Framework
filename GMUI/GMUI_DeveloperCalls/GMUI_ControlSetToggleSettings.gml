@@ -1,4 +1,3 @@
-#define GMUI_ControlSetToggleSettings
 ///GMUI_ControlSetToggleSettings(padding [pixels], color on, color off, slide shape/sprite, slide color on, slide color off, transition speed, orientation, Toggle Thickness [cell decimal])
 ///Required to be called to set the SETTINGS of the toggle
 //todo: create checkbox alias for this script (alpha value will utilize the toggle change vars)

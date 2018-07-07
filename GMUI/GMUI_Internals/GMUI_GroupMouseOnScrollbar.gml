@@ -1,4 +1,3 @@
-#define GMUI_GroupMouseOnScrollbar
 ///GMUI_GroupMouseOnScrollbar(GMUI instance, Mouse X position)
 ///Adds the control handling the scrollbar to the list if it doesnt exist
 

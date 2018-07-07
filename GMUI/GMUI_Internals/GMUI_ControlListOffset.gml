@@ -1,4 +1,3 @@
-#define GMUI_ControlListOffset
 ///GMUI_ControlListOffset(control id with List, Using Surface[bool], Mouse X, Mouse Y)
 ///Return the offset amount of the list and update the hover index based on mouse position
 

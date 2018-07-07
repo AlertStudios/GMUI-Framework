@@ -1,4 +1,3 @@
-#define GMUI_GridGetCellX
 ///GMUI_GridGetCellX(GMUI instance, Layer, X)  Returns the horizontal cell block that the mouse is on
 // argument0 is the GMUI instance
 // argument1 is the layer

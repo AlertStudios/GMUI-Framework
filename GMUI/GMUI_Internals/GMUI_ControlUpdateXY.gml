@@ -1,4 +1,3 @@
-#define GMUI_ControlUpdateXY
 ///GMUI_ControlUpdateXY(control)
 ///Updates the actual location in the room after adjustments
 

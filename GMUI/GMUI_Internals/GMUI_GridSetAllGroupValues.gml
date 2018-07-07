@@ -1,4 +1,3 @@
-#define GMUI_GridSetAllGroupValues
 ///GMUI_GridSetAllGroupValues(GMUI instance);
 ///Set all mapped values to groups, called after the UI is set
 

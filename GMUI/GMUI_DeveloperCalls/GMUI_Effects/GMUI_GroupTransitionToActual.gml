@@ -1,4 +1,3 @@
-#define GMUI_GroupTransitionToActual
 ///GMUI_GroupTransitionToActual(Layer Number, Group Id, Grid X, Grid Y, Transition Script, Time)
 ///
 

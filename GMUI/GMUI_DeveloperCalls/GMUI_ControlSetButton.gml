@@ -1,4 +1,3 @@
-#define GMUI_ControlSetButton
 ///GMUI_ControlSetButton(Text in button or "" , graphic inside button or -1 , font alignment or -1, text color on hover or -1)
 ///Set the picker values of the control (to override the defaults)
 

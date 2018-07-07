@@ -1,4 +1,3 @@
-#define GMUI_GridGetWidth
 ///GMUI_GridGetWidth(GMUI, Layer)
 ///Returns the width of the grid of the given instance and layer
 

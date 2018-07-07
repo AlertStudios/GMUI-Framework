@@ -1,4 +1,3 @@
-#define GMUI_ItemListBackground
 ///GMUI_ItemListBackground(Background Color, Background Color Hover, Background Alpha, Background Alpha Hover)
 
 if (!GMUI_IsControl() && id != GMUII())

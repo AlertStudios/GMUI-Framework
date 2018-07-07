@@ -1,4 +1,3 @@
-#define GMUI_ControlPositionToGroup
 ///GMUI_ControlPositionToGroup(Control id)
 
 with (argument0) {

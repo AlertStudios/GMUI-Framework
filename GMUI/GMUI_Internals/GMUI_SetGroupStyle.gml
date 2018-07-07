@@ -1,4 +1,3 @@
-#define GMUI_SetGroupStyle
 ///GMUI_SetGroupStyle(Background Color, Background Alpha, Border color, Border Alpha, Is RoundRect)
 ///Set the style of the controls that will be used for new controls (to override the defaults)
 if (!GMUI_IsControl() && id != GMUII())

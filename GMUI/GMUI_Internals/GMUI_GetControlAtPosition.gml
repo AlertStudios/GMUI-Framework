@@ -1,4 +1,3 @@
-#define GMUI_GetControlAtPosition
 ///GMUI_GetControlAtPosition(GMUI instance,X,Y)
 ///Returns the control that is present in the cell if one exists there
 

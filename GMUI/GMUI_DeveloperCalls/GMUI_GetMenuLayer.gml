@@ -1,4 +1,3 @@
-#define GMUI_GetMenuLayer
 ///GMUI_GetMenuLayer(GMUI, Menu Number)
 ///Returns the layer number of the given menu
 

@@ -1,4 +1,3 @@
-#define GMUI_ControlAddOption
 ///GMUI_ControlAddOption(OptionKeyValue, OptionText/Sprite)
 ///Adds an option to the picker control
 

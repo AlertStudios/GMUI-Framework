@@ -1,4 +1,3 @@
-#define easeElasticOut
 ///easeElasticOut(t,b,c,d) where t is current time, b is start value, c is change in value, and d is duration
 ///Elastic Ease for moving controls smoothly
 

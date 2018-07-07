@@ -1,4 +1,3 @@
-#define GMUI_StudioCheckDefined
 ///GMUI_StudioCheckDefined(value) Returns if the argument is defined or not (GM:Studio)
 
 var a0; a0 = argument0;

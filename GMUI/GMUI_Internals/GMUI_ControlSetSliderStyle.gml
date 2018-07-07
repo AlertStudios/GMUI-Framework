@@ -1,4 +1,3 @@
-#define GMUI_ControlSetSliderStyle
 ///GMUI_ControlSetSliderStyle(tick style [0 for none], slider style [0 for none/use sprite], Slide bg color, Slide bg alpha, Slider color, Slider alpha, border color, border alpha, Select color, Select alpha, tick color, tick alpha)
 ///Set the ONLY THE STYLE of the slider
 // Tick styles:

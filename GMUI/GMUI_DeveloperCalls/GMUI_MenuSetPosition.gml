@@ -1,4 +1,3 @@
-#define GMUI_MenuSetPosition
 ///GMUI_MenuSetPosition("menu name", Cell X, Cell Y, X Adjustment, Y Adjustment)
 // Sets menu position
 

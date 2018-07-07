@@ -1,4 +1,3 @@
-#define GMUI_GridGetMouseCellY
 ///GMUI_GridGetMouseCellY(GMUI instance)  Returns the vertical cell block that the mouse is on
 // argument0 is the GMUI instance
 

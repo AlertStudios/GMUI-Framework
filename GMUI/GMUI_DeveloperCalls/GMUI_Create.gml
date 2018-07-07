@@ -1,4 +1,3 @@
-#define GMUI_Create
 ///GMUI_Create(GMUI-compatible Object, Interface Script, cell size width [0: default], cell size height [0: default])
 
 // Must be an object

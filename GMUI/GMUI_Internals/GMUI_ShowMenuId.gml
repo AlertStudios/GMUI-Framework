@@ -1,4 +1,3 @@
-#define GMUI_ShowMenuId
 ///GMUI_ShowMenuId(menu id, show[1] or hide[0], animate [bool])
 
 // Arguments

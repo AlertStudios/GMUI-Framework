@@ -1,4 +1,3 @@
-#define GMUI_GroupTransitionToCell
 ///GMUI_GroupTransitionToCell(Layer Number, Group Id, Cell X, Cell Y, Transition Script, Time)
 ///
 

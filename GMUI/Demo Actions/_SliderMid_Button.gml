@@ -1,4 +1,3 @@
-#define _SliderMid_Button
 var slider;
 slider = GMUI_GetControl("Slider");
 

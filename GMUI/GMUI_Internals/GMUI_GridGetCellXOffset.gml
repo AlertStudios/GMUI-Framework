@@ -1,4 +1,3 @@
-#define GMUI_GridGetCellXOffset
 ///GMUI_GridGetCellXOffset(GMUI instance, Layer, X, Offset X)  Returns the horizontal cell block of coordinate
 // argument0 is the GMUI instance
 // argument1 is the layer

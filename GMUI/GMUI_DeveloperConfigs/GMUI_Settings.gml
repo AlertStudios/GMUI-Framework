@@ -1,4 +1,3 @@
-#define GMUI_Settings
 ///GMUI_Settings(OptionalInterfaceArgument) Settings for GMUI - Do not delete! Modify to fit your preferences
 ///Called from the initialization of each GMUI interface. Argument can set specific settings depending on the interface.
 // Don't change these values in runtime, only change them here.

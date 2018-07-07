@@ -1,4 +1,3 @@
-#define GMUI_ControlSetScrollbarDefaults
 ///GMUI_ControlSetScrollbarDefaults(set for control[true] or for group[false])
 ///Set the default variables for the scrollbar
 // This is called after the interface if in group and the overflow is set to scroll

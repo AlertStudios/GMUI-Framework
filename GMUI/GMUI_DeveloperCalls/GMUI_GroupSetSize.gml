@@ -1,4 +1,3 @@
-#define GMUI_GroupSetSize
 ///GMUI_GroupSetSize(Group, cells wide, cells high)
 ///Set the cell size of the group
 

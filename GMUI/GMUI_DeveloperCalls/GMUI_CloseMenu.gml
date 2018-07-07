@@ -1,4 +1,3 @@
-#define GMUI_CloseMenu
 ///GMUI_CloseMenu(animate [bool])
 ///Close the current open menu
 

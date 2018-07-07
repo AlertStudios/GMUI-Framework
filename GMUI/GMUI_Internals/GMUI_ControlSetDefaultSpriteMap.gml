@@ -1,4 +1,3 @@
-#define GMUI_ControlSetDefaultSpriteMap
 ///GMUI_ControlSetDefaultSpriteMap(id)
 ///Set the default attributes of the control from the controller
 

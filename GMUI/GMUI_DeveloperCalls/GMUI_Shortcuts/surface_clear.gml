@@ -1,4 +1,3 @@
-#define surface_clear
 ///surface_clear(surface)
 ///Draws a subtracting rectangle over the whole surface
 

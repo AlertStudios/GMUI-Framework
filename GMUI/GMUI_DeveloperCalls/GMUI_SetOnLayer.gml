@@ -1,4 +1,3 @@
-#define GMUI_SetOnLayer
 ///GMUI_SetOnLayer(Layer number)
 /// Switches the layer to create / modify on
 

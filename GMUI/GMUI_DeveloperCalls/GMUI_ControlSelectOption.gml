@@ -1,4 +1,3 @@
-#define GMUI_ControlSelectOption
 ///GMUI_ControlSelectOption("ControlName", key value)
 ///Safely set the value of a selection control using key value
 

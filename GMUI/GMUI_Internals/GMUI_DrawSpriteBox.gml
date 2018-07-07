@@ -1,4 +1,3 @@
-#define GMUI_DrawSpriteBox
 ///GMUI_DrawSpriteBox(GMUI instance, Layer, Group, Control[0] / Group [1] / Menu[2], Alpha)
 ///Draws the box of the specified type
 

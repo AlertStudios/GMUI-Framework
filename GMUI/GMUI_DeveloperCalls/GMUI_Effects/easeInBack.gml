@@ -1,4 +1,3 @@
-#define easeInBack
 ///easeInBack(t,b,c,d) where t is current time, b is start value, c is change in value, and d is duration
 ///Smooth overshot Ease for moving controls smoothly
 

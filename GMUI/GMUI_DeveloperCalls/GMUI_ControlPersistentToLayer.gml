@@ -1,4 +1,3 @@
-#define GMUI_ControlPersistentToLayer
 ///GMUI_ControlPersistentToLayer(Layer persistent to)
 ///Allow the control to be enabled for all layers between the main layer, and the one provided
 

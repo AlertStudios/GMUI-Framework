@@ -1,4 +1,3 @@
-#define GMUI_AddItem
 ///GMUI_AddItem(id, value, name, description, sprite [or -1])
 ///Adds an item to a control with an item list
 

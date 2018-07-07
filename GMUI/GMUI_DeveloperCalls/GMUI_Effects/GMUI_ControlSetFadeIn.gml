@@ -1,4 +1,3 @@
-#define GMUI_ControlSetFadeIn
 ///GMUI_ControlSetFadeIn("Control Name", Time)
 ///
 

@@ -1,4 +1,3 @@
-#define GMUI_GroupSetPosition
 ///GMUI_GroupSetPosition(Group Number, Cell X, Cell Y, X Adjustment, Y Adjustment)
 ///Change the position of the group (and all of the controls inside it)
 

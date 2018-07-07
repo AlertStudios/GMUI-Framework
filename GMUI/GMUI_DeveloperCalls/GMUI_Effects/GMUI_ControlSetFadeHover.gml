@@ -1,4 +1,3 @@
-#define GMUI_ControlSetFadeHover
 ///GMUI_ControlSetFadeHover("Control Name", Time)
 ///
 

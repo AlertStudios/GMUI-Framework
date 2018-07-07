@@ -1,4 +1,3 @@
-#define GMUI_ControlDrawTooltip
 ///GMUI_ControlDrawTooltip("name of control with the tooltip")
 /// Draw the control's tooltip
 

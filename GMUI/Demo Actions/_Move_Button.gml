@@ -1,4 +1,3 @@
-#define _Move_Button
 var MyButton,MyButtonText;
 
 MyButton = GMUI_GetControl("MoveButton");

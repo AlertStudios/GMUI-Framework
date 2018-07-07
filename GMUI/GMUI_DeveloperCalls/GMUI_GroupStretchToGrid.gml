@@ -1,4 +1,3 @@
-#define GMUI_GroupStretchToGrid
 ///GMUI_GroupStretchToGrid(Group, true/false)
 ///Stretch group to edges
 

@@ -1,4 +1,3 @@
-#define _Test_Form
 ///_Test_Form() This interface is for the demo
 
 // DEMO INTERFACE:

@@ -1,4 +1,3 @@
-#define GMUI_ControlSetFontStyle
 ///GMUI_ControlSetFontStyle(font, font color, font align)
 ///Set the style of the controls that will be used for new controls (to override the defaults)
 if (!GMUI_IsControl() && id != GMUII())

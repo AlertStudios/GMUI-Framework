@@ -1,4 +1,3 @@
-#define GMUI_ControlFadeIn
 ///GMUI_ControlFadeIn("ControlName", speed in steps)
 ///Fade in a control to alpha value
 

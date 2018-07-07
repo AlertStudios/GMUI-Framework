@@ -1,4 +1,3 @@
-#define GMUI_SetValue
 ///GMUI_SetValue("ControlName", value, value type - string:0, integer:1, decimal:2)
 ///Set the value of a control to GMUI to reference in user code (GMUI_GetValue)
 
@@ -33,13 +32,13 @@ with (GMUII())
             z = 0;
             strLenFmtVal = string_length(formatValue);
             for (c=0;c<=strLenFmtVal;c+=1) {
-                if (string_char_at(formatValue,strLenFmtVal-c) == '0')
+                if (string_char_at(formatValue,strLenFmtVal-c) == "0")
                     z += 1;
                 else
                     break;
             }
             formatValue = string_copy(formatValue,0,strLenFmtVal-z);
-            if (string_char_at(formatValue,string_length(formatValue)) == '.')
+            if (string_char_at(formatValue,string_length(formatValue)) == ".")
             formatValue = string_copy(formatValue,0,string_length(formatValue)-1);
         }
         (control).valueString = formatValue;

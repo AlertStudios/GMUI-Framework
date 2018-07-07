@@ -1,4 +1,3 @@
-#define GMUI_IsControlID
 ///GMUI_IsControlID(id)
 /// Checks that the object ID provided is a control
 

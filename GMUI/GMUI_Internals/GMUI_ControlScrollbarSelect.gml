@@ -1,4 +1,3 @@
-#define GMUI_ControlScrollbarSelect
 ///GMUI_ControlScrollbarSelect(control id with scrollbar, X cordinate, Y cordinate)
 ///Adjust the scrollbar to the position
 

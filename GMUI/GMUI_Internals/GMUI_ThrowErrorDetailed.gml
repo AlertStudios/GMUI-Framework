@@ -1,4 +1,3 @@
-#define GMUI_ThrowErrorDetailed
 ///GMUI_ThrowErrorDetailed(Error Message,script)
 ///Throw script name and object caller name with the message
 

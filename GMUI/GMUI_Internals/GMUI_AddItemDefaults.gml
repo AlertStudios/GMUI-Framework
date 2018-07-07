@@ -1,4 +1,3 @@
-#define GMUI_AddItemDefaults
 ///GMUI_AddItemDefaults(Control ID, id)
 ///Initialize item with all default values
 

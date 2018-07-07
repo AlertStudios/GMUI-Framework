@@ -1,4 +1,3 @@
-#define GMUI_ControlSetSelectingAction
 ///GMUI_ControlSetSelectingAction(Action Script)
 ///On initial selection, execute script (can also draw)
 

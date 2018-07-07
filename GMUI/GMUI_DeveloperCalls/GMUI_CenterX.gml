@@ -1,4 +1,3 @@
-#define GMUI_CenterX
 ///GMUI_CenterX(Layer, Control Width Cells #, Anchor)
 ///Get X Cell of Anchor for centering on layer
 

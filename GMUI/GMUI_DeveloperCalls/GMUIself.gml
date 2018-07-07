@@ -1,4 +1,3 @@
-#define GMUIself
 ///GMUIself()
 ///Returns id of the GMUI object instance or -1 if not
 // Usage: with (GMUIself()) { do something; }

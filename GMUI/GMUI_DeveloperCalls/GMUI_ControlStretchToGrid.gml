@@ -1,4 +1,3 @@
-#define GMUI_ControlStretchToGrid
 ///GMUI_ControlStretchToGrid(true/false)
 ///Set the control to stretch across the grid on the opposite anchor axis, offset by the X/Y cell
 

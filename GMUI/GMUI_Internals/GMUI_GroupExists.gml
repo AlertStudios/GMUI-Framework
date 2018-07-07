@@ -1,4 +1,3 @@
-#define GMUI_GroupExists
 ///GMUI_GroupExists(Layer Number, Group Number)
 ///Checks that the group number given exists in the layer in GMUI
 

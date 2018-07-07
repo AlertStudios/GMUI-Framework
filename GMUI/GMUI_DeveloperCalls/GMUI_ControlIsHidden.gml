@@ -1,4 +1,3 @@
-#define GMUI_ControlIsHidden
 ///GMUI_ControlIsHidden("ControlName")
 ///Is control of name hidden
 

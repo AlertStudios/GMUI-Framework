@@ -1,4 +1,3 @@
-#define GMUI_GroupHideOverflow
 ///GMUI_GroupHideOverflow(Group)
 ///Set the method for overflowing groups, and scrollbar with if necessary
 

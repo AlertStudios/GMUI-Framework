@@ -1,4 +1,3 @@
-#define _Test_Button
 // Demo Test Button action
 
 // Get all the values and display them:

@@ -1,4 +1,3 @@
-#define GMUI_ItemListSettings
 ///GMUI_ItemListSettings(Item height, Border color [or -1], Custom Draw Script [or -1], Fade time [frames])
 
 if (!GMUI_IsControl() && id != GMUII())

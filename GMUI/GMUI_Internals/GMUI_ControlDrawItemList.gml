@@ -1,4 +1,3 @@
-#define GMUI_ControlDrawItemList
 ///GMUI_ControlDrawItemList(Control ID, Using Surface[bool])
 ///Draws the group if set to do any drawing - Called by master control of group
 

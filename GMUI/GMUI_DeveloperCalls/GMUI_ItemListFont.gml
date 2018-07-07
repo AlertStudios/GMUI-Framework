@@ -1,4 +1,3 @@
-#define GMUI_ItemListFont
 ///GMUI_ItemListFont(Font, Font Color, Font Color Hover, Font Alpha, Font Alpha Hover)
 
 if (!GMUI_IsControl() && id != GMUII())

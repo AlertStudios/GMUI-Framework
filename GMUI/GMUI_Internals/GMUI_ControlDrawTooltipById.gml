@@ -1,4 +1,3 @@
-#define GMUI_ControlDrawTooltipById
 ///GMUI_ControlDrawTooltipById(id of tooltip control object)
 /// Draw the control as a tooltip
 

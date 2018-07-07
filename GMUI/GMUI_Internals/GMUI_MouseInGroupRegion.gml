@@ -1,4 +1,3 @@
-#define GMUI_MouseInGroupRegion
 ///GMUI_MouseInGroupRegion(group number, layer number)
 ///Returns if the mouse is in the bounds of the group
 

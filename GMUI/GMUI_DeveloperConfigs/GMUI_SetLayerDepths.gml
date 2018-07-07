@@ -1,4 +1,3 @@
-#define GMUI_SetLayerDepths
 ///GMUI_SetLayerDepths() Creates a set of layers with their relative depth values from the GMUI default
 // This is called by the Create script
 

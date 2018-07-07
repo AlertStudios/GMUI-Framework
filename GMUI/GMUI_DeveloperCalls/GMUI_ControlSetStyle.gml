@@ -1,4 +1,3 @@
-#define GMUI_ControlSetStyle
 ///GMUI_ControlSetStyle(Background Color, Border color, Hover color, hover border/rect, border alpha, Select color, Select alpha, show cursor)
 ///Set the style of the controls that will be used for new controls (to override the defaults)
 if (!GMUI_IsControl() && id != GMUII())

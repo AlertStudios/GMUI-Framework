@@ -1,4 +1,3 @@
-#define GMUI_GroupSetOverflow
 ///GMUI_GroupSetOverflow(Group, Overflow Mode [GMUIOverflow.], scrollbar width [or -1] if used)
 ///Set the method for overflowing groups, and scrollbar with if necessary
 

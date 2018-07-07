@@ -1,4 +1,3 @@
-#define GMUI_GetControl
 ///GMUI_GetControl("ControlName")
 ///Return the control id back to use in user code
 

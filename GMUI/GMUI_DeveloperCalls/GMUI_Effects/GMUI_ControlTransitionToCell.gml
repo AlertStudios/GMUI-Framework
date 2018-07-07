@@ -1,4 +1,3 @@
-#define GMUI_ControlTransitionToCell
 ///GMUI_ControlTransitionToCell("ControlName",Cell X, Cell Y, Transition Script, Time)
 ///
 

@@ -1,4 +1,3 @@
-#define GMUI_GroupSetScrollbar
 ///GMUI_GroupSetScrollbar(GMUI instance, drawing control ID)
 ///Adds the control handling the scrollbar to the list if it doesnt exist
 

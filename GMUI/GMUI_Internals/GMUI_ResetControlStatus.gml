@@ -1,4 +1,3 @@
-#define GMUI_ResetControlStatus
 ///GMUI_ResetControlStatus("Hovering" / "Selected" / "Position", GridID)
 /// Resets the hovering or selected values of the controls
 

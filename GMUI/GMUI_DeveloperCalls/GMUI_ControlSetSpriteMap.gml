@@ -1,4 +1,3 @@
-#define GMUI_ControlSetSpriteMap
 ///GMUI_ControlSetSpriteMap(sprite top, sprite top right, right, bottom right, bottom, bottom left, left, top left, center, center fixed partial [1] / stretched[0])
 ///Replace the control drawing with a sprite map of each corner, side, and center
 

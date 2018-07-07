@@ -3,6 +3,36 @@
   <folders>
     <folder folderName="GMUI">
       <folders>
+        <folder folderName="Demo Actions">
+          <file>_Debug_Button.gml</file>
+          <file>_Disable_Button.gml</file>
+          <file>_Enlarge_Button.gml</file>
+          <file>_Exit_Button.gml</file>
+          <file>_Hide_Button.gml</file>
+          <file>_Hide_Button2.gml</file>
+          <file>_HoverOff_Checkbox.gml</file>
+          <file>_HoverOff_Int.gml</file>
+          <file>_Hover_Checkbox.gml</file>
+          <file>_Hover_Int.gml</file>
+          <file>_ListAction.gml</file>
+          <file>_Move_Button.gml</file>
+          <file>_PopupClose_Button.gml</file>
+          <file>_PopupMenu2_Button.gml</file>
+          <file>_PopupMenu_Button.gml</file>
+          <file>_PopupReturnAction.gml</file>
+          <file>_Popup_Button.gml</file>
+          <file>_SliderMid_Button.gml</file>
+          <file>_SliderSnap_Button.gml</file>
+          <file>_SliderValue_Changed.gml</file>
+          <file>_Swipe_Button.gml</file>
+          <file>_Switch_Button.gml</file>
+          <file>_Test_Button.gml</file>
+          <folders />
+        </folder>
+        <folder folderName="Demo Interfaces">
+          <file>_Test_Form.gml</file>
+          <folders />
+        </folder>
         <folder folderName="GMUI_DeveloperCalls">
           <file>GMUIself.gml</file>
           <file>GMUI_Add.gml</file>
@@ -131,7 +161,6 @@
               <file>GMUI_GroupTransitionToActual.gml</file>
               <file>GMUI_GroupTransitionToCell.gml</file>
               <file>GMUI_LayerTransitionToXY.gml</file>
-              <file>GMUI_Transition.gml</file>
               <folders />
             </folder>
             <folder folderName="GMUI_Shortcuts">
@@ -256,36 +285,6 @@
           <file>GMUI_ThrowError.gml</file>
           <file>GMUI_ThrowErrorDetailed.gml</file>
           <file>GMUI_ValidCellBounds.gml</file>
-          <folders />
-        </folder>
-        <folder folderName="My Actions">
-          <file>_Debug_Button.gml</file>
-          <file>_Disable_Button.gml</file>
-          <file>_Enlarge_Button.gml</file>
-          <file>_Exit_Button.gml</file>
-          <file>_Hide_Button.gml</file>
-          <file>_Hide_Button2.gml</file>
-          <file>_HoverOff_Checkbox.gml</file>
-          <file>_HoverOff_Int.gml</file>
-          <file>_Hover_Checkbox.gml</file>
-          <file>_Hover_Int.gml</file>
-          <file>_ListAction.gml</file>
-          <file>_Move_Button.gml</file>
-          <file>_PopupClose_Button.gml</file>
-          <file>_PopupMenu2_Button.gml</file>
-          <file>_PopupMenu_Button.gml</file>
-          <file>_PopupReturnAction.gml</file>
-          <file>_Popup_Button.gml</file>
-          <file>_SliderMid_Button.gml</file>
-          <file>_SliderSnap_Button.gml</file>
-          <file>_SliderValue_Changed.gml</file>
-          <file>_Swipe_Button.gml</file>
-          <file>_Switch_Button.gml</file>
-          <file>_Test_Button.gml</file>
-          <folders />
-        </folder>
-        <folder folderName="My Interfaces">
-          <file>_Test_Form.gml</file>
           <folders />
         </folder>
       </folders>

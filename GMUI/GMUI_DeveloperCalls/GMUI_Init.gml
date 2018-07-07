@@ -1,4 +1,3 @@
-#define GMUI_Init
 ///GMUI_Init() Call this initialization script before creating any GMUI interfaces
 //
 // !WARNING! MODIFYING THE GMUI SCRIPTS CAN BREAK FUNCTIONALITY AND CAUSE ERRORS! TRY TO EDIT THE OBJECTS INSTEAD!

@@ -1,4 +1,3 @@
-#define GMUI_GridViewOffsetY
 ///GMUI_GridViewOffsetY(GMUI instance)
 ///Returns the offset value of the grid, based on UIsnaptoview and UIEnableSurfaces settings
 

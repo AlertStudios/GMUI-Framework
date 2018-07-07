@@ -1,4 +1,3 @@
-#define GMUI_MenuSetFadeOnHide
 ///GMUI_MenuSetFadeOnHide("Menu Name", Speed in steps, Fade Mode [0: alpha-sequential, 1: all-together])
 ///Set the fade in/out when the menu is hidden or not
 ///Fade Mode: 0 = fade dimmest last, 1 = fade all together

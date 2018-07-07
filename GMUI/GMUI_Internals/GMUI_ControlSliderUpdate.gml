@@ -1,4 +1,3 @@
-#define GMUI_ControlSliderUpdate
 ///GMUI_ControlSliderUpdate(Control ID)
 ///Updates the slider position according to its value (called when switching its value or initializing)
 

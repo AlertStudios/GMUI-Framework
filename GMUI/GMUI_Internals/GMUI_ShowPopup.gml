@@ -1,4 +1,3 @@
-#define GMUI_ShowPopup
 ///GMUI_ShowPopup("popup name", show[1] or hide[0], animate [bool])
 
 // Arguments

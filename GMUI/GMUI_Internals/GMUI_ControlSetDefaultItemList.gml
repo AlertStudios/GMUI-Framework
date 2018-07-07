@@ -1,4 +1,3 @@
-#define GMUI_ControlSetDefaultItemList
 ///GMUI_ControlSetDefaultItemList(id)
 
 if (!instance_exists(argument0))

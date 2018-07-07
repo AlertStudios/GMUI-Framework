@@ -1,4 +1,3 @@
-#define GMUI_ControlSetSliderMovement
 ///GMUI_ControlSetSliderStyle(Movement script for slider)
 ///Set the script called when smoothly moving the slider
 

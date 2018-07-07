@@ -1,4 +1,3 @@
-#define GMUI_ControlAddTooltip
 ///GMUI_ControlAddTooltip("message string", direction/side of control, width cells [or -1], height cells [or -1], max cells width, max cells height, relative x [or -1], relative y [or -1])
 ///Adds a tooltip to the control
 

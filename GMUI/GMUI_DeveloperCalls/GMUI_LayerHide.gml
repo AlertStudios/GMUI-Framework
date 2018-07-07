@@ -1,4 +1,3 @@
-#define GMUI_LayerHide
 ///GMUI_LayerHide(layer number, Hide(1) or show(0))
 /// Hide all of the controls within the specified layer
 

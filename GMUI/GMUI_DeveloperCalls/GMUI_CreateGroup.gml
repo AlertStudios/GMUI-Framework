@@ -1,4 +1,3 @@
-#define GMUI_CreateGroup
 ///GMUI_CreateGroup(group number, cell# x, cell# y, cells wide, cells high, Anchor)
 ///Adds a group to the current GMUI layer that controls can be put into
 

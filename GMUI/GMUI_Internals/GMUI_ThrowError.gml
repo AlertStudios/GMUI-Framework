@@ -1,4 +1,3 @@
-#define GMUI_ThrowError
 ///GMUI_ThrowError(Error Message)
 ///GMUI can store errors and can choose to save/report them if needed
 

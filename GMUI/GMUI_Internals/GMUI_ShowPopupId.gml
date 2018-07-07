@@ -1,4 +1,3 @@
-#define GMUI_ShowPopupId
 ///GMUI_ShowPopupId(popup id, show[1] or hide[0], animate [bool])
 
 // Arguments

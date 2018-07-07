@@ -1,4 +1,3 @@
-#define GMUI_IsScript
 ///GMUI_IsScript(script)
 ///Determines whether the value provided is an existing script
 

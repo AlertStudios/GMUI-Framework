@@ -1,4 +1,3 @@
-#define GMUI_ControlTransitionToActual
 ///GMUI_ControlTranstionToActual("ControlName",Grid X, Grid Y, Transition Script, Time)
 ///
 

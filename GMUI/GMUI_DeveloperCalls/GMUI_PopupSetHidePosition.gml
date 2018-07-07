@@ -1,4 +1,3 @@
-#define GMUI_PopupSetHidePosition
 ///GMUI_PopupSetHidePosition("popup name", Cell X, Cell Y, transition_script [or -1], speed in steps)
 // Sets popup position to come from and go to when shown or hidden
 

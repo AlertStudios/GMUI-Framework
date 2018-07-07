@@ -1,4 +1,3 @@
-#define GMUI_ControlSetDefaultAttributes
 ///GMUI_ControlSetDefaultAttributes(id)
 /// Set the default attributes of the control from the controller
 

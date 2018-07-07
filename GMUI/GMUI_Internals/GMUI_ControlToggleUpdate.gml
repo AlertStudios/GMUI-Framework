@@ -1,4 +1,3 @@
-#define GMUI_ControlToggleUpdate
 ///GMUI_ControlToggleUpdate(Control ID)
 ///Resets toggle timing for the animation
 

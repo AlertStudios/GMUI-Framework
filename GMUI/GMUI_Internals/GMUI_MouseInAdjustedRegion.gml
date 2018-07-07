@@ -1,4 +1,3 @@
-#define GMUI_MouseInAdjustedRegion
 ///GMUI_MouseInAdjustedRegion(Control Object, mouse x, mouse y)
 /// Checks to see if the mouse is in the adjusted region of the control (true/false)
 

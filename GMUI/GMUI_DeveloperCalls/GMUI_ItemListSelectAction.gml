@@ -1,4 +1,3 @@
-#define GMUI_ItemListSelectAction
 ///GMUI_ItemListSelectAction(Script with argument0 as ID)
 
 if (!GMUI_IsControl() && id != GMUII())

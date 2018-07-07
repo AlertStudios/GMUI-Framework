@@ -1,4 +1,3 @@
-#define GMUI_CellGetActualY
 ///GMUI_CellGetActualY(Y Cell #);
 /// Internal: Return the actual Y of the cell number
 

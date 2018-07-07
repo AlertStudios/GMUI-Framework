@@ -1,4 +1,3 @@
-#define GMUI_MouseInSpecialRegion
 ///GMUI_MouseInAdjustedSpecialRegion(Control Object, mouse x, mouse y)
 /// Returns direction if mouse is in the adjusted region of the control
 
