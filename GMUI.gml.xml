@@ -163,6 +163,17 @@
               <file>GMUI_LayerTransitionToXY.gml</file>
               <folders />
             </folder>
+            <folder folderName="GMUI_Settings">
+              <file>GMUI_DisableNavigation.gml</file>
+              <file>GMUI_SetConfirmKey.gml</file>
+              <file>GMUI_SetControlObject.gml</file>
+              <file>GMUI_SetDepth.gml</file>
+              <file>GMUI_SetDoubleSelect.gml</file>
+              <file>GMUI_SetKeyNavigation.gml</file>
+              <file>GMUI_SetViewSnap.gml</file>
+              <file>GMUI_UseSurfaces.gml</file>
+              <folders />
+            </folder>
             <folder folderName="GMUI_Shortcuts">
               <file>align.gml</file>
               <file>color_alpha.gml</file>
@@ -259,7 +270,6 @@
           <file>GMUI_GroupSetScrollbar.gml</file>
           <file>GMUI_GroupSetScrollbarX.gml</file>
           <file>GMUI_GroupSetStyle.gml</file>
-          <file>GMUI_InitStudio.gml</file>
           <file>GMUI_IsControl.gml</file>
           <file>GMUI_IsControlID.gml</file>
           <file>GMUI_IsScript.gml</file>

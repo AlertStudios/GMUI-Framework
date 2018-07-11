@@ -1,4 +1,4 @@
-///GMUI_Init() Call this initialization script before creating any GMUI interfaces
+///GMUI_Init(Controls Object) Call this initialization script before creating any GMUI interfaces
 //
 // !WARNING! MODIFYING THE GMUI SCRIPTS CAN BREAK FUNCTIONALITY AND CAUSE ERRORS! TRY TO EDIT THE OBJECTS INSTEAD!
 //
@@ -9,13 +9,18 @@
 //
 //
 
-// SET THIS VALUE TO TRUE IF RUNNING IN GAME MAKER 8.x
-global.GMUIGameMaker8 = true;
-
-
 // Index of global GMUI's
 global.GMUIii = 0;
 
+// CALL DEFAULT SCRIPTS:
+// EACH SHOULD CHECK FOR iid > 0. If 0, set global value otherwise set local
+GMUI_SetConfirmKey(vk_enter);
+GMUI_SetControlObject(argument0);
+GMUI_SetDepth(-9999);
+GMUI_SetDoubleSelect(true);
+GMUI_DisableNavigation();
+GMUI_SetViewSnap(true,0);
+GMUI_UseSurfaces(true);
 
 // Common GMUI values:
 
@@ -72,10 +77,11 @@ global.GMUIOverflowResize = 1;
 global.GMUIOverflowScroll = 2;
 
 
-// If studio, run the script to create enum versions of these
-if (!global.GMUIGameMaker8) {
-    GMUI_InitStudio();
-}
+// THIS VALUE WILL REMAIN TRUE IF RUNNING IN GAME MAKER 8.x
+global.GMUIGameMaker8 = true;
+
+// If studio, the flag will change to false and define the enums
+GMUI_InitStudio();
 
 
 
