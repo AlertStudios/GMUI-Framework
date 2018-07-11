@@ -1,5 +1,5 @@
 {
-    "id": "10de4431-0bcc-439a-90c9-481ef5fc7243",
+    "id": "75f66896-d858-4a8c-822e-749aedae56f8",
     "modelName": "GMScript",
     "mvc": "1.0",
     "name": "GMUI_DrawSpriteBox",

@@ -1,5 +1,5 @@
 {
-    "id": "81c59ad5-43b4-492c-a0e1-a7def71793c6",
+    "id": "71b5b4f1-6c29-45b1-a158-0c970aa42f1c",
     "modelName": "GMScript",
     "mvc": "1.0",
     "name": "_Exit_Button",

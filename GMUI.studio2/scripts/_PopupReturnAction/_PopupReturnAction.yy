@@ -1,5 +1,5 @@
 {
-    "id": "59b342b5-4309-48a3-a3d6-74c053c191cf",
+    "id": "77d69d2a-e0b0-47b0-82c8-6b4155e673ee",
     "modelName": "GMScript",
     "mvc": "1.0",
     "name": "_PopupReturnAction",

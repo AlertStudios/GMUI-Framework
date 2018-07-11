@@ -1,5 +1,5 @@
 {
-    "id": "cbcf3ea8-d3aa-4269-a7ae-0de0daa47430",
+    "id": "b0349d4e-a5de-457a-9c79-4705f64dc66a",
     "modelName": "GMScript",
     "mvc": "1.0",
     "name": "GMUI_PopupSetStyle",

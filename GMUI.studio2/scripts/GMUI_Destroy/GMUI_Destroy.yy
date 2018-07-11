@@ -1,5 +1,5 @@
 {
-    "id": "84a6a863-f92f-4630-aa50-52a29085dde0",
+    "id": "ab97238d-8974-4f70-9056-0097e001ddf3",
     "modelName": "GMScript",
     "mvc": "1.0",
     "name": "GMUI_Destroy",

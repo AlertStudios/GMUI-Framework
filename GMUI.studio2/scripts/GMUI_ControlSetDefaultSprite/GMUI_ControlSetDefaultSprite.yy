@@ -1,5 +1,5 @@
 {
-    "id": "410f16c5-93a7-4466-94ba-d22b452c0ef9",
+    "id": "59afd331-3916-4df6-b225-636db7ecd6b3",
     "modelName": "GMScript",
     "mvc": "1.0",
     "name": "GMUI_ControlSetDefaultSprite",

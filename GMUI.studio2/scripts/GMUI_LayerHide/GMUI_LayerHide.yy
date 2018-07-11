@@ -1,5 +1,5 @@
 {
-    "id": "1ca34ce0-9663-4825-a933-e28f7eb33fcf",
+    "id": "b7230652-26e4-4cf9-bfbc-c883ce382e31",
     "modelName": "GMScript",
     "mvc": "1.0",
     "name": "GMUI_LayerHide",

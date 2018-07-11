@@ -1,5 +1,5 @@
 {
-    "id": "1e6c60ae-232f-4653-932c-52a327617c10",
+    "id": "230075d5-4db4-493f-a719-10b010f8e263",
     "modelName": "GMScript",
     "mvc": "1.0",
     "name": "GMUI_ControlDrawSlider",

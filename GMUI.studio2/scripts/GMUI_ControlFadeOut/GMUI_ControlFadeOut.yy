@@ -1,5 +1,5 @@
 {
-    "id": "76d83b41-811e-4091-afd4-79f01379774c",
+    "id": "39e4d376-ef44-4555-8013-1b7927e370ee",
     "modelName": "GMScript",
     "mvc": "1.0",
     "name": "GMUI_ControlFadeOut",

@@ -1,5 +1,5 @@
 {
-    "id": "7d2d3245-2e68-4ce2-8338-9f4a6bd54837",
+    "id": "c83be136-ba0f-4060-9f5c-aec314f085cc",
     "modelName": "GMScript",
     "mvc": "1.0",
     "name": "GMUI_ControlScrollbarSelect",

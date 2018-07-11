@@ -1,5 +1,5 @@
 {
-    "id": "bce9d00c-64f0-4a6e-b4f5-035166b9a183",
+    "id": "aed60bf8-048e-4b46-8619-c4d13da27c43",
     "modelName": "GMScript",
     "mvc": "1.0",
     "name": "GMUI_ControlDrawGroup",

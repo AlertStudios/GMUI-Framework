@@ -1,0 +1,32 @@
+{
+    "id": "3ba654e4-afb8-486d-b6af-ab4c2f504ed3",
+    "modelName": "GMFolder",
+    "mvc": "1.1",
+    "name": "3ba654e4-afb8-486d-b6af-ab4c2f504ed3",
+    "children": [
+        "7eafe711-f5d1-4532-8127-bbeb6398164b",
+        "b34bd075-3cc6-410e-a781-9617151b7c0c",
+        "5fdb16dc-8d4c-48ce-83ac-995b1ccb5e9b",
+        "aeac89db-9f80-43a7-9646-9f0d43dfce94",
+        "34ab7290-9994-4461-804a-f3913c760925",
+        "f9627483-1f36-4774-a5c2-042007b798cf",
+        "408beafd-ccff-4afa-85c3-575bd0dde237",
+        "bab7e798-0cdc-4f24-b3aa-e82eb731ad1e",
+        "471b0707-f8e3-49e4-89d5-2086b61c70bd",
+        "8c0c7170-5202-43ea-a546-4a14ade34222",
+        "9bf8875c-de5d-4c14-a8d0-465931f28e51",
+        "d0240631-a811-4f2d-950f-3b0cb9d6b32c",
+        "60f0183a-d26b-4e95-8213-c9b29c48cafd",
+        "3d9538a3-3e19-456c-a0ad-acdc9072ed44",
+        "4e95cd05-94de-4080-b1cd-9aa07bd3fa1c",
+        "e8c1f821-50f0-45a1-aff1-cc2cea5464d2",
+        "2917efe7-506e-4f81-a4f1-41edcd323351",
+        "8f557f34-869c-4141-a9a9-d29e22dfe4b3",
+        "251eee55-89fb-44fb-a803-6171f96a7a6b",
+        "31030669-b31e-4dcf-a212-80dc7cb9b5f8"
+    ],
+    "filterType": "GMScript",
+    "folderName": "GMUI_Effects",
+    "isDefaultView": false,
+    "localisedFolderName": ""
+}

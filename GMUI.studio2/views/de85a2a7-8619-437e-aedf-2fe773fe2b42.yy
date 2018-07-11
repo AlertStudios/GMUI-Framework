@@ -1,10 +1,10 @@
 {
-    "id": "69dab9b9-5657-4cb0-8402-d71bfc8c9cbb",
+    "id": "de85a2a7-8619-437e-aedf-2fe773fe2b42",
     "modelName": "GMFolder",
     "mvc": "1.1",
-    "name": "69dab9b9-5657-4cb0-8402-d71bfc8c9cbb",
+    "name": "de85a2a7-8619-437e-aedf-2fe773fe2b42",
     "children": [
-        "ed6f94b6-486b-4b59-9604-bf187fc74ddd"
+        "31b7a92a-02b8-4f61-ae43-773b06a4c352"
     ],
     "filterType": "GMScript",
     "folderName": "Demo Interfaces",

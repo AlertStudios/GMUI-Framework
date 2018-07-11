@@ -1,5 +1,5 @@
 {
-    "id": "ff6deedb-227d-40aa-8774-5d853fc3d57f",
+    "id": "cd57133e-c113-4560-8054-c6de7f441880",
     "modelName": "GMScript",
     "mvc": "1.0",
     "name": "GMUI_GroupMouseOnScrollbar",

@@ -1,5 +1,5 @@
 {
-    "id": "8a076a15-d923-4cd5-8254-904c32f5ccb7",
+    "id": "a4be1c46-e618-48eb-a8ca-ed270eb2326e",
     "modelName": "GMScript",
     "mvc": "1.0",
     "name": "GMUI_ResetControlStatus",

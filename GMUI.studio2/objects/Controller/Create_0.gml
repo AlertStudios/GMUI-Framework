@@ -10,7 +10,7 @@ if (instance_number(self) > 1) {
 }
 
 // Start GMUI (only needed once per game)
-GMUI_Init();
+GMUI_Init(GMUI_control);
 
 // GMUI_Init also calls GMUI_Settings() and GMUI_SetLayerDepths()
 // for further customization.
@@ -28,5 +28,5 @@ global.showsurface = 0;
 
 
 // Call initiation script with name and cell size of 16 (or use 0 for default size). Returns the GMUI id.
-newGMUI = GMUI_Create(GMUI,_Test_Form,16,0); // e.g. newGMUI will have id of 1
+newGMUI = GMUI_Create(GMUI,_Demo_Form,16,0); // e.g. newGMUI will have id of 1
 

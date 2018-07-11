@@ -1,5 +1,5 @@
 {
-    "id": "8b5baaa2-80f4-476a-b99e-a4a78c13f890",
+    "id": "842cfa66-aaef-469f-97b7-75fa9bcfceb1",
     "modelName": "GMScript",
     "mvc": "1.0",
     "name": "GMUI_ControlToggleUpdate",

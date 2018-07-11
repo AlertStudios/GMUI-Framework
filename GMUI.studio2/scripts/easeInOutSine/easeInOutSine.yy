@@ -1,5 +1,5 @@
 {
-    "id": "26f55e71-7405-490b-a22e-6e3743e69300",
+    "id": "408beafd-ccff-4afa-85c3-575bd0dde237",
     "modelName": "GMScript",
     "mvc": "1.0",
     "name": "easeInOutSine",

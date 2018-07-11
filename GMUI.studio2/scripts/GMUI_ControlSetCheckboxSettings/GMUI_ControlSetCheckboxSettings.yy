@@ -1,5 +1,5 @@
 {
-    "id": "5972efff-6e78-4fb1-bb7a-37bfd6dbb468",
+    "id": "6ebbe1ad-2174-411a-aa79-105fcefaf6ac",
     "modelName": "GMScript",
     "mvc": "1.0",
     "name": "GMUI_ControlSetCheckboxSettings",

@@ -1,8 +1,8 @@
 {
-    "id": "e8916780-d5ad-4851-b905-366235af8d4b",
+    "id": "31b7a92a-02b8-4f61-ae43-773b06a4c352",
     "modelName": "GMScript",
     "mvc": "1.0",
-    "name": "GMUI_GroupSetDefaultStyle",
+    "name": "_Demo_Form",
     "IsCompatibility": false,
     "IsDnD": false
 }

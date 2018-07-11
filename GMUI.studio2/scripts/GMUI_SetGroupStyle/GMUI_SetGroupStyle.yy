@@ -1,5 +1,5 @@
 {
-    "id": "1da826af-4aca-4975-b4a9-fdc64f352fea",
+    "id": "dae915a1-d2b8-47c6-b8ec-65ce91c54484",
     "modelName": "GMScript",
     "mvc": "1.0",
     "name": "GMUI_SetGroupStyle",

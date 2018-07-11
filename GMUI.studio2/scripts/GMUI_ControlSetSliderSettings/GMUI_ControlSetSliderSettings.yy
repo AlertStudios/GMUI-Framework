@@ -1,5 +1,5 @@
 {
-    "id": "ca9a4f3e-d08f-4c4b-9344-bfa1638c1791",
+    "id": "5bdc0a7e-ef4d-4d7a-b3a1-9255210c71c8",
     "modelName": "GMScript",
     "mvc": "1.0",
     "name": "GMUI_ControlSetSliderSettings",

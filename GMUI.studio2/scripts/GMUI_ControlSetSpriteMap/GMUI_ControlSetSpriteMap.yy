@@ -1,5 +1,5 @@
 {
-    "id": "218ad1a3-9276-4add-88c7-964d8ece6aee",
+    "id": "40c635cd-6c51-48c7-8b68-84f732cf4dea",
     "modelName": "GMScript",
     "mvc": "1.0",
     "name": "GMUI_ControlSetSpriteMap",

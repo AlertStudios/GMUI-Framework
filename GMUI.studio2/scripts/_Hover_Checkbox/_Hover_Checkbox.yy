@@ -1,5 +1,5 @@
 {
-    "id": "2b1f2430-efa2-422a-9a9b-74e48402e910",
+    "id": "b6adeab6-c624-4b9a-8f51-72018b3d53dc",
     "modelName": "GMScript",
     "mvc": "1.0",
     "name": "_Hover_Checkbox",

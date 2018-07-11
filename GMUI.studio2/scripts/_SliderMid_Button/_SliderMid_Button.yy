@@ -1,5 +1,5 @@
 {
-    "id": "3b8cba6c-13db-47f8-9469-a153b1cdf930",
+    "id": "23ded0db-7964-4f92-ade5-b9110e797394",
     "modelName": "GMScript",
     "mvc": "1.0",
     "name": "_SliderMid_Button",

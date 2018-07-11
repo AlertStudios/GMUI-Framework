@@ -1,5 +1,5 @@
 {
-    "id": "ce1d0326-9e5d-49aa-b0f1-5343de3377d8",
+    "id": "a79ffd8a-5562-4570-b16b-fe72fff83ff3",
     "modelName": "GMScript",
     "mvc": "1.0",
     "name": "GMUI_ItemListSelectAction",

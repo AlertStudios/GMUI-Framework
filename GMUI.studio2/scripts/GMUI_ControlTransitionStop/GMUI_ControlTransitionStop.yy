@@ -1,5 +1,5 @@
 {
-    "id": "f3862a83-4e5a-4be4-9917-9556335e1af6",
+    "id": "3d9538a3-3e19-456c-a0ad-acdc9072ed44",
     "modelName": "GMScript",
     "mvc": "1.0",
     "name": "GMUI_ControlTransitionStop",

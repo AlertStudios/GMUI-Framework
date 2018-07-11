@@ -1,8 +1,8 @@
 {
-    "id": "ed6f94b6-486b-4b59-9604-bf187fc74ddd",
+    "id": "9ac84abe-230a-4f79-ab70-451abc87890f",
     "modelName": "GMScript",
     "mvc": "1.0",
-    "name": "_Test_Form",
+    "name": "GMUI_SetDoubleSelect",
     "IsCompatibility": false,
     "IsDnD": false
 }

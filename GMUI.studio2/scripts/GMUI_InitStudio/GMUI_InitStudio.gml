@@ -9,60 +9,80 @@
 //
 //
 
-if (global.GMUIGameMaker8)
-    return false;
+// THIS SCRIPT ONLY RUNS IN GM:STUDIO:
+global.GMUIGameMaker8 = false;
 
-    
-    
-// THE REST OF THIS SCRIPT ONLY EXISTS IN GM:STUDIO:
 
 // Common GMUI values:
+enum GMUIControl {
+    IntPicker = -1,
+    DoublePicker = -2,
+    SpritePicker = -3,
+    TextInt = -4,
+    TextDecimal = -5,
+    TextString = -6,
+    Button= -7,
+    TextButton = -8,
+    Slider = -9,
+    Toggle = -10,
+    Checkbox = -11,
+    Sprite = -12,
+    Image = -13,
+    Dropdown = -14,
+    SelectList = -15,
+    Label = -16,
+    Tooltip = -17
+}
 
 // AHOY MATEYS - Please note that the cell#'s for new controls are relative to their anchor position
-//global.GMUIAnchorRight = 1;
-//global.GMUIAnchorTopRight = 2;
-//global.GMUIAnchorTop = 3;
-//global.GMUIAnchorTopLeft = 4;
-//global.GMUIAnchorLeft = 5;
-//global.GMUIAnchorBottomLeft = 6;
-//global.GMUIAnchorBottom = 7;
-//global.GMUIAnchorBottomRight = 8;
-//global.GMUIAnchorCenter = 9;
-//global.GMUIAnchorDefault = global.GMUIAnchorTopLeft;
+enum GMUIAnchor {
+    Right = 1, //global.GMUIAnchorRight
+    TopRight = 2, //global.GMUIAnchorTopRight
+    Top = 3, //global.GMUIAnchorTop
+    TopLeft = 4, //global.GMUIAnchorTopLeft
+    Left = 5, //global.GMUIAnchorLeft
+    BottomLeft = 6, //global.GMUIAnchorBottomLeft
+    Bottom = 7, //global.GMUIAnchorBottom
+    BottomRight = 8, //global.GMUIAnchorBottomRight
+    Center = 9, //global.GMUIAnchorCenter
+    Default = 10 //global.GMUIAnchorDefault
+}
 
-// Hovering directions for special controls
-//global.GMUIHoveringDirection_None = 0;
-//global.GMUIHoveringDirection_Right = 1;
-//global.GMUIHoveringDirection_Up = 2;
-//global.GMUIHoveringDirection_Left = 3;
-//global.GMUIHoveringDirection_Down = 4;
+enum GMUIDirection {
+    Horizontal = 0, //global.GMUIDirectionTypeHorizontal
+    Vertical = 1, //global.GMUIDirectionTypeVertical
+    SideVertical = 2, //global.GMUIDirectionTypeSideVertical
+    Both = 3 //global.GMUIDirectionTypeBoth
+}
 
-// Direction types
-//global.GMUIDirectionTypeHorizontal = 0;
-//global.GMUIDirectionTypeVertical = 1;
-//global.GMUIDirectionTypeSideVertical = 2;
-//global.GMUIDirectionTypeBoth = 3;
+enum GMUIPopup {
+    Blank = -1, //global.GMUIPopupBlank
+    Information = 0, //global.GMUIPopupInformation
+    Confirm = 1, //global.GMUIPopupConfirm
+    ThreeOptions = 2 //global.GMUIPopupThreeOptions
+}
 
-// Control datatypes
-//global.GMUIDataTypeString = 0;
-//global.GMUIDataTypeInteger = 1;
-//global.GMUIDataTypeDecimal = 2;
-//global.GMUIDataTypeButton = 3;
-//global.GMUIDataTypeInfo = 4;
-//global.GMUIDataTypeBoolean = 5;
+enum GMUIData {
+    String = 0,//global.GMUIDataTypeString
+    Integer = 1,//global.GMUIDataTypeInteger
+    Decimal = 2,//global.GMUIDataTypeDecimal
+    Button = 3,//global.GMUIDataTypeButton
+    Info = 4,//global.GMUIDataTypeInfo
+    Boolean = 5//global.GMUIDataTypeBoolean
+}
 
-// PopupTypes
-//global.GMUIPopupBlank = -1;
-//global.GMUIPopupInformation = 0;
-//global.GMUIPopupConfirm = 1;
-//global.GMUIPopupThreeOptions = 2;
+enum GMUISlideShape {
+    None = -1, //global.GMUISlideNone
+    Line = -2, //global.GMUISlideLine
+    Rectangle = -3, //global.GMUISlideRect
+    RoundRectangle = -4, //global.GMUISlideRoundRect
+    FullRoundRectangle = -5 //global.GMUISlideFullRoundRect
+}
 
-// Slide shapes
-//global.GMUISlideNone = -1;
-//global.GMUISlideLine = -2;
-//global.GMUISlideRect = -3;
-//global.GMUISlideRoundRect = -4;
-//global.GMUISlideFullRoundRect = -5;
-
+enum GMUIOverflow {
+    None = 0, //global.GMUIOverflowNone
+    Resize = 1, //global.GMUIOverflowResize
+    Scroll = 2 //global.GMUIOverflowScroll
+}
 
 

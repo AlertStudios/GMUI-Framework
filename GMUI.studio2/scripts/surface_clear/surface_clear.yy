@@ -1,5 +1,5 @@
 {
-    "id": "0d5e9fd1-ee8c-4793-b2a6-1cb51d7afca4",
+    "id": "dd8f7d7d-dbfc-45a2-b5f3-05b3c64bd80c",
     "modelName": "GMScript",
     "mvc": "1.0",
     "name": "surface_clear",

@@ -1,5 +1,5 @@
 {
-    "id": "489e220d-f6d4-4d3f-9dba-ede026c26ee1",
+    "id": "d7c9b525-ef2e-4243-868e-3181efc41dfe",
     "modelName": "GMScript",
     "mvc": "1.0",
     "name": "GMUI_MouseInAdjustedRegion",

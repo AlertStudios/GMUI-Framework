@@ -1,5 +1,5 @@
 {
-    "id": "81718189-dedd-4ee7-9009-e9a464f41073",
+    "id": "40d038ba-0545-428e-82b7-a5e05828b696",
     "modelName": "GMScript",
     "mvc": "1.0",
     "name": "GMUI_ControlAddToMenuType",

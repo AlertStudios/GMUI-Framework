@@ -1,5 +1,5 @@
 {
-    "id": "6080c27e-6500-4db8-a207-286f4c7a2e4d",
+    "id": "26702412-39c0-4b90-9591-2a88acffffaa",
     "modelName": "GMScript",
     "mvc": "1.0",
     "name": "GMUI_ControlSliderUpdate",

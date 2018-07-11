@@ -1,5 +1,5 @@
 {
-    "id": "46ff05eb-9014-4340-9da3-968050bafc25",
+    "id": "feee0d27-9816-4438-ab61-1f9ea1fa16b3",
     "modelName": "GMScript",
     "mvc": "1.0",
     "name": "GMUI_SwitchToMenu",
