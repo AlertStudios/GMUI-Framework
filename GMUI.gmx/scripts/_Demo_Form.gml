@@ -320,4 +320,3 @@ GMUI_PopupSetHidePosition("Test Popup", -14, 0, easeExpOut, room_speed/4);
 //GMUI_ControlAddToPopup("Test Popup");}
 //GMUI_PopupSetClickOff("Test Popup", false); // False is default
 
-

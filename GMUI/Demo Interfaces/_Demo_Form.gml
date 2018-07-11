@@ -1,9 +1,9 @@
-///_Test_Form() This interface is for the demo
+///_Test_Form() This interface is from the demo
 
 // DEMO INTERFACE:
 
 // Set optional grid settings
-GMUI_GridSetNavigation(global.GMUIDirectionTypeVertical,vk_up,vk_down,vk_left,vk_right,true);
+GMUI_SetKeyNavigation(global.GMUIDirectionTypeVertical,vk_up,vk_down,vk_left,vk_right,true);
 
 /*
 

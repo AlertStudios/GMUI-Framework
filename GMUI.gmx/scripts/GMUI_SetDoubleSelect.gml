@@ -12,4 +12,3 @@ if (global.GMUIii > 0)
     GMUIAllowDoubleSelect = _opt;
 else
     global.GMUIAllowDoubleSelect = _opt;
-

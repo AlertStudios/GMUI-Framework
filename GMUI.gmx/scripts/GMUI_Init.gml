@@ -1,21 +1,26 @@
-///GMUI_Init() Call this initialization script before creating any GMUI interfaces
+///GMUI_Init(Controls Object) Call this initialization script before creating any GMUI interfaces
 //
 // !WARNING! MODIFYING THE GMUI SCRIPTS CAN BREAK FUNCTIONALITY AND CAUSE ERRORS! TRY TO EDIT THE OBJECTS INSTEAD!
 //
-// Copyright 2016-2018 Alert Studios (Mark Palnau). Initially designed by Alert Studios and released as Open-Source.
+// Copyright 2017-2018 Alert Studios (Mark Palnau). Initially designed by Alert Studios and released as Open-Source.
 //
 // If you would like to help make GMUI better, please submit a ticket or pull request on the project on GitHub!
 // https://github.com/AlertStudios/GMUI-Framework
 //
 //
 
-// SET THIS VALUE TO TRUE IF RUNNING IN GAME MAKER 8.x
-global.GMUIGameMaker8 = false;
-
-
 // Index of global GMUI's
 global.GMUIii = 0;
 
+// CALL DEFAULT SCRIPTS:
+// EACH SHOULD CHECK FOR iid > 0. If 0, set global value otherwise set local
+GMUI_SetConfirmKey(vk_enter);
+GMUI_SetControlObject(argument0);
+GMUI_SetDepth(-9999);
+GMUI_SetDoubleSelect(true);
+GMUI_DisableNavigation();
+GMUI_SetViewSnap(true,0);
+GMUI_UseSurfaces(true);
 
 // Common GMUI values:
 
@@ -70,4 +75,12 @@ global.GMUISlideFullRoundRect = -5;
 global.GMUIOverflowNone = 0;
 global.GMUIOverflowResize = 1;
 global.GMUIOverflowScroll = 2;
+
+
+// THIS VALUE WILL REMAIN TRUE IF RUNNING IN GAME MAKER 8.x
+global.GMUIGameMaker8 = true;
+
+// If studio, the flag will change to false and define the enums
+GMUI_InitStudio();
+
 

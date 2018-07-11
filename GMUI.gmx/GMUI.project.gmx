@@ -57,6 +57,16 @@
           <script>scripts\GMUI_LayerTransitionToXY.gml</script>
           <script>scripts\GMUI_Transition.gml</script>
         </scripts>
+        <scripts name="GMUI_Settings">
+          <script>scripts\GMUI_DisableNavigation.gml</script>
+          <script>scripts\GMUI_SetConfirmKey.gml</script>
+          <script>scripts\GMUI_SetControlObject.gml</script>
+          <script>scripts\GMUI_SetDepth.gml</script>
+          <script>scripts\GMUI_SetDoubleSelect.gml</script>
+          <script>scripts\GMUI_SetKeyNavigation.gml</script>
+          <script>scripts\GMUI_SetViewSnap.gml</script>
+          <script>scripts\GMUI_UseSurfaces.gml</script>
+        </scripts>
         <scripts name="GMUI_Shortcuts">
           <script>scripts\rgb.gml</script>
           <script>scripts\hsv.gml</script>
@@ -297,7 +307,7 @@
       <script>scripts\_Test_Button.gml</script>
     </scripts>
     <scripts name="My Interfaces">
-      <script>scripts\_Test_Form.gml</script>
+      <script>scripts\_Demo_Form.gml</script>
     </scripts>
   </scripts>
   <fonts name="fonts">

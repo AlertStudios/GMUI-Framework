@@ -42,7 +42,13 @@ UIAddToLayer = 0;
 UIInterfaceSet = false;
 
 // Other specific functionality settings that can be turned off if unwanted
-GMUI_Settings(argument0);
+GMUI_Settings();
+GMUI_SetConfirmKey(global.GMUIConfirmKey);
+GMUI_SetControlObject(global.GMUI_controlobject);
+GMUI_SetDepth(global.GMUIDepth);
+GMUI_SetDoubleSelect(global.GMUIAllowDoubleSelect);
+GMUI_SetViewSnap(global.UIsnaptoview, global.UIgridview);
+GMUI_UseSurfaces(global.UIEnableSurfaces);
 
 // Set the default layering depths
 GMUI_SetLayerDepths();

@@ -20,4 +20,3 @@ else {
     global.UIsnaptoview = _enable;
     global.UIgridview = _view;
 }
-

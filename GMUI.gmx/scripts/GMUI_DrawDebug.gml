@@ -25,25 +25,25 @@ if (DebugData && !RemovingGMUI) {
         draw_text(view_wview[0]/2+xoffset,view_hview[0]-64+yoffset,string(GMUI_ErrorNumber) + ".) " + GMUI_LastError());
     }
     
-    var groupId, layer, i, m, ff, ffo;
+    var groupId, _layer, i, m, ff, ffo;
     
     // draw the group boundaries
     color_alpha(c_green,0.5);
     for(i=0;i<ds_list_size((GMUII()).GMUI_gridlist);i+=1) {
-        layer = ds_list_find_value((GMUII()).GMUI_gridlist,i);
-        if (layer >= (GMUII()).GMUI_menu_layer)
+        _layer = ds_list_find_value((GMUII()).GMUI_gridlist,i);
+        if (_layer >= (GMUII()).GMUI_menu_layer)
             color_alpha(c_lime,0.25);
         
-        for(j=0;j<ds_list_size((GMUII()).GMUI_groupList[layer]);j+=1) {
-            groupId = ds_list_find_value((GMUII()).GMUI_groupList[layer],j);
+        for(j=0;j<ds_list_size((GMUII()).GMUI_groupList[_layer]);j+=1) {
+            groupId = ds_list_find_value((GMUII()).GMUI_groupList[_layer],j);
             
             draw_rectangle(
-                (GMUII()).GMUI_groupActualX[layer,groupId] + (GMUII()).GMUI_grid_x[layer] + xoffset,
-                (GMUII()).GMUI_groupActualY[layer,groupId] + (GMUII()).GMUI_grid_y[layer] + yoffset,
-                (GMUII()).GMUI_groupActualX[layer,groupId] + 
-                    (GMUII()).GMUI_groupCellsW[layer,groupId]*(GMUII()).cellsize + (GMUII()).GMUI_grid_x[layer] + xoffset,
-                (GMUII()).GMUI_groupActualY[layer,groupId] + 
-                    (GMUII()).GMUI_groupCellsH[layer,groupId]*(GMUII()).cellsize_h + (GMUII()).GMUI_grid_y[layer] + yoffset,
+                (GMUII()).GMUI_groupActualX[_layer,groupId] + (GMUII()).GMUI_grid_x[_layer] + xoffset,
+                (GMUII()).GMUI_groupActualY[_layer,groupId] + (GMUII()).GMUI_grid_y[_layer] + yoffset,
+                (GMUII()).GMUI_groupActualX[_layer,groupId] + 
+                    (GMUII()).GMUI_groupCellsW[_layer,groupId]*(GMUII()).cellsize + (GMUII()).GMUI_grid_x[_layer] + xoffset,
+                (GMUII()).GMUI_groupActualY[_layer,groupId] + 
+                    (GMUII()).GMUI_groupCellsH[_layer,groupId]*(GMUII()).cellsize_h + (GMUII()).GMUI_grid_y[_layer] + yoffset,
                 true);
         }
     }
@@ -55,21 +55,6 @@ if (DebugData && !RemovingGMUI) {
             draw_rectangle(RoomX, RoomY, RoomW, RoomH, 1);
         }
     }
-    /*ff = ds_map_find_first((_GID).GMUI_map);
-    if (string(ff) != "0") {
-        // Set all controls' hover variable to false
-        ms = ds_map_size((_GID).GMUI_map);
-        for (m=0; m < ms; m+=1) {
-            if (string(ff) != "0" && GMUI_StudioCheckDefined(ff)) {
-                ffo = ds_map_find_value((_GID).GMUI_map,ff);
-                if (GMUI_StudioCheckDefined(ffo)) {
-                    draw_
-                }
-            }
-            
-            ff = ds_map_find_next((_GID).GMUI_map,ff);
-        }
-    }*/
     
 
 }

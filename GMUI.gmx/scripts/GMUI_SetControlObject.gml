@@ -15,4 +15,3 @@ else if (global.GMUIii > 0)
     GMUI_controlobject = _ctrl;
 else
     global.GMUI_controlobject = _ctrl;
-

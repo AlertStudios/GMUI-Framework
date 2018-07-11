@@ -11,4 +11,3 @@ if (global.GMUIii > 0)
     UIEnableSurfaces = _opt;
 else
     global.UIEnableSurfaces = _opt;
-

@@ -17,4 +17,3 @@ if (global.GMUIii > 0)
     GMUIConfirmKey = _key;
 else
     global.GMUIConfirmKey = _key;
-
