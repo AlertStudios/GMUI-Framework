@@ -8,7 +8,8 @@
         "de85a2a7-8619-437e-aedf-2fe773fe2b42",
         "dee8c014-ab7d-4391-8521-563be1e2b337",
         "99eb2227-e4fc-420c-8fe1-ce996d5f7dfd",
-        "3b9b74c6-f6cc-40b7-b1ac-9fab7d410a01"
+        "3b9b74c6-f6cc-40b7-b1ac-9fab7d410a01",
+        "52dc8cb3-80f1-4b64-82bd-6ad1e066906c"
     ],
     "filterType": "GMScript",
     "folderName": "GMUI",

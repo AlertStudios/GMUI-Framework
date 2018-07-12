@@ -29,10 +29,6 @@
           <file>_Test_Button.gml</file>
           <folders />
         </folder>
-        <folder folderName="Demo Interfaces">
-          <file>_Demo_Form.gml</file>
-          <folders />
-        </folder>
         <folder folderName="GMUI_DeveloperCalls">
           <file>GMUIself.gml</file>
           <file>GMUI_Add.gml</file>
