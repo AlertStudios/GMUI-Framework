@@ -288,7 +288,6 @@
           <file>GMUI_ShowMenuId.gml</file>
           <file>GMUI_ShowPopup.gml</file>
           <file>GMUI_ShowPopupId.gml</file>
-          <file>GMUI_StudioCheckDefined.gml</file>
           <file>GMUI_ThrowError.gml</file>
           <file>GMUI_ThrowErrorDetailed.gml</file>
           <file>GMUI_ValidCellBounds.gml</file>

@@ -7,5 +7,5 @@ if (global.GMUIGameMaker8)
     return true;
 
 //Studio: UNCOMMENT THE NEXT LINE IN GM:STUDIO
-//return !is_undefined(a0);
+return !is_undefined(a0);
 

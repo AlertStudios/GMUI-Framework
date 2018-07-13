@@ -11,6 +11,7 @@ if (instance_number(self) > 1) {
 
 // Start GMUI (only needed once per game)
 GMUI_Init(GMUI_control);
+//GMUI_UseSurfaces(false);
 
 // GMUI_Init also calls GMUI_Settings() and GMUI_SetLayerDepths()
 // for further customization.

@@ -316,6 +316,7 @@ if (GMUI_GridEnabled())
                     if (surface_exists(GMUI_gridSurface[_l])) {
                         // Adjust surface position to view if enabled, with alpha if set
                         if (GMUI_grid_alpha[_l] == 1) {
+							draw_set_alpha(1);
                             draw_surface(GMUI_gridSurface[_l],
                                 GMUI_grid_x[_l]+view_xview[UIgridview]*UIsnaptoview,
                                 GMUI_grid_y[_l]+view_yview[UIgridview]*UIsnaptoview);
