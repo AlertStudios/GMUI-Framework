@@ -1,7 +1,7 @@
 # ![-](docs/GMUI_pic_160_w.png) GMUI-Framework
 ## The Best Programmable Interface for Game Maker (Studio 2.x, 1.x & GM8!)
 
-**INSTRUCTIONS: For the manual, please take a look at [the wiki](/wiki)**
+**INSTRUCTIONS: For the manual, please take a look at [the wiki](../../wiki)**
 
 **Please note: New features and shortcuts can be added all the time! Take a look at the wiki for the latest documentation!**
 
