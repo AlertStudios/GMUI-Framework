@@ -1,7 +1,7 @@
-# GMUI-Framework
-## The Best Programmable Interface for Game Maker (Studio 1.x & GM8!)
+# ![-](docs/GMUI_pic_160_w.png) GMUI-Framework
+## The Best Programmable Interface for Game Maker (Studio 2.x, 1.x & GM8!)
 
-**Notice: Some of the documentation will be moved into a separate wiki soon for better reference!**
+**INSTRUCTIONS: For the manual, please take a look at [the wiki](/wiki)**
 
 **Please note: New features and shortcuts can be added all the time! Take a look at the wiki for the latest documentation!**
 
@@ -244,3 +244,5 @@ There are a number of features still left to implement, including:
 - Formatting on the decimal field in the Studio version is not working properly
 - Issue in GM:Studio version where switching rooms/adjusting layer may cause fade actions to affect all layers
 - Moving the view (arrow keys) may negate menu functionality
+
+Please look at the issues list in the Repo to see all outstanding issues or report a new issue. Thanks! :)
