@@ -1,46 +1,217 @@
+#define GMUI_DisableNavigation
+///GMUI_DisableNavigation()
+///Disable the ability to tab or navigate controls
+
+var _set;
+
+if (global.GMUIii > 0)
+    GMUIEnableTabbing = false;
+else
+    global.GMUIEnableTabbing = false;
+
+#define GMUI_Init
+///GMUI_Init(Controls Object) Call this initialization script before creating any GMUI interfaces
+//
+// !WARNING! MODIFYING THE GMUI SCRIPTS CAN BREAK FUNCTIONALITY AND CAUSE ERRORS! TRY TO EDIT THE OBJECTS INSTEAD!
+//
+// Copyright 2017-2018 Alert Studios (Mark Palnau). Initially designed by Alert Studios and released as Open-Source.
+//
+// If you would like to help make GMUI better, please submit a ticket or pull request on the project on GitHub!
+// https://github.com/AlertStudios/GMUI-Framework
+//
+//
+
+// Index of global GMUI's
+global.GMUIii = 0;
+
+// CALL DEFAULT SCRIPTS:
+// EACH SHOULD CHECK FOR iid > 0. If 0, set global value otherwise set local
+GMUI_SetConfirmKey(vk_enter);
+GMUI_SetControlObject(argument0);
+GMUI_SetDepth(-9999);
+GMUI_SetDoubleSelect(true);
+GMUI_DisableNavigation();
+GMUI_SetViewSnap(true,0);
+GMUI_UseSurfaces(true);
+
+// Optionally specified defaults script
+global.GMUIDefaults = -1;
+
+// Common GMUI values:
+
+// AHOY MATEYS - Please note that the cell#'s for new controls are relative to their anchor position
+global.GMUIAnchorRight = 1;
+global.GMUIAnchorTopRight = 2;
+global.GMUIAnchorTop = 3;
+global.GMUIAnchorTopLeft = 4;
+global.GMUIAnchorLeft = 5;
+global.GMUIAnchorBottomLeft = 6;
+global.GMUIAnchorBottom = 7;
+global.GMUIAnchorBottomRight = 8;
+global.GMUIAnchorCenter = 9;
+global.GMUIAnchorDefault = global.GMUIAnchorTopLeft;
+
+// Hovering directions for special controls
+global.GMUIHoveringDirection_None = 0;
+global.GMUIHoveringDirection_Right = 1;
+global.GMUIHoveringDirection_Up = 2;
+global.GMUIHoveringDirection_Left = 3;
+global.GMUIHoveringDirection_Down = 4;
+
+// Direction types
+global.GMUIDirectionTypeHorizontal = 0;
+global.GMUIDirectionTypeVertical = 1;
+global.GMUIDirectionTypeSideVertical = 2;
+global.GMUIDirectionTypeBoth = 3;
+global.GMUIDirectionTypeNone = -1;
+
+// Control datatypes
+global.GMUIDataTypeString = 0;
+global.GMUIDataTypeInteger = 1;
+global.GMUIDataTypeDecimal = 2;
+global.GMUIDataTypeButton = 3;
+global.GMUIDataTypeInfo = 4;
+global.GMUIDataTypeBoolean = 5;
+
+// PopupTypes
+global.GMUIPopupBlank = -1;
+global.GMUIPopupInformation = 0;
+global.GMUIPopupConfirm = 1;
+global.GMUIPopupThreeOptions = 2;
+
+// Slide shapes
+global.GMUISlideNone = -1;
+global.GMUISlideLine = -2;
+global.GMUISlideRect = -3;
+global.GMUISlideRoundRect = -4;
+global.GMUISlideFullRoundRect = -5;
+
+// Overflow types
+global.GMUIOverflowNone = 0;
+global.GMUIOverflowResize = 1;
+global.GMUIOverflowScroll = 2;
+
+
+// THIS VALUE WILL REMAIN TRUE IF RUNNING IN GAME MAKER 8.x
+global.GMUIGameMaker8 = true;
+
+// If studio, the flag will change to false and define the enums
+GMUI_InitStudio();
+
+
+
+#define GMUI_SetConfirmKey
+///GMUI_SetConfirmKey(confirmation key: vk_* or vk_nokey to disable)
+///Key to automatically submit the form (WIP)
+
+var _key, _set;
+_key = argument0;
+
+if (!is_real(_key))
+    _key = vk_nokey;
+
+if (global.GMUIii > 0)
+    _set = id;
+else
+    _set = global;
+
+// Key will deselect the control and execute
+if (global.GMUIii > 0)
+    GMUIConfirmKey = _key;
+else
+    global.GMUIConfirmKey = _key;
+
 #define GMUI_SetControlDefaults
-///GMUI_SetControlDefaults() Sets the default values for all controls if they are not specified in GMUI_Form
+///GMUI_SetControlDefaults() Sets default values for all controls in GMUI instance if not specified in the interface
 
-// ! NOTE ! These values must pass validation or else errors will occur!
+if (script_exists(argument0))
+    global.GMUIDefaults = argument0;
+else
+    GMUI_ThrowErrorDetailed("Defaults script doesn't exist", GMUI_SetControlDefaults);
 
-// Set the default control styling (Background Color, Border color, Hover color, hover border/rect, hover alpha,
-// overwrite color, overwrite alpha, select color, select alpha, 
-// showcursor)
-GMUI_ControlSetStyle(
-    rgb(250,250,255),hsv(135,30,100),rgb(20,160,230),true,0.5,
-    rgb(40,40,40),0.1,rgb(240,140,40),0.3,
-    true
-    );
-    
-// Default sprite options
-GMUI_ControlSetSpriteExt(-1,0,0,0,1,1,c_white,1);
-GMUI_ControlSetSpriteMap(-1,-1,-1,-1,-1,-1,-1,-1,-1,false);
+#define GMUI_SetControlObject
+///GMUI_SetControlObject(object of which controls are created with)
 
-// Default font style (font, font color, font align)
-GMUI_ControlSetFontStyle(fontNumeric,rgb(42,42,42), fa_left);
+var _ctrl;
+_ctrl = argument0;
 
-// Set the default control attributes(id, Max string length/Whole number padding(KEEP @ 0!), max decimal (if applicable), Min value, Max value)
-GMUI_ControlSetAttributes(0,0,0,999);
+// Set controlobject if it exists
+if (!object_exists(_ctrl)) {
+    GMUI_ThrowErrorDetailed("Control object provided does not exist", GMUI_SetControlObject);
+    if (global.GMUIii > 0)
+        GMUI_controlobject = -1;
+    else
+        global.GMUI_controlobject = -1;
+}
+else if (global.GMUIii > 0)
+    GMUI_controlobject = _ctrl;
+else
+    global.GMUI_controlobject = _ctrl;
 
-// Default group style can be set when called
-ControlHasGroupStyle = false;
+#define GMUI_SetDepth
+///GMUI_SetDepth(depth of bottom-most layer of instance)
+///Key to automatically submit the form (WIP)
+
+var _depth;
+_depth = argument0;
+
+if (!is_real(_depth))
+    _depth = -9999;
+
+if (global.GMUIii > 0)
+    depth = _depth;
+else
+    global.GMUIDepth = _depth;
+
+#define GMUI_SetDoubleSelect
+///GMUI_SetDoubleSelect(boolean)
+///Set double select functionality to on(true) or off(false)
+// If double selected, the control will overwrite the contents
+
+var _opt;
+_opt = argument0;
+
+if (!is_real(_opt))
+    _opt = true;
+
+if (global.GMUIii > 0)
+    GMUIAllowDoubleSelect = _opt;
+else
+    global.GMUIAllowDoubleSelect = _opt;
+
+#define GMUI_SetKeyNavigation
+///GMUI_SetKeyNavigation(direction that navigates, back key, forward key, alternate back key [or -1], alternate forward key [or -1], allow tab key)
+///Set the controls that can navigate through the list
+// Called by the GMUI instance in the form or otherwise
+
+var _navdir, _back, _forward, _backalt, _forwardalt, _allowtab;
+_navdir = minmax(argument0,0,2); // 3 and 2 count as the same
+_back = argument1;
+_forward = argument2;
+_backalt = argument3;
+_forwardalt = argument4;
+_allowtab = argument5;
+
+if (global.GMUIii > 0) {
+    GMUIEnableTabbing = true;
+    GMUI_navigateDirection = _navdir;
+    GMUI_backKey = _back;
+    GMUI_forwardKey = _forward;
+    GMUI_backAltKey = _backalt;
+    GMUI_forwardAltKey = _forwardalt;
+    GMUI_enableTab = _allowtab;
+}
+else {
+    global.GMUIEnableTabbing = true;
+    global.GMUI_navigateDirection = _navdir;
+    global.GMUI_backKey = _back;
+    global.GMUI_forwardKey = _forward;
+    global.GMUI_backAltKey = _backalt;
+    global.GMUI_forwardAltKey = _forwardalt;
+    global.GMUI_enableTab = _allowtab;
+}
 
 
-
-// Specific control initializations //
-
-// Picker controls ( region width, region height, 
-// direction type (see below), right/up sprite, left/down sprite )
-GMUI_ControlSetPicker(
-    sprite_get_width(GMUIspr_arrow) + 4,sprite_get_height(GMUIspr_arrow) + 4,
-    global.GMUIDirectionTypeSideVertical,GMUIspr_arrowup,GMUIspr_arrow
-    );
-// Direction types: global.GMUIDirectionTypeHorizontal: 0, global.GMUIDirectionTypeVertical: 1, global.GMUIDirectionTypeSideVertical: 2
-
-
-// Text Button control (Text or "", graphic in button or -1, button image sprite or -1, text alignment, hover color or -1)
-GMUI_ControlSetButton("", -1, -1, -1);
-    
 
 #define GMUI_SetLayerDepths
 ///GMUI_SetLayerDepths() Creates a set of layers with their relative depth values from the GMUI default
@@ -72,6 +243,30 @@ layerDepth_menus = layerDepth_messages - 1;
 ////layerDepth_warnings = layerDepth_popups - 1;
 
 
+#define GMUI_SetViewSnap
+///GMUI_SetViewSnap(enable adjusting to view [bool], view # to bind to)
+
+var _enable, _view;
+_enable = argument0;
+_view = argument1;
+
+if (is_real(_enable))
+    _enable = (_enable > 0);
+else
+    _enable = true;
+    
+if (!is_real(_view))
+    _view = 0;
+
+if (global.GMUIii > 0) {
+    UIsnaptoview = _enable;
+    UIgridview = _view;
+}
+else {
+    global.UIsnaptoview = _enable;
+    global.UIgridview = _view;
+}
+
 #define GMUI_Settings
 ///GMUI_Settings() Settings for GMUI - Do not delete! Modify to fit your preferences
 ///Called from the initialization of each GMUI interface.
@@ -97,6 +292,21 @@ DebugData = false;
 
 
 
+
+#define GMUI_UseSurfaces
+///GMUI_UseSurfaces(boolean)
+///Enable the use of surfaces for controls and drawing
+
+var _opt;
+_opt = argument0;
+
+if (!is_real(_opt))
+    _opt = true;
+
+if (global.GMUIii > 0)
+    UIEnableSurfaces = _opt;
+else
+    global.UIEnableSurfaces = _opt;
 
 #define GMUI_DefaultActionCancel
 // Set value of popup return to Cancel
@@ -552,161 +762,6 @@ with (GMUII()) {
 
 return true;
 
-#define GMUI_DisableNavigation
-///GMUI_DisableNavigation()
-///Disable the ability to tab or navigate controls
-
-var _set;
-
-if (global.GMUIii > 0)
-    GMUIEnableTabbing = false;
-else
-    global.GMUIEnableTabbing = false;
-
-#define GMUI_SetConfirmKey
-///GMUI_SetConfirmKey(confirmation key: vk_* or vk_nokey to disable)
-///Key to automatically submit the form (WIP)
-
-var _key, _set;
-_key = argument0;
-
-if (!is_real(_key))
-    _key = vk_nokey;
-
-if (global.GMUIii > 0)
-    _set = id;
-else
-    _set = global;
-
-// Key will deselect the control and execute
-if (global.GMUIii > 0)
-    GMUIConfirmKey = _key;
-else
-    global.GMUIConfirmKey = _key;
-
-#define GMUI_SetControlObject
-///GMUI_SetControlObject(object of which controls are created with)
-
-var _ctrl;
-_ctrl = argument0;
-
-// Set controlobject if it exists
-if (!object_exists(_ctrl)) {
-    GMUI_ThrowErrorDetailed("Control object provided does not exist", GMUI_SetControlObject);
-    if (global.GMUIii > 0)
-        GMUI_controlobject = -1;
-    else
-        global.GMUI_controlobject = -1;
-}
-else if (global.GMUIii > 0)
-    GMUI_controlobject = _ctrl;
-else
-    global.GMUI_controlobject = _ctrl;
-
-#define GMUI_SetDepth
-///GMUI_SetDepth(depth of bottom-most layer of instance)
-///Key to automatically submit the form (WIP)
-
-var _depth;
-_depth = argument0;
-
-if (!is_real(_depth))
-    _depth = -9999;
-
-if (global.GMUIii > 0)
-    depth = _depth;
-else
-    global.GMUIDepth = _depth;
-
-#define GMUI_SetDoubleSelect
-///GMUI_SetDoubleSelect(boolean)
-///Set double select functionality to on(true) or off(false)
-// If double selected, the control will overwrite the contents
-
-var _opt;
-_opt = argument0;
-
-if (!is_real(_opt))
-    _opt = true;
-
-if (global.GMUIii > 0)
-    GMUIAllowDoubleSelect = _opt;
-else
-    global.GMUIAllowDoubleSelect = _opt;
-
-#define GMUI_SetKeyNavigation
-///GMUI_SetKeyNavigation(direction that navigates, back key, forward key, alternate back key [or -1], alternate forward key [or -1], allow tab key)
-///Set the controls that can navigate through the list
-// Called by the GMUI instance in the form or otherwise
-
-var _navdir, _back, _forward, _backalt, _forwardalt, _allowtab;
-_navdir = minmax(argument0,0,2); // 3 and 2 count as the same
-_back = argument1;
-_forward = argument2;
-_backalt = argument3;
-_forwardalt = argument4;
-_allowtab = argument5;
-
-if (global.GMUIii > 0) {
-    GMUIEnableTabbing = true;
-    GMUI_navigateDirection = _navdir;
-    GMUI_backKey = _back;
-    GMUI_forwardKey = _forward;
-    GMUI_backAltKey = _backalt;
-    GMUI_forwardAltKey = _forwardalt;
-    GMUI_enableTab = _allowtab;
-}
-else {
-    global.GMUIEnableTabbing = true;
-    global.GMUI_navigateDirection = _navdir;
-    global.GMUI_backKey = _back;
-    global.GMUI_forwardKey = _forward;
-    global.GMUI_backAltKey = _backalt;
-    global.GMUI_forwardAltKey = _forwardalt;
-    global.GMUI_enableTab = _allowtab;
-}
-
-
-
-#define GMUI_SetViewSnap
-///GMUI_SetViewSnap(enable adjusting to view [bool], view # to bind to)
-
-var _enable, _view;
-_enable = argument0;
-_view = argument1;
-
-if (is_real(_enable))
-    _enable = (_enable > 0);
-else
-    _enable = true;
-    
-if (!is_real(_view))
-    _view = 0;
-
-if (global.GMUIii > 0) {
-    UIsnaptoview = _enable;
-    UIgridview = _view;
-}
-else {
-    global.UIsnaptoview = _enable;
-    global.UIgridview = _view;
-}
-
-#define GMUI_UseSurfaces
-///GMUI_UseSurfaces(boolean)
-///Enable the use of surfaces for controls and drawing
-
-var _opt;
-_opt = argument0;
-
-if (!is_real(_opt))
-    _opt = true;
-
-if (global.GMUIii > 0)
-    UIEnableSurfaces = _opt;
-else
-    global.UIEnableSurfaces = _opt;
-
 #define hsv
 ///hsv(hue, saturation, value) Shortcut for making an hsv based color
 return make_color_hsv(argument0,argument1,argument2);
@@ -1057,7 +1112,8 @@ if (_direction < 0 || _direction > 8) {
 }
 
 // Adjust sizing based on text given
-draw_set_font(((_ctrl).GMUIP).ControlFont);
+if (((_ctrl).GMUIP).ControlFont != noone)
+    draw_set_font(((_ctrl).GMUIP).ControlFont);
 gcellsize = ((_ctrl).GMUIP).cellsize;
 gcellsize_h = ((_ctrl).GMUIP).cellsize_h;
 
@@ -1482,8 +1538,8 @@ with (GMUII()) {
     }
 }
 
-#define GMUI_ControlDraw
-///GMUI_ControlDraw(Draw the control [bool])
+#define GMUI_ControlDrawEvent
+///GMUI_ControlDrawEvent(Draw the control [bool])
 /// The actions done per step for a control added to the grid, along with drawing things
 
 // STEP actions:
@@ -1496,7 +1552,7 @@ if (Transitioning) {
         if (TooltipId != -1)
             GMUI_ControlHide(TooltipId,1);
             
-        if (T_t < T_d) {
+        if (T_t < T_d && GMUIP.UIDrawAnimations) {
             T_t += 1;
             ActualX = script_execute(TransitionScript,T_t,T_bx,T_cx,T_d);
             ActualY = script_execute(TransitionScript,T_t,T_by,T_cy,T_d);
@@ -1569,7 +1625,7 @@ if (Transitioning) {
 if (FadeCalled != 0) {
     // Fade in, else, fade out
     if (FadeCalled > 0) {
-        if (FadeAlpha < FadeIn) {
+        if (FadeAlpha < FadeIn && GMUIP.UIDrawAnimations) {
             FadeAlpha += 1/FadeTime;
         }
         else {
@@ -1578,7 +1634,7 @@ if (FadeCalled != 0) {
         }
     }
     else {
-        if (FadeAlpha > FadeOut) {
+        if (FadeAlpha > FadeOut && GMUIP.UIDrawAnimations) {
             FadeAlpha -= 1/FadeTime;
         }
         else {
@@ -1663,7 +1719,10 @@ if (!Hidden) {
     else if (ControlType == "toggle" || ControlType == "checkbox") {
         // Fade or Slide update if checkbox/toggle control
         if (Toggle_t < Toggle_d) {
-            Toggle_t += 1;
+            if (GMUIP.UIDrawAnimations)
+                Toggle_t += 1;
+            else
+                Toggle_t = Toggle_d;
             GMUI_GridUpdateLayer(GMUIP,Layer);
             NeedsDrawUpdate = true;
             if (string(value) == "0")
@@ -1929,14 +1988,16 @@ if (argument0 == true) {
         
                 if (Hovering || Selected) {
                     // Draw the hovering effect
-                    if (!Selected)
+                    if (!Selected && ControlHoverColor > -1)
                         color_alpha(ControlHoverColor,_HoverAlpha);
-                    else
+                    else if (ControlSelectColor > -1)
                         color_alpha(ControlSelectColor,_SelectAlpha);
+                        
+                    if ((!Selected && ControlHoverColor > -1) || (Selected && ControlSelectColor > -1))
                     draw_rectangle(RoomX+1,RoomY+1,RoomW-1,RoomH-1, ControlHoverBorder);
                 }
                 
-                if (DoubleSelected && ControlInput) {
+                if (DoubleSelected && ControlInput && ControlOverwriteColor > -1) {
                     // Draw 'Overwrite' affect
                     color_alpha(ControlOverwriteColor,_OverwriteAlpha);
                     draw_rectangle(RoomX+2,RoomY+2,RoomW-2,RoomH-2,0);
@@ -1977,12 +2038,14 @@ if (argument0 == true) {
                 _hh = ControlPickerHeight;
             }
             else {
-                _ax1 = RoomW-2;
-                _ax3 = _ax1-ControlPickerWidth+1;
+                _ax1 = RoomW-ControlPickerWidth/2;
+                _ax3 = RoomW-2-ControlPickerWidth+1;
                 _hh = (RoomH-RoomY)/2;
             }
             if (ControlPickerDirection == global.GMUIDirectionTypeHorizontal) {
+                _ax1 = RoomW-2;
                 _ax2 = RoomX+2;
+                _ay1 = RoomY+_hh;
                 _ay2 = _ay1;
             }
             else { // GMUIDirectionTypeSideVertical or GMUIDirectionTypeVertical
@@ -1991,9 +2054,30 @@ if (argument0 == true) {
             }
             
             // Top arrow and bottom arrow
-            draw_sprite_ext(ControlPickerSpriteRightOrUp,0,_ax1,_ay1,1,1,0,c_white,_BackgroundAlpha);
-            draw_sprite_ext(ControlPickerSpriteLeftOrDown,0,_ax2,_ay2,1,1,0,c_white,_BackgroundAlpha);
+            if (ControlPickerSpriteRightOrUp > -1)
+                draw_sprite_ext(ControlPickerSpriteRightOrUp,0,_ax1,_ay1,1,1,0,c_white,_BackgroundAlpha);
+            else {
+                color_alpha(ControlBorderColor, 1);
+                if (ControlPickerDirection == global.GMUIDirectionTypeHorizontal)
+                    draw_triangle(_ax1-ControlPickerWidth/4,_ay1,
+                        _ax1-ControlPickerWidth/2,_ay1-_hh/2,_ax1-ControlPickerWidth/2,_ay1+_hh/2,0);
+                else
+                    draw_triangle(_ax1,_ay1+ControlPickerHeight/6,
+                        _ax1-ControlPickerWidth/4,_ay1+_hh/2,_ax1+ControlPickerWidth/4,_ay1+_hh/2,0);
+            }
+            if (ControlPickerSpriteLeftOrDown > -1)
+                draw_sprite_ext(ControlPickerSpriteLeftOrDown,0,_ax2,_ay2,1,1,0,c_white,_BackgroundAlpha);
+            else {
+                color_alpha(ControlBorderColor, 1);
+                if (ControlPickerDirection == global.GMUIDirectionTypeHorizontal)
+                    draw_triangle(_ax2+ControlPickerWidth/4,_ay1,
+                        _ax2+ControlPickerWidth/2,_ay1-_hh/2,_ax2+ControlPickerWidth/2,_ay1+_hh/2,0);
+                else
+                    draw_triangle(_ax1,_ay2-ControlPickerHeight/6,
+                        _ax1-ControlPickerWidth/4,_ay2-_hh/2,_ax1+ControlPickerWidth/4,_ay2-_hh/2,0);
+            }
             
+            // Top arrow and bottom arrow selection regions
             color_alpha(ControlHoverColor,_HoverAlpha);
             if (ControlPickerDirection == global.GMUIDirectionTypeHorizontal) {
                 if (HoveringDirection == global.GMUIHoveringDirection_Right)
@@ -2045,7 +2129,8 @@ if (argument0 == true) {
             midHeight = CellHigh * (GMUIP).cellsize_h / 2;
             
         // Set control font and alignment
-        draw_set_font(ControlFont);
+        if (ControlFont != noone)
+            draw_set_font(ControlFont);
         align(ControlFontAlign,ControlFontAlignV);
         
         // Specific controls may override display
@@ -2113,11 +2198,11 @@ if (argument0 == true) {
             // draw scrollbar area
             if (Scrollbar_hover) {
                 draw_set_color(Scrollbar_bgcolor_hover);
-                draw_set_alpha(Scrollbar_bgalpha_hover);
+                draw_set_alpha(min(FadeAlpha,Scrollbar_bgalpha_hover));
             }
             else {
                 draw_set_color(Scrollbar_bgcolor);
-                draw_set_alpha(Scrollbar_bgalpha);
+                draw_set_alpha(min(FadeAlpha,Scrollbar_bgalpha));
             }
             
             draw_rectangle(cx1,cy1,cx1+_sbw,cy2,0);
@@ -2125,11 +2210,11 @@ if (argument0 == true) {
             // draw scrollbar select area
             if (Scrollbar_hover) {
                 draw_set_color(Scrollbar_color_hover);
-                draw_set_alpha(Scrollbar_alpha_hover);
+                draw_set_alpha(min(FadeAlpha,Scrollbar_alpha_hover));
             }
             else {
                 draw_set_color(Scrollbar_color);
-                draw_set_alpha(Scrollbar_alpha);
+                draw_set_alpha(min(FadeAlpha,Scrollbar_alpha));
             }
             
             draw_rectangle(cx1 + 1,cy3,cx1+_sbw - 1,cy3+Scrollbar_height, 0);
@@ -2190,17 +2275,21 @@ with (GMUII()) {
     if (string(_ctrl) == "0")
         return false;
     else {
-        (_ctrl).Hidden = argument1;
-        if ((_ctrl).FadeOnHide) {
+        _ctrl.Hidden = argument1;
+        if (_ctrl.FadeOnHide) {
             if (argument1 > 0)
-                GMUI_ControlFadeOut(argument0,(_ctrl).FadeTime);
+                GMUI_ControlFadeOut(argument0,_ctrl.FadeTime);
             else
-                GMUI_ControlFadeIn(argument0,(_ctrl).FadeTime);
+                GMUI_ControlFadeIn(argument0,_ctrl.FadeTime);
         }
         else {
-            GMUI_GridUpdateLayer((_ctrl).GMUIP,(_ctrl).Layer);
-            (_ctrl).NeedsDrawUpdate = true;
+            GMUI_GridUpdateLayer(_ctrl.GMUIP,_ctrl.Layer);
+            _ctrl.NeedsDrawUpdate = true;
         }
+        
+        // Re-set the control region on the map
+        GMUI_GridSetControlRegion(GMUI_grid[_ctrl.Layer],_ctrl,!_ctrl.Hidden);
+        
         return true;
     }
 }
@@ -2295,6 +2384,9 @@ if (!GMUI_IsControl() && id != GMUII())
 
 if (GMUI_LayerExists(argument0)) {
     AdditionalLayer = argument0;
+}
+else {
+    GMUI_ThrowErrorDetailed("Layer does not exist (yet?)", GMUI_ControlPersistentToLayer);
 }
 
 #define GMUI_ControlPosition
@@ -2491,7 +2583,7 @@ return true;
 ///GMUI_ControlSetButtonAction(Action Script)
 if (!GMUI_IsControl() && id != GMUII())
 {
-    GMUI_ThrowError("Invalid control for GMUI_ControlSetButtonAction");
+    GMUI_ThrowErrorDetailed("Invalid control", GMUI_ControlSetButtonAction);
     return false;
 }
 
@@ -2500,7 +2592,29 @@ if (script_exists(argument0)) {
     return true;
 }
 else {
-    GMUI_ThrowError("Invalid script argument for GMUI_ControlSetButtonAction");
+    GMUI_ThrowErrorDetailed("Invalid script argument", GMUI_ControlSetButtonAction);
+}
+
+return false;
+    
+
+#define GMUI_ControlSetButtonAction1
+///GMUI_ControlSetButtonAction1(Action Script, script argument0)
+// Set the control button action, also with an argument
+if (!GMUI_IsControl() && id != GMUII())
+{
+    GMUI_ThrowErrorDetailed("Invalid control", GMUI_ControlSetButtonAction1);
+    return false;
+}
+
+if (script_exists(argument0)) {
+    ActionScript = argument0;
+    ActionScriptArgument = 1;
+    ActionArgument0 = argument1;
+    return true;
+}
+else {
+    GMUI_ThrowErrorDetailed("Invalid script argument", GMUI_ControlSetButtonAction1);
 }
 
 return false;
@@ -2608,7 +2722,7 @@ if (!GMUI_IsControl() && id != GMUII())
     return false;
 }
 
-if (argument0 > -1)
+if (argument0 > -1 || argument0 == noone)
     ControlFont = argument0;
 if (argument1 > -1)
     ControlFontColor = argument1;
@@ -2699,9 +2813,10 @@ if (!GMUI_IsControl() && id != GMUII())
             ControlFontAlign = fa_center;
     }
     
-    if (sprite_exists(argument3))
+    if (sprite_exists(argument3) || argument3 == noone)
         ControlPickerSpriteRightOrUp = argument3;
-    if (sprite_exists(argument4))
+        
+    if (sprite_exists(argument4) || argument4 == noone)
         ControlPickerSpriteLeftOrDown = argument4;
     
 
@@ -3419,6 +3534,8 @@ UILayerPrevious = 0;
 UIAddToLayer = 0;
 // Will only switch layer being added to until complete
 UIInterfaceSet = false;
+// Will skip the animations and fading when defining form
+UIDrawAnimations = false;
 
 // Other specific functionality settings that can be turned off if unwanted
 GMUI_Settings();
@@ -3490,8 +3607,11 @@ GMUI_map = ds_map_create();
 // List of all controls
 GMUI_controlList = ds_list_create();
 
-// Create all of the default control settings
-GMUI_SetControlDefaults();
+// Create all of the default control settings (init to GMUI defaults)
+GMUI_ControlDefaultsInit();
+// If defaults script defined, run that now
+if (global.GMUIDefaults > -1)
+    script_execute(global.GMUIDefaults);
 
 // Currently hovering or selecting on control for controls to revert if not them
 HoveringControl = -1;
@@ -3850,7 +3970,7 @@ with (argument0) {
 }
 
 #define GMUI_DrawEvent
-///GMUI_GridDraw()
+///GMUI_DrawEvent()
 ///Actions done to operate the grid, executed by the GMUI object in the draw event
 
 
@@ -3860,9 +3980,10 @@ if (GMUI_GridEnabled())
     //do grid stuff:
     
     // Assign mouse values here to easily switch out later if needed
-    var MX, MY, inRegion, onDirection, mouseHor, mouseVert, ctrlObject, clickOffEvent, mouseEvent;
+    var MX, MY, GX, inRegion, onDirection, mouseHor, mouseVert, ctrlObject, clickOffEvent, mouseEvent;
     MX = mouse_x;
     MY = mouse_y;
+    GX = 0;
     inRegion = false;
     mouseEvent = true;
     
@@ -3914,7 +4035,9 @@ if (GMUI_GridEnabled())
                             
                     }
                     else if (ctrlObject.ControlHasScrollbar) {
-                        if (MX >= ctrlObject.Scrollbar_x+GMUI_grid_x[ctrlObject.Layer] + GMUI_GridViewOffsetX(id)) {
+                        if (ctrlObject.Group > 0)
+                            _GX = GMUI_groupActualX[ctrlObject.Layer,ctrlObject.Group];
+                        if (MX >= ctrlObject.Scrollbar_x+GMUI_grid_x[ctrlObject.Layer] + GMUI_GridViewOffsetX(id) + _GX) {
                             ctrlObject.Scrollbar_hover = true;
                         }
                         else {
@@ -4037,7 +4160,9 @@ if (GMUI_GridEnabled())
                         else if (ctrlObject.ControlItemList) {
                             // For lists that have a scrollbar, check which region we are in
                             if (ctrlObject.ControlHasScrollbar) {
-                                if (MX >= ctrlObject.Scrollbar_x + GMUI_grid_x[ctrlObject.Layer] + GMUI_GridViewOffsetX(id)) {                                    
+                                if (ctrlObject.Group > 0)
+                                    _GX = GMUI_groupActualX[ctrlObject.Layer,ctrlObject.Group];
+                                if (MX >= ctrlObject.Scrollbar_x + GMUI_grid_x[ctrlObject.Layer] + GMUI_GridViewOffsetX(id) + _GX) {                                 
                                     // Drag the scrollbar
                                     var _MPos,_SPos;
                                     _MPos = MY - ctrlObject.ActualY;
@@ -4053,6 +4178,7 @@ if (GMUI_GridEnabled())
                                 else {
                                     // Select List Region click
                                     GMUI_ControlListOffset(ctrlObject, UIEnableSurfaces, MX, MY);
+                                    
                                     if (ctrlObject.ItemListHoverIndex > 0) {
                                         ctrlObject.ItemListSelectedId = ctrlObject.ItemListId[ctrlObject.ItemListHoverIndex];
                                         if (script_exists(ctrlObject.ItemListActionScript))
@@ -4168,6 +4294,7 @@ if (GMUI_GridEnabled())
                     if (surface_exists(GMUI_gridSurface[_l])) {
                         // Adjust surface position to view if enabled, with alpha if set
                         if (GMUI_grid_alpha[_l] == 1) {
+                            draw_set_alpha(1);
                             draw_surface(GMUI_gridSurface[_l],
                                 GMUI_grid_x[_l]+view_xview[UIgridview]*UIsnaptoview,
                                 GMUI_grid_y[_l]+view_yview[UIgridview]*UIsnaptoview);
@@ -4197,6 +4324,8 @@ if (GMUI_GridEnabled())
         }
     }
     
+    if (UIDrawAnimations == false)
+        UIDrawAnimations = true;
     
     
     // Check if the room size has changed to move any anchored controls positions?
@@ -4230,7 +4359,8 @@ if (DebugData && !RemovingGMUI) {
     if (GMUI_ErrorNumber > 0) {
         color_alpha(c_red,0.5);
         align(fa_center,fa_bottom);
-        draw_text(view_wview[0]/2+xoffset,view_hview[0]-64+yoffset,string(GMUI_ErrorNumber) + ".) " + GMUI_LastError());
+        draw_text_ext(view_wview[0]/2+xoffset,view_hview[0]-64+yoffset,
+            string(GMUI_ErrorNumber) + ".) " + GMUI_LastError(), -1, view_wview[0]-32);
     }
     
     var groupId, _layer, i, m, ff, ffo;
@@ -4285,7 +4415,10 @@ with (GMUII()) {
 ///GMUI_GetCurrentLayer()
 ///Returns the layer number currently viewed for the current GMUI instance
 
-return (GMUII()).UILayer;
+if (GMUII().UIInterfaceSet)
+    return (GMUII()).UILayer;
+else
+    return (GMUII()).UIAddToLayer;
 
 #define GMUI_GetValue
 ///GMUI_GetValue("ControlName")
@@ -4324,6 +4457,15 @@ _Group = argument0;
 _Layer = argument1;
 _Hide = argument2;
 
+if (!(GMUII()).UIInterfaceSet) {
+    if ((GMUII()).GMUI_groupSettingsMap[_Layer,_Group] == -1) {
+        (GMUII()).GMUI_groupSettingsMap[_Layer,_Group] = ds_map_create();
+    }
+    
+    ds_map_add((GMUII()).GMUI_groupSettingsMap[_Layer,_Group], "Hide", _Hide);
+    return true;
+}
+
 (GMUII()).GMUI_groupNeedsDrawUpdate[_Layer,_Group] = true;
 
 // Change the value for each of the controls within the group
@@ -4349,6 +4491,8 @@ for(i=0;i<ds_list_size((GMUII()).GMUI_groupControlList[_Layer,_Group]);i+=1) {
         }
     }
 }
+
+return true;
 
 #define GMUI_GroupHideOverflow
 ///GMUI_GroupHideOverflow(Group)
@@ -4639,7 +4783,7 @@ if (!GMUII().UIInterfaceSet) {
 
 // Get master control for menu if it exists
 if ((GMUII()).GMUI_groupMasterControl[_Layer,_Group] == -1) {
-    GMUI_ThrowErrorDetailed("A control is needed to set style for group: " + _Group, _SCRIPT);
+    GMUI_ThrowErrorDetailed("A control is needed to set style for group: " + string(_Group), _SCRIPT);
     return false;
 }
 
@@ -4702,94 +4846,6 @@ GMUI_GroupSetPositionAnchored(_Layer, _Group,
 
 // Resize group?
 // (Also resize if setting size after)
-
-
-
-#define GMUI_Init
-///GMUI_Init(Controls Object) Call this initialization script before creating any GMUI interfaces
-//
-// !WARNING! MODIFYING THE GMUI SCRIPTS CAN BREAK FUNCTIONALITY AND CAUSE ERRORS! TRY TO EDIT THE OBJECTS INSTEAD!
-//
-// Copyright 2017-2018 Alert Studios (Mark Palnau). Initially designed by Alert Studios and released as Open-Source.
-//
-// If you would like to help make GMUI better, please submit a ticket or pull request on the project on GitHub!
-// https://github.com/AlertStudios/GMUI-Framework
-//
-//
-
-// Index of global GMUI's
-global.GMUIii = 0;
-
-// CALL DEFAULT SCRIPTS:
-// EACH SHOULD CHECK FOR iid > 0. If 0, set global value otherwise set local
-GMUI_SetConfirmKey(vk_enter);
-GMUI_SetControlObject(argument0);
-GMUI_SetDepth(-9999);
-GMUI_SetDoubleSelect(true);
-GMUI_DisableNavigation();
-GMUI_SetViewSnap(true,0);
-GMUI_UseSurfaces(true);
-
-// Common GMUI values:
-
-// AHOY MATEYS - Please note that the cell#'s for new controls are relative to their anchor position
-global.GMUIAnchorRight = 1;
-global.GMUIAnchorTopRight = 2;
-global.GMUIAnchorTop = 3;
-global.GMUIAnchorTopLeft = 4;
-global.GMUIAnchorLeft = 5;
-global.GMUIAnchorBottomLeft = 6;
-global.GMUIAnchorBottom = 7;
-global.GMUIAnchorBottomRight = 8;
-global.GMUIAnchorCenter = 9;
-global.GMUIAnchorDefault = global.GMUIAnchorTopLeft;
-
-// Hovering directions for special controls
-global.GMUIHoveringDirection_None = 0;
-global.GMUIHoveringDirection_Right = 1;
-global.GMUIHoveringDirection_Up = 2;
-global.GMUIHoveringDirection_Left = 3;
-global.GMUIHoveringDirection_Down = 4;
-
-// Direction types
-global.GMUIDirectionTypeHorizontal = 0;
-global.GMUIDirectionTypeVertical = 1;
-global.GMUIDirectionTypeSideVertical = 2;
-global.GMUIDirectionTypeBoth = 3;
-global.GMUIDirectionTypeNone = -1;
-
-// Control datatypes
-global.GMUIDataTypeString = 0;
-global.GMUIDataTypeInteger = 1;
-global.GMUIDataTypeDecimal = 2;
-global.GMUIDataTypeButton = 3;
-global.GMUIDataTypeInfo = 4;
-global.GMUIDataTypeBoolean = 5;
-
-// PopupTypes
-global.GMUIPopupBlank = -1;
-global.GMUIPopupInformation = 0;
-global.GMUIPopupConfirm = 1;
-global.GMUIPopupThreeOptions = 2;
-
-// Slide shapes
-global.GMUISlideNone = -1;
-global.GMUISlideLine = -2;
-global.GMUISlideRect = -3;
-global.GMUISlideRoundRect = -4;
-global.GMUISlideFullRoundRect = -5;
-
-// Overflow types
-global.GMUIOverflowNone = 0;
-global.GMUIOverflowResize = 1;
-global.GMUIOverflowScroll = 2;
-
-
-// THIS VALUE WILL REMAIN TRUE IF RUNNING IN GAME MAKER 8.x
-global.GMUIGameMaker8 = true;
-
-// If studio, the flag will change to false and define the enums
-GMUI_InitStudio();
 
 
 
@@ -5327,7 +5383,7 @@ var OptionalInterfaceName; OptionalInterfaceName = argument0;
 // Assign names to the controls to reference in your code
 // e.g. SizeSlider = GMUI_Add("SizeSlider",...), then use: GMUI_GetValue("SizeSlider");
 
-// Custom controls should call Create: GMUI_ControlInit, Draw: GMUI_ControlDraw
+// Custom controls should call Draw: GMUI_ControlDrawEvent
 
 //GMUI_Add("New1" , GMUI_custom , 0 , 0 , 1 , 1 , 0 , 0 , 1 , 0 , AnchorTopLeft );
 // gmuiaddlabel ()
@@ -5739,7 +5795,10 @@ else if (!script_exists((argument0).ActionScript)) {
     GMUI_ThrowError("Invalid script assigned to " + (argument0).valueName + " : " + string((argument0).ActionScript));
 }
 else {
-    script_execute((argument0).ActionScript);
+    if ((argument0).ActionScriptArgument == 0)
+        script_execute((argument0).ActionScript);
+    else
+        script_execute((argument0).ActionScript,(argument0).ActionArgument0);
     return true;
 }
 
@@ -5805,6 +5864,47 @@ if ((GMUIP).UILayer < (GMUIP).GMUI_menu_layer || (GMUIP).UILayer != (GMUIP).GMUI
 
 return true;
     
+    
+
+#define GMUI_ControlDefaultsInit
+///GMUI_ControlDefaultsInit() Sets the GMUI default values for all controls if they are not specified in GMUI_Form
+
+// ! NOTE ! These values are the defaults provided by the framework
+// If you want to change default values, use: GMUI_SetControlDefaults()
+
+// Set the default control styling
+GMUI_ControlSetStyle(
+    rgb(250,250,255),hsv(135,30,100),rgb(20,160,230),true,0.5,
+    rgb(40,40,40),0.1,rgb(240,140,40),0.3,
+    true
+    );
+    
+// Default sprite options
+GMUI_ControlSetSpriteExt(-1,0,0,0,1,1,c_white,1);
+GMUI_ControlSetSpriteMap(-1,-1,-1,-1,-1,-1,-1,-1,-1,false);
+
+// Default font style (font, font color, font align)
+GMUI_ControlSetFontStyle(noone,rgb(42,42,42), fa_left);
+
+// Set the default control attributes
+GMUI_ControlSetAttributes(0,0,0,999);
+
+// Default group style can be set when called
+ControlHasGroupStyle = false;
+
+// Specific control initializations //
+
+// Picker controls ( region width, region height, 
+// direction type (see below), right/up sprite, left/down sprite )
+GMUI_ControlSetPicker(
+    //sprite_get_width(GMUIspr_arrow) + 4,sprite_get_height(GMUIspr_arrow) + 4,
+    cellsize * 2 + 4, cellsize_h + 4,
+    global.GMUIDirectionTypeSideVertical,noone,noone,//GMUIspr_arrowup,GMUIspr_arrow
+    );
+
+
+// Text Button control (Text or "", graphic in button, button image sprite, text alignment, hover color)
+GMUI_ControlSetButton("", -1, -1, -1);
     
 
 #define GMUI_ControlDrawGroup
@@ -5937,12 +6037,12 @@ for (_i=1;_i<=ItemListSize;_i+=1) {
                     if (ItemListBackgroundColorHover[_id] != -1)
                         draw_set_color(ItemListBackgroundColorHover[_id]);
                     if (ItemListBackgroundAlphaHover[_id] != -1)
-                        draw_set_alpha(ItemListBackgroundAlphaHover[_id]);
+                        draw_set_alpha(min(FadeAlpha,ItemListBackgroundAlphaHover[_id]));
                 }
                 else {
                     draw_set_color(ItemListBackgroundColor[_id]);
                     if (ItemListBackgroundAlpha[_id] != -1)
-                        draw_set_alpha(ItemListBackgroundAlpha[_id]);
+                        draw_set_alpha(min(FadeAlpha,ItemListBackgroundAlpha[_id]));
                 }
                 
                 draw_rectangle(_cx,_cy + (_i-_offPos-1) * ItemListHeight,_cx + ItemListAreaWidth - _sbw,_cy + (_i-_offPos) * ItemListHeight - 1,false);
@@ -5965,7 +6065,7 @@ for (_i=1;_i<=ItemListSize;_i+=1) {
             else if (ItemListFontColor[0] != -1)
                 draw_set_color(ItemListFontColor[0]);
             // Set opacity
-            draw_set_alpha(ItemListOpacity[_id]);
+            draw_set_alpha(min(FadeAlpha,ItemListOpacity[_id]));
             
             // Draw text (temporary values for X)
             if (ItemListDescription[_id] == "") {
@@ -6014,7 +6114,7 @@ with (_tt_id) {
     }
     
     // Assign drawing vars
-    var cx, cp, cy, cw, ch, cwx, cwx2, chy, chy2, cworh, RoomWorH, SC, SA;
+    var cx, cp, cy, cw, ch, cwx, cwx2, chy, chy2, cworh, RoomWorH, SC, SA, _SBA;
     cx = RoomX;
     cy = RoomY;
     if (!SliderVertical)
@@ -6077,7 +6177,7 @@ with (_tt_id) {
     
     // Draw the slider region first, based on type
     if (SliderTickStyle == 2 || SliderTickStyle == 3) {
-        color_alpha(SliderBackgroundColor,SliderBackgroundAlpha);
+        color_alpha(SliderBackgroundColor,min(SliderBackgroundAlpha,FadeAlpha));
     }
     switch (SliderTickStyle) {
         case 1: // Free (No horizontal line)
@@ -6104,7 +6204,7 @@ with (_tt_id) {
     // If 0 draw none, optionally use sprite script instead
     if (SliderTickStyle > 0) {
         // Set the properties of the ticks
-        color_alpha(SliderTickColor,SliderTickAlpha);
+        color_alpha(SliderTickColor,min(SliderTickAlpha,FadeAlpha));
         
         if (SliderTickHeight > 0 && SliderTickDistance > 1) {
             if (!SliderVertical) {
@@ -6162,7 +6262,8 @@ with (_tt_id) {
     // Check if selected or not
     //todo: implement
     SC = SliderColor;
-    SA = SliderAlpha;
+    SA = min(SliderAlpha,FadeAlpha);
+    _SBA = min(SliderBorderAlpha,FadeAlpha);
     
     // Draw slider based on type
     switch (SliderStyle) {
@@ -6179,12 +6280,12 @@ with (_tt_id) {
                 draw_vertex_color(cx+SliderRelativeXorY+SliderThumbWidth/2,chy2-SliderThumbHeight/2+SliderThumbWidth/2,SC,SA);
                 draw_primitive_end();
                 draw_primitive_begin(pr_linestrip);
-                draw_vertex_color(cx+SliderRelativeXorY,chy2-SliderThumbHeight/2,SliderBorderColor,SliderBorderAlpha);
-                draw_vertex_color(cx+SliderRelativeXorY-SliderThumbWidth/2,chy2-SliderThumbHeight/2+SliderThumbWidth/2,SliderBorderColor,SliderBorderAlpha);
-                draw_vertex_color(cx+SliderRelativeXorY-SliderThumbWidth/2,chy2+SliderThumbHeight/2,SliderBorderColor,SliderBorderAlpha);
-                draw_vertex_color(-1+cx+SliderRelativeXorY+SliderThumbWidth/2,chy2+SliderThumbHeight/2,SliderBorderColor,SliderBorderAlpha);
-                draw_vertex_color(-1+cx+SliderRelativeXorY+SliderThumbWidth/2,chy2-SliderThumbHeight/2+SliderThumbWidth/2,SliderBorderColor,SliderBorderAlpha);
-                draw_vertex_color(-1+cx+SliderRelativeXorY,chy2-SliderThumbHeight/2,SliderBorderColor,SliderBorderAlpha);
+                draw_vertex_color(cx+SliderRelativeXorY,chy2-SliderThumbHeight/2,SliderBorderColor,_SBA);
+                draw_vertex_color(cx+SliderRelativeXorY-SliderThumbWidth/2,chy2-SliderThumbHeight/2+SliderThumbWidth/2,SliderBorderColor,_SBA);
+                draw_vertex_color(cx+SliderRelativeXorY-SliderThumbWidth/2,chy2+SliderThumbHeight/2,SliderBorderColor,_SBA);
+                draw_vertex_color(-1+cx+SliderRelativeXorY+SliderThumbWidth/2,chy2+SliderThumbHeight/2,SliderBorderColor,_SBA);
+                draw_vertex_color(-1+cx+SliderRelativeXorY+SliderThumbWidth/2,chy2-SliderThumbHeight/2+SliderThumbWidth/2,SliderBorderColor,_SBA);
+                draw_vertex_color(-1+cx+SliderRelativeXorY,chy2-SliderThumbHeight/2,SliderBorderColor,_SBA);
                 draw_primitive_end();
             }
             else {
@@ -6196,31 +6297,31 @@ with (_tt_id) {
                 draw_vertex_color(cwx2+SliderThumbHeight/2-SliderThumbWidth/2,cy+SliderRelativeXorY+SliderThumbWidth/2,SC,SA);
                 draw_primitive_end();
                 draw_primitive_begin(pr_linestrip);
-                draw_vertex_color(-1+cwx2+SliderThumbHeight/2,cy+SliderRelativeXorY,SliderBorderColor,SliderAlpha);
-                draw_vertex_color(-1+cwx2+SliderThumbHeight/2-SliderThumbWidth/2,cy+SliderRelativeXorY-SliderThumbWidth/2,SliderBorderColor,SliderAlpha);
-                draw_vertex_color(cwx2-SliderThumbHeight/2,cy+SliderRelativeXorY-SliderThumbWidth/2,SliderBorderColor,SliderAlpha);
-                draw_vertex_color(cwx2-SliderThumbHeight/2,cy+SliderRelativeXorY+SliderThumbWidth/2,SliderBorderColor,SliderAlpha);
-                draw_vertex_color(-1+cwx2+SliderThumbHeight/2-SliderThumbWidth/2,cy+SliderRelativeXorY+SliderThumbWidth/2,SliderBorderColor,SliderAlpha);
-                draw_vertex_color(-1+cwx2+SliderThumbHeight/2,cy+SliderRelativeXorY,SliderBorderColor,SliderAlpha);
+                draw_vertex_color(-1+cwx2+SliderThumbHeight/2,cy+SliderRelativeXorY,SliderBorderColor,_SBA);
+                draw_vertex_color(-1+cwx2+SliderThumbHeight/2-SliderThumbWidth/2,cy+SliderRelativeXorY-SliderThumbWidth/2,SliderBorderColor,_SBA);
+                draw_vertex_color(cwx2-SliderThumbHeight/2,cy+SliderRelativeXorY-SliderThumbWidth/2,SliderBorderColor,_SBA);
+                draw_vertex_color(cwx2-SliderThumbHeight/2,cy+SliderRelativeXorY+SliderThumbWidth/2,SliderBorderColor,_SBA);
+                draw_vertex_color(-1+cwx2+SliderThumbHeight/2-SliderThumbWidth/2,cy+SliderRelativeXorY+SliderThumbWidth/2,SliderBorderColor,_SBA);
+                draw_vertex_color(-1+cwx2+SliderThumbHeight/2,cy+SliderRelativeXorY,SliderBorderColor,_SBA);
                 draw_primitive_end();
             }
             break;
         case 3: // PentagonDown
             if (!SliderVertical) {
                 draw_primitive_begin(pr_trianglefan);
-                draw_vertex_color(cx+SliderRelativeXorY,chy2+SliderThumbHeight/2,SliderColor,SliderAlpha);
+                draw_vertex_color(cx+SliderRelativeXorY,chy2+SliderThumbHeight/2,SliderColor,SA);
                 draw_vertex_color(cx+SliderRelativeXorY+SliderThumbWidth/2,chy2+SliderThumbHeight/2-SliderThumbWidth/2,SC,SA);
                 draw_vertex_color(cx+SliderRelativeXorY+SliderThumbWidth/2,chy2-SliderThumbHeight/2,SC,SA);
                 draw_vertex_color(cx+SliderRelativeXorY-SliderThumbWidth/2,chy2-SliderThumbHeight/2,SC,SA);
                 draw_vertex_color(cx+SliderRelativeXorY-SliderThumbWidth/2,chy2+SliderThumbHeight/2-SliderThumbWidth/2,SC,SA);
                 draw_primitive_end();
                 draw_primitive_begin(pr_linestrip);
-                draw_vertex_color(-1+cx+SliderRelativeXorY,chy2+SliderThumbHeight/2,SliderBorderColor,SliderBorderAlpha);
-                draw_vertex_color(-1+cx+SliderRelativeXorY+SliderThumbWidth/2,chy2+SliderThumbHeight/2-SliderThumbWidth/2,SliderBorderColor,SliderBorderAlpha);
-                draw_vertex_color(-1+cx+SliderRelativeXorY+SliderThumbWidth/2,chy2-SliderThumbHeight/2,SliderBorderColor,SliderBorderAlpha);
-                draw_vertex_color(cx+SliderRelativeXorY-SliderThumbWidth/2,chy2-SliderThumbHeight/2,SliderBorderColor,SliderBorderAlpha);
-                draw_vertex_color(cx+SliderRelativeXorY-SliderThumbWidth/2,chy2+SliderThumbHeight/2-SliderThumbWidth/2,SliderBorderColor,SliderBorderAlpha);
-                draw_vertex_color(cx+SliderRelativeXorY,chy2+SliderThumbHeight/2,SliderBorderColor,SliderBorderAlpha);
+                draw_vertex_color(-1+cx+SliderRelativeXorY,chy2+SliderThumbHeight/2,SliderBorderColor,_SBA);
+                draw_vertex_color(-1+cx+SliderRelativeXorY+SliderThumbWidth/2,chy2+SliderThumbHeight/2-SliderThumbWidth/2,SliderBorderColor,_SBA);
+                draw_vertex_color(-1+cx+SliderRelativeXorY+SliderThumbWidth/2,chy2-SliderThumbHeight/2,SliderBorderColor,_SBA);
+                draw_vertex_color(cx+SliderRelativeXorY-SliderThumbWidth/2,chy2-SliderThumbHeight/2,SliderBorderColor,_SBA);
+                draw_vertex_color(cx+SliderRelativeXorY-SliderThumbWidth/2,chy2+SliderThumbHeight/2-SliderThumbWidth/2,SliderBorderColor,_SBA);
+                draw_vertex_color(cx+SliderRelativeXorY,chy2+SliderThumbHeight/2,SliderBorderColor,_SBA);
                 draw_primitive_end();
             }
             else {
@@ -6232,12 +6333,12 @@ with (_tt_id) {
                 draw_vertex_color(cwx2-SliderThumbHeight/2+SliderThumbWidth/2,cy+SliderRelativeXorY-SliderThumbWidth/2,SC,SA);
                 draw_primitive_end();
                 draw_primitive_begin(pr_linestrip);
-                draw_vertex_color(cwx2-SliderThumbHeight/2,cy+SliderRelativeXorY,SliderBorderColor,SliderBorderAlpha);
-                draw_vertex_color(cwx2-SliderThumbHeight/2+SliderThumbWidth/2,cy+SliderRelativeXorY+SliderThumbWidth/2,SliderBorderColor,SliderBorderAlpha);
-                draw_vertex_color(-1+cwx2+SliderThumbHeight/2,cy+SliderRelativeXorY+SliderThumbWidth/2,SliderBorderColor,SliderBorderAlpha);
-                draw_vertex_color(-1+cwx2+SliderThumbHeight/2,cy+SliderRelativeXorY-SliderThumbWidth/2,SliderBorderColor,SliderBorderAlpha);
-                draw_vertex_color(cwx2-SliderThumbHeight/2+SliderThumbWidth/2,cy+SliderRelativeXorY-SliderThumbWidth/2,SliderBorderColor,SliderBorderAlpha);
-                draw_vertex_color(cwx2-SliderThumbHeight/2,cy+SliderRelativeXorY,SliderBorderColor,SliderBorderAlpha);
+                draw_vertex_color(cwx2-SliderThumbHeight/2,cy+SliderRelativeXorY,SliderBorderColor,_SBA);
+                draw_vertex_color(cwx2-SliderThumbHeight/2+SliderThumbWidth/2,cy+SliderRelativeXorY+SliderThumbWidth/2,SliderBorderColor,_SBA);
+                draw_vertex_color(-1+cwx2+SliderThumbHeight/2,cy+SliderRelativeXorY+SliderThumbWidth/2,SliderBorderColor,_SBA);
+                draw_vertex_color(-1+cwx2+SliderThumbHeight/2,cy+SliderRelativeXorY-SliderThumbWidth/2,SliderBorderColor,_SBA);
+                draw_vertex_color(cwx2-SliderThumbHeight/2+SliderThumbWidth/2,cy+SliderRelativeXorY-SliderThumbWidth/2,SliderBorderColor,_SBA);
+                draw_vertex_color(cwx2-SliderThumbHeight/2,cy+SliderRelativeXorY,SliderBorderColor,_SBA);
                 draw_primitive_end();
             }
             break;
@@ -6334,7 +6435,7 @@ with (_tt_id) {
         else
             TSC = ToggleSlideColorOff;
             
-        TSA = ToggleSlideAlpha;
+        TSA = min(ToggleSlideAlpha,FadeAlpha);
         
         // Draw slide region
         draw_set_color(TSC);
@@ -6381,7 +6482,7 @@ with (_tt_id) {
             draw_set_color(ToggleColorOn);
         else
             draw_set_color(ToggleColorOff);
-        draw_set_alpha(ToggleAlpha);
+        draw_set_alpha(min(ToggleAlpha,FadeAlpha));
         
         if (ToggleOrientation == global.GMUIDirectionTypeHorizontal)
             cx1 += ToggleRelativeXorY;
@@ -6416,7 +6517,7 @@ with (_tt_id) {
             TSC = ToggleSlideColorOn;
         else
             TSC = ToggleSlideColorOff;
-        TA = ToggleAlpha;
+        TA = min(ToggleAlpha,FadeAlpha);
         // Draw box
         if (ToggleSlideShape >= 0) {
             draw_sprite(ToggleSlideShape,0, RoomX + TogglePadding, RoomY + TogglePadding);
@@ -6443,7 +6544,7 @@ with (_tt_id) {
         }
         else {
             draw_set_color(ToggleColorOn);
-            draw_set_alpha(ToggleRelativeXorY);
+            draw_set_alpha(min(ToggleRelativeXorY,FadeAlpha));
             draw_rectangle(RoomX+TogglePadding+3, RoomY+TogglePadding+3, RoomW-TogglePadding-3, RoomH-TogglePadding-3, 0);
         }
     }
@@ -6502,7 +6603,8 @@ with (_tt_id) {
     
     // Set control color, font, and alignment
     color_alpha(ControlFontColor,min(ControlFontAlpha,FadeAlpha));
-    draw_set_font(ControlFont);
+    if (ControlFont != noone)
+        draw_set_font(ControlFont);
     align(ControlFontAlign,ControlFontAlignV);
     
     var _dtx, _midHeight;
@@ -6581,6 +6683,7 @@ i.NonClickable = 0;
 
 // Custom Actions
 i.ActionScript = -1;
+i.ActionScriptArgument = 0;
 i.HoverActionScript = -1;
 i.HoverOffActionScript = -1;
 i.SelectingActionScript = -1;
@@ -6802,6 +6905,7 @@ _UsingSurface = argument1;
 _MX = argument2;
 _offset = 0;
 _relMY = 0;
+_relGY = 0;
 
 if (!instance_exists(_Ctrl)) {
     GMUI_ThrowErrorDetailed("Control " + string(_Ctrl) + " doesn't exist!", _SCRIPT);
@@ -6809,9 +6913,13 @@ if (!instance_exists(_Ctrl)) {
 }
 
 if (_Ctrl.ControlItemList) {
+    // Account for group offset
+    if (_Ctrl.Group > 0)
+        _relGY = _Ctrl.GMUIP.GMUI_groupActualY[_Ctrl.Layer,_Ctrl.Group];
+        
     // Get the relative mouse position to the control
-    _relMY = argument3 - _Ctrl.RoomY - (_Ctrl.GMUIP.GMUI_grid_y[_Ctrl.Layer] + GMUI_GridViewOffsetY(_Ctrl.GMUIP))*_UsingSurface;
-    
+    _relMY = argument3 - _Ctrl.RoomY - (_Ctrl.GMUIP.GMUI_grid_y[_Ctrl.Layer] + _relGY + GMUI_GridViewOffsetY(_Ctrl.GMUIP))*_UsingSurface;
+
     with (_Ctrl) {
         // Return index offset for non-surface, or Y offset for surfaces
         if (!_UsingSurface)
@@ -6901,6 +7009,9 @@ if (_Ctrl.ControlHasScrollbar) {
     with (_Ctrl) {
     if (Scrollbar_maxtop > Scrollbar_padding) {
         _relY = _MY-GMUIP.GMUI_grid_y[Layer]-GMUI_GridViewOffsetY(GMUIP) - Scrollbar_y - Scrollbar_drag_y;
+        
+        if (_Ctrl.Group > 0)
+            _relY -= (_Ctrl.GMUIP).GMUI_groupActualY[_Ctrl.Layer,_Ctrl.Group];
     
         Scrollbar_pos_y = minmax(Scrollbar_y + _relY, Scrollbar_y + Scrollbar_padding, Scrollbar_y + Scrollbar_maxtop);
 
@@ -7175,7 +7286,7 @@ Scrollbar_bgcolor = c_dkgray;
 Scrollbar_bgalpha = 0.8;
 Scrollbar_bgcolor_hover = c_dkgray;
 Scrollbar_bgalpha_hover = 1;
-Scrollbar_color = c_gray;
+Scrollbar_color = c_ltgray;
 Scrollbar_alpha = 0.8;
 Scrollbar_color_hover = c_gray;
 Scrollbar_alpha_hover = 1;
@@ -7289,7 +7400,7 @@ switch (_type) {
         break;
     case "label":
     case "tooltip":
-    
+        IID.ControlInput = false;
         IID.ControlInteraction = false;
         IID.ControlStyleDefined = false;
         break;
@@ -7327,8 +7438,13 @@ return _type;
 // Update adjustment
 if (argument0) {
     var MX,MY;
-    MX = mouse_x-(GMUIP).GMUI_grid_x[Layer];
-    MY = mouse_y-(GMUIP).GMUI_grid_y[Layer];
+    MX = mouse_x-(GMUIP).GMUI_grid_x[Layer]-GMUI_GridViewOffsetX(GMUIP);
+    MY = mouse_y-(GMUIP).GMUI_grid_y[Layer]-GMUI_GridViewOffsetY(GMUIP);
+    //todo: fix view and group offsets!
+    if (Group > 0) {
+        MX -= (GMUIP).GMUI_groupActualX[Layer,Group];
+        MY -= (GMUIP).GMUI_groupActualY[Layer,Group];
+    }
     
     if (!SliderVertical)
         SliderRelativeFinalXorY = minmax(MX,RoomX+SliderStartEndPadding,RoomW-SliderStartEndPadding)-RoomX;
@@ -8248,10 +8364,12 @@ with (argument0) {
             }
             // Set scrollbar option if necessary
             if (UIEnableSurfaces) {
-                with (GMUI_groupDrawingControl[l,g]) {
-                    if (GMUIP.GMUI_groupOverflow[l,g] == global.GMUIOverflowScroll) {
-                        GroupHasScrollbar = true;
-                        GMUI_ControlSetScrollbarDefaults(false); // false: set for group
+                if (GMUI_groupDrawingControl[l,g] > -1) {
+                    with (GMUI_groupDrawingControl[l,g]) {
+                        if (GMUIP.GMUI_groupOverflow[l,g] == global.GMUIOverflowScroll) {
+                            GroupHasScrollbar = true;
+                            GMUI_ControlSetScrollbarDefaults(false); // false: set for group
+                        }
                     }
                 }
             }
@@ -8259,6 +8377,28 @@ with (argument0) {
     }
 
 }
+
+#define GMUI_GridSetControlRegion
+///GMUI_GridSetControlRegion(grid to add to, control, add [bool] else remove)
+///
+
+var _grid,_ctrl,_add,_CX2,_CY2;
+_grid = argument0;
+_ctrl = argument1;
+_add = argument2 > 0;
+
+_CX2 = _ctrl.CellX+_ctrl.CellWide-1+ceil(_ctrl.RelativeX / (_ctrl.GMUIP).cellsize);
+_CY2 = _ctrl.CellY+_ctrl.CellHigh-1+ceil(_ctrl.RelativeY / (_ctrl.GMUIP).cellsize_h);
+
+// Add the control value to the cells, or set to 0 if removing
+if (_add) {
+    ds_grid_set_region(_grid,_ctrl.CellX,_ctrl.CellY,_CX2,_CY2,_ctrl);
+}
+else {
+    ds_grid_set_region(_grid,_ctrl.CellX,_ctrl.CellY,_CX2,_CY2,0);
+}
+
+
 
 #define GMUI_GridSetMappedValues
 ///GMUI_GridSetMappedValues(GMUI instance, layer, group number)
@@ -8324,6 +8464,14 @@ with (argument0) {
                     GMUI_ThrowErrorDetailed("Missing value for SetHidePosition. Unable to set",_SCRIPT);
                 }
                 break;
+            case "Hide":
+                if (ds_map_exists(_Map,"Hide")) {
+                    GMUI_GroupHide(_Group,_Layer,ds_map_find_value(_Map, "Hide"));
+                }
+                else {
+                    GMUI_ThrowErrorDetailed("Missing value for Hide. Unable to set",_SCRIPT);
+                }
+                break;
             default:
                 break;
         }
@@ -8357,7 +8505,7 @@ _Grid = (GMUII()).GMUI_grid[_Layer];
 ds_grid_clear(_Grid,0);
 
 // Loop through all controls in the layer
-var i,_ctrl,_CX2,_CY2;
+var i,_ctrl;
 for(i=0;i<ds_list_size((GMUII()).GMUI_controlList);i+=1) {
     // Get control value
     _ctrl = ds_list_find_value((GMUII()).GMUI_controlList,i);
@@ -8366,11 +8514,11 @@ for(i=0;i<ds_list_size((GMUII()).GMUI_controlList);i+=1) {
         GMUI_ThrowErrorDetailed("Control no longer exists", GMUI_GridSetRegionsLayer);
     }
     else if (GMUI_ControlIsInLayer(_ctrl,_Layer)) {
-        if ((_ctrl).ControlInteraction) {
-            // Map the control to the grid[layer#] - Warning: This will overwrite any existing instance values (overlapping)
-            _CX2 = (_ctrl).CellX+(_ctrl).CellWide-1+ceil((_ctrl).RelativeX / (GMUII()).cellsize);
-            _CY2 = (_ctrl).CellY+(_ctrl).CellHigh-1+ceil((_ctrl).RelativeY / (GMUII()).cellsize_h);
-            ds_grid_set_region(_Grid,(_ctrl).CellX,(_ctrl).CellY,_CX2,_CY2,_ctrl);
+        if (!_ctrl.Hidden) {
+            if (_ctrl.ControlInteraction) {
+                // Map the control to the grid[layer#] - Warning: This will overwrite any existing instance values (overlapping)
+                GMUI_GridSetControlRegion(_Grid,_ctrl,true);
+            }
         }
         
         // Update control draw location in the room
@@ -9498,10 +9646,38 @@ show_message("Result:
 " + t3 + "
 " + t4);
 
-#define _Demo_Form
-///_Test_Form() This interface is from the demo
+#define _Show_Group
+// Uses an argument to determine which group to show
 
-// DEMO INTERFACE:
+
+// Hide group shown
+var _grouplayer, _i, _group; _grouplayer = 0;
+_group = argument0;
+
+// Show group selected
+// Right Group 2: Sliders
+// Right Group 3: Inputs
+// Right Group 4: Toggles
+// Right Group 5: Selection
+// Right Group 6: Disabling
+// Right Group 7: Layering
+// Right Group 8: Movement
+// Right Group 9: Anchoring
+// Right Group 10: Expand (may also be button action?)
+
+for (_i=2; _i <=10; _i+=1) {
+    if (_i != _group) {
+        GMUI_GroupHide(_i,_grouplayer,true);
+    }
+}
+
+GMUI_GroupHide(_group,_grouplayer,false);
+
+
+#define _Test_Form
+///_Test_Form() This interface is for the testing form
+
+// TESTING
 
 // Set optional grid settings
 GMUI_SetKeyNavigation(global.GMUIDirectionTypeVertical,vk_up,vk_down,vk_left,vk_right,true);
@@ -9699,6 +9875,7 @@ with (GMUI_Add("Slider", "slider",              16,12,  10,2,   global.GMUIAncho
     GMUI_ControlSetValueChangedAction(_SliderValue_Changed);
     
 }
+
 // Button to set slider to mid point
 with (GMUI_Add("MidSlider", "button",           19,12,  2,2,    global.GMUIAnchorBottomRight)) {
     GMUI_ControlSetButtonAction(_SliderMid_Button);
@@ -9742,7 +9919,7 @@ with (GMUI_Add("SpritePicker", "spritepicker",  -10,10, 5,2,    global.GMUIAncho
     GMUI_ControlAddOption(4, GMUIspr_arrowleft);
     GMUI_ControlAddOption(6, GMUIspr_arrow);
     GMUI_ControlSetPicker(sprite_get_width(GMUIspr_arrowleft) + 4,sprite_get_height(GMUIspr_arrowleft) + 4,
-        global.GMUIDirectionTypeHorizontal, GMUIspr_arrowright, GMUIspr_arrowleft);
+        global.GMUIDirectionTypeHorizontal, GMUIspr_arrowright,GMUIspr_arrowleft);
     GMUI_ControlSetInitValue(6);
 }
 // Example: overrides initial value:
@@ -9858,5 +10035,1129 @@ GMUI_PopupSetHidePosition("Test Popup", -14, 0, easeExpOut, room_speed/4);
 //GMUI_ControlAddToPopup("Test Popup");}
 //GMUI_PopupSetClickOff("Test Popup", false); // False is default
 
+
+
+#define _Demo_Form_with_layers
+///_Demo_Form() This interface is for the demo form
+
+// DEMO INTERFACE:
+
+// Set optional grid settings
+GMUI_SetKeyNavigation(global.GMUIDirectionTypeVertical,vk_up,vk_down,vk_left,vk_right,true);
+
+// Set the layer to change settings on [This one is optional: Already defaults to layer 0]
+GMUI_SetOnLayer(0);
+
+// Instead, lets create the menu on layer 10, and set each as persistent all the way to layer 0
+GMUI_AddLayer(10,0,0);
+
+//
+// Setting the left choices
+//
+
+// Left side option buttons group
+GMUI_CreateGroup(1,      2,2,   global.GMUIAnchorTopLeft);
+GMUI_GroupSetSize(1,     8,20);
+GMUI_GroupSetStyle(1, c_black, .2, c_black, .3, 0);
+GMUI_GroupSetFadeOnHide(1, room_speed/2, 0);
+
+var _bW; _bW = 6;
+
+with (GMUI_Add("BtnSliders", "button",         1,1,   _bW,2,    global.GMUIAnchorTopLeft)) {
+    GMUI_ControlAddToGroup(1);
+    GMUI_ControlSetButtonAction1(_Show_Group, 2);
+    GMUI_ControlSetButton("Sliders",-1,-1,-1);
+    GMUI_ControlPersistentToLayer(0);
+}
+
+with (GMUI_Add("BtnInputs", "button",         1,4,   _bW,2,    global.GMUIAnchorTopLeft)) {
+    GMUI_ControlAddToGroup(1);
+    GMUI_ControlSetButtonAction1(_Show_Group, 3);
+    GMUI_ControlSetButton("Inputs",-1,-1,-1);
+    GMUI_ControlPersistentToLayer(0);
+}
+
+with (GMUI_Add("BtnToggles", "button",         1,7,   _bW,2,    global.GMUIAnchorTopLeft)) {
+    GMUI_ControlAddToGroup(1);
+    GMUI_ControlSetButtonAction1(_Show_Group, 4);
+    GMUI_ControlSetButton("Toggles",-1,-1,-1);
+    GMUI_ControlPersistentToLayer(0);
+}
+
+with (GMUI_Add("BtnMenus", "button",         1,10,   _bW,2,    global.GMUIAnchorTopLeft)) {
+    GMUI_ControlAddToGroup(1);
+    //GMUI_ControlSetButtonAction1(_Show_Group, 2);
+    GMUI_ControlSetButton("Menus",-1,-1,-1);
+    GMUI_ControlPersistentToLayer(0);
+}
+
+with (GMUI_Add("BtnSelection", "button",         1,13,   _bW,2,    global.GMUIAnchorTopLeft)) {
+    GMUI_ControlAddToGroup(1);
+    GMUI_ControlSetButtonAction1(_Show_Group, 5);
+    GMUI_ControlSetButton("Selection",-1,-1,-1);
+    GMUI_ControlPersistentToLayer(0);
+}
+
+with (GMUI_Add("BtnDisabling", "button",         1,16,   _bW,2,    global.GMUIAnchorTopLeft)) {
+    GMUI_ControlAddToGroup(1);
+    GMUI_ControlSetButtonAction1(_Show_Group, 6);
+    GMUI_ControlSetButton("Disabling",-1,-1,-1);
+    GMUI_ControlPersistentToLayer(0);
+}
+
+with (GMUI_Add("BtnLayering", "button",         1,19,   _bW,2,    global.GMUIAnchorTopLeft)) {
+    GMUI_ControlAddToGroup(1);
+    GMUI_ControlSetButtonAction1(_Show_Group, 7);
+    GMUI_ControlSetButton("Layering",-1,-1,-1);
+    GMUI_ControlPersistentToLayer(0);
+}
+
+with (GMUI_Add("BtnMovement", "button",         1,22,   _bW,2,    global.GMUIAnchorTopLeft)) {
+    GMUI_ControlAddToGroup(1);
+    GMUI_ControlSetButtonAction1(_Show_Group, 8);
+    GMUI_ControlSetButton("Movement",-1,-1,-1);
+    GMUI_ControlPersistentToLayer(0);
+}
+
+with (GMUI_Add("BtnAnchoring", "button",         1,25,   _bW,2,    global.GMUIAnchorTopLeft)) {
+    GMUI_ControlAddToGroup(1);
+    GMUI_ControlSetButtonAction1(_Show_Group, 9);
+    GMUI_ControlSetButton("Anchoring",-1,-1,-1);
+    GMUI_ControlPersistentToLayer(0);
+}
+
+with (GMUI_Add("BtnExpand", "button",         1,28,   _bW,2,    global.GMUIAnchorTopLeft)) {
+    GMUI_ControlAddToGroup(1);
+    //GMUI_ControlSetButtonAction1(_Show_Group, 8);
+    GMUI_ControlSetButton("Expand",-1,-1,-1);
+    GMUI_ControlPersistentToLayer(0);
+}
+
+with (GMUI_Add("BtnDebug", "button",         1,31,   _bW,2,    global.GMUIAnchorTopLeft)) {
+    GMUI_ControlAddToGroup(1);
+    GMUI_ControlSetButtonAction(_Debug_Button);
+    GMUI_ControlSetButton("Debug",-1,-1,-1);
+    GMUI_ControlPersistentToLayer(0);
+}
+
+
+//
+// RIGHT GROUP SECTION
+//
+GMUI_AddLayer(1,0,0);
+//GMUI_SetOnLayer(1);
+
+var _fadespeed; _fadespeed = room_speed/2;
+
+// Right Group 2: Sliders (Default)
+GMUI_CreateGroup(2,      20,2,    global.GMUIAnchorTopRight);
+GMUI_GroupSetFadeOnHide(2, _fadespeed, 0);
+//SET SIZE TO GRID - X
+
+with (GMUI_Add("Slider", "slider",              8,6,  10,2,   global.GMUIAnchorTopLeft)) {
+    GMUI_ControlAddToGroup(2);
+    GMUI_ControlSetSliderSettings(13,10,34,true,true,true,global.GMUIDirectionTypeHorizontal);
+    GMUI_ControlSetSliderStyle(2,2,c_dkgray,0.6,c_teal,0.9,c_dkgray,0.4,c_aqua,1,c_gray,0.8);
+    GMUI_ControlSetSliderSize(16, 20, 1, 12, 10, 8, 6, 8);
+    GMUI_ControlSetInitValue(20);
+    
+    GMUI_ControlSetValueChangedAction(_SliderValue_Changed);
+}
+
+// Button to set slider to mid point
+with (GMUI_Add("MidSlider", "button",           3,4,  2,2,    global.GMUIAnchorTopLeft)) {
+    GMUI_ControlAddToGroup(2);
+    GMUI_ControlSetButtonAction(_SliderMid_Button);
+    GMUI_ControlSetButton("Mid",-1,-1,-1);
+    GMUI_ControlSetPositioning(0,6,0,20);
+}
+// Button to set slider to snap or not
+with (GMUI_Add("SnapSlider", "button",          3,6,  3,2,    global.GMUIAnchorTopLeft)) {
+    GMUI_ControlAddToGroup(2);
+    GMUI_ControlSetButtonAction(_SliderSnap_Button);
+    GMUI_ControlSetButton("Snap",-1,-1,-1);
+    GMUI_ControlSetPositioning(0,6,0,20);
+}
+
+// Display of slider value to the side
+with (GMUI_Add("SliderVal", "label",            19,8,   2,2,    global.GMUIAnchorTopLeft)) {
+    GMUI_ControlAddToGroup(2);
+    GMUI_ControlSetText(string(round(GMUI_GetValue("Slider"))));
+    GMUI_ControlSetStyle($606060,c_gray,-1,-1,-1,-1,-1,-1,-1,-1);
+    GMUI_ControlSetFontStyle(fontNumericBold,$D9D9D9,fa_middle);
+}
+
+with (GMUI_Add("SliderV", "slider",              13,9,  4,8,   global.GMUIAnchorTopLeft)) {
+    GMUI_ControlAddToGroup(2);
+    GMUI_ControlSetSliderSettings(13,10,34,true,true,true,global.GMUIDirectionTypeVertical);
+    GMUI_ControlSetSliderStyle(2,2,c_dkgray,0.6,c_teal,0.9,c_dkgray,0.4,c_aqua,1,c_gray,0.8);
+    GMUI_ControlSetSliderSize(16, 20, 1, 12, 10, 8, 6, 8);
+    GMUI_ControlSetInitValue(20);
+}
+
+//TESTESTESTESTESTEST
+/*
+with (GMUI_Add("Slider2", "slider",              10,6,  6,2,   global.GMUIAnchorTopLeft)) {
+    GMUI_ControlSetSliderSettings(13,10,34,true,true,true,global.GMUIDirectionTypeHorizontal);
+    GMUI_ControlSetSliderStyle(2,2,c_dkgray,0.6,c_teal,0.9,c_dkgray,0.4,c_aqua,1,c_gray,0.8);
+    GMUI_ControlSetSliderSize(16, 20, 1, 12, 10, 8, 6, 8);
+    GMUI_ControlSetInitValue(20);
+    
+    GMUI_ControlSetValueChangedAction(_SliderValue_Changed);
+}
+with (GMUI_Add("SliderV2", "slider",              13,9,  4,8,   global.GMUIAnchorTopLeft)) {
+    GMUI_ControlSetSliderSettings(13,10,34,true,true,true,global.GMUIDirectionTypeVertical);
+    GMUI_ControlSetSliderStyle(2,2,c_dkgray,0.6,c_teal,0.9,c_dkgray,0.4,c_aqua,1,c_gray,0.8);
+    GMUI_ControlSetSliderSize(16, 20, 1, 12, 10, 8, 6, 8);
+    GMUI_ControlSetInitValue(20);
+    
+    GMUI_ControlSetValueChangedAction(_SliderValue_Changed);
+}
+*/
+
+GMUI_AddLayer(2,0,0);
+//GMUI_SetOnLayer(2);
+// Right Group 3: Inputs
+GMUI_CreateGroup(3,      20,2,    global.GMUIAnchorTopRight);
+GMUI_GroupHide(3,GMUI_GetCurrentLayer(),true);
+GMUI_GroupSetFadeOnHide(3, _fadespeed, 0);
+//SET SIZE TO GRID - X
+
+with (GMUI_Add("SpriteText","textstring",            1,1,    16,2,   global.GMUIAnchorTopLeft)) {
+GMUI_ControlAddToGroup(3);
+    GMUI_ControlSetAttributes(20,0,0,0);
+    GMUI_ControlSetInitValue("Select");
+    GMUI_ControlSetSprite(sprite24,0,1,0);//GMUIspr_input
+}
+
+with (GMUI_Add("IntegerText", "textint",              1,4,    10,2,   global.GMUIAnchorTopLeft)) {
+    GMUI_ControlSetAttributes(5,0,-1000,1000);
+    GMUI_ControlSetStyle(hsv(85,55,255),rgb(20,20,20),-1,-1,-1,-1,-1,-1,-1,-1);
+    GMUI_ControlAddToGroup(3);
+}
+
+with (GMUI_Add("DecimalText", "textdecimal",          1,7,    10,2,   global.GMUIAnchorTopLeft)) {
+    GMUI_ControlSetAttributes(10,10,-999,999);
+    GMUI_ControlAddToGroup(3);
+    //GMUI_ControlSetSpriteMap(s2,s3,s4,s5,s6,s7,s8,s1,s9,false);
+}
+
+with (GMUI_Add("Test4", "intpicker",            1,10,    10,2,   global.GMUIAnchorTopLeft)) {
+    GMUI_ControlSetAttributes(0,0,-20,20);
+    GMUI_ControlSetInitValue(-1);
+    GMUI_ControlAddToGroup(3);
+    GMUI_ControlSetHoverAction(_Hover_Int);
+    GMUI_ControlSetHoverOffAction(_HoverOff_Int);
+    //sprite_set_offset(GMUIspr_arrow,10,12);sprite_set_offset(GMUIspr_arrowup,10,0); // If vertical, offset should be centered
+    //GMUI_ControlSetPicker(sprite_get_width(GMUIspr_arrowup) + 4,sprite_get_height(GMUIspr_arrowup) + 4,
+    //    global.GMUIDirectionTypeVertical, GMUIspr_arrowup, GMUIspr_arrow);
+        
+    with (GMUI_ControlAddTooltip("-20 to 20.",global.GMUIAnchorLeft,6,2,12,4,-1,-1)) {
+        GMUI_ControlSetFadeOnHide(id, room_speed/4);
+    }
+}
+
+GMUI_AddLayer(3,0,0);
+//GMUI_SetOnLayer(3);
+// Right Group 4: Toggles
+GMUI_CreateGroup(4,      20,2,    global.GMUIAnchorTopRight);
+GMUI_GroupHide(4,GMUI_GetCurrentLayer(),true);
+GMUI_GroupSetFadeOnHide(4, _fadespeed, 0);
+//SET SIZE TO GRID - X
+
+with (GMUI_Add("Toggle1", "toggle",              3,6,   3,2,    global.GMUIAnchorTopLeft)) {
+    GMUI_ControlSetToggleSettings(1, c_lime, c_gray, global.GMUISlideFullRoundRect, $808080, $505050, room_speed/4, global.GMUIDirectionTypeHorizontal, 0);
+    GMUI_ControlAddToGroup(4);
+}
+
+with (GMUI_Add("Toggle2", "toggle",              3,9,   3,2,    global.GMUIAnchorTopLeft)) {
+    GMUI_ControlSetToggleSettings(1, c_lime, c_gray, global.GMUISlideRoundRect, $808080, $505050, room_speed/4, global.GMUIDirectionTypeHorizontal, 0);
+    GMUI_ControlAddToGroup(4);
+}
+
+with (GMUI_Add("Toggle3", "toggle",              3,12,   3,2,    global.GMUIAnchorTopLeft)) {
+    GMUI_ControlSetToggleSettings(1, c_lime, c_gray, global.GMUISlideRect, $808080, $505050, room_speed/4, global.GMUIDirectionTypeHorizontal, 0);
+    GMUI_ControlAddToGroup(4);
+    GMUI_ControlSetInitValue(true);
+}
+
+with (GMUI_Add("Toggle4", "toggle",              3,15,   3,2,    global.GMUIAnchorTopLeft)) {
+    GMUI_ControlSetToggleSettings(1, c_lime, c_gray, global.GMUISlideLine, $808080, $505050, room_speed/4, global.GMUIDirectionTypeHorizontal, 0);
+    GMUI_ControlAddToGroup(4);
+}
+
+// Test checkbox and toggle
+with (GMUI_Add("CheckBox", "checkbox",          3,18,   1,1,    global.GMUIAnchorBottomLeft)) {
+    GMUI_ControlAddToGroup(4);
+    GMUI_ControlSetCheckboxSettings(1, c_lime, c_gray, global.GMUISlideRoundRect, $808080, $505050, room_speed/6);
+    GMUI_ControlSetHoverAction(_Hover_Checkbox);
+    GMUI_ControlSetHoverOffAction(_HoverOff_Checkbox);
+    GMUI_ControlSetSprite(s10, 0, 0, 0);
+    
+    // Add a space at the end of the string to make sure it wraps. I know... but its Game Maker ;)
+    with (GMUI_ControlAddTooltip("Checkbox!",global.GMUIAnchorBottom,6,2,12,4,-1,-1)) {
+        GMUI_ControlSetFadeOnHide(id, room_speed/6);
+    }
+}
+
+
+// Open menu button (group 4/5)
+GMUI_AddLayer(4,0,0);
+// Right Group 5: Selection
+GMUI_CreateGroup(5,      20,2,    global.GMUIAnchorTopRight);
+GMUI_GroupHide(5,GMUI_GetCurrentLayer(),true);
+GMUI_GroupSetFadeOnHide(5, _fadespeed, 0);
+//SET SIZE TO GRID - X
+
+// SELECT LIST TEST
+with (GMUI_Add("TestSelectList", "selectlist",            2,2,    10,5,   global.GMUIAnchorTopLeft)) {
+    GMUI_ItemListSettings(26, $E3E3E3, -1, -1);
+    GMUI_ItemListBackground($DEDEDE, $EAEAEA, 0.8, 1);
+    GMUI_ItemListSelectAction(_ListAction);
+    GMUI_AddItem(2,10,"2-One","",-1);
+    GMUI_AddItem(4,20,"4-Two","",-1);
+    GMUI_AddItem(6,30,"6-Three","",-1);
+    GMUI_AddItem(8,40,"8-Four","",-1);
+    GMUI_AddItem(10,50,"10-Five","",-1);
+    GMUI_AddItem(12,60,"12-Six","",-1);
+    GMUI_AddItem(14,70,"14-Seven","",-1);
+    GMUI_AddItem(16,70,"16-Eight","",-1);
+    GMUI_AddItem(18,70,"18-Nine","",-1);
+    GMUI_AddItem(20,70,"20-Ten","",-1);
+    GMUI_AddItem(22,70,"22-Eleven","",-1);
+    GMUI_AddItem(24,70,"24-Twelve","",-1);
+    GMUI_AddItem(26,80,"26-Thirteen","",-1);
+    
+    GMUI_ControlAddToGroup(5);
+}
+
+GMUI_AddLayer(5,0,0);
+// Right Group 6: Disabling
+GMUI_CreateGroup(6,      20,2,    global.GMUIAnchorTopRight);
+GMUI_GroupSetFadeOnHide(6, _fadespeed, 0);
+//SET SIZE TO GRID - X
+GMUI_GroupHide(6,GMUI_GetCurrentLayer(),true);
+
+GMUI_AddLayer(6,0,0);
+// Right Group 7: Layering
+GMUI_CreateGroup(7,      20,2,    global.GMUIAnchorTopRight);
+GMUI_GroupSetFadeOnHide(7, _fadespeed, 0);
+//SET SIZE TO GRID - X
+GMUI_GroupHide(7,GMUI_GetCurrentLayer(),true);
+
+GMUI_AddLayer(7,0,0);
+// Right Group 8: Movement
+GMUI_CreateGroup(8,      20,2,    global.GMUIAnchorTopRight);
+GMUI_GroupSetFadeOnHide(8, _fadespeed, 0);
+//SET SIZE TO GRID - X
+GMUI_GroupHide(8,GMUI_GetCurrentLayer(),true);
+
+GMUI_AddLayer(8,0,0);
+// Right Group 9: Anchoring
+GMUI_CreateGroup(9,      20,2,    global.GMUIAnchorTopRight);
+GMUI_GroupSetFadeOnHide(9, _fadespeed, 0);
+//SET SIZE TO GRID - X
+GMUI_GroupHide(9,GMUI_GetCurrentLayer(),true);
+
+GMUI_AddLayer(9,0,0);
+// Right Group 10: Expand (may also be button action?)
+GMUI_CreateGroup(10,      20,2,    global.GMUIAnchorTopRight);
+GMUI_GroupSetFadeOnHide(10, _fadespeed, 0);
+//SET SIZE TO GRID - X
+GMUI_GroupHide(10,GMUI_GetCurrentLayer(),true);
+
+
+// Debug button (group 11)
+
+
+// Set the layer back to 0 for this control
+GMUI_SetOnLayer(0);
+
+with (GMUI_Add("ExitButton", "textbutton",      0,0,    1,1,     global.GMUIAnchorTopRight)) {
+    GMUI_ControlSetButtonAction(_Exit_Button);
+    GMUI_ControlSetButton("x", -1, -1, -1);
+    GMUI_ControlSetPositioning(-1,0,0,0); // Minor adjustment so that the control isnt cut off by the room
+    GMUI_ControlPersistentToLayer(9); // Works on all layers from 0 to 9
+}
+
+
+
+/*
+with (GMUI_Add("test14","textstring",20,1,12,2,global.GMUIAnchorTopLeft)) {
+    GMUI_ControlSetAttributes(14,0,0,0);
+}
+*/
+
+
+
+/*
+with (GMUI_Add("TestButton", "textbutton",      3,9,    5,3,    global.GMUIAnchorTopLeft)) {
+    GMUI_ControlSetButtonAction(_Test_Button);
+    GMUI_ControlSetButton("Test!", -1, -1, -1);
+    GMUI_ControlSetStyle(-1, -1, c_red, 1, 0.85, -1, -1, -1, -1, -1);
+    GMUI_ControlAddToGroup(2);
+}
+
+
+
+
+with (GMUI_Add("PopupMenuButton", "textbutton",     1,7,    5,3,    global.GMUIAnchorBottomLeft)) {
+    GMUI_ControlSetButtonAction(_PopupMenu_Button);
+    GMUI_ControlSetButton("Show"+chr(13)+"Menu", -1, -1, -1);
+    GMUI_ControlSetStyle(-1, -1, c_purple, 1, 0.85, -1, -1, -1, -1, -1);
+}
+
+with (GMUI_Add("DebugButton", "textbutton",     1,3,    5,3,    global.GMUIAnchorBottomLeft)) {
+    GMUI_ControlSetButtonAction(_Debug_Button);
+    GMUI_ControlSetButton("Debug", -1, -1, -1);
+    GMUI_ControlSetStyle(-1, -1, c_gray, 1, 0.85, -1, -1, -1, -1, -1);
+}
+
+with (GMUI_Add("SwipeButton", "textbutton",      8,7,   5,3,    global.GMUIAnchorBottomLeft)) {
+    GMUI_ControlSetButtonAction(_Swipe_Button);
+    GMUI_ControlSetButton("Swipe"+chr(13)+"Out",-1,-1,-1);
+}
+
+with (GMUI_Add("DisableButton", "textbutton",   8,3,    5,3,    global.GMUIAnchorBottomLeft)) {
+    GMUI_ControlSetButtonAction(_Disable_Button);
+    GMUI_ControlSetButton("Disable"+chr(13)+"Test",-1,-1,-1);
+}
+
+with (GMUI_Add("HideButton2", "textbutton",      15,7,   5,3,    global.GMUIAnchorBottomLeft)) {
+    GMUI_ControlSetButtonAction(_Hide_Button2);
+    GMUI_ControlSetButton("Hide"+chr(13)+"Group 2",-1,-1,-1);
+}
+
+with (GMUI_Add("HideButton", "textbutton",      15,3,   5,3,    global.GMUIAnchorBottomLeft)) {
+    GMUI_ControlSetButtonAction(_Hide_Button);
+    GMUI_ControlSetButton("Hide"+chr(13)+"Group 1",-1,-1,-1);
+}
+
+with (GMUI_Add("MoveButton", "textbutton",      22,3,   6,3,    global.GMUIAnchorBottomLeft)) {
+    GMUI_ControlSetButtonAction(_Move_Button);
+    GMUI_ControlSetButton("Move"+chr(13)+"Group",-1,-1,-1);
+}
+
+with (GMUI_Add("EnlargeButton", "textbutton",   30,3,   6,3,    global.GMUIAnchorBottomLeft)) {
+    GMUI_ControlSetButtonAction(_Enlarge_Button);
+    GMUI_ControlSetButton("Enlarge"+chr(13)+"Window",-1,-1,-1);
+}
+
+
+
+with (GMUI_Add("SwitchButton", "button",        -2,16,  4,2,    global.GMUIAnchorTop)) {
+    GMUI_ControlSetButtonAction(_Switch_Button);
+    GMUI_ControlSetSprite(GMUIspr_switch,0,1,0);
+}
+
+
+
+
+
+with (GMUI_Add("Toggle", "toggle",              3,10,   3,2,    global.GMUIAnchorBottomLeft)) {
+    GMUI_ControlSetToggleSettings(1, c_lime, c_gray, global.GMUISlideFullRoundRect, $808080, $505050, room_speed/4, global.GMUIDirectionTypeHorizontal, 0);
+}
+
+with (GMUI_Add("SpritePicker", "spritepicker",  -10,10, 5,2,    global.GMUIAnchorBottom)) {
+    GMUI_ControlAddOption(0, GMUIspr_arrowright);
+    GMUI_ControlAddOption(2, GMUIspr_arrowup);
+    GMUI_ControlAddOption(4, GMUIspr_arrowleft);
+    GMUI_ControlAddOption(6, GMUIspr_arrow);
+    GMUI_ControlSetPicker(sprite_get_width(GMUIspr_arrowleft) + 4,sprite_get_height(GMUIspr_arrowleft) + 4,
+        global.GMUIDirectionTypeHorizontal, GMUIspr_arrowright,GMUIspr_arrowleft);
+    GMUI_ControlSetInitValue(6);
+}
+*/
+// Example: overrides initial value:
+GMUI_ControlSelectOption("SpritePicker",2);
+
+//with (GMUI_Add("Graphic", "image",          -12,10, 2,2,    layer, global.GMUIAnchorBottom)) {
+//    GMUI_ControlSetSpriteExt(s10, 0, 0, 0, 2, 2, c_white, 0.2);
+//}
+
+
+// Object click group test
+/*
+
+    NEW LAYER: 1 (Automatically switches setting layer to new layer
+
+*/
+
+//GMUI_AddLayer(1,0,0);
+
+//GMUI_CreateGroup(3,          0,0,    global.GMUIAnchorTopLeft);
+//GMUI_GroupSetFadeOnHide(3,room_speed/8,1)
+
+/*
+with (GMUI_Add("MenuInt", "intpicker",          0,0,    3,2,    global.GMUIAnchorTopLeft)) {
+    GMUI_ControlSetAttributes(0,0,0,9);
+    GMUI_ControlSetInitValue(0);
+    GMUI_ControlAddToGroup(3);
+    GMUI_GroupHide(3,1,true);
+}
+
+// Switch back to make instructions on layer 0
+GMUI_SetOnLayer(0);
+
+with (GMUI_Add("MenuIntInstructions", "label",  20,23,  12,2,   global.GMUIAnchorTopLeft)) {
+    GMUI_ControlSetInitValue("Click square to open sub menu");
+}
+
+*/
+/*
+
+    MENU EXAMPLES
+
+*/
+
+
+// Test Menu (Menu ID variable isn't used here... but could be if you want to)
+var menuID; //-9,2 
+menuID = GMUI_CreateMenu("Test Menu",   GMUI_CenterX(0, 18, global.GMUIAnchorTop) ,2,   18,24,   global.GMUIAnchorTop);
+GMUI_MenuSetClickOff("Test Menu", true);
+GMUI_MenuSetStyle("Test Menu", c_black, .3, c_white, 0.75, true);
+GMUI_MenuSetFadeOnHide("Test Menu", room_speed/4, 0);
+GMUI_MenuSetHidePosition("Test Menu", -9, 6, easeExpOut, room_speed/2);
+//GMUI_MenuSetActionIn("Test Menu",...)
+
+with (GMUI_Add("CloseButton", "textbutton",   4,1,   4,1,    global.GMUIAnchorTopRight)) {
+    GMUI_ControlSetButtonAction(_PopupClose_Button);
+    GMUI_ControlSetButton("Close",-1,-1,-1);
+    GMUI_ControlAddToMenu("Test Menu");
+}
+
+with (GMUI_Add("OpenButton", "textbutton",   -3,8,   8,1,    global.GMUIAnchorTop)) {
+    GMUI_ControlSetButtonAction(_PopupMenu2_Button);
+    GMUI_ControlSetButton("Open Another",-1,-1,-1);
+    GMUI_ControlAddToMenu("Test Menu");
+}
+
+with (GMUI_Add("Toggle5", "toggle",              2,4,   3,2,    global.GMUIAnchorBottomLeft)) {
+    GMUI_ControlSetToggleSettings(1, c_lime, c_gray, global.GMUISlideFullRoundRect, $808080, $505050, room_speed/4, global.GMUIDirectionTypeHorizontal, 0);
+    GMUI_ControlAddToMenu("Test Menu");
+}
+
+
+// Test Menu 2
+menuID = GMUI_CreateMenu("Test Menu 2",   -6,8,   18,24,   global.GMUIAnchorTop);
+GMUI_MenuSetClickOff("Test Menu 2", true);
+GMUI_MenuSetStyle("Test Menu 2", c_black, 0.3, c_white, 0.75, true);
+GMUI_MenuSetFadeOnHide("Test Menu 2", room_speed/4, 0);
+
+with (GMUI_Add("CloseButton2", "textbutton",   4,1,   4,1,    global.GMUIAnchorTopRight)) {
+    GMUI_ControlSetButtonAction(_PopupClose_Button);
+    GMUI_ControlSetButton("Close",-1,-1,-1);
+    GMUI_ControlAddToMenu("Test Menu 2");
+}
+
+with (GMUI_Add("PopupTestButton","textbutton",  -3,8,   8,1,    global.GMUIAnchorTop)) {
+    GMUI_ControlSetButtonAction(_Popup_Button);
+    GMUI_ControlSetButton("Try Popup",-1,-1,-1);
+    GMUI_ControlAddToMenu("Test Menu 2");
+}
+
+with (GMUI_Add("ResponseLabel", "label", -8, 10, 16, 2, global.GMUIAnchorTop)) {
+    // This value will be set by the popup
+    //ControlBackgroundColor = c_black;
+    GMUI_ControlSetFontStyle(fontNumericBold,c_white,fa_center);
+    GMUI_ControlAddToMenu("Test Menu 2");
+}
+
+// Test Popup
+//global.GMUIPopupBlank = -1;global.GMUIPopupInformation = 0;global.GMUIPopupConfirm = 1;global.GMUIPopupThreeOptions = 2;
+menuID = GMUI_CreatePopup("Test Popup",  -14,2,   28,12,   global.GMUIAnchorTop, global.GMUIPopupThreeOptions);
+GMUI_PopupSetMessage("Test Popup", "Click an option to return to the previous screen!", 2, -1, -1);
+GMUI_PopupSetAction("Test Popup", _PopupReturnAction);
+GMUI_PopupSetStyle("Test Popup", c_white, 0.99, c_white, 0.75, true);
+GMUI_PopupSetFadeOnHide("Test Popup", room_speed/8, 0);
+GMUI_PopupSetHidePosition("Test Popup", -14, 0, easeExpOut, room_speed/4);
+//todo: change the popup style
+
+// Options to change default controls and actions:
+// GMUI_PopupSetButton("Test Popup", which button, Text or "", graphic or -1, text align, text color on hover)
+
+// Additional Options:
+//with (GMUI_Add("Button", "textbutton", 20,3, 4,2, 0, global.GMUIAnchorBottomRight)) {
+//GMUI_ControlAddToPopup("Test Popup");}
+//GMUI_PopupSetClickOff("Test Popup", false); // False is default
+
+
+
+#define _Demo_Form
+///_Demo_Form() This interface is for the demo form
+
+// DEMO INTERFACE:
+
+// Set optional grid settings
+GMUI_SetKeyNavigation(global.GMUIDirectionTypeVertical,vk_up,vk_down,vk_left,vk_right,true);
+
+// Set the layer to change settings on [This one is optional: Already defaults to layer 0]
+GMUI_SetOnLayer(0);
+
+//
+// Setting the left choices
+//
+
+// Left side option buttons group
+GMUI_CreateGroup(1,      2,2,   global.GMUIAnchorTopLeft);
+GMUI_GroupSetSize(1,     8,20);
+GMUI_GroupSetStyle(1, c_black, .2, c_black, .3, 0);
+GMUI_GroupSetFadeOnHide(1, room_speed/2, 0);
+
+var _bW; _bW = 6;
+
+with (GMUI_Add("BtnSliders", "button",         1,1,   _bW,2,    global.GMUIAnchorTopLeft)) {
+    GMUI_ControlAddToGroup(1);
+    GMUI_ControlSetButtonAction1(_Show_Group, 2);
+    GMUI_ControlSetButton("Sliders",-1,-1,-1);
+}
+
+with (GMUI_Add("BtnInputs", "button",         1,4,   _bW,2,    global.GMUIAnchorTopLeft)) {
+    GMUI_ControlAddToGroup(1);
+    GMUI_ControlSetButtonAction1(_Show_Group, 3);
+    GMUI_ControlSetButton("Inputs",-1,-1,-1);
+}
+
+with (GMUI_Add("BtnToggles", "button",         1,7,   _bW,2,    global.GMUIAnchorTopLeft)) {
+    GMUI_ControlAddToGroup(1);
+    GMUI_ControlSetButtonAction1(_Show_Group, 4);
+    GMUI_ControlSetButton("Toggles",-1,-1,-1);
+}
+
+with (GMUI_Add("BtnMenus", "button",         1,10,   _bW,2,    global.GMUIAnchorTopLeft)) {
+    GMUI_ControlAddToGroup(1);
+    GMUI_ControlSetButtonAction(_PopupMenu_Button);
+    GMUI_ControlSetButton("Menus",-1,-1,-1);
+}
+
+with (GMUI_Add("BtnSelection", "button",         1,13,   _bW,2,    global.GMUIAnchorTopLeft)) {
+    GMUI_ControlAddToGroup(1);
+    GMUI_ControlSetButtonAction1(_Show_Group, 5);
+    GMUI_ControlSetButton("Selection",-1,-1,-1);
+}
+
+with (GMUI_Add("BtnDisabling", "button",         1,16,   _bW,2,    global.GMUIAnchorTopLeft)) {
+    GMUI_ControlAddToGroup(1);
+    GMUI_ControlSetButtonAction1(_Show_Group, 6);
+    GMUI_ControlSetButton("Disabling",-1,-1,-1);
+}
+
+with (GMUI_Add("BtnLayering", "button",         1,19,   _bW,2,    global.GMUIAnchorTopLeft)) {
+    GMUI_ControlAddToGroup(1);
+    GMUI_ControlSetButtonAction1(_Show_Group, 7);
+    GMUI_ControlSetButton("Layering",-1,-1,-1);
+}
+
+with (GMUI_Add("BtnMovement", "button",         1,22,   _bW,2,    global.GMUIAnchorTopLeft)) {
+    GMUI_ControlAddToGroup(1);
+    GMUI_ControlSetButtonAction1(_Show_Group, 8);
+    GMUI_ControlSetButton("Movement",-1,-1,-1);
+}
+
+with (GMUI_Add("BtnAnchoring", "button",         1,25,   _bW,2,    global.GMUIAnchorTopLeft)) {
+    GMUI_ControlAddToGroup(1);
+    GMUI_ControlSetButtonAction1(_Show_Group, 9);
+    GMUI_ControlSetButton("Anchoring",-1,-1,-1);
+}
+
+with (GMUI_Add("BtnExpand", "button",         1,28,   _bW,2,    global.GMUIAnchorTopLeft)) {
+    GMUI_ControlAddToGroup(1);
+    //GMUI_ControlSetButtonAction1(_Show_Group, 8);
+    GMUI_ControlSetButton("Expand",-1,-1,-1);
+}
+
+with (GMUI_Add("BtnDebug", "button",         1,31,   _bW,2,    global.GMUIAnchorTopLeft)) {
+    GMUI_ControlAddToGroup(1);
+    GMUI_ControlSetButtonAction(_Debug_Button);
+    GMUI_ControlSetButton("Debug",-1,-1,-1);
+}
+
+
+//
+// RIGHT GROUP SECTION
+//
+
+// group border
+GMUI_CreateGroup(99, 20, 2, global.GMUIAnchorTopRight);
+GMUI_GroupSetStyle(99, c_black, .2, c_black, .3, 0);
+GMUI_GroupSetSize(99,20,33);
+
+with (GMUI_Add("Right","label",0,0,1,1,global.GMUIAnchorTopRight)) {
+    GMUI_ControlAddToGroup(99);
+}
+
+
+var _fadespeed; _fadespeed = room_speed/2;
+
+// Right Group 2: Sliders (Default)
+GMUI_CreateGroup(2,      20,2,    global.GMUIAnchorTopRight);
+GMUI_GroupSetFadeOnHide(2, _fadespeed, 0);
+//SET SIZE TO GRID - X
+
+with (GMUI_Add("Slider", "slider",              5,6,  10,2,   global.GMUIAnchorTopLeft)) {
+    GMUI_ControlAddToGroup(2);
+    GMUI_ControlSetSliderSettings(13,10,34,true,true,true,global.GMUIDirectionTypeHorizontal);
+    GMUI_ControlSetSliderStyle(2,2,c_dkgray,0.6,c_teal,0.9,c_dkgray,0.4,c_aqua,1,c_gray,0.8);
+    GMUI_ControlSetSliderSize(16, 20, 1, 12, 10, 8, 6, 8);
+    GMUI_ControlSetInitValue(20);
+    
+    GMUI_ControlSetValueChangedAction(_SliderValue_Changed);
+}
+
+// Button to set slider to mid point
+with (GMUI_Add("MidSlider", "button",           1,4,  2,2,    global.GMUIAnchorTopLeft)) {
+    GMUI_ControlAddToGroup(2);
+    GMUI_ControlSetButtonAction(_SliderMid_Button);
+    GMUI_ControlSetButton("Mid",-1,-1,-1);
+    GMUI_ControlSetPositioning(0,6,0,20);
+}
+// Button to set slider to snap or not
+with (GMUI_Add("SnapSlider", "button",          1,6,  3,2,    global.GMUIAnchorTopLeft)) {
+    GMUI_ControlAddToGroup(2);
+    GMUI_ControlSetButtonAction(_SliderSnap_Button);
+    GMUI_ControlSetButton("Snap",-1,-1,-1);
+    GMUI_ControlSetPositioning(0,6,0,20);
+}
+
+// Display of slider value to the side
+with (GMUI_Add("SliderVal", "label",            16,6,   2,2,    global.GMUIAnchorTopLeft)) {
+    GMUI_ControlAddToGroup(2);
+    GMUI_ControlSetText(string(round(GMUI_GetValue("Slider"))));
+    GMUI_ControlSetStyle($606060,c_gray,-1,-1,-1,-1,-1,-1,-1,-1);
+    GMUI_ControlSetFontStyle(fontNumericBold,$D9D9D9,fa_middle);
+}
+
+with (GMUI_Add("SliderV", "slider",              6,9,  4,8,   global.GMUIAnchorTopLeft)) {
+    GMUI_ControlAddToGroup(2);
+    GMUI_ControlSetSliderSettings(13,10,34,true,true,true,global.GMUIDirectionTypeVertical);
+    GMUI_ControlSetSliderStyle(2,2,c_dkgray,0.6,c_teal,0.9,c_dkgray,0.4,c_aqua,1,c_gray,0.8);
+    GMUI_ControlSetSliderSize(16, 20, 1, 12, 10, 8, 6, 8);
+    GMUI_ControlSetInitValue(20);
+}
+
+//TESTESTESTESTESTEST
+/*
+with (GMUI_Add("Slider2", "slider",              10,6,  6,2,   global.GMUIAnchorTopLeft)) {
+    GMUI_ControlSetSliderSettings(13,10,34,true,true,true,global.GMUIDirectionTypeHorizontal);
+    GMUI_ControlSetSliderStyle(2,2,c_dkgray,0.6,c_teal,0.9,c_dkgray,0.4,c_aqua,1,c_gray,0.8);
+    GMUI_ControlSetSliderSize(16, 20, 1, 12, 10, 8, 6, 8);
+    GMUI_ControlSetInitValue(20);
+    
+    GMUI_ControlSetValueChangedAction(_SliderValue_Changed);
+}
+with (GMUI_Add("SliderV2", "slider",              13,9,  4,8,   global.GMUIAnchorTopLeft)) {
+    GMUI_ControlSetSliderSettings(13,10,34,true,true,true,global.GMUIDirectionTypeVertical);
+    GMUI_ControlSetSliderStyle(2,2,c_dkgray,0.6,c_teal,0.9,c_dkgray,0.4,c_aqua,1,c_gray,0.8);
+    GMUI_ControlSetSliderSize(16, 20, 1, 12, 10, 8, 6, 8);
+    GMUI_ControlSetInitValue(20);
+    
+    GMUI_ControlSetValueChangedAction(_SliderValue_Changed);
+}
+*/
+
+// Right Group 3: Inputs
+GMUI_CreateGroup(3,      20,2,    global.GMUIAnchorTopRight);
+GMUI_GroupHide(3,GMUI_GetCurrentLayer(),true);
+GMUI_GroupSetFadeOnHide(3, _fadespeed, 0);
+//SET SIZE TO GRID - X
+
+with (GMUI_Add("SpriteText","textstring",            1,1,    16,2,   global.GMUIAnchorTopLeft)) {
+GMUI_ControlAddToGroup(3);
+    GMUI_ControlSetAttributes(20,0,0,0);
+    GMUI_ControlSetInitValue("Select");
+    GMUI_ControlSetSprite(sprite24,0,1,0);//GMUIspr_input
+}
+
+with (GMUI_Add("IntegerText", "textint",              1,4,    10,2,   global.GMUIAnchorTopLeft)) {
+    GMUI_ControlSetAttributes(5,0,-1000,1000);
+    GMUI_ControlSetStyle(hsv(85,55,255),rgb(20,20,20),-1,-1,-1,-1,-1,-1,-1,-1);
+    GMUI_ControlAddToGroup(3);
+}
+
+with (GMUI_Add("DecimalText", "textdecimal",          1,7,    10,2,   global.GMUIAnchorTopLeft)) {
+    GMUI_ControlSetAttributes(10,10,-999,999);
+    GMUI_ControlAddToGroup(3);
+    //GMUI_ControlSetSpriteMap(s2,s3,s4,s5,s6,s7,s8,s1,s9,false);
+}
+
+with (GMUI_Add("Test4", "intpicker",            1,10,    10,2,   global.GMUIAnchorTopLeft)) {
+    GMUI_ControlSetAttributes(0,0,-20,20);
+    GMUI_ControlSetInitValue(-1);
+    GMUI_ControlAddToGroup(3);
+    GMUI_ControlSetHoverAction(_Hover_Int);
+    GMUI_ControlSetHoverOffAction(_HoverOff_Int);
+    //sprite_set_offset(GMUIspr_arrow,10,12);sprite_set_offset(GMUIspr_arrowup,10,0); // If vertical, offset should be centered
+    //GMUI_ControlSetPicker(sprite_get_width(GMUIspr_arrowup) + 4,sprite_get_height(GMUIspr_arrowup) + 4,
+    //    global.GMUIDirectionTypeVertical, GMUIspr_arrowup, GMUIspr_arrow);
+        
+    with (GMUI_ControlAddTooltip("-20 to 20.",global.GMUIAnchorLeft,6,2,12,4,-1,-1)) {
+        GMUI_ControlSetFadeOnHide(id, room_speed/4);
+    }
+}
+
+
+// Right Group 4: Toggles
+GMUI_CreateGroup(4,      20,2,    global.GMUIAnchorTopRight);
+GMUI_GroupHide(4,GMUI_GetCurrentLayer(),true);
+GMUI_GroupSetFadeOnHide(4, _fadespeed, 0);
+//SET SIZE TO GRID - X
+
+with (GMUI_Add("Toggle1", "toggle",              3,6,   3,2,    global.GMUIAnchorTopLeft)) {
+    GMUI_ControlSetToggleSettings(1, c_lime, c_gray, global.GMUISlideFullRoundRect, $808080, $505050, room_speed/4, global.GMUIDirectionTypeHorizontal, 0);
+    GMUI_ControlAddToGroup(4);
+}
+
+with (GMUI_Add("Toggle2", "toggle",              3,9,   3,2,    global.GMUIAnchorTopLeft)) {
+    GMUI_ControlSetToggleSettings(1, c_lime, c_gray, global.GMUISlideRoundRect, $808080, $505050, room_speed/4, global.GMUIDirectionTypeHorizontal, 0);
+    GMUI_ControlAddToGroup(4);
+}
+
+with (GMUI_Add("Toggle3", "toggle",              3,12,   3,2,    global.GMUIAnchorTopLeft)) {
+    GMUI_ControlSetToggleSettings(1, c_lime, c_gray, global.GMUISlideRect, $808080, $505050, room_speed/4, global.GMUIDirectionTypeHorizontal, 0);
+    GMUI_ControlAddToGroup(4);
+    GMUI_ControlSetInitValue(true);
+}
+
+with (GMUI_Add("Toggle4", "toggle",              3,15,   3,2,    global.GMUIAnchorTopLeft)) {
+    GMUI_ControlSetToggleSettings(1, c_lime, c_gray, global.GMUISlideLine, $808080, $505050, room_speed/4, global.GMUIDirectionTypeHorizontal, 0);
+    GMUI_ControlAddToGroup(4);
+}
+
+// Test checkbox and toggle
+with (GMUI_Add("CheckBox", "checkbox",          3,18,   1,1,    global.GMUIAnchorBottomLeft)) {
+    GMUI_ControlAddToGroup(4);
+    GMUI_ControlSetCheckboxSettings(1, c_lime, c_gray, global.GMUISlideRoundRect, $808080, $505050, room_speed/6);
+    GMUI_ControlSetHoverAction(_Hover_Checkbox);
+    GMUI_ControlSetHoverOffAction(_HoverOff_Checkbox);
+    GMUI_ControlSetSprite(s10, 0, 0, 0);
+    
+    // Add a space at the end of the string to make sure it wraps. I know... but its Game Maker ;)
+    with (GMUI_ControlAddTooltip("Checkbox!",global.GMUIAnchorBottom,6,2,12,4,-1,-1)) {
+        GMUI_ControlSetFadeOnHide(id, room_speed/6);
+    }
+}
+
+
+// Open menu button (group 4/5)
+
+// Right Group 5: Selection
+GMUI_CreateGroup(5,      20,2,    global.GMUIAnchorTopRight);
+GMUI_GroupHide(5,GMUI_GetCurrentLayer(),true);
+GMUI_GroupSetFadeOnHide(5, _fadespeed, 0);
+//SET SIZE TO GRID - X
+
+// SELECT LIST TEST
+with (GMUI_Add("TestSelectList", "selectlist",            2,2,    10,5,   global.GMUIAnchorTopLeft)) {
+    GMUI_ItemListSettings(26, $E3E3E3, -1, -1);
+    GMUI_ItemListBackground($DEDEDE, $EAEAEA, 0.8, 1);
+    GMUI_ItemListSelectAction(_ListAction);
+    GMUI_AddItem(2,10,"2-One","",-1);
+    GMUI_AddItem(4,20,"4-Two","",-1);
+    GMUI_AddItem(6,30,"6-Three","",-1);
+    GMUI_AddItem(8,40,"8-Four","",-1);
+    GMUI_AddItem(10,50,"10-Five","",-1);
+    GMUI_AddItem(12,60,"12-Six","",-1);
+    GMUI_AddItem(14,70,"14-Seven","",-1);
+    GMUI_AddItem(16,70,"16-Eight","",-1);
+    GMUI_AddItem(18,70,"18-Nine","",-1);
+    GMUI_AddItem(20,70,"20-Ten","",-1);
+    GMUI_AddItem(22,70,"22-Eleven","",-1);
+    GMUI_AddItem(24,70,"24-Twelve","",-1);
+    GMUI_AddItem(26,80,"26-Thirteen","",-1);
+    
+    GMUI_ControlAddToGroup(5);
+}
+
+
+// Right Group 6: Disabling
+GMUI_CreateGroup(6,      20,2,    global.GMUIAnchorTopRight);
+GMUI_GroupSetFadeOnHide(6, _fadespeed, 0);
+//SET SIZE TO GRID - X
+GMUI_GroupHide(6,GMUI_GetCurrentLayer(),true);
+
+
+// Right Group 7: Layering
+GMUI_CreateGroup(7,      20,2,    global.GMUIAnchorTopRight);
+GMUI_GroupSetFadeOnHide(7, _fadespeed, 0);
+//SET SIZE TO GRID - X
+GMUI_GroupHide(7,GMUI_GetCurrentLayer(),true);
+
+
+// Right Group 8: Movement
+GMUI_CreateGroup(8,      20,2,    global.GMUIAnchorTopRight);
+GMUI_GroupSetFadeOnHide(8, _fadespeed, 0);
+//SET SIZE TO GRID - X
+GMUI_GroupHide(8,GMUI_GetCurrentLayer(),true);
+
+
+// Right Group 9: Anchoring
+GMUI_CreateGroup(9,      20,2,    global.GMUIAnchorTopRight);
+GMUI_GroupSetFadeOnHide(9, _fadespeed, 0);
+//SET SIZE TO GRID - X
+GMUI_GroupHide(9,GMUI_GetCurrentLayer(),true);
+
+
+// Right Group 10: Expand (may also be button action?)
+GMUI_CreateGroup(10,      20,2,    global.GMUIAnchorTopRight);
+GMUI_GroupSetFadeOnHide(10, _fadespeed, 0);
+//SET SIZE TO GRID - X
+GMUI_GroupHide(10,GMUI_GetCurrentLayer(),true);
+
+
+// Debug button (group 11)
+
+
+//GMUI_AddLayer(10,0,0);
+with (GMUI_Add("ExitButton", "textbutton",      0,0,    1,1,     global.GMUIAnchorTopRight)) {
+    GMUI_ControlSetButtonAction(_Exit_Button);
+    GMUI_ControlSetButton("x", -1, -1, -1);
+    GMUI_ControlSetPositioning(-1,0,0,0); // Minor adjustment so that the control isnt cut off by the room
+    
+    //GMUI_ControlPersistentToLayer(0);
+}
+
+/*
+with (GMUI_Add("test14","textstring",20,1,12,2,global.GMUIAnchorTopLeft)) {
+    GMUI_ControlSetAttributes(14,0,0,0);
+}
+*/
+
+
+
+/*
+with (GMUI_Add("TestButton", "textbutton",      3,9,    5,3,    global.GMUIAnchorTopLeft)) {
+    GMUI_ControlSetButtonAction(_Test_Button);
+    GMUI_ControlSetButton("Test!", -1, -1, -1);
+    GMUI_ControlSetStyle(-1, -1, c_red, 1, 0.85, -1, -1, -1, -1, -1);
+    GMUI_ControlAddToGroup(2);
+}
+
+
+
+
+with (GMUI_Add("PopupMenuButton", "textbutton",     1,7,    5,3,    global.GMUIAnchorBottomLeft)) {
+    GMUI_ControlSetButtonAction(_PopupMenu_Button);
+    GMUI_ControlSetButton("Show"+chr(13)+"Menu", -1, -1, -1);
+    GMUI_ControlSetStyle(-1, -1, c_purple, 1, 0.85, -1, -1, -1, -1, -1);
+}
+
+with (GMUI_Add("DebugButton", "textbutton",     1,3,    5,3,    global.GMUIAnchorBottomLeft)) {
+    GMUI_ControlSetButtonAction(_Debug_Button);
+    GMUI_ControlSetButton("Debug", -1, -1, -1);
+    GMUI_ControlSetStyle(-1, -1, c_gray, 1, 0.85, -1, -1, -1, -1, -1);
+}
+
+with (GMUI_Add("SwipeButton", "textbutton",      8,7,   5,3,    global.GMUIAnchorBottomLeft)) {
+    GMUI_ControlSetButtonAction(_Swipe_Button);
+    GMUI_ControlSetButton("Swipe"+chr(13)+"Out",-1,-1,-1);
+}
+
+with (GMUI_Add("DisableButton", "textbutton",   8,3,    5,3,    global.GMUIAnchorBottomLeft)) {
+    GMUI_ControlSetButtonAction(_Disable_Button);
+    GMUI_ControlSetButton("Disable"+chr(13)+"Test",-1,-1,-1);
+}
+
+with (GMUI_Add("HideButton2", "textbutton",      15,7,   5,3,    global.GMUIAnchorBottomLeft)) {
+    GMUI_ControlSetButtonAction(_Hide_Button2);
+    GMUI_ControlSetButton("Hide"+chr(13)+"Group 2",-1,-1,-1);
+}
+
+with (GMUI_Add("HideButton", "textbutton",      15,3,   5,3,    global.GMUIAnchorBottomLeft)) {
+    GMUI_ControlSetButtonAction(_Hide_Button);
+    GMUI_ControlSetButton("Hide"+chr(13)+"Group 1",-1,-1,-1);
+}
+
+with (GMUI_Add("MoveButton", "textbutton",      22,3,   6,3,    global.GMUIAnchorBottomLeft)) {
+    GMUI_ControlSetButtonAction(_Move_Button);
+    GMUI_ControlSetButton("Move"+chr(13)+"Group",-1,-1,-1);
+}
+
+with (GMUI_Add("EnlargeButton", "textbutton",   30,3,   6,3,    global.GMUIAnchorBottomLeft)) {
+    GMUI_ControlSetButtonAction(_Enlarge_Button);
+    GMUI_ControlSetButton("Enlarge"+chr(13)+"Window",-1,-1,-1);
+}
+
+
+
+with (GMUI_Add("SwitchButton", "button",        -2,16,  4,2,    global.GMUIAnchorTop)) {
+    GMUI_ControlSetButtonAction(_Switch_Button);
+    GMUI_ControlSetSprite(GMUIspr_switch,0,1,0);
+}
+
+
+
+
+
+with (GMUI_Add("Toggle", "toggle",              3,10,   3,2,    global.GMUIAnchorBottomLeft)) {
+    GMUI_ControlSetToggleSettings(1, c_lime, c_gray, global.GMUISlideFullRoundRect, $808080, $505050, room_speed/4, global.GMUIDirectionTypeHorizontal, 0);
+}
+
+with (GMUI_Add("SpritePicker", "spritepicker",  -10,10, 5,2,    global.GMUIAnchorBottom)) {
+    GMUI_ControlAddOption(0, GMUIspr_arrowright);
+    GMUI_ControlAddOption(2, GMUIspr_arrowup);
+    GMUI_ControlAddOption(4, GMUIspr_arrowleft);
+    GMUI_ControlAddOption(6, GMUIspr_arrow);
+    GMUI_ControlSetPicker(sprite_get_width(GMUIspr_arrowleft) + 4,sprite_get_height(GMUIspr_arrowleft) + 4,
+        global.GMUIDirectionTypeHorizontal, GMUIspr_arrowright,GMUIspr_arrowleft);
+    GMUI_ControlSetInitValue(6);
+}
+*/
+// Example: overrides initial value:
+//GMUI_ControlSelectOption("SpritePicker",2);
+
+//with (GMUI_Add("Graphic", "image",          -12,10, 2,2,    layer, global.GMUIAnchorBottom)) {
+//    GMUI_ControlSetSpriteExt(s10, 0, 0, 0, 2, 2, c_white, 0.2);
+//}
+
+
+// Object click group test
+/*
+
+    NEW LAYER: 1 (Automatically switches setting layer to new layer
+
+*/
+
+//GMUI_AddLayer(1,0,0);
+
+//GMUI_CreateGroup(3,          0,0,    global.GMUIAnchorTopLeft);
+//GMUI_GroupSetFadeOnHide(3,room_speed/8,1)
+
+/*
+with (GMUI_Add("MenuInt", "intpicker",          0,0,    3,2,    global.GMUIAnchorTopLeft)) {
+    GMUI_ControlSetAttributes(0,0,0,9);
+    GMUI_ControlSetInitValue(0);
+    GMUI_ControlAddToGroup(3);
+    GMUI_GroupHide(3,1,true);
+}
+
+// Switch back to make instructions on layer 0
+GMUI_SetOnLayer(0);
+
+with (GMUI_Add("MenuIntInstructions", "label",  20,23,  12,2,   global.GMUIAnchorTopLeft)) {
+    GMUI_ControlSetInitValue("Click square to open sub menu");
+}
+
+*/
+/*
+
+    MENU EXAMPLES
+
+*/
+
+
+// Test Menu (Menu ID variable isn't used here... but could be if you want to)
+var menuID; //-9,2 
+menuID = GMUI_CreateMenu("Test Menu",   GMUI_CenterX(0, 18, global.GMUIAnchorTop) ,2,   18,24,   global.GMUIAnchorTop);
+GMUI_MenuSetClickOff("Test Menu", true);
+GMUI_MenuSetStyle("Test Menu", c_black, .3, c_white, 0.75, true);
+GMUI_MenuSetFadeOnHide("Test Menu", room_speed/4, 0);
+GMUI_MenuSetHidePosition("Test Menu", -9, 6, easeExpOut, room_speed/2);
+//GMUI_MenuSetActionIn("Test Menu",...)
+
+with (GMUI_Add("CloseButton", "textbutton",   4,1,   4,1,    global.GMUIAnchorTopRight)) {
+    GMUI_ControlSetButtonAction(_PopupClose_Button);
+    GMUI_ControlSetButton("Close",-1,-1,-1);
+    GMUI_ControlAddToMenu("Test Menu");
+}
+
+with (GMUI_Add("OpenButton", "textbutton",   -3,8,   8,1,    global.GMUIAnchorTop)) {
+    GMUI_ControlSetButtonAction(_PopupMenu2_Button);
+    GMUI_ControlSetButton("Open Another",-1,-1,-1);
+    GMUI_ControlAddToMenu("Test Menu");
+}
+
+with (GMUI_Add("Toggle5", "toggle",              2,4,   3,2,    global.GMUIAnchorBottomLeft)) {
+    GMUI_ControlSetToggleSettings(1, c_lime, c_gray, global.GMUISlideFullRoundRect, $808080, $505050, room_speed/4, global.GMUIDirectionTypeHorizontal, 0);
+    GMUI_ControlAddToMenu("Test Menu");
+}
+
+
+// Test Menu 2
+menuID = GMUI_CreateMenu("Test Menu 2",   -6,8,   18,24,   global.GMUIAnchorTop);
+GMUI_MenuSetClickOff("Test Menu 2", true);
+GMUI_MenuSetStyle("Test Menu 2", c_black, 0.3, c_white, 0.75, true);
+GMUI_MenuSetFadeOnHide("Test Menu 2", room_speed/4, 0);
+
+with (GMUI_Add("CloseButton2", "textbutton",   4,1,   4,1,    global.GMUIAnchorTopRight)) {
+    GMUI_ControlSetButtonAction(_PopupClose_Button);
+    GMUI_ControlSetButton("Close",-1,-1,-1);
+    GMUI_ControlAddToMenu("Test Menu 2");
+}
+
+with (GMUI_Add("PopupTestButton","textbutton",  -3,8,   8,1,    global.GMUIAnchorTop)) {
+    GMUI_ControlSetButtonAction(_Popup_Button);
+    GMUI_ControlSetButton("Try Popup",-1,-1,-1);
+    GMUI_ControlAddToMenu("Test Menu 2");
+}
+
+with (GMUI_Add("ResponseLabel", "label", -8, 10, 16, 2, global.GMUIAnchorTop)) {
+    // This value will be set by the popup
+    //ControlBackgroundColor = c_black;
+    GMUI_ControlSetFontStyle(fontNumericBold,c_white,fa_center);
+    GMUI_ControlAddToMenu("Test Menu 2");
+}
+
+// Test Popup
+//global.GMUIPopupBlank = -1;global.GMUIPopupInformation = 0;global.GMUIPopupConfirm = 1;global.GMUIPopupThreeOptions = 2;
+menuID = GMUI_CreatePopup("Test Popup",  -14,2,   28,12,   global.GMUIAnchorTop, global.GMUIPopupThreeOptions);
+GMUI_PopupSetMessage("Test Popup", "Click an option to return to the previous screen!", 2, -1, -1);
+GMUI_PopupSetAction("Test Popup", _PopupReturnAction);
+GMUI_PopupSetStyle("Test Popup", c_white, 0.99, c_white, 0.75, true);
+GMUI_PopupSetFadeOnHide("Test Popup", room_speed/8, 0);
+GMUI_PopupSetHidePosition("Test Popup", -14, 0, easeExpOut, room_speed/4);
+//todo: change the popup style
+
+// Options to change default controls and actions:
+// GMUI_PopupSetButton("Test Popup", which button, Text or "", graphic or -1, text align, text color on hover)
+
+// Additional Options:
+//with (GMUI_Add("Button", "textbutton", 20,3, 4,2, 0, global.GMUIAnchorBottomRight)) {
+//GMUI_ControlAddToPopup("Test Popup");}
+//GMUI_PopupSetClickOff("Test Popup", false); // False is default
+
+
+
+#define _Demo_My_Defaults
+///_Demo_My_Defaults() DEMO: Provide your own default values here
+
+// ! NOTE ! These values must pass validation or else errors will occur!
+
+// Set the default control styling (Background Color, Border color, Hover color, hover border/rect, hover alpha,
+// overwrite color, overwrite alpha, select color, select alpha, 
+// showcursor)
+GMUI_ControlSetStyle(
+    rgb(250,250,255),hsv(135,30,100),rgb(20,160,230),true,0.5,
+    rgb(40,40,40),0.1,rgb(240,140,40),0.3,
+    true
+    );
+    
+// Default sprite options
+GMUI_ControlSetSpriteExt(-1,0,0,0,1,1,c_white,1);
+GMUI_ControlSetSpriteMap(-1,-1,-1,-1,-1,-1,-1,-1,-1,false);
+
+// Default font style (font, font color, font align)
+GMUI_ControlSetFontStyle(fontNumeric,rgb(42,42,42), fa_left);
+
+// Set the default control attributes(id, Max string length/Whole number padding(KEEP @ 0!), max decimal (if applicable), Min value, Max value)
+GMUI_ControlSetAttributes(0,0,0,999);
+
+// Default group style can be set when called
+ControlHasGroupStyle = false;
+
+
+
+// Specific control initializations //
+
+// Picker controls ( region width, region height, 
+// direction type (see below), right/up sprite, left/down sprite )
+GMUI_ControlSetPicker(
+    sprite_get_width(GMUIspr_arrow) + 4,sprite_get_height(GMUIspr_arrow) + 4,
+    global.GMUIDirectionTypeSideVertical,GMUIspr_arrowup,GMUIspr_arrow,
+    );
+// Direction types: global.GMUIDirectionTypeHorizontal: 0, global.GMUIDirectionTypeVertical: 1, global.GMUIDirectionTypeSideVertical: 2
+
+
+// Text Button control (Text or "", graphic in button or -1, button image sprite or -1, text alignment, hover color or -1)
+GMUI_ControlSetButton("", -1, -1, -1);
 
 
