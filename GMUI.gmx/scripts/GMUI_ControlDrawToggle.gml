@@ -51,7 +51,7 @@ with (_tt_id) {
         else
             TSC = ToggleSlideColorOff;
             
-        TSA = ToggleSlideAlpha;
+        TSA = min(ToggleSlideAlpha,FadeAlpha);
         
         // Draw slide region
         draw_set_color(TSC);
@@ -98,7 +98,7 @@ with (_tt_id) {
             draw_set_color(ToggleColorOn);
         else
             draw_set_color(ToggleColorOff);
-        draw_set_alpha(ToggleAlpha);
+        draw_set_alpha(min(ToggleAlpha,FadeAlpha));
         
         if (ToggleOrientation == global.GMUIDirectionTypeHorizontal)
             cx1 += ToggleRelativeXorY;
@@ -133,7 +133,7 @@ with (_tt_id) {
             TSC = ToggleSlideColorOn;
         else
             TSC = ToggleSlideColorOff;
-        TA = ToggleAlpha;
+        TA = min(ToggleAlpha,FadeAlpha);
         // Draw box
         if (ToggleSlideShape >= 0) {
             draw_sprite(ToggleSlideShape,0, RoomX + TogglePadding, RoomY + TogglePadding);
@@ -160,7 +160,7 @@ with (_tt_id) {
         }
         else {
             draw_set_color(ToggleColorOn);
-            draw_set_alpha(ToggleRelativeXorY);
+            draw_set_alpha(min(ToggleRelativeXorY,FadeAlpha));
             draw_rectangle(RoomX+TogglePadding+3, RoomY+TogglePadding+3, RoomW-TogglePadding-3, RoomH-TogglePadding-3, 0);
         }
     }

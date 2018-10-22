@@ -22,6 +22,9 @@ GMUI_DisableNavigation();
 GMUI_SetViewSnap(true,0);
 GMUI_UseSurfaces(true);
 
+// Optionally specified defaults script
+global.GMUIDefaults = -1;
+
 // Common GMUI values:
 
 // AHOY MATEYS - Please note that the cell#'s for new controls are relative to their anchor position

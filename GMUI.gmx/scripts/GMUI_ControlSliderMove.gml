@@ -4,8 +4,13 @@
 // Update adjustment
 if (argument0) {
     var MX,MY;
-    MX = mouse_x-(GMUIP).GMUI_grid_x[Layer];
-    MY = mouse_y-(GMUIP).GMUI_grid_y[Layer];
+    MX = mouse_x-(GMUIP).GMUI_grid_x[Layer]-GMUI_GridViewOffsetX(GMUIP);
+    MY = mouse_y-(GMUIP).GMUI_grid_y[Layer]-GMUI_GridViewOffsetY(GMUIP);
+    //todo: fix view and group offsets!
+    if (Group > 0) {
+        MX -= (GMUIP).GMUI_groupActualX[Layer,Group];
+        MY -= (GMUIP).GMUI_groupActualY[Layer,Group];
+    }
     
     if (!SliderVertical)
         SliderRelativeFinalXorY = minmax(MX,RoomX+SliderStartEndPadding,RoomW-SliderStartEndPadding)-RoomX;

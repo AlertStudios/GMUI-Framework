@@ -92,7 +92,7 @@
         <script>scripts\GMUI_ControlCenterX.gml</script>
         <script>scripts\GMUI_ControlCenterY.gml</script>
         <script>scripts\GMUI_ControlDisable.gml</script>
-        <script>scripts\GMUI_ControlDraw.gml</script>
+        <script>scripts\GMUI_ControlDrawEvent.gml</script>
         <script>scripts\GMUI_ControlDrawTooltip.gml</script>
         <script>scripts\GMUI_ControlFadeIn.gml</script>
         <script>scripts\GMUI_ControlFadeOut.gml</script>
@@ -106,6 +106,7 @@
         <script>scripts\GMUI_ControlSetAttributes.gml</script>
         <script>scripts\GMUI_ControlSetButton.gml</script>
         <script>scripts\GMUI_ControlSetButtonAction.gml</script>
+        <script>scripts\GMUI_ControlSetButtonAction1.gml</script>
         <script>scripts\GMUI_ControlSetCheckboxSettings.gml</script>
         <script>scripts\GMUI_ControlSetFadeOnHide.gml</script>
         <script>scripts\GMUI_ControlSetFontStyle.gml</script>
@@ -196,6 +197,7 @@
         <script>scripts\GMUI_CellGetActualY.gml</script>
         <script>scripts\GMUI_ControlActionScript.gml</script>
         <script>scripts\GMUI_ControlAddToMenuType.gml</script>
+        <script>scripts\GMUI_ControlDefaultsInit.gml</script>
         <script>scripts\GMUI_ControlDrawGroup.gml</script>
         <script>scripts\GMUI_ControlDrawItemList.gml</script>
         <script>scripts\GMUI_ControlDrawSlider.gml</script>
@@ -248,6 +250,7 @@
         <script>scripts\GMUI_GridNextControl.gml</script>
         <script>scripts\GMUI_GridResetControlRegion.gml</script>
         <script>scripts\GMUI_GridSetAllGroupValues.gml</script>
+        <script>scripts\GMUI_GridSetControlRegion.gml</script>
         <script>scripts\GMUI_GridSetMappedValues.gml</script>
         <script>scripts\GMUI_GridSetRegions.gml</script>
         <script>scripts\GMUI_GridSetRegionsLayer.gml</script>
@@ -302,12 +305,14 @@
       <script>scripts\_SliderMid_Button.gml</script>
       <script>scripts\_SliderSnap_Button.gml</script>
       <script>scripts\_SliderValue_Changed.gml</script>
+      <script>scripts\_Show_Group.gml</script>
       <script>scripts\_Swipe_Button.gml</script>
       <script>scripts\_Switch_Button.gml</script>
       <script>scripts\_Test_Button.gml</script>
     </scripts>
     <scripts name="My Interfaces">
       <script>scripts\_Demo_Form.gml</script>
+      <script>scripts\_Demo_My_Defaults.gml</script>
     </scripts>
   </scripts>
   <fonts name="fonts">

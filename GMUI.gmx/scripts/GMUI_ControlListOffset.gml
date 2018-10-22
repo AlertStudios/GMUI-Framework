@@ -8,6 +8,7 @@ _UsingSurface = argument1;
 _MX = argument2;
 _offset = 0;
 _relMY = 0;
+_relGY = 0;
 
 if (!instance_exists(_Ctrl)) {
     GMUI_ThrowErrorDetailed("Control " + string(_Ctrl) + " doesn't exist!", _SCRIPT);
@@ -15,9 +16,13 @@ if (!instance_exists(_Ctrl)) {
 }
 
 if (_Ctrl.ControlItemList) {
+    // Account for group offset
+    if (_Ctrl.Group > 0)
+        _relGY = _Ctrl.GMUIP.GMUI_groupActualY[_Ctrl.Layer,_Ctrl.Group];
+        
     // Get the relative mouse position to the control
-    _relMY = argument3 - _Ctrl.RoomY - (_Ctrl.GMUIP.GMUI_grid_y[_Ctrl.Layer] + GMUI_GridViewOffsetY(_Ctrl.GMUIP))*_UsingSurface;
-    
+    _relMY = argument3 - _Ctrl.RoomY - (_Ctrl.GMUIP.GMUI_grid_y[_Ctrl.Layer] + _relGY + GMUI_GridViewOffsetY(_Ctrl.GMUIP))*_UsingSurface;
+
     with (_Ctrl) {
         // Return index offset for non-surface, or Y offset for surfaces
         if (!_UsingSurface)

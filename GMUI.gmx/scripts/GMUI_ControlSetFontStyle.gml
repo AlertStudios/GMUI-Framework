@@ -6,7 +6,7 @@ if (!GMUI_IsControl() && id != GMUII())
     return false;
 }
 
-if (argument0 > -1)
+if (argument0 > -1 || argument0 == noone)
     ControlFont = argument0;
 if (argument1 > -1)
     ControlFontColor = argument1;

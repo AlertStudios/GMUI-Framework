@@ -16,9 +16,10 @@ if (!GMUI_IsControl() && id != GMUII())
             ControlFontAlign = fa_center;
     }
     
-    if (sprite_exists(argument3))
+    if (sprite_exists(argument3) || argument3 == noone)
         ControlPickerSpriteRightOrUp = argument3;
-    if (sprite_exists(argument4))
+        
+    if (sprite_exists(argument4) || argument4 == noone)
         ControlPickerSpriteLeftOrDown = argument4;
     
 

@@ -62,6 +62,7 @@ i.NonClickable = 0;
 
 // Custom Actions
 i.ActionScript = -1;
+i.ActionScriptArgument = 0;
 i.HoverActionScript = -1;
 i.HoverOffActionScript = -1;
 i.SelectingActionScript = -1;
