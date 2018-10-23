@@ -8,6 +8,9 @@ GMUI_SetKeyNavigation(global.GMUIDirectionTypeVertical,vk_up,vk_down,vk_left,vk_
 // Set the layer to change settings on [This one is optional: Already defaults to layer 0]
 GMUI_SetOnLayer(0);
 
+// Instead, lets create the menu on layer 10, and set each as persistent all the way to layer 0
+GMUI_AddLayer(10,0,0);
+
 //
 // Setting the left choices
 //
@@ -24,82 +27,85 @@ with (GMUI_Add("BtnSliders", "button",         1,1,   _bW,2,    global.GMUIAncho
     GMUI_ControlAddToGroup(1);
     GMUI_ControlSetButtonAction1(_Show_Group, 2);
     GMUI_ControlSetButton("Sliders",-1,-1,-1);
+    GMUI_ControlPersistentToLayer(0);
 }
 
 with (GMUI_Add("BtnInputs", "button",         1,4,   _bW,2,    global.GMUIAnchorTopLeft)) {
     GMUI_ControlAddToGroup(1);
     GMUI_ControlSetButtonAction1(_Show_Group, 3);
     GMUI_ControlSetButton("Inputs",-1,-1,-1);
+    GMUI_ControlPersistentToLayer(0);
 }
 
 with (GMUI_Add("BtnToggles", "button",         1,7,   _bW,2,    global.GMUIAnchorTopLeft)) {
     GMUI_ControlAddToGroup(1);
     GMUI_ControlSetButtonAction1(_Show_Group, 4);
     GMUI_ControlSetButton("Toggles",-1,-1,-1);
+    GMUI_ControlPersistentToLayer(0);
 }
 
 with (GMUI_Add("BtnMenus", "button",         1,10,   _bW,2,    global.GMUIAnchorTopLeft)) {
     GMUI_ControlAddToGroup(1);
-    GMUI_ControlSetButtonAction(_PopupMenu_Button);
+    //GMUI_ControlSetButtonAction1(_Show_Group, 2);
     GMUI_ControlSetButton("Menus",-1,-1,-1);
+    GMUI_ControlPersistentToLayer(0);
 }
 
 with (GMUI_Add("BtnSelection", "button",         1,13,   _bW,2,    global.GMUIAnchorTopLeft)) {
     GMUI_ControlAddToGroup(1);
     GMUI_ControlSetButtonAction1(_Show_Group, 5);
     GMUI_ControlSetButton("Selection",-1,-1,-1);
+    GMUI_ControlPersistentToLayer(0);
 }
 
 with (GMUI_Add("BtnDisabling", "button",         1,16,   _bW,2,    global.GMUIAnchorTopLeft)) {
     GMUI_ControlAddToGroup(1);
     GMUI_ControlSetButtonAction1(_Show_Group, 6);
     GMUI_ControlSetButton("Disabling",-1,-1,-1);
+    GMUI_ControlPersistentToLayer(0);
 }
 
 with (GMUI_Add("BtnLayering", "button",         1,19,   _bW,2,    global.GMUIAnchorTopLeft)) {
     GMUI_ControlAddToGroup(1);
     GMUI_ControlSetButtonAction1(_Show_Group, 7);
     GMUI_ControlSetButton("Layering",-1,-1,-1);
+    GMUI_ControlPersistentToLayer(0);
 }
 
 with (GMUI_Add("BtnMovement", "button",         1,22,   _bW,2,    global.GMUIAnchorTopLeft)) {
     GMUI_ControlAddToGroup(1);
     GMUI_ControlSetButtonAction1(_Show_Group, 8);
     GMUI_ControlSetButton("Movement",-1,-1,-1);
+    GMUI_ControlPersistentToLayer(0);
 }
 
 with (GMUI_Add("BtnAnchoring", "button",         1,25,   _bW,2,    global.GMUIAnchorTopLeft)) {
     GMUI_ControlAddToGroup(1);
     GMUI_ControlSetButtonAction1(_Show_Group, 9);
     GMUI_ControlSetButton("Anchoring",-1,-1,-1);
+    GMUI_ControlPersistentToLayer(0);
 }
 
 with (GMUI_Add("BtnExpand", "button",         1,28,   _bW,2,    global.GMUIAnchorTopLeft)) {
     GMUI_ControlAddToGroup(1);
     //GMUI_ControlSetButtonAction1(_Show_Group, 8);
     GMUI_ControlSetButton("Expand",-1,-1,-1);
+    GMUI_ControlPersistentToLayer(0);
 }
 
 with (GMUI_Add("BtnDebug", "button",         1,31,   _bW,2,    global.GMUIAnchorTopLeft)) {
     GMUI_ControlAddToGroup(1);
     GMUI_ControlSetButtonAction(_Debug_Button);
     GMUI_ControlSetButton("Debug",-1,-1,-1);
+    GMUI_ControlPersistentToLayer(0);
 }
 
 
 //
 // RIGHT GROUP SECTION
 //
-
-// group border
-GMUI_CreateGroup(99, 20, 2, global.GMUIAnchorTopRight);
-GMUI_GroupSetStyle(99, c_black, .2, c_black, .3, 0);
-GMUI_GroupSetSize(99,20,33);
-
-with (GMUI_Add("Right","label",0,0,1,1,global.GMUIAnchorTopRight)) {
-    GMUI_ControlAddToGroup(99);
-}
-
+GMUI_AddLayer(1,0,0);
+//GMUI_SetOnLayer(1);
 
 var _fadespeed; _fadespeed = room_speed/2;
 
@@ -108,7 +114,7 @@ GMUI_CreateGroup(2,      20,2,    global.GMUIAnchorTopRight);
 GMUI_GroupSetFadeOnHide(2, _fadespeed, 0);
 //SET SIZE TO GRID - X
 
-with (GMUI_Add("Slider", "slider",              5,6,  10,2,   global.GMUIAnchorTopLeft)) {
+with (GMUI_Add("Slider", "slider",              8,6,  10,2,   global.GMUIAnchorTopLeft)) {
     GMUI_ControlAddToGroup(2);
     GMUI_ControlSetSliderSettings(13,10,34,true,true,true,global.GMUIDirectionTypeHorizontal);
     GMUI_ControlSetSliderStyle(2,2,c_dkgray,0.6,c_teal,0.9,c_dkgray,0.4,c_aqua,1,c_gray,0.8);
@@ -119,14 +125,14 @@ with (GMUI_Add("Slider", "slider",              5,6,  10,2,   global.GMUIAnchorT
 }
 
 // Button to set slider to mid point
-with (GMUI_Add("MidSlider", "button",           1,4,  2,2,    global.GMUIAnchorTopLeft)) {
+with (GMUI_Add("MidSlider", "button",           3,4,  2,2,    global.GMUIAnchorTopLeft)) {
     GMUI_ControlAddToGroup(2);
     GMUI_ControlSetButtonAction(_SliderMid_Button);
     GMUI_ControlSetButton("Mid",-1,-1,-1);
     GMUI_ControlSetPositioning(0,6,0,20);
 }
 // Button to set slider to snap or not
-with (GMUI_Add("SnapSlider", "button",          1,6,  3,2,    global.GMUIAnchorTopLeft)) {
+with (GMUI_Add("SnapSlider", "button",          3,6,  3,2,    global.GMUIAnchorTopLeft)) {
     GMUI_ControlAddToGroup(2);
     GMUI_ControlSetButtonAction(_SliderSnap_Button);
     GMUI_ControlSetButton("Snap",-1,-1,-1);
@@ -134,14 +140,14 @@ with (GMUI_Add("SnapSlider", "button",          1,6,  3,2,    global.GMUIAnchorT
 }
 
 // Display of slider value to the side
-with (GMUI_Add("SliderVal", "label",            16,6,   2,2,    global.GMUIAnchorTopLeft)) {
+with (GMUI_Add("SliderVal", "label",            19,8,   2,2,    global.GMUIAnchorTopLeft)) {
     GMUI_ControlAddToGroup(2);
     GMUI_ControlSetText(string(round(GMUI_GetValue("Slider"))));
     GMUI_ControlSetStyle($606060,c_gray,-1,-1,-1,-1,-1,-1,-1,-1);
     GMUI_ControlSetFontStyle(fontNumericBold,$D9D9D9,fa_middle);
 }
 
-with (GMUI_Add("SliderV", "slider",              6,9,  4,8,   global.GMUIAnchorTopLeft)) {
+with (GMUI_Add("SliderV", "slider",              13,9,  4,8,   global.GMUIAnchorTopLeft)) {
     GMUI_ControlAddToGroup(2);
     GMUI_ControlSetSliderSettings(13,10,34,true,true,true,global.GMUIDirectionTypeVertical);
     GMUI_ControlSetSliderStyle(2,2,c_dkgray,0.6,c_teal,0.9,c_dkgray,0.4,c_aqua,1,c_gray,0.8);
@@ -169,6 +175,8 @@ with (GMUI_Add("SliderV2", "slider",              13,9,  4,8,   global.GMUIAncho
 }
 */
 
+GMUI_AddLayer(2,0,0);
+//GMUI_SetOnLayer(2);
 // Right Group 3: Inputs
 GMUI_CreateGroup(3,      20,2,    global.GMUIAnchorTopRight);
 GMUI_GroupHide(3,GMUI_GetCurrentLayer(),true);
@@ -209,7 +217,8 @@ with (GMUI_Add("Test4", "intpicker",            1,10,    10,2,   global.GMUIAnch
     }
 }
 
-
+GMUI_AddLayer(3,0,0);
+//GMUI_SetOnLayer(3);
 // Right Group 4: Toggles
 GMUI_CreateGroup(4,      20,2,    global.GMUIAnchorTopRight);
 GMUI_GroupHide(4,GMUI_GetCurrentLayer(),true);
@@ -253,7 +262,7 @@ with (GMUI_Add("CheckBox", "checkbox",          3,18,   1,1,    global.GMUIAncho
 
 
 // Open menu button (group 4/5)
-
+GMUI_AddLayer(4,0,0);
 // Right Group 5: Selection
 GMUI_CreateGroup(5,      20,2,    global.GMUIAnchorTopRight);
 GMUI_GroupHide(5,GMUI_GetCurrentLayer(),true);
@@ -282,35 +291,35 @@ with (GMUI_Add("TestSelectList", "selectlist",            2,2,    10,5,   global
     GMUI_ControlAddToGroup(5);
 }
 
-
+GMUI_AddLayer(5,0,0);
 // Right Group 6: Disabling
 GMUI_CreateGroup(6,      20,2,    global.GMUIAnchorTopRight);
 GMUI_GroupSetFadeOnHide(6, _fadespeed, 0);
 //SET SIZE TO GRID - X
 GMUI_GroupHide(6,GMUI_GetCurrentLayer(),true);
 
-
+GMUI_AddLayer(6,0,0);
 // Right Group 7: Layering
 GMUI_CreateGroup(7,      20,2,    global.GMUIAnchorTopRight);
 GMUI_GroupSetFadeOnHide(7, _fadespeed, 0);
 //SET SIZE TO GRID - X
 GMUI_GroupHide(7,GMUI_GetCurrentLayer(),true);
 
-
+GMUI_AddLayer(7,0,0);
 // Right Group 8: Movement
 GMUI_CreateGroup(8,      20,2,    global.GMUIAnchorTopRight);
 GMUI_GroupSetFadeOnHide(8, _fadespeed, 0);
 //SET SIZE TO GRID - X
 GMUI_GroupHide(8,GMUI_GetCurrentLayer(),true);
 
-
+GMUI_AddLayer(8,0,0);
 // Right Group 9: Anchoring
 GMUI_CreateGroup(9,      20,2,    global.GMUIAnchorTopRight);
 GMUI_GroupSetFadeOnHide(9, _fadespeed, 0);
 //SET SIZE TO GRID - X
 GMUI_GroupHide(9,GMUI_GetCurrentLayer(),true);
 
-
+GMUI_AddLayer(9,0,0);
 // Right Group 10: Expand (may also be button action?)
 GMUI_CreateGroup(10,      20,2,    global.GMUIAnchorTopRight);
 GMUI_GroupSetFadeOnHide(10, _fadespeed, 0);
@@ -321,14 +330,17 @@ GMUI_GroupHide(10,GMUI_GetCurrentLayer(),true);
 // Debug button (group 11)
 
 
-//GMUI_AddLayer(10,0,0);
+// Set the layer back to 0 for this control
+GMUI_SetOnLayer(0);
+
 with (GMUI_Add("ExitButton", "textbutton",      0,0,    1,1,     global.GMUIAnchorTopRight)) {
     GMUI_ControlSetButtonAction(_Exit_Button);
     GMUI_ControlSetButton("x", -1, -1, -1);
     GMUI_ControlSetPositioning(-1,0,0,0); // Minor adjustment so that the control isnt cut off by the room
-    
-    //GMUI_ControlPersistentToLayer(0);
+    GMUI_ControlPersistentToLayer(9); // Works on all layers from 0 to 9
 }
+
+
 
 /*
 with (GMUI_Add("test14","textstring",20,1,12,2,global.GMUIAnchorTopLeft)) {
@@ -417,7 +429,7 @@ with (GMUI_Add("SpritePicker", "spritepicker",  -10,10, 5,2,    global.GMUIAncho
 }
 */
 // Example: overrides initial value:
-//GMUI_ControlSelectOption("SpritePicker",2);
+GMUI_ControlSelectOption("SpritePicker",2);
 
 //with (GMUI_Add("Graphic", "image",          -12,10, 2,2,    layer, global.GMUIAnchorBottom)) {
 //    GMUI_ControlSetSpriteExt(s10, 0, 0, 0, 2, 2, c_white, 0.2);

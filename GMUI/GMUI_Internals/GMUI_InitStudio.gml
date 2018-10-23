@@ -10,6 +10,7 @@
 //
 
 // THIS SCRIPT ONLY RUNS IN GM:STUDIO:
+/*
 global.GMUIGameMaker8 = false;
 
 
@@ -84,5 +85,6 @@ enum GMUIOverflow {
     Resize = 1, //global.GMUIOverflowResize
     Scroll = 2 //global.GMUIOverflowScroll
 }
+*/
 
 

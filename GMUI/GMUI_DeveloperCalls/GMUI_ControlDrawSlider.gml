@@ -15,7 +15,7 @@ with (_tt_id) {
     }
     
     // Assign drawing vars
-    var cx, cp, cy, cw, ch, cwx, cwx2, chy, chy2, cworh, RoomWorH, SC, SA;
+    var cx, cp, cy, cw, ch, cwx, cwx2, chy, chy2, cworh, RoomWorH, SC, SA, _SBA;
     cx = RoomX;
     cy = RoomY;
     if (!SliderVertical)
@@ -78,7 +78,7 @@ with (_tt_id) {
     
     // Draw the slider region first, based on type
     if (SliderTickStyle == 2 || SliderTickStyle == 3) {
-        color_alpha(SliderBackgroundColor,SliderBackgroundAlpha);
+        color_alpha(SliderBackgroundColor,min(SliderBackgroundAlpha,FadeAlpha));
     }
     switch (SliderTickStyle) {
         case 1: // Free (No horizontal line)
@@ -105,7 +105,7 @@ with (_tt_id) {
     // If 0 draw none, optionally use sprite script instead
     if (SliderTickStyle > 0) {
         // Set the properties of the ticks
-        color_alpha(SliderTickColor,SliderTickAlpha);
+        color_alpha(SliderTickColor,min(SliderTickAlpha,FadeAlpha));
         
         if (SliderTickHeight > 0 && SliderTickDistance > 1) {
             if (!SliderVertical) {
@@ -163,7 +163,8 @@ with (_tt_id) {
     // Check if selected or not
     //todo: implement
     SC = SliderColor;
-    SA = SliderAlpha;
+    SA = min(SliderAlpha,FadeAlpha);
+    _SBA = min(SliderBorderAlpha,FadeAlpha);
     
     // Draw slider based on type
     switch (SliderStyle) {
@@ -180,12 +181,12 @@ with (_tt_id) {
                 draw_vertex_color(cx+SliderRelativeXorY+SliderThumbWidth/2,chy2-SliderThumbHeight/2+SliderThumbWidth/2,SC,SA);
                 draw_primitive_end();
                 draw_primitive_begin(pr_linestrip);
-                draw_vertex_color(cx+SliderRelativeXorY,chy2-SliderThumbHeight/2,SliderBorderColor,SliderBorderAlpha);
-                draw_vertex_color(cx+SliderRelativeXorY-SliderThumbWidth/2,chy2-SliderThumbHeight/2+SliderThumbWidth/2,SliderBorderColor,SliderBorderAlpha);
-                draw_vertex_color(cx+SliderRelativeXorY-SliderThumbWidth/2,chy2+SliderThumbHeight/2,SliderBorderColor,SliderBorderAlpha);
-                draw_vertex_color(-1+cx+SliderRelativeXorY+SliderThumbWidth/2,chy2+SliderThumbHeight/2,SliderBorderColor,SliderBorderAlpha);
-                draw_vertex_color(-1+cx+SliderRelativeXorY+SliderThumbWidth/2,chy2-SliderThumbHeight/2+SliderThumbWidth/2,SliderBorderColor,SliderBorderAlpha);
-                draw_vertex_color(-1+cx+SliderRelativeXorY,chy2-SliderThumbHeight/2,SliderBorderColor,SliderBorderAlpha);
+                draw_vertex_color(cx+SliderRelativeXorY,chy2-SliderThumbHeight/2,SliderBorderColor,_SBA);
+                draw_vertex_color(cx+SliderRelativeXorY-SliderThumbWidth/2,chy2-SliderThumbHeight/2+SliderThumbWidth/2,SliderBorderColor,_SBA);
+                draw_vertex_color(cx+SliderRelativeXorY-SliderThumbWidth/2,chy2+SliderThumbHeight/2,SliderBorderColor,_SBA);
+                draw_vertex_color(-1+cx+SliderRelativeXorY+SliderThumbWidth/2,chy2+SliderThumbHeight/2,SliderBorderColor,_SBA);
+                draw_vertex_color(-1+cx+SliderRelativeXorY+SliderThumbWidth/2,chy2-SliderThumbHeight/2+SliderThumbWidth/2,SliderBorderColor,_SBA);
+                draw_vertex_color(-1+cx+SliderRelativeXorY,chy2-SliderThumbHeight/2,SliderBorderColor,_SBA);
                 draw_primitive_end();
             }
             else {
@@ -197,31 +198,31 @@ with (_tt_id) {
                 draw_vertex_color(cwx2+SliderThumbHeight/2-SliderThumbWidth/2,cy+SliderRelativeXorY+SliderThumbWidth/2,SC,SA);
                 draw_primitive_end();
                 draw_primitive_begin(pr_linestrip);
-                draw_vertex_color(-1+cwx2+SliderThumbHeight/2,cy+SliderRelativeXorY,SliderBorderColor,SliderAlpha);
-                draw_vertex_color(-1+cwx2+SliderThumbHeight/2-SliderThumbWidth/2,cy+SliderRelativeXorY-SliderThumbWidth/2,SliderBorderColor,SliderAlpha);
-                draw_vertex_color(cwx2-SliderThumbHeight/2,cy+SliderRelativeXorY-SliderThumbWidth/2,SliderBorderColor,SliderAlpha);
-                draw_vertex_color(cwx2-SliderThumbHeight/2,cy+SliderRelativeXorY+SliderThumbWidth/2,SliderBorderColor,SliderAlpha);
-                draw_vertex_color(-1+cwx2+SliderThumbHeight/2-SliderThumbWidth/2,cy+SliderRelativeXorY+SliderThumbWidth/2,SliderBorderColor,SliderAlpha);
-                draw_vertex_color(-1+cwx2+SliderThumbHeight/2,cy+SliderRelativeXorY,SliderBorderColor,SliderAlpha);
+                draw_vertex_color(-1+cwx2+SliderThumbHeight/2,cy+SliderRelativeXorY,SliderBorderColor,_SBA);
+                draw_vertex_color(-1+cwx2+SliderThumbHeight/2-SliderThumbWidth/2,cy+SliderRelativeXorY-SliderThumbWidth/2,SliderBorderColor,_SBA);
+                draw_vertex_color(cwx2-SliderThumbHeight/2,cy+SliderRelativeXorY-SliderThumbWidth/2,SliderBorderColor,_SBA);
+                draw_vertex_color(cwx2-SliderThumbHeight/2,cy+SliderRelativeXorY+SliderThumbWidth/2,SliderBorderColor,_SBA);
+                draw_vertex_color(-1+cwx2+SliderThumbHeight/2-SliderThumbWidth/2,cy+SliderRelativeXorY+SliderThumbWidth/2,SliderBorderColor,_SBA);
+                draw_vertex_color(-1+cwx2+SliderThumbHeight/2,cy+SliderRelativeXorY,SliderBorderColor,_SBA);
                 draw_primitive_end();
             }
             break;
         case 3: // PentagonDown
             if (!SliderVertical) {
                 draw_primitive_begin(pr_trianglefan);
-                draw_vertex_color(cx+SliderRelativeXorY,chy2+SliderThumbHeight/2,SliderColor,SliderAlpha);
+                draw_vertex_color(cx+SliderRelativeXorY,chy2+SliderThumbHeight/2,SliderColor,SA);
                 draw_vertex_color(cx+SliderRelativeXorY+SliderThumbWidth/2,chy2+SliderThumbHeight/2-SliderThumbWidth/2,SC,SA);
                 draw_vertex_color(cx+SliderRelativeXorY+SliderThumbWidth/2,chy2-SliderThumbHeight/2,SC,SA);
                 draw_vertex_color(cx+SliderRelativeXorY-SliderThumbWidth/2,chy2-SliderThumbHeight/2,SC,SA);
                 draw_vertex_color(cx+SliderRelativeXorY-SliderThumbWidth/2,chy2+SliderThumbHeight/2-SliderThumbWidth/2,SC,SA);
                 draw_primitive_end();
                 draw_primitive_begin(pr_linestrip);
-                draw_vertex_color(-1+cx+SliderRelativeXorY,chy2+SliderThumbHeight/2,SliderBorderColor,SliderBorderAlpha);
-                draw_vertex_color(-1+cx+SliderRelativeXorY+SliderThumbWidth/2,chy2+SliderThumbHeight/2-SliderThumbWidth/2,SliderBorderColor,SliderBorderAlpha);
-                draw_vertex_color(-1+cx+SliderRelativeXorY+SliderThumbWidth/2,chy2-SliderThumbHeight/2,SliderBorderColor,SliderBorderAlpha);
-                draw_vertex_color(cx+SliderRelativeXorY-SliderThumbWidth/2,chy2-SliderThumbHeight/2,SliderBorderColor,SliderBorderAlpha);
-                draw_vertex_color(cx+SliderRelativeXorY-SliderThumbWidth/2,chy2+SliderThumbHeight/2-SliderThumbWidth/2,SliderBorderColor,SliderBorderAlpha);
-                draw_vertex_color(cx+SliderRelativeXorY,chy2+SliderThumbHeight/2,SliderBorderColor,SliderBorderAlpha);
+                draw_vertex_color(-1+cx+SliderRelativeXorY,chy2+SliderThumbHeight/2,SliderBorderColor,_SBA);
+                draw_vertex_color(-1+cx+SliderRelativeXorY+SliderThumbWidth/2,chy2+SliderThumbHeight/2-SliderThumbWidth/2,SliderBorderColor,_SBA);
+                draw_vertex_color(-1+cx+SliderRelativeXorY+SliderThumbWidth/2,chy2-SliderThumbHeight/2,SliderBorderColor,_SBA);
+                draw_vertex_color(cx+SliderRelativeXorY-SliderThumbWidth/2,chy2-SliderThumbHeight/2,SliderBorderColor,_SBA);
+                draw_vertex_color(cx+SliderRelativeXorY-SliderThumbWidth/2,chy2+SliderThumbHeight/2-SliderThumbWidth/2,SliderBorderColor,_SBA);
+                draw_vertex_color(cx+SliderRelativeXorY,chy2+SliderThumbHeight/2,SliderBorderColor,_SBA);
                 draw_primitive_end();
             }
             else {
@@ -233,12 +234,12 @@ with (_tt_id) {
                 draw_vertex_color(cwx2-SliderThumbHeight/2+SliderThumbWidth/2,cy+SliderRelativeXorY-SliderThumbWidth/2,SC,SA);
                 draw_primitive_end();
                 draw_primitive_begin(pr_linestrip);
-                draw_vertex_color(cwx2-SliderThumbHeight/2,cy+SliderRelativeXorY,SliderBorderColor,SliderBorderAlpha);
-                draw_vertex_color(cwx2-SliderThumbHeight/2+SliderThumbWidth/2,cy+SliderRelativeXorY+SliderThumbWidth/2,SliderBorderColor,SliderBorderAlpha);
-                draw_vertex_color(-1+cwx2+SliderThumbHeight/2,cy+SliderRelativeXorY+SliderThumbWidth/2,SliderBorderColor,SliderBorderAlpha);
-                draw_vertex_color(-1+cwx2+SliderThumbHeight/2,cy+SliderRelativeXorY-SliderThumbWidth/2,SliderBorderColor,SliderBorderAlpha);
-                draw_vertex_color(cwx2-SliderThumbHeight/2+SliderThumbWidth/2,cy+SliderRelativeXorY-SliderThumbWidth/2,SliderBorderColor,SliderBorderAlpha);
-                draw_vertex_color(cwx2-SliderThumbHeight/2,cy+SliderRelativeXorY,SliderBorderColor,SliderBorderAlpha);
+                draw_vertex_color(cwx2-SliderThumbHeight/2,cy+SliderRelativeXorY,SliderBorderColor,_SBA);
+                draw_vertex_color(cwx2-SliderThumbHeight/2+SliderThumbWidth/2,cy+SliderRelativeXorY+SliderThumbWidth/2,SliderBorderColor,_SBA);
+                draw_vertex_color(-1+cwx2+SliderThumbHeight/2,cy+SliderRelativeXorY+SliderThumbWidth/2,SliderBorderColor,_SBA);
+                draw_vertex_color(-1+cwx2+SliderThumbHeight/2,cy+SliderRelativeXorY-SliderThumbWidth/2,SliderBorderColor,_SBA);
+                draw_vertex_color(cwx2-SliderThumbHeight/2+SliderThumbWidth/2,cy+SliderRelativeXorY-SliderThumbWidth/2,SliderBorderColor,_SBA);
+                draw_vertex_color(cwx2-SliderThumbHeight/2,cy+SliderRelativeXorY,SliderBorderColor,_SBA);
                 draw_primitive_end();
             }
             break;

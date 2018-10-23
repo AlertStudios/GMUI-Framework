@@ -1,4 +1,4 @@
-///GMUI_GridDraw()
+///GMUI_DrawEvent()
 ///Actions done to operate the grid, executed by the GMUI object in the draw event
 
 
@@ -8,9 +8,10 @@ if (GMUI_GridEnabled())
     //do grid stuff:
     
     // Assign mouse values here to easily switch out later if needed
-    var MX, MY, inRegion, onDirection, mouseHor, mouseVert, ctrlObject, clickOffEvent, mouseEvent;
+    var MX, MY, GX, inRegion, onDirection, mouseHor, mouseVert, ctrlObject, clickOffEvent, mouseEvent;
     MX = mouse_x;
     MY = mouse_y;
+    GX = 0;
     inRegion = false;
     mouseEvent = true;
     
@@ -62,7 +63,9 @@ if (GMUI_GridEnabled())
                             
                     }
                     else if (ctrlObject.ControlHasScrollbar) {
-                        if (MX >= ctrlObject.Scrollbar_x+GMUI_grid_x[ctrlObject.Layer] + GMUI_GridViewOffsetX(id)) {
+                        if (ctrlObject.Group > 0)
+                            _GX = GMUI_groupActualX[ctrlObject.Layer,ctrlObject.Group];
+                        if (MX >= ctrlObject.Scrollbar_x+GMUI_grid_x[ctrlObject.Layer] + GMUI_GridViewOffsetX(id) + _GX) {
                             ctrlObject.Scrollbar_hover = true;
                         }
                         else {
@@ -185,7 +188,9 @@ if (GMUI_GridEnabled())
                         else if (ctrlObject.ControlItemList) {
                             // For lists that have a scrollbar, check which region we are in
                             if (ctrlObject.ControlHasScrollbar) {
-                                if (MX >= ctrlObject.Scrollbar_x + GMUI_grid_x[ctrlObject.Layer] + GMUI_GridViewOffsetX(id)) {                                    
+                                if (ctrlObject.Group > 0)
+                                    _GX = GMUI_groupActualX[ctrlObject.Layer,ctrlObject.Group];
+                                if (MX >= ctrlObject.Scrollbar_x + GMUI_grid_x[ctrlObject.Layer] + GMUI_GridViewOffsetX(id) + _GX) {                                 
                                     // Drag the scrollbar
                                     var _MPos,_SPos;
                                     _MPos = MY - ctrlObject.ActualY;
@@ -201,6 +206,7 @@ if (GMUI_GridEnabled())
                                 else {
                                     // Select List Region click
                                     GMUI_ControlListOffset(ctrlObject, UIEnableSurfaces, MX, MY);
+                                    
                                     if (ctrlObject.ItemListHoverIndex > 0) {
                                         ctrlObject.ItemListSelectedId = ctrlObject.ItemListId[ctrlObject.ItemListHoverIndex];
                                         if (script_exists(ctrlObject.ItemListActionScript))
@@ -316,6 +322,7 @@ if (GMUI_GridEnabled())
                     if (surface_exists(GMUI_gridSurface[_l])) {
                         // Adjust surface position to view if enabled, with alpha if set
                         if (GMUI_grid_alpha[_l] == 1) {
+                            draw_set_alpha(1);
                             draw_surface(GMUI_gridSurface[_l],
                                 GMUI_grid_x[_l]+view_xview[UIgridview]*UIsnaptoview,
                                 GMUI_grid_y[_l]+view_yview[UIgridview]*UIsnaptoview);
@@ -345,6 +352,8 @@ if (GMUI_GridEnabled())
         }
     }
     
+    if (UIDrawAnimations == false)
+        UIDrawAnimations = true;
     
     
     // Check if the room size has changed to move any anchored controls positions?

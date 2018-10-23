@@ -40,6 +40,8 @@ UILayerPrevious = 0;
 UIAddToLayer = 0;
 // Will only switch layer being added to until complete
 UIInterfaceSet = false;
+// Will skip the animations and fading when defining form
+UIDrawAnimations = false;
 
 // Other specific functionality settings that can be turned off if unwanted
 GMUI_Settings();
@@ -111,8 +113,11 @@ GMUI_map = ds_map_create();
 // List of all controls
 GMUI_controlList = ds_list_create();
 
-// Create all of the default control settings
-GMUI_SetControlDefaults();
+// Create all of the default control settings (init to GMUI defaults)
+GMUI_ControlDefaultsInit();
+// If defaults script defined, run that now
+if (global.GMUIDefaults > -1)
+    script_execute(global.GMUIDefaults);
 
 // Currently hovering or selecting on control for controls to revert if not them
 HoveringControl = -1;

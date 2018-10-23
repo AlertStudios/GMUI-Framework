@@ -22,7 +22,8 @@ if (DebugData && !RemovingGMUI) {
     if (GMUI_ErrorNumber > 0) {
         color_alpha(c_red,0.5);
         align(fa_center,fa_bottom);
-        draw_text(view_wview[0]/2+xoffset,view_hview[0]-64+yoffset,string(GMUI_ErrorNumber) + ".) " + GMUI_LastError());
+        draw_text_ext(view_wview[0]/2+xoffset,view_hview[0]-64+yoffset,
+            string(GMUI_ErrorNumber) + ".) " + GMUI_LastError(), -1, view_wview[0]-32);
     }
     
     var groupId, _layer, i, m, ff, ffo;

@@ -25,7 +25,7 @@ var OptionalInterfaceName; OptionalInterfaceName = argument0;
 // Assign names to the controls to reference in your code
 // e.g. SizeSlider = GMUI_Add("SizeSlider",...), then use: GMUI_GetValue("SizeSlider");
 
-// Custom controls should call Create: GMUI_ControlInit, Draw: GMUI_ControlDraw
+// Custom controls should call Draw: GMUI_ControlDrawEvent
 
 //GMUI_Add("New1" , GMUI_custom , 0 , 0 , 1 , 1 , 0 , 0 , 1 , 0 , AnchorTopLeft );
 // gmuiaddlabel ()

@@ -81,7 +81,7 @@ switch (_type) {
         break;
     case "label":
     case "tooltip":
-    
+        IID.ControlInput = false;
         IID.ControlInteraction = false;
         IID.ControlStyleDefined = false;
         break;

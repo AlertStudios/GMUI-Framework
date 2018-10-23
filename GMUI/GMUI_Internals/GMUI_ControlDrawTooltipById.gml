@@ -42,7 +42,8 @@ with (_tt_id) {
     
     // Set control color, font, and alignment
     color_alpha(ControlFontColor,min(ControlFontAlpha,FadeAlpha));
-    draw_set_font(ControlFont);
+    if (ControlFont != noone)
+        draw_set_font(ControlFont);
     align(ControlFontAlign,ControlFontAlignV);
     
     var _dtx, _midHeight;

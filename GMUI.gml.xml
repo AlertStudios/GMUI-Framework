@@ -21,12 +21,26 @@
           <file>_PopupMenu_Button.gml</file>
           <file>_PopupReturnAction.gml</file>
           <file>_Popup_Button.gml</file>
+          <file>_Show_Group.gml</file>
           <file>_SliderMid_Button.gml</file>
           <file>_SliderSnap_Button.gml</file>
           <file>_SliderValue_Changed.gml</file>
           <file>_Swipe_Button.gml</file>
           <file>_Switch_Button.gml</file>
           <file>_Test_Button.gml</file>
+          <folders />
+        </folder>
+        <folder folderName="Demo Interfaces">
+          <file>_Demo_Form.gml</file>
+          <file>_Demo_Form_with_layers.gml</file>
+          <file>_Demo_My_Defaults.gml</file>
+          <file>_Test_Form.gml</file>
+          <folders />
+        </folder>
+        <folder folderName="GMUI_Compatibility">
+          <file>draw_set_blend_mode.gml</file>
+          <file>draw_set_blend_mode_ext.gml</file>
+          <file>instance_create.gml</file>
           <folders />
         </folder>
         <folder folderName="GMUI_DeveloperCalls">
@@ -48,6 +62,7 @@
           <file>GMUI_ControlCenterX.gml</file>
           <file>GMUI_ControlCenterY.gml</file>
           <file>GMUI_ControlDisable.gml</file>
+          <file>GMUI_ControlDrawEvent.gml</file>
           <file>GMUI_ControlDrawSlider.gml</file>
           <file>GMUI_ControlDrawTooltip.gml</file>
           <file>GMUI_ControlFadeIn.gml</file>
@@ -62,6 +77,7 @@
           <file>GMUI_ControlSetAttributes.gml</file>
           <file>GMUI_ControlSetButton.gml</file>
           <file>GMUI_ControlSetButtonAction.gml</file>
+          <file>GMUI_ControlSetButtonAction1.gml</file>
           <file>GMUI_ControlSetCheckboxSettings.gml</file>
           <file>GMUI_ControlSetFadeOnHide.gml</file>
           <file>GMUI_ControlSetFontStyle.gml</file>
@@ -98,7 +114,6 @@
           <file>GMUI_GridSetNavigation.gml</file>
           <file>GMUI_GroupHide.gml</file>
           <file>GMUI_GroupHideOverflow.gml</file>
-          <file>GMUI_GroupSetDefaultStyle.gml</file>
           <file>GMUI_GroupSetFadeOnHide.gml</file>
           <file>GMUI_GroupSetPosition.gml</file>
           <file>GMUI_GroupSetPositionActual.gml</file>
@@ -195,7 +210,7 @@
           <file>GMUI_CellGetActualX.gml</file>
           <file>GMUI_CellGetActualY.gml</file>
           <file>GMUI_ControlActionScript.gml</file>
-          <file>GMUI_ControlDraw.gml</file>
+          <file>GMUI_ControlDefaultsInit.gml</file>
           <file>GMUI_ControlDrawGroup.gml</file>
           <file>GMUI_ControlDrawItemList.gml</file>
           <file>GMUI_ControlDrawToggle.gml</file>
@@ -251,6 +266,7 @@
           <file>GMUI_GridResetControlRegion.gml</file>
           <file>GMUI_GridSelect.gml</file>
           <file>GMUI_GridSetAllGroupValues.gml</file>
+          <file>GMUI_GridSetControlRegion.gml</file>
           <file>GMUI_GridSetMappedValues.gml</file>
           <file>GMUI_GridSetRegions.gml</file>
           <file>GMUI_GridSetRegionsLayer.gml</file>
@@ -288,6 +304,7 @@
           <file>GMUI_ShowMenuId.gml</file>
           <file>GMUI_ShowPopup.gml</file>
           <file>GMUI_ShowPopupId.gml</file>
+          <file>GMUI_StudioCheckDefined.gml</file>
           <file>GMUI_ThrowError.gml</file>
           <file>GMUI_ThrowErrorDetailed.gml</file>
           <file>GMUI_ValidCellBounds.gml</file>

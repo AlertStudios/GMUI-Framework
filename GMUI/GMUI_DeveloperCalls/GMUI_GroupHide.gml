@@ -6,6 +6,15 @@ _Group = argument0;
 _Layer = argument1;
 _Hide = argument2;
 
+if (!(GMUII()).UIInterfaceSet) {
+    if ((GMUII()).GMUI_groupSettingsMap[_Layer,_Group] == -1) {
+        (GMUII()).GMUI_groupSettingsMap[_Layer,_Group] = ds_map_create();
+    }
+    
+    ds_map_add((GMUII()).GMUI_groupSettingsMap[_Layer,_Group], "Hide", _Hide);
+    return true;
+}
+
 (GMUII()).GMUI_groupNeedsDrawUpdate[_Layer,_Group] = true;
 
 // Change the value for each of the controls within the group
@@ -31,4 +40,6 @@ for(i=0;i<ds_list_size((GMUII()).GMUI_groupControlList[_Layer,_Group]);i+=1) {
         }
     }
 }
+
+return true;
 
