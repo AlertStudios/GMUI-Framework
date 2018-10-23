@@ -53,7 +53,7 @@ GMUI_ControlInit(id);
             <string>/// Custom Control
 
 // Execute the control. If true, also draw the control:
-GMUI_ControlDraw(true);
+GMUI_ControlDrawEvent(true);
 
 if (Hovering) {
 

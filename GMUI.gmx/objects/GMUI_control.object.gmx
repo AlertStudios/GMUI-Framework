@@ -28,7 +28,7 @@
             <string>/// Control Draw
 
 // Execute the control, and draw it (true).
-GMUI_ControlDraw(true);
+GMUI_ControlDrawEvent(true);
 </string>
           </argument>
         </arguments>
