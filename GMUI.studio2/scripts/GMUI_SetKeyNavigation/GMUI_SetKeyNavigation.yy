@@ -1,5 +1,5 @@
 {
-    "id": "9103839f-0462-46d8-b256-5e0e5f0be712",
+    "id": "34b1ffeb-772a-4bfb-ae06-e741e0f26b6b",
     "modelName": "GMScript",
     "mvc": "1.0",
     "name": "GMUI_SetKeyNavigation",

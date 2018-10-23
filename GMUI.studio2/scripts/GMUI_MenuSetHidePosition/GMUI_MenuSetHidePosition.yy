@@ -1,5 +1,5 @@
 {
-    "id": "fc68f779-f8ef-4d94-98e2-34c5652c463e",
+    "id": "6cdafea5-fcf6-40d2-9ac3-3bef538d38fe",
     "modelName": "GMScript",
     "mvc": "1.0",
     "name": "GMUI_MenuSetHidePosition",

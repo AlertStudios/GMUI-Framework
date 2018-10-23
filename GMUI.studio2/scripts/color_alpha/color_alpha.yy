@@ -1,5 +1,5 @@
 {
-    "id": "b1e15657-ac31-43f2-9473-3207f833eff1",
+    "id": "06ac3886-ddeb-489a-a116-5d827bc1562a",
     "modelName": "GMScript",
     "mvc": "1.0",
     "name": "color_alpha",

@@ -1,5 +1,5 @@
 {
-    "id": "24d4c1e1-95b6-4672-b40c-44cfd3087e6e",
+    "id": "85648808-604f-4582-83d9-27162e87100c",
     "modelName": "GMScript",
     "mvc": "1.0",
     "name": "GMUI_ControlStretchToGrid",

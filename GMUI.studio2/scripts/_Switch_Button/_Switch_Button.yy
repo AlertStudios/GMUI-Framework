@@ -1,5 +1,5 @@
 {
-    "id": "5f856d8e-f0f3-40ca-bd1e-16b4fc6b0d8a",
+    "id": "99c1256e-4f15-41ed-9b4b-0c54e0798a36",
     "modelName": "GMScript",
     "mvc": "1.0",
     "name": "_Switch_Button",

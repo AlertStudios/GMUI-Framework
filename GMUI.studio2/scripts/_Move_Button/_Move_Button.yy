@@ -1,5 +1,5 @@
 {
-    "id": "0ab360ec-ab90-40e3-b566-b29131348076",
+    "id": "2605e473-e2df-4aaf-befe-c098fa585572",
     "modelName": "GMScript",
     "mvc": "1.0",
     "name": "_Move_Button",

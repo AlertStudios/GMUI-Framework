@@ -1,5 +1,5 @@
 {
-    "id": "00344b11-70d8-4751-892b-2d8cdd4013db",
+    "id": "a44dc350-548b-42ad-b75e-ec4f189b674a",
     "modelName": "GMScript",
     "mvc": "1.0",
     "name": "GMUI_GroupSetHidePosition",

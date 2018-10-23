@@ -48,9 +48,8 @@ else if (string_lower(a0) == "hovering" || a0 == "0") {
                     (ffo).HoveringDirection = 0;
                     
                     if ((ffo).ControlHasScrollbar) {
-                        if (!(ffo).Scrollbar_dragging) {
+                        if (!(ffo).Scrollbar_dragging)
                             (ffo).Scrollbar_hover = false;
-						}
                     }
                 }
             }
@@ -81,3 +80,4 @@ else if (string_lower(a0) == "position" || a0 == "2") {
 else {
     GMUI_ThrowErrorDetailed("Incorrect parameter given",_SCRIPT);
 }
+

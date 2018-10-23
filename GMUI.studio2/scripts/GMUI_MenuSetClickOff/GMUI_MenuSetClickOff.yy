@@ -1,5 +1,5 @@
 {
-    "id": "70746ecf-f599-4bd5-9ee7-7d7f68e4209e",
+    "id": "5171b7f6-9d23-419a-84d8-b5640f37c413",
     "modelName": "GMScript",
     "mvc": "1.0",
     "name": "GMUI_MenuSetClickOff",

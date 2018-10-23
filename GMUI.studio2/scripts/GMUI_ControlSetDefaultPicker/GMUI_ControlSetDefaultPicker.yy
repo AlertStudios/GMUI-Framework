@@ -1,5 +1,5 @@
 {
-    "id": "dcda5739-ffb0-440f-9468-6923c0b9ff46",
+    "id": "12a41407-a3a7-4c8d-9f92-55b4bc33efa9",
     "modelName": "GMScript",
     "mvc": "1.0",
     "name": "GMUI_ControlSetDefaultPicker",

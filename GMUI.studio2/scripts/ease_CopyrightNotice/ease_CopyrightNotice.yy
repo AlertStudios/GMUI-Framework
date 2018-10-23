@@ -1,5 +1,5 @@
 {
-    "id": "471b0707-f8e3-49e4-89d5-2086b61c70bd",
+    "id": "4b7b7a37-21a5-4cfd-9cc2-25dfcc4f04c3",
     "modelName": "GMScript",
     "mvc": "1.0",
     "name": "ease_CopyrightNotice",

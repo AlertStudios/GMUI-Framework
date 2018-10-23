@@ -1,5 +1,5 @@
 {
-    "id": "d0a091d2-6f38-4745-92eb-9960cff454ec",
+    "id": "b4977a7e-f1dd-474b-82f0-94dadb798744",
     "modelName": "GMScript",
     "mvc": "1.0",
     "name": "GMUI_NavigateNextControl",

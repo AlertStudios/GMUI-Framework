@@ -1,5 +1,5 @@
 {
-    "id": "9257b495-17fc-40c6-be3c-21f3e165608b",
+    "id": "3c0b6458-aa7c-4515-88d9-35ebff4f5055",
     "modelName": "GMScript",
     "mvc": "1.0",
     "name": "GMUI_ControlSetDefaultFontStyle",

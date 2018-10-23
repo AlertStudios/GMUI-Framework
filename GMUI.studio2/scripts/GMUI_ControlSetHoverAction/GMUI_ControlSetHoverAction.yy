@@ -1,5 +1,5 @@
 {
-    "id": "db920634-914a-4d87-91af-cf14cc021c9e",
+    "id": "3dca7730-a4d4-40fa-94e5-aec9d35375f8",
     "modelName": "GMScript",
     "mvc": "1.0",
     "name": "GMUI_ControlSetHoverAction",

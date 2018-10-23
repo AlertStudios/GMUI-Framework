@@ -1,5 +1,5 @@
 {
-    "id": "c03e5dec-4f68-44cb-bd95-527538b0f2ba",
+    "id": "06484a0f-b42b-410e-8e31-1e99256c4549",
     "modelName": "GMScript",
     "mvc": "1.0",
     "name": "_Disable_Button",

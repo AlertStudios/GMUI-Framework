@@ -1,5 +1,5 @@
 {
-    "id": "76ebbe65-a7de-4c6a-8813-2220c5b28481",
+    "id": "ec871026-dcaf-4f80-9e45-0e9c54c69eaf",
     "modelName": "GMScript",
     "mvc": "1.0",
     "name": "_Hide_Button",

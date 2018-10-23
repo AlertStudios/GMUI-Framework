@@ -1,5 +1,5 @@
 {
-    "id": "bf2c54b8-a417-4c75-8fdd-44627d291412",
+    "id": "d385ae9e-19b0-4fdb-a380-2bb0da434ea6",
     "modelName": "GMScript",
     "mvc": "1.0",
     "name": "GMUI_ControlIsHidden",

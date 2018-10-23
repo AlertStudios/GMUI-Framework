@@ -1,5 +1,5 @@
 {
-    "id": "f4971f1f-736c-4841-a347-2825febc91f2",
+    "id": "c37964db-9c9f-4d11-a755-20b9027a5337",
     "modelName": "GMScript",
     "mvc": "1.0",
     "name": "GMUI_GetValue",

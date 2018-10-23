@@ -1,5 +1,5 @@
 {
-    "id": "7fbdb042-c5e3-4fe7-bf29-b56fb18ee3bd",
+    "id": "05829bb7-3c38-4e0d-a506-0ae8b6771834",
     "modelName": "GMScript",
     "mvc": "1.0",
     "name": "GMUI_ControlSliderMove",

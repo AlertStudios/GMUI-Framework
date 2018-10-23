@@ -1,5 +1,5 @@
 {
-    "id": "5d7a5302-7c08-4aff-ac5b-a1d06785dc1f",
+    "id": "d57acb3c-9d2d-4f8a-9c27-a38fe5c73a59",
     "modelName": "GMScript",
     "mvc": "1.0",
     "name": "GMUI_ControlPosition",

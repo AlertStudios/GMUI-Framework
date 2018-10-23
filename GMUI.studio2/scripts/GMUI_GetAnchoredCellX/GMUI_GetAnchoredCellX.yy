@@ -1,5 +1,5 @@
 {
-    "id": "917080bf-2908-48ef-a532-69249f7e50ff",
+    "id": "b80d4ce7-a23b-4ba0-9e97-02969e3d1ea7",
     "modelName": "GMScript",
     "mvc": "1.0",
     "name": "GMUI_GetAnchoredCellX",

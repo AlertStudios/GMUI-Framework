@@ -1,5 +1,5 @@
 {
-    "id": "6959a636-715c-4d15-a8f6-734b479ae83b",
+    "id": "5c7b4cf3-ce21-4503-8b4d-eb23d33a817c",
     "modelName": "GMScript",
     "mvc": "1.0",
     "name": "GMUI_ControlSetDefaultButton",

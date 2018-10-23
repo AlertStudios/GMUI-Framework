@@ -61,6 +61,14 @@ with (argument0) {
                     GMUI_ThrowErrorDetailed("Missing value for SetHidePosition. Unable to set",_SCRIPT);
                 }
                 break;
+            case "Hide":
+                if (ds_map_exists(_Map,"Hide")) {
+                    GMUI_GroupHide(_Group,_Layer,ds_map_find_value(_Map, "Hide"));
+                }
+                else {
+                    GMUI_ThrowErrorDetailed("Missing value for Hide. Unable to set",_SCRIPT);
+                }
+                break;
             default:
                 break;
         }

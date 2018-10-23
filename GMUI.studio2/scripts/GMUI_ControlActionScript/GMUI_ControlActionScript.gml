@@ -13,7 +13,10 @@ else if (!script_exists((argument0).ActionScript)) {
     GMUI_ThrowError("Invalid script assigned to " + (argument0).valueName + " : " + string((argument0).ActionScript));
 }
 else {
-    script_execute((argument0).ActionScript);
+    if ((argument0).ActionScriptArgument == 0)
+        script_execute((argument0).ActionScript);
+    else
+        script_execute((argument0).ActionScript,(argument0).ActionArgument0);
     return true;
 }
 

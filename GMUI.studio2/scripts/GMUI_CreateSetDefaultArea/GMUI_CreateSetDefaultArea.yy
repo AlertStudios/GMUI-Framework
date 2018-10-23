@@ -1,5 +1,5 @@
 {
-    "id": "d875e253-8344-4fb2-b2d3-72e8501dab4d",
+    "id": "8bafd4bd-f54b-4a3f-9d9f-5bf45e27d90a",
     "modelName": "GMScript",
     "mvc": "1.0",
     "name": "GMUI_CreateSetDefaultArea",

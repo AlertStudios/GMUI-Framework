@@ -1,4 +1,4 @@
-///GMUI_ControlDraw(Draw the control [bool])
+///GMUI_ControlDrawEvent(Draw the control [bool])
 /// The actions done per step for a control added to the grid, along with drawing things
 
 // STEP actions:
@@ -11,7 +11,7 @@ if (Transitioning) {
         if (TooltipId != -1)
             GMUI_ControlHide(TooltipId,1);
             
-        if (T_t < T_d) {
+        if (T_t < T_d && GMUIP.UIDrawAnimations) {
             T_t += 1;
             ActualX = script_execute(TransitionScript,T_t,T_bx,T_cx,T_d);
             ActualY = script_execute(TransitionScript,T_t,T_by,T_cy,T_d);
@@ -84,7 +84,7 @@ if (Transitioning) {
 if (FadeCalled != 0) {
     // Fade in, else, fade out
     if (FadeCalled > 0) {
-        if (FadeAlpha < FadeIn) {
+        if (FadeAlpha < FadeIn && GMUIP.UIDrawAnimations) {
             FadeAlpha += 1/FadeTime;
         }
         else {
@@ -93,7 +93,7 @@ if (FadeCalled != 0) {
         }
     }
     else {
-        if (FadeAlpha > FadeOut) {
+        if (FadeAlpha > FadeOut && GMUIP.UIDrawAnimations) {
             FadeAlpha -= 1/FadeTime;
         }
         else {
@@ -178,7 +178,10 @@ if (!Hidden) {
     else if (ControlType == "toggle" || ControlType == "checkbox") {
         // Fade or Slide update if checkbox/toggle control
         if (Toggle_t < Toggle_d) {
-            Toggle_t += 1;
+            if (GMUIP.UIDrawAnimations)
+                Toggle_t += 1;
+            else
+                Toggle_t = Toggle_d;
             GMUI_GridUpdateLayer(GMUIP,Layer);
             NeedsDrawUpdate = true;
             if (string(value) == "0")
@@ -444,14 +447,16 @@ if (argument0 == true) {
         
                 if (Hovering || Selected) {
                     // Draw the hovering effect
-                    if (!Selected)
+                    if (!Selected && ControlHoverColor > -1)
                         color_alpha(ControlHoverColor,_HoverAlpha);
-                    else
+                    else if (ControlSelectColor > -1)
                         color_alpha(ControlSelectColor,_SelectAlpha);
+                        
+                    if ((!Selected && ControlHoverColor > -1) || (Selected && ControlSelectColor > -1))
                     draw_rectangle(RoomX+1,RoomY+1,RoomW-1,RoomH-1, ControlHoverBorder);
                 }
                 
-                if (DoubleSelected && ControlInput) {
+                if (DoubleSelected && ControlInput && ControlOverwriteColor > -1) {
                     // Draw 'Overwrite' affect
                     color_alpha(ControlOverwriteColor,_OverwriteAlpha);
                     draw_rectangle(RoomX+2,RoomY+2,RoomW-2,RoomH-2,0);
@@ -492,12 +497,14 @@ if (argument0 == true) {
                 _hh = ControlPickerHeight;
             }
             else {
-                _ax1 = RoomW-2;
-                _ax3 = _ax1-ControlPickerWidth+1;
+                _ax1 = RoomW-ControlPickerWidth/2;
+                _ax3 = RoomW-2-ControlPickerWidth+1;
                 _hh = (RoomH-RoomY)/2;
             }
             if (ControlPickerDirection == global.GMUIDirectionTypeHorizontal) {
+                _ax1 = RoomW-2;
                 _ax2 = RoomX+2;
+                _ay1 = RoomY+_hh;
                 _ay2 = _ay1;
             }
             else { // GMUIDirectionTypeSideVertical or GMUIDirectionTypeVertical
@@ -506,9 +513,30 @@ if (argument0 == true) {
             }
             
             // Top arrow and bottom arrow
-            draw_sprite_ext(ControlPickerSpriteRightOrUp,0,_ax1,_ay1,1,1,0,c_white,_BackgroundAlpha);
-            draw_sprite_ext(ControlPickerSpriteLeftOrDown,0,_ax2,_ay2,1,1,0,c_white,_BackgroundAlpha);
+            if (ControlPickerSpriteRightOrUp > -1)
+                draw_sprite_ext(ControlPickerSpriteRightOrUp,0,_ax1,_ay1,1,1,0,c_white,_BackgroundAlpha);
+            else {
+                color_alpha(ControlBorderColor, 1);
+                if (ControlPickerDirection == global.GMUIDirectionTypeHorizontal)
+                    draw_triangle(_ax1-ControlPickerWidth/4,_ay1,
+                        _ax1-ControlPickerWidth/2,_ay1-_hh/2,_ax1-ControlPickerWidth/2,_ay1+_hh/2,0);
+                else
+                    draw_triangle(_ax1,_ay1+ControlPickerHeight/6,
+                        _ax1-ControlPickerWidth/4,_ay1+_hh/2,_ax1+ControlPickerWidth/4,_ay1+_hh/2,0);
+            }
+            if (ControlPickerSpriteLeftOrDown > -1)
+                draw_sprite_ext(ControlPickerSpriteLeftOrDown,0,_ax2,_ay2,1,1,0,c_white,_BackgroundAlpha);
+            else {
+                color_alpha(ControlBorderColor, 1);
+                if (ControlPickerDirection == global.GMUIDirectionTypeHorizontal)
+                    draw_triangle(_ax2+ControlPickerWidth/4,_ay1,
+                        _ax2+ControlPickerWidth/2,_ay1-_hh/2,_ax2+ControlPickerWidth/2,_ay1+_hh/2,0);
+                else
+                    draw_triangle(_ax1,_ay2-ControlPickerHeight/6,
+                        _ax1-ControlPickerWidth/4,_ay2-_hh/2,_ax1+ControlPickerWidth/4,_ay2-_hh/2,0);
+            }
             
+            // Top arrow and bottom arrow selection regions
             color_alpha(ControlHoverColor,_HoverAlpha);
             if (ControlPickerDirection == global.GMUIDirectionTypeHorizontal) {
                 if (HoveringDirection == global.GMUIHoveringDirection_Right)
@@ -560,7 +588,8 @@ if (argument0 == true) {
             midHeight = CellHigh * (GMUIP).cellsize_h / 2;
             
         // Set control font and alignment
-        draw_set_font(ControlFont);
+        if (ControlFont != noone)
+            draw_set_font(ControlFont);
         align(ControlFontAlign,ControlFontAlignV);
         
         // Specific controls may override display
@@ -628,11 +657,11 @@ if (argument0 == true) {
             // draw scrollbar area
             if (Scrollbar_hover) {
                 draw_set_color(Scrollbar_bgcolor_hover);
-                draw_set_alpha(Scrollbar_bgalpha_hover);
+                draw_set_alpha(min(FadeAlpha,Scrollbar_bgalpha_hover));
             }
             else {
                 draw_set_color(Scrollbar_bgcolor);
-                draw_set_alpha(Scrollbar_bgalpha);
+                draw_set_alpha(min(FadeAlpha,Scrollbar_bgalpha));
             }
             
             draw_rectangle(cx1,cy1,cx1+_sbw,cy2,0);
@@ -640,11 +669,11 @@ if (argument0 == true) {
             // draw scrollbar select area
             if (Scrollbar_hover) {
                 draw_set_color(Scrollbar_color_hover);
-                draw_set_alpha(Scrollbar_alpha_hover);
+                draw_set_alpha(min(FadeAlpha,Scrollbar_alpha_hover));
             }
             else {
                 draw_set_color(Scrollbar_color);
-                draw_set_alpha(Scrollbar_alpha);
+                draw_set_alpha(min(FadeAlpha,Scrollbar_alpha));
             }
             
             draw_rectangle(cx1 + 1,cy3,cx1+_sbw - 1,cy3+Scrollbar_height, 0);

@@ -1,5 +1,5 @@
 {
-    "id": "1de84b0c-3259-4daf-a678-63f8fc23689c",
+    "id": "8df625f0-9cfb-4db2-9794-0a788cba2307",
     "modelName": "GMScript",
     "mvc": "1.0",
     "name": "GMUI_ControlSetDefaultStyle",

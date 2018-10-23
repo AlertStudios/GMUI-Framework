@@ -1,5 +1,5 @@
 {
-    "id": "b6d1c5ab-7162-4b9d-8bcf-6c0e800da51e",
+    "id": "06a266fa-a7a2-4c9e-a97f-92e712c84cf0",
     "modelName": "GMScript",
     "mvc": "1.0",
     "name": "GMUI_CloseMenu",

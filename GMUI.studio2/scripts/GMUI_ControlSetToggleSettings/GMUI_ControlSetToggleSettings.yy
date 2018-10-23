@@ -1,5 +1,5 @@
 {
-    "id": "8c127c73-8a33-48f5-9677-a9b9a5ef2476",
+    "id": "04882c1d-9687-4c31-8c91-52b2c725b7cc",
     "modelName": "GMScript",
     "mvc": "1.0",
     "name": "GMUI_ControlSetToggleSettings",

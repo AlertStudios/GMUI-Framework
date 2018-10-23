@@ -1,5 +1,5 @@
 {
-    "id": "c7b6bda6-ad6c-484b-b591-8f4757a9daee",
+    "id": "1a81ba65-fa5f-4246-9459-0e87daf00bd0",
     "modelName": "GMScript",
     "mvc": "1.0",
     "name": "_SliderSnap_Button",

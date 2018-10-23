@@ -81,12 +81,12 @@ for (_i=1;_i<=ItemListSize;_i+=1) {
                     if (ItemListBackgroundColorHover[_id] != -1)
                         draw_set_color(ItemListBackgroundColorHover[_id]);
                     if (ItemListBackgroundAlphaHover[_id] != -1)
-                        draw_set_alpha(ItemListBackgroundAlphaHover[_id]);
+                        draw_set_alpha(min(FadeAlpha,ItemListBackgroundAlphaHover[_id]));
                 }
                 else {
                     draw_set_color(ItemListBackgroundColor[_id]);
                     if (ItemListBackgroundAlpha[_id] != -1)
-                        draw_set_alpha(ItemListBackgroundAlpha[_id]);
+                        draw_set_alpha(min(FadeAlpha,ItemListBackgroundAlpha[_id]));
                 }
                 
                 draw_rectangle(_cx,_cy + (_i-_offPos-1) * ItemListHeight,_cx + ItemListAreaWidth - _sbw,_cy + (_i-_offPos) * ItemListHeight - 1,false);
@@ -109,7 +109,7 @@ for (_i=1;_i<=ItemListSize;_i+=1) {
             else if (ItemListFontColor[0] != -1)
                 draw_set_color(ItemListFontColor[0]);
             // Set opacity
-            draw_set_alpha(ItemListOpacity[_id]);
+            draw_set_alpha(min(FadeAlpha,ItemListOpacity[_id]));
             
             // Draw text (temporary values for X)
             if (ItemListDescription[_id] == "") {

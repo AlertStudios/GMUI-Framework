@@ -1,5 +1,5 @@
 {
-    "id": "b34bd075-3cc6-410e-a781-9617151b7c0c",
+    "id": "100efbb1-dd97-47c2-a75e-db335156810d",
     "modelName": "GMScript",
     "mvc": "1.0",
     "name": "easeElasticOut",

@@ -1,3 +1,3 @@
 /// @description Control draw event
 
-GMUI_ControlDraw(true);
+GMUI_ControlDrawEvent(true);

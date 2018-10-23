@@ -1,5 +1,5 @@
 {
-    "id": "e803b71d-42b5-4ee7-8c94-4bef40e9d848",
+    "id": "b7c1f10b-37ad-4f22-b4bf-3b6e22f299d1",
     "modelName": "GMScript",
     "mvc": "1.0",
     "name": "GMUI_GridResetControlRegion",

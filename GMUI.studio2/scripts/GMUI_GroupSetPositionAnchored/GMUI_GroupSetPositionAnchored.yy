@@ -1,5 +1,5 @@
 {
-    "id": "d4e34aba-bc73-46e8-8a19-6fa21e5f0cab",
+    "id": "f5d96559-a0c8-4661-acd4-a31ea7e570ef",
     "modelName": "GMScript",
     "mvc": "1.0",
     "name": "GMUI_GroupSetPositionAnchored",

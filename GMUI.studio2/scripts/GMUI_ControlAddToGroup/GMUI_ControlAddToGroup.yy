@@ -1,5 +1,5 @@
 {
-    "id": "e952264a-7bf8-4944-a643-4f84f79836b6",
+    "id": "47af5215-a9b6-4329-86e9-d8834a66e7c8",
     "modelName": "GMScript",
     "mvc": "1.0",
     "name": "GMUI_ControlAddToGroup",

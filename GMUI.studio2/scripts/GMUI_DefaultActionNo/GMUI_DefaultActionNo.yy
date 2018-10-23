@@ -1,5 +1,5 @@
 {
-    "id": "8f789836-81a3-4bab-9fdc-18739750e2a2",
+    "id": "0525ea28-3e5b-4f27-9606-92aae9914b6f",
     "modelName": "GMScript",
     "mvc": "1.0",
     "name": "GMUI_DefaultActionNo",

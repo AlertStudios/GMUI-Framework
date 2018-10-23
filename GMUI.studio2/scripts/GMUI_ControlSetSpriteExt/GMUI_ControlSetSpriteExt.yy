@@ -1,5 +1,5 @@
 {
-    "id": "b998451d-b858-4775-bd08-9a2a915203da",
+    "id": "82f21117-6264-4086-8b8f-2fc65b5757ad",
     "modelName": "GMScript",
     "mvc": "1.0",
     "name": "GMUI_ControlSetSpriteExt",

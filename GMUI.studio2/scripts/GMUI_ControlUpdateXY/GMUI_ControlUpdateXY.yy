@@ -1,5 +1,5 @@
 {
-    "id": "9f78babc-aee3-4a6f-9005-18c59277f9e2",
+    "id": "ae9c19cf-360c-4231-bf6e-45e1f42fcd03",
     "modelName": "GMScript",
     "mvc": "1.0",
     "name": "GMUI_ControlUpdateXY",

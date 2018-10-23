@@ -1,5 +1,5 @@
 {
-    "id": "c7e62d99-ea69-4f07-a073-8d2d3773efa9",
+    "id": "632f0618-c769-4efe-b822-656760fbd4a5",
     "modelName": "GMScript",
     "mvc": "1.0",
     "name": "GMUI_ControlDisable",

@@ -12,17 +12,21 @@ with (GMUII()) {
     if (string(_ctrl) == "0")
         return false;
     else {
-        (_ctrl).Hidden = argument1;
-        if ((_ctrl).FadeOnHide) {
+        _ctrl.Hidden = argument1;
+        if (_ctrl.FadeOnHide) {
             if (argument1 > 0)
-                GMUI_ControlFadeOut(argument0,(_ctrl).FadeTime);
+                GMUI_ControlFadeOut(argument0,_ctrl.FadeTime);
             else
-                GMUI_ControlFadeIn(argument0,(_ctrl).FadeTime);
+                GMUI_ControlFadeIn(argument0,_ctrl.FadeTime);
         }
         else {
-            GMUI_GridUpdateLayer((_ctrl).GMUIP,(_ctrl).Layer);
-            (_ctrl).NeedsDrawUpdate = true;
+            GMUI_GridUpdateLayer(_ctrl.GMUIP,_ctrl.Layer);
+            _ctrl.NeedsDrawUpdate = true;
         }
+        
+        // Re-set the control region on the map
+        GMUI_GridSetControlRegion(GMUI_grid[_ctrl.Layer],_ctrl,!_ctrl.Hidden);
+        
         return true;
     }
 }

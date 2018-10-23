@@ -10,4 +10,7 @@ if (!GMUI_IsControl() && id != GMUII())
 if (GMUI_LayerExists(argument0)) {
     AdditionalLayer = argument0;
 }
+else {
+    GMUI_ThrowErrorDetailed("Layer does not exist (yet?)", GMUI_ControlPersistentToLayer);
+}
 

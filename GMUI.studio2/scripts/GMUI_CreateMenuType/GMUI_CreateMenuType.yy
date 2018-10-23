@@ -1,5 +1,5 @@
 {
-    "id": "ac3dafa6-cf7f-4d0a-93df-a9a81333f6e5",
+    "id": "6b8abde4-627a-469f-aec5-8af1f1c7ba2f",
     "modelName": "GMScript",
     "mvc": "1.0",
     "name": "GMUI_CreateMenuType",

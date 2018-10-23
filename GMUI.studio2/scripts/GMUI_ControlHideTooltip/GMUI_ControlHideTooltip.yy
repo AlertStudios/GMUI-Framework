@@ -1,5 +1,5 @@
 {
-    "id": "284005de-4b02-4f63-872f-d0c60b4930dd",
+    "id": "5f498519-c260-470b-8802-72dc3087ab74",
     "modelName": "GMScript",
     "mvc": "1.0",
     "name": "GMUI_ControlHideTooltip",

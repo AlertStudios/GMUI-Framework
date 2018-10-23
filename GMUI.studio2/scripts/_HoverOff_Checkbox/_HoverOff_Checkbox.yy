@@ -1,5 +1,5 @@
 {
-    "id": "c9cc6fa5-c35d-4e70-a161-34a2e1d62673",
+    "id": "0986dc7d-0c85-4738-87d4-5ee3fe3abaae",
     "modelName": "GMScript",
     "mvc": "1.0",
     "name": "_HoverOff_Checkbox",

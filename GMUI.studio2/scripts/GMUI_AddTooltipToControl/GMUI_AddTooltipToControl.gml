@@ -31,7 +31,8 @@ if (_direction < 0 || _direction > 8) {
 }
 
 // Adjust sizing based on text given
-draw_set_font(((_ctrl).GMUIP).ControlFont);
+if (((_ctrl).GMUIP).ControlFont != noone)
+    draw_set_font(((_ctrl).GMUIP).ControlFont);
 gcellsize = ((_ctrl).GMUIP).cellsize;
 gcellsize_h = ((_ctrl).GMUIP).cellsize_h;
 

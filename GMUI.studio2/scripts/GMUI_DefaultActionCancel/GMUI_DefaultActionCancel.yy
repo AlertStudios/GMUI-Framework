@@ -1,5 +1,5 @@
 {
-    "id": "5df5c263-971c-4164-83ff-cfc1d8ca40f3",
+    "id": "87b0ed72-5a19-4fcb-bddf-3163d16d09b6",
     "modelName": "GMScript",
     "mvc": "1.0",
     "name": "GMUI_DefaultActionCancel",

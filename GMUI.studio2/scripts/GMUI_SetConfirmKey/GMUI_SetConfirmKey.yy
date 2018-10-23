@@ -1,5 +1,5 @@
 {
-    "id": "438d1650-715b-4205-bc15-6c27b213828e",
+    "id": "0541ed08-36ce-4b70-9c1f-2f8968766b33",
     "modelName": "GMScript",
     "mvc": "1.0",
     "name": "GMUI_SetConfirmKey",

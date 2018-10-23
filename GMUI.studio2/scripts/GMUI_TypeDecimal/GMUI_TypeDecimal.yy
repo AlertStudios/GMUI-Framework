@@ -1,5 +1,5 @@
 {
-    "id": "b1847e88-62ea-4c07-9c99-a27c6e3d942d",
+    "id": "1801c4bb-0b56-43e9-8596-d315a28b463a",
     "modelName": "GMScript",
     "mvc": "1.0",
     "name": "GMUI_TypeDecimal",

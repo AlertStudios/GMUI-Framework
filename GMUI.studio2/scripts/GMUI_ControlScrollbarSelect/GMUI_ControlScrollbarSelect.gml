@@ -12,6 +12,9 @@ if (_Ctrl.ControlHasScrollbar) {
     with (_Ctrl) {
     if (Scrollbar_maxtop > Scrollbar_padding) {
         _relY = _MY-GMUIP.GMUI_grid_y[Layer]-GMUI_GridViewOffsetY(GMUIP) - Scrollbar_y - Scrollbar_drag_y;
+        
+        if (_Ctrl.Group > 0)
+            _relY -= (_Ctrl.GMUIP).GMUI_groupActualY[_Ctrl.Layer,_Ctrl.Group];
     
         Scrollbar_pos_y = minmax(Scrollbar_y + _relY, Scrollbar_y + Scrollbar_padding, Scrollbar_y + Scrollbar_maxtop);
 

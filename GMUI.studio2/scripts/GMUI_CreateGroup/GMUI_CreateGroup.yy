@@ -1,5 +1,5 @@
 {
-    "id": "607e9cda-94d5-4307-8955-9dcc4904623a",
+    "id": "a7f797d4-bac8-4cf2-9a22-861b9cd5c3d1",
     "modelName": "GMScript",
     "mvc": "1.0",
     "name": "GMUI_CreateGroup",

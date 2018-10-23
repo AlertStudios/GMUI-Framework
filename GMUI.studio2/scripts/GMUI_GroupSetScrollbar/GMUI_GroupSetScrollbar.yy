@@ -1,5 +1,5 @@
 {
-    "id": "8e207bc8-f595-4499-9cf4-7061947d1a2d",
+    "id": "61a2f54a-4584-49be-bbe0-a601a764a3aa",
     "modelName": "GMScript",
     "mvc": "1.0",
     "name": "GMUI_GroupSetScrollbar",

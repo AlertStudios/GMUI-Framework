@@ -1,5 +1,5 @@
 {
-    "id": "bada8b55-c9a6-497e-bab0-980386b7b88d",
+    "id": "988c5e80-3f18-46ac-8fc8-77a0ba1faee1",
     "modelName": "GMScript",
     "mvc": "1.0",
     "name": "GMUI_AddItem",

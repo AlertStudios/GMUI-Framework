@@ -1,5 +1,5 @@
 {
-    "id": "c5d8af41-94ec-45e0-8f7b-1144ad4f68ef",
+    "id": "5780bd35-1779-4ba8-a99a-70236717703a",
     "modelName": "GMScript",
     "mvc": "1.0",
     "name": "GMUI_ControlFadeIn",

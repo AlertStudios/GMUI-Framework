@@ -1,5 +1,5 @@
 {
-    "id": "9bf8875c-de5d-4c14-a8d0-465931f28e51",
+    "id": "a55e320b-104f-4601-92d7-f3a37b35c2f1",
     "modelName": "GMScript",
     "mvc": "1.0",
     "name": "GMUI_ControlSetFadeHover",

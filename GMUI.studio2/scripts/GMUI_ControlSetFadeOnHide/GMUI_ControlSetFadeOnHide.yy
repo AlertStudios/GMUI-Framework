@@ -1,5 +1,5 @@
 {
-    "id": "24731ffa-3333-44d3-b4f6-74c22f9c69c3",
+    "id": "ec4017a6-79c2-4751-8dd9-f911128147ad",
     "modelName": "GMScript",
     "mvc": "1.0",
     "name": "GMUI_ControlSetFadeOnHide",

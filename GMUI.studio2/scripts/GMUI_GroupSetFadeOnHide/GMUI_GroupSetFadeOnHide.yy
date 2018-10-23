@@ -1,5 +1,5 @@
 {
-    "id": "6c336dd2-a1d8-41af-97fb-d6c2d7db4c11",
+    "id": "b8a285b8-2b19-430e-a1e8-0d036842200e",
     "modelName": "GMScript",
     "mvc": "1.0",
     "name": "GMUI_GroupSetFadeOnHide",
