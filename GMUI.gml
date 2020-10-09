@@ -930,8 +930,9 @@ if ((GMUII()).UIEnableSurfaces) {
 }
 
 
-if ((GMUII()).UILayerTop < _Layer)
+if ((GMUII()).UILayerTop < _Layer) {
     (GMUII()).UILayerTop = _Layer;
+}
 
 return true;
 
@@ -1003,8 +1004,9 @@ thecontrol.Group = 0;
 ds_list_add((GMUII()).GMUI_controlList,thecontrol);
 
 if ((GMUII()).UIEnableSurfaces) {
-    if ((GMUII()).GMUI_gridMasterControl[_Layer] == -1)
+    if ((GMUII()).GMUI_gridMasterControl[_Layer] == -1) {
         (GMUII()).GMUI_gridMasterControl[_Layer] = thecontrol;
+    }
     
     // Also set possible surface defaults
     thecontrol.SelectListSurface = noone;
@@ -2748,8 +2750,9 @@ with (GMUII()) {
         // Set the fade settings for when hiding or unhiding
         (_ctrl).FadeTime = argument1;
         (_ctrl).FadeOnHide = true;
-        if ((_ctrl).Hidden)
+        if ((_ctrl).Hidden) {
             (_ctrl).FadeAlpha = 0;
+        }
         return true;
     }
 }
@@ -3541,7 +3544,7 @@ with (instance_create(0,0,argument0)) {
 var isOk,G;
 isOk = true;
 for (G=1;G<=global.GMUIii;G+=1) {
-    if (id = global.GMUIiid[G]) {
+    if (id = global.GMUIi_id[G]) {
         isOk = false;
         break;
     }
@@ -3555,10 +3558,10 @@ else {
 }
 
 // Define the instance & number running GMUI
-global.GMUIiid[global.GMUIii] = id;
+global.GMUIi_id[global.GMUIii] = id;
 GMUInumber = global.GMUIii;
 // Current grid is now this one. The 0 index is the currently active grid
-global.GMUIiid[0] = id;
+global.GMUIi_id[0] = id;
 
 
 // Initial time to not execute any actions from the grid
@@ -5895,10 +5898,10 @@ if (!is_real(argument0))
     return -1;
 
 if (argument0 > 0 && argument0 <= global.GMUIii) {
-    if (instance_exists(global.GMUIiid[argument0])) {
+    if (instance_exists(global.GMUIi_id[argument0])) {
         // Change current GMUI to this one:
-        global.GMUIiid[0] = global.GMUIiid[argument0];
-        return global.GMUIiid[argument0];
+        global.GMUIi_id[0] = global.GMUIi_id[argument0];
+        return global.GMUIi_id[argument0];
     }
 }
 
@@ -5914,7 +5917,7 @@ var _gmuii,_G;
 _gmuii = -1;
 
 for (_G=1;_G<=global.GMUIii;_G+=1) {
-    if (id = global.GMUIiid[_G]) {
+    if (id = global.GMUIi_id[_G]) {
         _gmuii = _G;
         break;
     }
@@ -5922,8 +5925,8 @@ for (_G=1;_G<=global.GMUIii;_G+=1) {
 
 if (_gmuii > -1) {
     // Change current GMUI to this one:
-    global.GMUIiid[0] = id;
-    return global.GMUIiid[0];
+    global.GMUIi_id[0] = id;
+    return global.GMUIi_id[0];
 }
 
 return -1;
@@ -8735,8 +8738,9 @@ keyboard_string = (argument0).valueString;
 
 // Double selection will overwrite the current value
 if ((GMUII()).PreviousSelectedControl == argument0) {
-    if ((GMUII()).GMUIAllowDoubleSelect)
-        (argument0).DoubleSelected = 1;   
+    if ((GMUII()).GMUIAllowDoubleSelect) {
+        (argument0).DoubleSelected = 1;
+    }   
 }
 else if (GMUI_IsScript((argument0).SelectingActionScript)) {
     // If there is a script to assigned to run it'll only be done once
@@ -9289,8 +9293,9 @@ if (_dc > -1) {
         
     }
     else if (instance_exists(_SBC)) {
-        if (instance_exists(_dc.GroupScrollbarHandler))
+        if (instance_exists(_dc.GroupScrollbarHandler)) {
             (_dc.GroupScrollbarHandler).GroupHasScrollbar = false;
+        }
             
         _dc.GroupScrollbarHandler = _SBC;
         _SBC.GroupHasScrollbar = true;
@@ -9702,8 +9707,9 @@ else if (string_lower(a0) == "hovering" || a0 == "0") {
                     (ffo).HoveringDirection = 0;
                     
                     if ((ffo).ControlHasScrollbar) {
-                        if (!(ffo).Scrollbar_dragging)
+                        if (!(ffo).Scrollbar_dragging) {
                             (ffo).Scrollbar_hover = false;
+                        }
                     }
                 }
             }
@@ -9893,7 +9899,7 @@ return true;
 /// INTERNAL USE: Returns the current GMUI object instance
 // (GMUII()).Value
 
-return global.GMUIiid[0];
+return global.GMUIi_id[0];
 
 #define _Debug_Button
 // Show/hide debug for the first interface
