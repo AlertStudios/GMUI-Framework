@@ -8091,7 +8091,7 @@ if (_isOpening) {
     // Use default, or use applied settings to select list object, creating it if it doesn't exist
     _checkSL = GMUI_GetControl(_SLName);
     
-    if (_checkSL == -1) {
+    if (!GMUI_StudioCheckDefined(_checkSL) || _checkSL == -1) {
     
         _newSL = GMUI_AddToLayer(_Control.Layer,_SLName, "selectlist", 
             _Control.RelativeCellX, _newCellY,
