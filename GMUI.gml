@@ -14,7 +14,7 @@ else
 //
 // !WARNING! MODIFYING THE GMUI SCRIPTS CAN BREAK FUNCTIONALITY AND CAUSE ERRORS! TRY TO EDIT THE OBJECTS INSTEAD!
 //
-// Copyright 2017-2018 Alert Studios (Mark Palnau). Initially designed by Alert Studios and released as Open-Source.
+// Copyright 2017-2020 Alert Studios (Mark Palnau). Initially designed by Alert Studios and released as Open-Source.
 //
 // If you would like to help make GMUI better, please submit a ticket or pull request on the project on GitHub!
 // https://github.com/AlertStudios/GMUI-Framework
@@ -597,10 +597,16 @@ GMUI_ControlSetFade(argument0,argument1,0);
 ///
 
 // Get coordinates of CellX and CellY and pass to actual position
-var _ActualX, _ActualY;
+var _ActualX, _ActualY, _Ctrl;
+_Ctrl = GMUI_GetControl(argument0);
 
 _ActualX = GMUI_CellGetActualX(argument1);
 _ActualY = GMUI_CellGetActualY(argument2);
+
+if (_Ctrl.Group > 0) {
+    _ActualX += _Ctrl.GMUIP.GMUI_groupActualX[_Ctrl.Layer,_Ctrl.Group];
+    _ActualY += _Ctrl.GMUIP.GMUI_groupActualY[_Ctrl.Layer,_Ctrl.Group];
+}
 
 GMUI_ControlTransitionToActual(argument0,_ActualX,_ActualY,argument3,argument4);
 
@@ -790,7 +796,7 @@ else
     return argument1;
 
 #define surface_target
-///surface_target(surface, width if created, height if created)
+///surface_target(surface, width if created/modified, height if created/modified)
 ///Sets the target to the surface or creates it if it doesn't exist
 
 var _Surface;
@@ -803,6 +809,7 @@ else {
     _Surface = surface_create(argument1,argument2);
     surface_set_target(_Surface);
 }
+
 
 return _Surface;
 
@@ -836,7 +843,7 @@ if (!GMUI_IsControl() && id != GMUII())
     return false;
 }
 
-if (ControlItemList) {
+if (ControlItemList || ControlType == "dropdown") {
     var _id, _OF; _id = argument0;
     // Check if item exists, creating it if it doesnt
     if (!GMUI_AddItemDefaults(id,_id))
@@ -854,7 +861,7 @@ if (ControlItemList) {
         // Recalculate the height of the selectable scrollbar based on the number of items
         _OF = max(CellHigh,ItemListSize);
         if (ControlHasScrollbar) {
-            Scrollbar_height = max(GMUIP.cellsize_h, CellHigh / _OF * Scrollbar_max) - Scrollbar_padding*2;
+            Scrollbar_height = max(GMUIP.cellsize_h, CellHigh / _OF * Scrollbar_max) - Scrollbar_padding*2 + 2;
             Scrollbar_maxtop = Scrollbar_max - Scrollbar_height;
         }
         
@@ -1397,15 +1404,15 @@ if (GMUIP.GMUI_groupMasterControl[_Layer,_Group] == -1 || GMUIP.GMUI_groupMaster
             depth = _Depth-1;
         }
         // Reset scrollbar list if necessary
-        _prev = ds_list_find_index(GMUIP.GMUI_groupScrollbars,GMUIP.GMUI_groupMasterControl[_Layer,_Group]);
-        if (GMUI_StudioCheckDefined(_prev)) {
-            if (_prev != -1) {
-                if ((GMUIP.GMUI_groupMasterControl[_Layer,_Group]).GroupHasScrollbar) {
-                    ds_list_delete(GMUIP.GMUI_groupScrollbars,_prev);
-                    (GMUIP.GMUI_groupMasterControl[_Layer,_Group]).GroupHasScrollbar = false;
-                }
-            }
-        }
+        //_prev = ds_list_find_index(GMUIP.GMUI_groupScrollbars,GMUIP.GMUI_groupMasterControl[_Layer,_Group]);
+        //if (GMUI_StudioCheckDefined(_prev)) {
+        //    if (_prev != -1) {
+        //        if ((GMUIP.GMUI_groupMasterControl[_Layer,_Group]).GroupHasScrollbar) {
+        //            ds_list_delete(GMUIP.GMUI_groupScrollbars,_prev);
+        //            (GMUIP.GMUI_groupMasterControl[_Layer,_Group]).GroupHasScrollbar = false;
+        //        }
+        //    }
+        //}
     }
     
     
@@ -1419,6 +1426,7 @@ else
 if (GMUIP.UIEnableSurfaces) {
     if (GMUIP.GMUI_groupDrawingControl[_Layer,_Group] == -1 || GMUIP.GMUI_groupDrawingControl[_Layer,_Group] < id) {
         GMUIP.GMUI_groupDrawingControl[_Layer,_Group] = id;
+        GroupScrollbarHandler = -1;
         NeedsGroupUpdate = true;
     }
 }
@@ -1606,10 +1614,22 @@ if (Transitioning) {
                 }
             }
             else {
-                CellX = GMUI_GridGetCellX(GMUIP,Layer,ActualX);
-                CellY = GMUI_GridGetCellY(GMUIP,Layer,ActualY);
+                var _getCellX,_getCellY;
+                _getCellX = GMUI_GridGetCellXOffset(GMUIP,Layer,ActualX,0);
+                _getCellY = GMUI_GridGetCellYOffset(GMUIP,Layer,ActualY,0);
                 
-                GMUI_ControlSetPositioning(CellX*GMUIP.cellsize,CellY*GMUIP.cellsize_h,ActualW,ActualH);
+                if (Group > 0) {
+                    CellX = GMUI_GetAnchoredCellX(GMUI_GridGetWidth(GMUIP,Layer),_getCellX - GMUIP.GMUI_groupCellX[Layer,Group],Anchor);
+                    CellY = GMUI_GetAnchoredCellY(GMUI_GridGetHeight(GMUIP,Layer),_getCellY - GMUIP.GMUI_groupCellY[Layer,Group],Anchor);
+                }
+                else {
+                    CellX = GMUI_GetAnchoredCellX(GMUI_GridGetWidth(GMUIP,Layer),_getCellX,Anchor);
+                    CellY = GMUI_GetAnchoredCellY(GMUI_GridGetHeight(GMUIP,Layer),_getCellY,Anchor);
+                }
+                RelativeX = ActualX - GMUI_CellGetActualX(_getCellX);
+                RelativeY = ActualY - GMUI_CellGetActualY(_getCellY);
+                
+                GMUI_ControlPosition(id,CellX,CellY,RelativeX,RelativeY,Anchor);
             }            
         }
        
@@ -1669,7 +1689,7 @@ if (Group > 0) {
                 if (mouse_check_button(mb_left)) {
                     // Recalculate drag position (from GMUI_GridGetCellYOffset)
                     // may need to apply offset here
-                    Scrollbar_y = minmax(Scrollbar_padding,Scrollbar_maxtop,
+                    Scrollbar_y = minmax(Scrollbar_padding,Scrollbar_maxtop,//todo: test for group and non-group control
                         mouse_y - GMUIP.GMUI_grid_y[Layer] - GMUI_groupActualY[Layer,Group] - Scrollbar_drag_y);
                 }
                 else {
@@ -1692,7 +1712,8 @@ if (Group > 0) {
 if (NeedsPositionUpdate) {
     GMUI_ControlUpdateXY(id);
     NeedsPositionUpdate = false;
-    //GMUI_GridUpdateLayer(GMUIP,Layer);
+    if (Group <= 0)
+        GMUIP.NeedsRegionsUpdate = true;
     //NeedsDrawUpdate = true;
 }
 
@@ -1877,10 +1898,8 @@ if (argument0 == true) {
             if (ControlType == "selectlist") {
                 // Only create the surface of the list and return
                 SelectListSurface = GMUI_ControlDrawItemList(id, true);
-                surface_reset_target();
-            }
-            else if (ControlType == "dropdown") {
-            
+                if (surface_exists(GMUIP.GMUI_groupSurface[Layer,Group]))
+                    surface_set_target(GMUIP.GMUI_groupSurface[Layer,Group]);
             }
         }
         
@@ -1960,7 +1979,7 @@ if (argument0 == true) {
             
         // Start drawing the control (inputs and buttons)
         if (ControlInput || ControlPicker || ControlDataType == global.GMUIDataTypeButton 
-            || ControlType == "image" || ControlType == "label") {
+            || ControlType == "image" || ControlType == "label" || ControlType == "dropdown") {
             if (ControlGraphicMapIsUsed) {
                 GMUI_DrawSpriteBox(GMUIP,Layer,Group,0,1);
             }
@@ -2002,6 +2021,16 @@ if (argument0 == true) {
                     color_alpha(ControlOverwriteColor,_OverwriteAlpha);
                     draw_rectangle(RoomX+2,RoomY+2,RoomW-2,RoomH-2,0);
                 }
+                
+                if (ControlType == "dropdown") {
+                    var _dax1,_dhh,_day2;
+                    _dax1 = RoomW-ControlPickerWidth/2;
+                    _dhh = (RoomH-RoomY)/2;
+                    _day2 = RoomH-ControlPickerHeight/3;
+                    color_alpha(ControlBorderColor, 1);
+                    draw_triangle(_dax1,_day2-ControlPickerHeight/3,
+                        _dax1-ControlPickerWidth/4,_day2-_dhh,_dax1+ControlPickerWidth/4,_day2-_dhh,0);
+                }
             }
         }
         else if (ControlType == "tooltip") {
@@ -2015,14 +2044,12 @@ if (argument0 == true) {
         }
         else if (ControlType == "selectlist") {
             if (GMUIP.UIEnableSurfaces) {
-                if (surface_exists(SelectListSurface))
+                if (surface_exists(SelectListSurface)) {
                     draw_surface_part(SelectListSurface,0,ItemListOffsetY,RoomW-RoomX,RoomH-RoomY,RoomX,RoomY);
+                }
             }
             else
                 GMUI_ControlDrawItemList(id, false);
-        }
-        else if (ControlType == "dropdown") {
-        
         }
         
         
@@ -2106,7 +2133,7 @@ if (argument0 == true) {
         else if (ControlDataType == global.GMUIDataTypeButton) {
             Text = ControlButtonText;
         }
-        else if (ControlDataType == global.GMUIDataTypeString) {
+        else if (ControlDataType == global.GMUIDataTypeString || ControlType == "dropdown") {
             Text = valueString;
         }
         else
@@ -2154,7 +2181,7 @@ if (argument0 == true) {
         // Draw value string or button text
         if (Text != "") {
             if (ControlShowValue) {
-                if (ControlInteraction && ControlShowCursor && Selected && !DoubleSelected)
+                if (ControlInteraction && ControlInput && ControlShowCursor && Selected && !DoubleSelected)
                     Text = Text + "|";
                     
                 if (ControlType != "label")
@@ -2172,24 +2199,32 @@ if (argument0 == true) {
         }
         
         
-        // Draw scrollbar for group if it has one
+        // Draw scrollbar for control or for group if it has one
         if (ControlHasScrollbar || GroupHasScrollbar) {
-            var cy1,cy2,cy3,cx1,_sbw;
+            var cy1,cy2,cy3,cx1,_sbw,_sbc;
             
-            if (GroupHasScrollbar) {
-                cy1 = GMUIP.GMUI_groupActualY[Layer,Group]+GMUI_GridViewOffsetY(GMUIP)+GMUIP.GMUI_grid_y[Layer]*!GMUIP.UIEnableSurfaces;
-                cy2 = cy1 + GMUIP.GMUI_groupCellsH[Layer,Group]*GMUIP.cellsize_h;
-                _sbw = GMUIP.GMUI_groupScrollWidth[Layer,Group];
+            if (!GMUIP.UIEnableSurfaces) {
+                _sbc = id;
+            }
+            else if (GroupHasScrollbar && GMUIP.GMUI_groupDrawingControl[Layer,Group] == id) {
+                _sbc = GroupScrollbarHandler;
             }
             else {
-                cy1 = Scrollbar_y+GMUIP.GMUI_grid_y[Layer]*!GMUIP.UIEnableSurfaces;
+                _sbc = id;
+            }
+                //cy1 = GMUIP.GMUI_groupActualY[Layer,Group]+GMUI_GridViewOffsetY(GMUIP)+GMUIP.GMUI_grid_y[Layer]*!GMUIP.UIEnableSurfaces;
+                //cy2 = cy1 + GMUIP.GMUI_groupCellsH[Layer,Group]*GMUIP.cellsize_h;
+                //_sbw = GMUIP.GMUI_groupScrollWidth[Layer,Group];
+            //}
+            //else {
+                cy1 = _sbc.Scrollbar_y+GMUIP.GMUI_grid_y[Layer]*!GMUIP.UIEnableSurfaces;
                 if (!GMUIP.UIEnableSurfaces)
                     cy1 += GMUI_GridViewOffsetY(GMUIP);
                 cy2 = cy1 + CellHigh*GMUIP.cellsize_h;
-                _sbw = Scrollbar_width;
-            }
-            cy3 = Scrollbar_pos_y+GMUIP.GMUI_grid_y[Layer]*!GMUIP.UIEnableSurfaces;
-            cx1 = Scrollbar_x+GMUIP.GMUI_grid_x[Layer]*!GMUIP.UIEnableSurfaces;
+                _sbw = _sbc.Scrollbar_width;
+            //}
+            cy3 = _sbc.Scrollbar_pos_y+GMUIP.GMUI_grid_y[Layer]*!GMUIP.UIEnableSurfaces;
+            cx1 = _sbc.Scrollbar_x+GMUIP.GMUI_grid_x[Layer]*!GMUIP.UIEnableSurfaces;
             if (!GMUIP.UIEnableSurfaces) {
                 cy3 += GMUI_GridViewOffsetY(GMUIP);
                 cx1 += GMUI_GridViewOffsetX(GMUIP);
@@ -2197,27 +2232,27 @@ if (argument0 == true) {
             
             // draw scrollbar area
             if (Scrollbar_hover) {
-                draw_set_color(Scrollbar_bgcolor_hover);
-                draw_set_alpha(min(FadeAlpha,Scrollbar_bgalpha_hover));
+                draw_set_color(_sbc.Scrollbar_bgcolor_hover);
+                draw_set_alpha(min(FadeAlpha,_sbc.Scrollbar_bgalpha_hover));
             }
             else {
                 draw_set_color(Scrollbar_bgcolor);
-                draw_set_alpha(min(FadeAlpha,Scrollbar_bgalpha));
+                draw_set_alpha(min(FadeAlpha,_sbc.Scrollbar_bgalpha));
             }
             
             draw_rectangle(cx1,cy1,cx1+_sbw,cy2,0);
             
             // draw scrollbar select area
             if (Scrollbar_hover) {
-                draw_set_color(Scrollbar_color_hover);
-                draw_set_alpha(min(FadeAlpha,Scrollbar_alpha_hover));
+                draw_set_color(_sbc.Scrollbar_color_hover);
+                draw_set_alpha(min(FadeAlpha,_sbc.Scrollbar_alpha_hover));
             }
             else {
-                draw_set_color(Scrollbar_color);
-                draw_set_alpha(min(FadeAlpha,Scrollbar_alpha));
+                draw_set_color(_sbc.Scrollbar_color);
+                draw_set_alpha(min(FadeAlpha,_sbc.Scrollbar_alpha));
             }
             
-            draw_rectangle(cx1 + 1,cy3,cx1+_sbw - 1,cy3+Scrollbar_height, 0);
+            draw_rectangle(cx1 + 1,cy3 + 1,cx1+_sbw - 1,cy3+_sbc.Scrollbar_height - 1, 0);
         }
     }
     
@@ -2233,8 +2268,7 @@ if (argument0 == true) {
                 surface_reset_target();
             }
         }
-        //if (!No)
-        //    No = true;
+        
         if (GMUIP.GMUI_gridNeedsDrawUpdate[Layer] != 1) {
             NeedsDrawUpdate = false;
             NeedsGroupUpdate = false;
@@ -2276,6 +2310,13 @@ with (GMUII()) {
         return false;
     else {
         _ctrl.Hidden = argument1;
+        
+        if (argument1 == false)
+            if (_ctrl.ControlType == "selectlist")
+                if (_ctrl.ControlDropdownParent != -1)  
+                    if (_ctrl.ControlDropdownParent.Selected == false)
+                        _ctrl.Hidden = true;
+        
         if (_ctrl.FadeOnHide) {
             if (argument1 > 0)
                 GMUI_ControlFadeOut(argument0,_ctrl.FadeTime);
@@ -3618,6 +3659,9 @@ HoveringControl = -1;
 SelectedControl = -1;
 PreviousSelectedControl = -1;
 
+// Request to update the layer region
+NeedsRegionsUpdate = false;
+
 // An offset change will trigger repositioning controls
 previousXOffset = 0;
 previousYOffset = 0;
@@ -3638,7 +3682,7 @@ GMUI_popup_map = ds_map_create();
 // Warnings
 GMUI_warnings_map = ds_map_create();
 
-// Group scrollbars
+// Add list of scrollbar controls
 GMUI_groupScrollbars = ds_list_create();
 
 
@@ -3661,6 +3705,7 @@ GMUI_groupRelativeCellX[0,0] = 0;
 GMUI_groupRelativeCellY[0,0] = 0;
 GMUI_groupAnchor[0,0] = global.GMUIAnchorDefault;
 GMUI_groupClickOff[0,0] = false;
+GMUI_controlClickOff = -1;
 GMUI_groupTransitioning[0,0] = false;
 //GMUI_groupTransitioningControl[0,0] = -1;
 GMUI_groupAction[0,0] = -1;
@@ -3955,7 +4000,7 @@ with (argument0) {
     
     ds_map_destroy(GMUI_warnings_map);
     
-    ds_map_destroy(GMUI_groupScrollbars);
+    ds_list_destroy(GMUI_groupScrollbars);
     
     ds_map_destroy(GMUI_map);
     
@@ -4036,7 +4081,7 @@ if (GMUI_GridEnabled())
                     }
                     else if (ctrlObject.ControlHasScrollbar) {
                         if (ctrlObject.Group > 0)
-                            _GX = GMUI_groupActualX[ctrlObject.Layer,ctrlObject.Group];
+                            _GX = GMUI_groupActualX[ctrlObject.Layer,ctrlObject.Group] * UIEnableSurfaces;
                         if (MX >= ctrlObject.Scrollbar_x+GMUI_grid_x[ctrlObject.Layer] + GMUI_GridViewOffsetX(id) + _GX) {
                             ctrlObject.Scrollbar_hover = true;
                         }
@@ -4098,11 +4143,24 @@ if (GMUI_GridEnabled())
         
         // Check if we are looking at a menu, and if this is a click outside of it first
         clickOffEvent = false;
-        if (UILayer >= GMUI_menu_layer && UILayer < GMUI_menu_layer + GMUI_menuLastId) {
-            if (GMUI_groupClickOff[UILayer,GMUI_menuCurrent]) {
-                if (!GMUI_MouseInGroupRegion(GMUI_menuCurrent,UILayer)) {
-                    GMUI_ShowMenuId(GMUI_menuCurrent,false,true);
+        if (UILayer < GMUI_menu_layer + GMUI_menuLastId) {
+            if (UILayer >= GMUI_menu_layer) {
+                if (GMUI_groupClickOff[UILayer,GMUI_menuCurrent]) {
+                    if (!GMUI_MouseInGroupRegion(GMUI_menuCurrent,UILayer)) {
+                        GMUI_ShowMenuId(GMUI_menuCurrent,false,true);
+                        clickOffEvent = true;
+                    }
+                }
+            }
+            else if (GMUI_controlClickOff > -1) {
+                // Check for click off control selection, else just cancel
+                if (GMUI_GetControlAtPosition(id,MX,MY) != GMUI_controlClickOff) {
                     clickOffEvent = true;
+                    if (GMUI_controlClickOff.ControlType == "selectlist")
+                        if (GMUI_controlClickOff.ControlDropdownParent != -1)
+                            GMUI_DropdownSelect(GMUI_controlClickOff.ControlDropdownParent,false);
+                            
+                    GMUI_controlClickOff = -1;
                 }
             }
         }
@@ -4161,14 +4219,15 @@ if (GMUI_GridEnabled())
                             // For lists that have a scrollbar, check which region we are in
                             if (ctrlObject.ControlHasScrollbar) {
                                 if (ctrlObject.Group > 0)
-                                    _GX = GMUI_groupActualX[ctrlObject.Layer,ctrlObject.Group];
+                                    _GX = GMUI_groupActualX[ctrlObject.Layer,ctrlObject.Group] * (UIEnableSurfaces);
+                                    
                                 if (MX >= ctrlObject.Scrollbar_x + GMUI_grid_x[ctrlObject.Layer] + GMUI_GridViewOffsetX(id) + _GX) {                                 
                                     // Drag the scrollbar
                                     var _MPos,_SPos;
                                     _MPos = MY - ctrlObject.ActualY;
-                                    _SPos = ctrlObject.Scrollbar_pos_y - ctrlObject.Scrollbar_y + GMUI_grid_y[ctrlObject.Layer] + GMUI_GridViewOffsetY(id);
+                                    _SPos = ctrlObject.Scrollbar_pos_y - ctrlObject.Scrollbar_y + GMUI_grid_y[ctrlObject.Layer] + GMUI_GridViewOffsetY(id)*UIEnableSurfaces;
                                     ctrlObject.Scrollbar_dragging = true;
-                                    
+                                    draw_text(0,80,string(_MPos) +"-"+string(_SPos));
                                     if (_MPos >= _SPos && _MPos < _SPos + ctrlObject.Scrollbar_height)
                                         ctrlObject.Scrollbar_drag_y = _MPos - _SPos;
                                     else
@@ -4181,18 +4240,29 @@ if (GMUI_GridEnabled())
                                     
                                     if (ctrlObject.ItemListHoverIndex > 0) {
                                         ctrlObject.ItemListSelectedId = ctrlObject.ItemListId[ctrlObject.ItemListHoverIndex];
-                                        if (script_exists(ctrlObject.ItemListActionScript))
-                                            script_execute(ctrlObject.ItemListActionScript,ctrlObject.ItemListSelectedId);
+                                        GMUI_controlClickOff = -1;
+                                        
+                                        if (script_exists(ctrlObject.ItemListActionScript)) {
+                                            with (ctrlObject) {
+                                                script_execute(ItemListActionScript,ItemListSelectedId);
+                                            }
+                                        }
                                     }
                                 }
                             }
                             else {
                                 // Select List Region click
                                 GMUI_ControlListOffset(ctrlObject, UIEnableSurfaces, MX, MY);
+                                
                                 if (ctrlObject.ItemListHoverIndex > 0) {
                                     ctrlObject.ItemListSelectedId = ctrlObject.ItemListId[ctrlObject.ItemListHoverIndex];
-                                    if (script_exists(ctrlObject.ItemListActionScript))
-                                        script_execute(ctrlObject.ItemListActionScript,ctrlObject.ItemListSelectedId);
+                                    GMUI_controlClickOff = -1;
+                                    
+                                    if (script_exists(ctrlObject.ItemListActionScript)) {
+                                        with (ctrlObject) {
+                                            script_execute(ItemListActionScript,ItemListSelectedId);
+                                        }
+                                    }
                                 }
                             }
                         }
@@ -4202,6 +4272,9 @@ if (GMUI_GridEnabled())
                         }
                         else if (ctrlObject.ControlType == "checkbox" || ctrlObject.ControlType == "toggle") {
                             GMUI_SetValue(ctrlObject.valueName,1-ctrlObject.value,"integer");
+                        }
+                        else if (ctrlObject.ControlType == "dropdown") {
+                            GMUI_DropdownSelect(ctrlObject, true);
                         }
                         else if (ctrlObject.ActionScript != -1) {
                             // Control buttons clicked
@@ -4222,14 +4295,14 @@ if (GMUI_GridEnabled())
                 GMUI_GridUpdateLayer(id,GMUI_GetCurrentLayer());
                 
                 // Check for scrollbar actions
-                var _MC, _MPos; _MC = GMUI_GroupMouseOnScrollbar(id, MX);
-                if (_MC > -1) {
-                    _MC.Scrollbar_dragging = true;
-                    _MPos = MY - GMUI_groupActualY[_MC.Layer,_MC.Group];
-                    if (_MPos > _MC.Scrollbar_y && _MPos < _MC.Scrollbar_y + _MC.Scrollbar_height)
-                        _MC.Scrollbar_drag_y = _MPos - _MC.Scrollbar_y;
+                var _SBC, _MPos; _SBC = GMUI_GroupMouseOnScrollbar(id, MX);
+                if (_SBC > -1) {
+                    _SBC.Scrollbar_dragging = true;
+                    _MPos = MY - GMUI_groupActualY[_SBC.Layer,_SBC.Group];
+                    if (_MPos > _SBC.Scrollbar_y && _MPos < _SBC.Scrollbar_y + _SBC.Scrollbar_height)
+                        _SBC.Scrollbar_drag_y = _MPos - _SBC.Scrollbar_y;
                     else
-                        _MC.Scrollbar_drag_y = _MC.Scrollbar_height/2;
+                        _SBC.Scrollbar_drag_y = _SBC.Scrollbar_height/2;
                 }
             }
         }
@@ -4258,6 +4331,12 @@ if (GMUI_GridEnabled())
             previousXOffset = view_xview[UIgridview];
             previousYOffset = view_yview[UIgridview];
         }
+    }
+    
+    // If a control has been repositioned, it may need a map layer update
+    if (UIInterfaceSet && NeedsRegionsUpdate) {
+        GMUI_GridSetRegionsLayer(UILayer);
+        NeedsRegionsUpdate = false;
     }
     
     
@@ -4419,6 +4498,18 @@ if (GMUII().UIInterfaceSet)
     return (GMUII()).UILayer;
 else
     return (GMUII()).UIAddToLayer;
+
+#define GMUI_GetHeight
+///GMUI_GetHeight()
+///Get the height of the interface
+
+return GMUI_GridGetHeight(GMUII(),(GMUII()).UIAddToLayer);
+
+#define GMUI_GetWidth
+///GMUI_GetWidth()
+///Get the width of the interface
+
+return GMUI_GridGetWidth(GMUII(),(GMUII()).UIAddToLayer);
 
 #define GMUI_GetValue
 ///GMUI_GetValue("ControlName")
@@ -4588,6 +4679,52 @@ for(i=0;i<ds_list_size((GMUII()).GMUI_groupControlList[_LayerNumber,_GroupNumber
 }
 
 return true;
+
+#define GMUI_GroupSetMarginX
+///GMUI_GroupSetMarginX(Group, Cells wide for margin)
+///Set the width of the group by margin cells (to edge of grid)
+
+var _LayerNumber, _GroupNumber, _Cells, _Grid;
+_LayerNumber = UIAddToLayer;
+_GroupNumber = argument0;
+_Cells = argument1;
+_Grid = GMUI_GridGetWidth(GMUII(),_LayerNumber);
+
+
+GMUI_groupCellsW[_LayerNumber,_GroupNumber] = max(1, 
+    _Grid - GMUI_groupCellX[_LayerNumber,_GroupNumber] - _Cells);
+
+#define GMUI_GroupSetMarginY
+///GMUI_GroupSetMarginY(Group, Cells height for margin)
+///Set the height of the group by margin cells (to edge of grid)
+
+var _LayerNumber, _GroupNumber, _Cells, _Grid;
+_LayerNumber = UIAddToLayer;
+_GroupNumber = argument0;
+_Cells = argument1;
+_Grid = GMUI_GridGetHeight(GMUII(),_LayerNumber);
+
+
+GMUI_groupCellsH[_LayerNumber,_GroupNumber] = max(1, 
+    _Grid - GMUI_groupCellY[_LayerNumber,_GroupNumber] - _Cells);
+
+#define GMUI_GroupSetOverflow
+///GMUI_GroupSetOverflow(Group, overflow)
+///Set the method for overflowing groups, and scrollbar with if necessary
+
+var _GMUI, _Layer, _Group, _Direction, _MC;
+_GMUI = GMUII();
+_Layer = UIAddToLayer;
+_Group = argument0;
+
+
+_GMUI.GMUI_groupOverflow[_Layer,_Group] = max(0,argument1);
+
+//GMUIOverflowNone = 0;
+//GMUIOverflowResize = 1;
+//GMUIOverflowScroll = 2;
+
+
 
 #define GMUI_GroupSetPosition
 ///GMUI_GroupSetPosition(Group Number, Cell X, Cell Y, X Adjustment, Y Adjustment)
@@ -4858,7 +4995,7 @@ if (!GMUI_IsControl() && id != GMUII())
     return false;
 }
 
-if (!ControlItemList) {
+if (!ControlItemList && ControlType != "dropdown") {
     GMUI_ThrowErrorDetailed("'" + valueName + "' is not an item list control", GMUI_ItemListBackground);
     return false;
 }
@@ -4875,6 +5012,8 @@ if (argument2 > -1)
     
 if (argument3 > -1)
     ItemListBackgroundAlphaHover = argument3;
+
+
 
 #define GMUI_ItemListFont
 ///GMUI_ItemListFont(Font, Font Color, Font Color Hover, Font Alpha, Font Alpha Hover)
@@ -5017,6 +5156,33 @@ for(i=0;i<ds_list_size((_GMUI).GMUI_groupList[_Layer]);i+=1) {
 GMUI_GridUpdateLayer(_GMUI,_Layer);
 
 
+#define GMUI_MenuHideOverflow
+///GMUI_MenuHideOverflow("Menu Name")
+///Set the method for overflowing menus, and scrollbar with if necessary
+
+var _GMUI, _Layer, _menuName, _menuNumber, _Direction, _MC;
+_GMUI = GMUII();
+_Layer = UIAddToLayer;
+_menuName = string(argument0);
+
+// Get menu number and check its valid
+_menuNumber = ds_map_find_value(_GMUI.GMUI_menu_map,_menuName);
+
+if (string(_menuNumber) == "0") {
+    GMUI_ThrowErrorDetailed("Menu doesn't exist: " + _menuName,GMUI_MenuHideOverflow);
+    return false;
+}
+
+_Layer = GMUI_GetMenuLayer(_GMUI,_menuNumber);
+
+_GMUI.GMUI_groupOverflow[_Layer,_menuNumber] = global.GMUIOverflowNone;
+
+//GMUIOverflowNone = 0;
+//GMUIOverflowResize = 1;
+//GMUIOverflowScroll = 2;
+
+
+
 #define GMUI_MenuSetClickOff
 ///GMUI_MenuSetClickOff("menu name", Click off to close [1] or not [0])
 ///This option allows the user to click outside of the menu to close it
@@ -5091,6 +5257,34 @@ _result = GMUI_GroupSetFadeOnHide(_MenuNumber,_Speed,_FadeMode);
 
 UIAddToLayer = _prevLayer;
 return _result;
+
+#define GMUI_MenuSetOverflow
+///GMUI_MenuSetOverflow("Menu Name", overflow)
+///Set the method for overflowing menus, and scrollbar with if necessary
+
+var _GMUI, _Layer, _menuName, _menuNumber, _Direction, _MC;
+_GMUI = GMUII();
+_Layer = UIAddToLayer;
+_menuName = string(argument0);
+
+// Get menu number and check its valid
+_menuNumber = ds_map_find_value(_GMUI.GMUI_menu_map,_menuName);
+
+if (string(_menuNumber) == "0") {
+    GMUI_ThrowErrorDetailed("Menu doesn't exist: " + _menuName,GMUI_MenuHideOverflow);
+    return false;
+}
+
+_Layer = GMUI_GetMenuLayer(_GMUI,_menuNumber);
+
+_GMUI.GMUI_groupOverflow[_Layer,_menuNumber] = max(0,argument1);
+
+//GMUIOverflowNone = 0;
+//GMUIOverflowResize = 1;
+//GMUIOverflowScroll = 2;
+
+
+
 
 #define GMUI_MenuSetPosition
 ///GMUI_MenuSetPosition("menu name", Cell X, Cell Y, X Adjustment, Y Adjustment)
@@ -5725,7 +5919,7 @@ return -1;
 
 if (instance_exists(argument0)) {
     with (argument0) {
-        if (ControlItemList) {
+        if (ControlItemList || ControlType == "dropdown") {
             // Check if ID exists first, if not, add a default item
             var _m, _i, _id;
             _id = argument1;
@@ -5969,7 +6163,6 @@ if (!_UsingSurface) {
     _cy = _Ctrl.ActualY+_Ctrl.GMUIP.GMUI_grid_y[_Ctrl.Layer]+GMUI_GridViewOffsetY(_Ctrl.GMUIP);
 }
 else {
-    //surface_reset_target();
     _Surface = surface_target(_Ctrl.SelectListSurface,_Ctrl.RoomW-_Ctrl.RoomX,max(_Ctrl.RoomH-_Ctrl.RoomY,ItemListHeight*ItemListSize));
     surface_clear(_Surface);
 }
@@ -6032,17 +6225,31 @@ for (_i=1;_i<=ItemListSize;_i+=1) {
         // Draw the individual item depending on the provided parameters
         if (_canDraw) {
             // Draw background if defined
-            if (ItemListBackgroundColor[_id] != -1) {
+            _ibgc = ItemListBackgroundColor[_id];
+            if (_ibgc == -1)
+                _ibgc = ItemListBackgroundColor[0];
+            
+            if (_ibgc != -1) {
                 if (ItemListHoverIndex == _i) {
                     if (ItemListBackgroundColorHover[_id] != -1)
                         draw_set_color(ItemListBackgroundColorHover[_id]);
+                    else if (ItemListBackgroundColorHover[0] != -1)
+                        draw_set_color(ItemListBackgroundColorHover[0]);
                     if (ItemListBackgroundAlphaHover[_id] != -1)
                         draw_set_alpha(min(FadeAlpha,ItemListBackgroundAlphaHover[_id]));
+                    else if (ItemListBackgroundAlphaHover[0] != -1)
+                        draw_set_alpha(min(FadeAlpha,ItemListBackgroundAlphaHover[0]));
                 }
                 else {
-                    draw_set_color(ItemListBackgroundColor[_id]);
+                    if (ItemListBackgroundColor[_id] != -1)
+                        draw_set_color(ItemListBackgroundColor[_id]);
+                    else if (ItemListBackgroundColor[0] != -1)
+                        draw_set_color(ItemListBackgroundColor[0]);
+                    
                     if (ItemListBackgroundAlpha[_id] != -1)
                         draw_set_alpha(min(FadeAlpha,ItemListBackgroundAlpha[_id]));
+                    else if (ItemListBackgroundAlpha[0] != -1)
+                        draw_set_alpha(min(FadeAlpha,ItemListBackgroundAlpha[0]));
                 }
                 
                 draw_rectangle(_cx,_cy + (_i-_offPos-1) * ItemListHeight,_cx + ItemListAreaWidth - _sbw,_cy + (_i-_offPos) * ItemListHeight - 1,false);
@@ -6053,6 +6260,7 @@ for (_i=1;_i<=ItemListSize;_i+=1) {
                 draw_set_font(ItemListFont[_id]);
             else if (ItemListFont[0] != -1)
                 draw_set_font(ItemListFont[0]);
+                
             // Set font color if defined, and if hovering
             if (ItemListHoverIndex == _i) {
                 if (ItemListFontColorHover[_id] != -1)
@@ -6064,6 +6272,7 @@ for (_i=1;_i<=ItemListSize;_i+=1) {
                 draw_set_color(ItemListFontColor[_id]);
             else if (ItemListFontColor[0] != -1)
                 draw_set_color(ItemListFontColor[0]);
+                
             // Set opacity
             draw_set_alpha(min(FadeAlpha,ItemListOpacity[_id]));
             
@@ -6090,6 +6299,9 @@ for (_i=1;_i<=ItemListSize;_i+=1) {
     //ItemListSprite[_id] = -1;
     //ItemListFadeTime
 }
+
+if (_UsingSurface)
+    surface_reset_target();
 
 return _Surface;
 
@@ -6962,30 +7174,45 @@ return 0;
 
 with (argument0) {
     // Reset positioning to base on group's position
-    CellX = GMUI_GetAnchoredCellX((GMUIP).GMUI_groupCellsW[Layer,Group],RelativeCellX,Anchor) + (GMUIP).GMUI_groupCellX[Layer,Group];
-    CellY = GMUI_GetAnchoredCellY((GMUIP).GMUI_groupCellsH[Layer,Group],RelativeCellY,Anchor) + (GMUIP).GMUI_groupCellY[Layer,Group];
+    CellX = GMUI_GetAnchoredCellX(GMUIP.GMUI_groupCellsW[Layer,Group],RelativeCellX,Anchor) + GMUIP.GMUI_groupCellX[Layer,Group];
+    CellY = GMUI_GetAnchoredCellY(GMUIP.GMUI_groupCellsH[Layer,Group],RelativeCellY,Anchor) + GMUIP.GMUI_groupCellY[Layer,Group];
     
     ActualX = GMUI_CellGetActualX(CellX);
     ActualY = GMUI_CellGetActualY(CellY);
     
     var expand; expand = true;
     if (GMUIP.UIEnableSurfaces) {
-        if (GMUIP.GMUI_groupOverflow[Layer,Group] == global.GMUIOverflowScroll) {
+        if (GMUIP.GMUI_groupOverflow[Layer,Group] != global.GMUIOverflowResize) {
             expand = false;
         }
     }
     
     // If control is outside of the group boundaries, expand the group to fit it
     if (expand) {
-        if (CellX + CellWide > (GMUIP).GMUI_groupCellX[Layer,Group] + (GMUIP).GMUI_groupCellsW[Layer,Group]) {
-            GMUIP.GMUI_groupCellsW[Layer,Group] = CellX + CellWide - (GMUIP).GMUI_groupCellX[Layer,Group];
+        if (CellX + CellWide > GMUIP.GMUI_groupCellX[Layer,Group] + GMUIP.GMUI_groupCellsW[Layer,Group]) {
+        
+            GMUIP.GMUI_groupCellsW[Layer,Group] = CellX + CellWide - GMUIP.GMUI_groupCellX[Layer,Group];
+            
+            if (GMUIP.UIEnableSurfaces)
+                GMUI_SurfaceResize(GMUIP,
+                    GMUIP.GMUI_groupSurface[Layer,Group],
+                    GMUIP.GMUI_groupCellsW*GMUIP.cellsize+1,
+                    GMUIP.GMUI_groupCellsH*GMUIP.cellsize_h+1);
         }
-        if (CellY + CellHigh > (GMUIP).GMUI_groupCellY[Layer,Group] + (GMUIP).GMUI_groupCellsH[Layer,Group]) {
-            GMUIP.GMUI_groupCellsH[Layer,Group] = CellY + CellHigh - (GMUIP).GMUI_groupCellY[Layer,Group];
+        
+        if (CellY + CellHigh > GMUIP.GMUI_groupCellY[Layer,Group] + GMUIP.GMUI_groupCellsH[Layer,Group]) {
+        
+            GMUIP.GMUI_groupCellsH[Layer,Group] = CellY + CellHigh - GMUIP.GMUI_groupCellY[Layer,Group];
+            
+            if (GMUIP.UIEnableSurfaces)
+                GMUI_SurfaceResize(GMUIP,
+                    GMUIP.GMUI_groupSurface[Layer,Group],
+                    GMUIP.GMUI_groupCellsW*GMUIP.cellsize+1,
+                    GMUIP.GMUI_groupCellsH*GMUIP.cellsize_h+1);
         }
     }
-    else if (CellY + CellHigh > (GMUIP).GMUI_groupCellY[Layer,Group] + (GMUIP).GMUI_groupCellsH[Layer,Group]) {
-        GMUIP.GMUI_groupOverflowCellsH[Layer,Group] = CellY + CellHigh - (GMUIP).GMUI_groupCellY[Layer,Group];
+    else if (CellY + CellHigh > GMUIP.GMUI_groupCellY[Layer,Group] + GMUIP.GMUI_groupCellsH[Layer,Group]) {
+        GMUIP.GMUI_groupOverflowCellsH[Layer,Group] = CellY + CellHigh - GMUIP.GMUI_groupCellY[Layer,Group];
     }
     
     
@@ -7010,7 +7237,7 @@ if (_Ctrl.ControlHasScrollbar) {
     if (Scrollbar_maxtop > Scrollbar_padding) {
         _relY = _MY-GMUIP.GMUI_grid_y[Layer]-GMUI_GridViewOffsetY(GMUIP) - Scrollbar_y - Scrollbar_drag_y;
         
-        if (_Ctrl.Group > 0)
+        if (_Ctrl.Group > 0 && _Ctrl.GMUIP.UIEnableSurfaces)
             _relY -= (_Ctrl.GMUIP).GMUI_groupActualY[_Ctrl.Layer,_Ctrl.Group];
     
         Scrollbar_pos_y = minmax(Scrollbar_y + _relY, Scrollbar_y + Scrollbar_padding, Scrollbar_y + Scrollbar_maxtop);
@@ -7121,6 +7348,7 @@ with (argument0)
     ItemListFadeTime = 0;
     ControlHasScrollbar = true;
     Scrollbar_hover = false;
+    ControlDropdownParent = -1;
 }
 
 return true;
@@ -7137,6 +7365,35 @@ if (!instance_exists(argument0))
 
 with (argument0)
 {
+    GMUI_ControlSetPicker(
+    (GMUII()).ControlPickerWidth,
+    (GMUII()).ControlPickerHeight,
+    (GMUII()).ControlPickerDirection,
+    (GMUII()).ControlPickerSpriteRightOrUp,
+    (GMUII()).ControlPickerSpriteLeftOrDown
+    );
+}
+
+
+return true;
+
+#define GMUI_ControlSetDefaultDropdown
+///GMUI_ControlSetDefaultDropdown(id)
+/// Set the default attributes of the control from the controller
+
+if (!instance_exists(argument0))
+{
+    GMUI_ThrowError("Invalid control for GMUI_ControlSetDefaultDropdown");
+    return false;
+}
+
+with (argument0)
+{
+    // Default values before applying parent's values
+    ControlDropdownParent = -1;
+    ControlDropdownCellHigh = 0;
+    ControlDropdownCellHighMin = 4;
+    
     GMUI_ControlSetPicker(
     (GMUII()).ControlPickerWidth,
     (GMUII()).ControlPickerHeight,
@@ -7253,7 +7510,7 @@ return true;
 ///Set the default variables for the scrollbar
 // This is called after the interface if in group and the overflow is set to scroll
 
-var _GMUI, _Layer, _Group, _CH,_GH,_OF;
+var _GMUI, _Layer, _Group, _CH,_GH,_OF,_SBC;
 _GMUI = GMUIP;
 _Layer = Layer;
 _Group = Group;
@@ -7281,6 +7538,7 @@ Scrollbar_maxtop = 0;
 Scrollbar_hover = false;
 Scrollbar_dragging = false;
 Scrollbar_drag_y = 0;
+// Default display values
 Scrollbar_padding = 0;
 Scrollbar_bgcolor = c_dkgray;
 Scrollbar_bgalpha = 0.8;
@@ -7306,11 +7564,6 @@ if (_GH > 0) {
             - _GMUI.GMUI_grid_x[_Layer] - GMUI_GridViewOffsetX(_GMUI);
         Scrollbar_y = ActualY - _GMUI.GMUI_grid_y[_Layer] - GMUI_GridViewOffsetY(_GMUI) + Scrollbar_padding*2;
         Scrollbar_pos_y = Scrollbar_y;
-    }
-    else {
-        GMUI_GroupSetScrollbarX(_GMUI,_Layer,_Group);
-        
-        GMUI_GroupSetScrollbar(_GMUI, id);
     }
 }
 
@@ -7390,19 +7643,32 @@ switch (_type) {
         IID.ControlInput = false;
         IID.ControlSelectable = false;
         break;
-    
-    case "dropdown":
     case "selectlist":
-    
+    case "dropdown":
+        
         IID.ControlItemList = true;
         GMUI_ControlSetDefaultItemList(IID);
         with (IID) { GMUI_ControlSetScrollbarDefaults(true); }
+        
+        if (_type == "dropdown") {
+            GMUI_ControlSetDefaultDropdown(IID);
+        
+            IID.ControlHasScrollbar = false;
+            IID.ControlItemList = false;
+            IID.ControlInput = false;
+            IID.ControlSelectable = false;
+            
+        }
         break;
-    case "label":
+    case "scrollbarhandler":
     case "tooltip":
-        IID.ControlInput = false;
+    
         IID.ControlInteraction = false;
+    case "label": // (Label includes interaction)
+    
+        IID.ControlInput = false;
         IID.ControlStyleDefined = false;
+        IID.ControlSelectable = false;
         break;
     default:
         // no match; override to show invalid:
@@ -7441,7 +7707,7 @@ if (argument0) {
     MX = mouse_x-(GMUIP).GMUI_grid_x[Layer]-GMUI_GridViewOffsetX(GMUIP);
     MY = mouse_y-(GMUIP).GMUI_grid_y[Layer]-GMUI_GridViewOffsetY(GMUIP);
     //todo: fix view and group offsets!
-    if (Group > 0) {
+    if (Group > 0 && GMUIP.UIEnableSurfaces) {
         MX -= (GMUIP).GMUI_groupActualX[Layer,Group];
         MY -= (GMUIP).GMUI_groupActualY[Layer,Group];
     }
@@ -7538,7 +7804,7 @@ with (argument0) {
 ///GMUI_ControlUpdateXY(control)
 ///Updates the actual location in the room after adjustments
 
-var _ctrl, _GMUIP, _xoffset, _yoffset, _lw, _lh;
+var _ctrl, _GMUIP, _xoffset, _yoffset, _lw, _lh, _sbOffset;
 _ctrl = argument0;
 _GMUIP = (_ctrl).GMUIP;
 
@@ -7584,6 +7850,17 @@ if ((_ctrl).TooltipId != -1) {
         global.GMUIAnchorTopLeft);
     ((_ctrl).TooltipId).NeedsPositionUpdate = true;
 }
+
+// If the control has a scrollbar, update the scrollbar location (copied from GMUI_ControlSetScrollbarDefaults)
+if ((_ctrl).ControlHasScrollbar && !_GMUIP.UIEnableSurfaces) {
+    (_ctrl).Scrollbar_x = (_ctrl).ActualX + (_ctrl).CellWide * _GMUIP.cellsize
+        - (_ctrl).Scrollbar_width
+        - _GMUIP.GMUI_grid_x[(_ctrl).Layer] - GMUI_GridViewOffsetX(_GMUIP);
+    _sbOffset = (_ctrl).Scrollbar_pos_y - (_ctrl).Scrollbar_y;
+    (_ctrl).Scrollbar_y = (_ctrl).ActualY - _GMUIP.GMUI_grid_y[(_ctrl).Layer] - GMUI_GridViewOffsetY(_GMUIP) + (_ctrl).Scrollbar_padding*2;
+    (_ctrl).Scrollbar_pos_y = (_ctrl).Scrollbar_y + _sbOffset;
+}
+//draw_text(0,16,"updating positioning :(");
 
 #define GMUI_CreateMenuType
 ///GMUI_CreateMenuType (Type[script calling], menu name, cell# x, cell# y, cells wide, cells high, Anchor)
@@ -7765,6 +8042,114 @@ if (_spr_isFixed) {
 else {
     draw_sprite_stretched_ext(_sprCenter,-1,_dbx+_spr_width,_dby+_spr_height,_dbw-_spr_width*2,_dbh-_spr_height*2,c_white,_alpha);
 }
+
+#define GMUI_DropdownSelect
+///GMUI_DropdownSelect(control, isOpening)
+/// Creates a select list around the dropdown region from the parent control
+/// isOpening either creates the new select list, or removes it when closing
+
+
+// 1. values from parent (control) to use to create new control
+
+var _Control,_isOpening,_Layer,_SLName,_checkSL,_newSL,_newCellY,_newCellHigh;
+
+_Control = argument0;
+_isOpening = argument1;
+_SLName = "DDSL|" + _Control.valueName;
+
+if (_isOpening) {
+
+    // Default to minimum (overridable) or the cell height * 2, unless defined
+    if (_Control.ControlDropdownCellHigh <= 0)
+        _newCellHigh = max(_Control.ControlDropdownCellHighMin, _Control.CellHigh * 2);
+    else
+        _newCellHigh = _Control.ControlDropdownCellHigh;
+        
+    // Check clearance of placing select list below control
+    if (_Control.RelativeCellY + _Control.CellHigh + _newCellHigh > GMUI_GridGetHeight(_Control.GMUIP,_Control.Layer))
+        _newCellY = _Control.RelativeCellY - _newCellHigh;
+    else
+        _newCellY = _Control.RelativeCellY + _Control.CellHigh;
+        
+    _Control.Selected = true;
+        
+    // Use default, or use applied settings to select list object, creating it if it doesn't exist
+    _checkSL = GMUI_GetControl(_SLName);
+    
+    if (_checkSL == -1) {
+    
+        _newSL = GMUI_AddToLayer(_Control.Layer,_SLName, "selectlist", 
+            _Control.RelativeCellX, _newCellY,
+            _Control.CellWide, _newCellHigh,
+            _Control.Anchor);
+    }
+    else {
+    
+        _newSL = _checkSL;
+        GMUI_ControlHide(_SLName, false);
+    }
+        
+    // Set parent to this control, apply settings
+    _newSL.ControlDropdownParent = _Control;
+    _newSL.depth = _Control.depth - 2;
+    
+    with (_newSL) {
+        // Set settings using parent's settings (like above commands). And apply them (run) here:
+        
+        if (_Control.Group > 0)
+            GMUI_ControlAddToGroup(_Control.Group);
+        
+        GMUI_ItemListSelectAction(GMUI_DropdownSelectItem);
+        
+        // Add all select list settings from parent
+        GMUI_ItemListSettings(_Control.ItemListHeight, _Control.ItemListBorderColor[0],
+            _Control.ItemListDrawScript, _Control.ItemListFadeTime);
+            
+        GMUI_ItemListBackground(_Control.ItemListBackgroundColor[0], _Control.ItemListBackgroundColorHover[0],
+            _Control.ItemListBackgroundAlpha, _Control.ItemListBackgroundAlphaHover);
+        
+        // Add all items from parent
+        var i,_id;
+        for (i=1;i<=_Control.ItemListSize;i+=1) {
+            _id = _Control.ItemListId[i];
+            GMUI_AddItem(_id,_Control.ItemListValue[_id],_Control.ItemListName[_id],_Control.ItemListDescription[_id],_Control.ItemListSprite[_id]);
+        }
+        
+            
+        // Set clickoff
+        GMUIP.GMUI_controlClickOff = id;
+    }
+    
+    GMUI_GridUpdateLayer(_Control.GMUIP,_Control.Layer);
+    
+}
+else {
+
+    // Remove the select list, and update the parent control with the new value
+    GMUI_ControlHide(_SLName, true);
+    
+}
+
+#define GMUI_DropdownSelectItem
+///GMUI_DropdownSelectItem(item selected)
+///Performs the selection of the dropdown when the user selects an option
+
+// Adjust the parent control value
+
+var _valType;
+if (is_string(argument0))
+    _valType = 0;
+else if (frac(argument0) == 0)
+    _valType = 1;
+else
+    _valType = 2;
+    
+GMUI_SetValue(ControlDropdownParent.valueName, argument0, _valType);
+ControlDropdownParent.valueString = ItemListName[argument0];
+
+// Hide the select list, disabling input
+
+GMUI_ControlHide("DDSL|" + ControlDropdownParent.valueName,true);
 
 #define GMUI_GetAnchoredCellX
 ///GMUI_GetAnchoredCellX(Area Width, Cell X given, Anchor Type)
@@ -8367,8 +8752,7 @@ with (argument0) {
                 if (GMUI_groupDrawingControl[l,g] > -1) {
                     with (GMUI_groupDrawingControl[l,g]) {
                         if (GMUIP.GMUI_groupOverflow[l,g] == global.GMUIOverflowScroll) {
-                            GroupHasScrollbar = true;
-                            GMUI_ControlSetScrollbarDefaults(false); // false: set for group
+                            GMUI_GroupSetScrollbar(argument0,l,g,-1);
                         }
                     }
                 }
@@ -8616,19 +9000,19 @@ return (ds_list_find_index((GMUII()).GMUI_groupList[L],G) != -1);
 ///GMUI_GroupMouseOnScrollbar(GMUI instance, Mouse X position)
 ///Adds the control handling the scrollbar to the list if it doesnt exist
 
-var _GMUI, _s, _sb, _MX, _MC;
+var _GMUI, _Si, _SBC, _L, _G, _MX;
 _GMUI = argument0;
 _MX = argument1;
+_L = _GMUI.UILayer;
 
-for(_s=0;_s<ds_list_size(_GMUI.GMUI_groupScrollbars);_s+=1) {
-    _sb = ds_list_find_value(_GMUI.GMUI_groupScrollbars,_s);
-    
-    if (GMUI_StudioCheckDefined(_sb)) {
-        if (GMUI_MouseInGroupRegion(_sb.Group,_sb.Layer)) {
-            _MC = _GMUI.GMUI_groupMasterControl[_sb.Layer,_sb.Group];
+for(_Si=0;_Si<ds_list_size(_GMUI.GMUI_groupScrollbars);_Si+=1) {
+    _SBC = ds_list_find_value(_GMUI.GMUI_groupScrollbars,_Si);
+    if (GMUI_StudioCheckDefined(_SBC)) {
+        if (GMUI_MouseInGroupRegion(_SBC.Group,_SBC.Layer)) {
+            _MC = _GMUI.GMUI_groupMasterControl[_SBC.Layer,_SBC.Group];
             // Calculated: X + W - scrollbar W - gridX - offset
-            if (_MX >= _MC.Scrollbar_x) {
-                return _MC;
+            if (_MX >= _SBC.Scrollbar_x) {
+                return _SBC;
                 break;
             }
         }
@@ -8636,6 +9020,8 @@ for(_s=0;_s<ds_list_size(_GMUI.GMUI_groupScrollbars);_s+=1) {
 }
 
 return -1;
+
+
 
 #define GMUI_GroupSetHidePosition
 ///GMUI_GroupSetHidePosition(Group Number, Cell X, Cell Y, Transition_script [or -1], speed in steps)
@@ -8708,10 +9094,10 @@ else {
 
 
 #define GMUI_GroupSetOverflow
-///GMUI_GroupSetOverflow(Group, Overflow Mode [GMUIOverflow.], scrollbar width [or -1] if used)
+///GMUI_GroupSetOverflow(Group, Overflow Mode [GMUIOverflow.], scrollbar width [or -1 for default])
 ///Set the method for overflowing groups, and scrollbar with if necessary
 
-var _GMUI, _Layer, _Group, _Direction, _MC;
+var _GMUI, _Layer, _Group, _Direction, _DC;
 _GMUI = GMUII();
 _Layer = UIAddToLayer;
 _Group = argument0;
@@ -8725,13 +9111,11 @@ if (argument2 > 0) {
         
         if (_GMUI.GMUI_groupMasterControl[_Layer,_Group] != -1) {
             if ((_GMUI.GMUI_groupMasterControl[_Layer,_Group]).GroupHasScrollbar == false) {
-            
-                _MC = _GMUI.GMUI_groupMasterControl[_Layer,_Group];
-                GMUI_GroupSetScrollbar(_GMUI, _MC);
-                _MC.GroupHasScrollbar = true;
+                _GMUI.GMUI_groupMasterControl[_Layer,_Group].GroupHasScrollbar = true;
                 
-                // Calculate the scrollbar position: X + W - scrollbar W - gridX - offset
-                GMUI_GroupSetScrollbarX(_GMUI,_LayerNumber,_GroupNumber);
+                if (_GMUI.UIInterfaceSet) {
+                    GMUI_GroupSetScrollbar(_GMUI,_LayerNumber,_GroupNumber,-1);
+                }
             }
         }
     }
@@ -8890,43 +9274,83 @@ GMUI_GridSetRegionsLayer(_LayerNumber);
 
 
 #define GMUI_GroupSetScrollbar
-///GMUI_GroupSetScrollbar(GMUI instance, drawing control ID)
+///GMUI_GroupSetScrollbar(GMUI instance, Layer Number, Group Number, scrollbar control ID [or -1])
 ///Adds the control handling the scrollbar to the list if it doesnt exist
 
-var _GMUI, _sbid, _s, _sb, _found;
+var _GMUI, _LayerNumber, _GroupNumber, _SBC, _dc;
 _GMUI = argument0;
-_sbid = argument1;
-_found = false;
+_LayerNumber = argument1;
+_GroupNumber = argument2;
+_SBC = argument3;
 
-for(_s=0;_s<ds_list_size(_GMUI.GMUI_groupScrollbars);_s+=1) {
-    _sb = ds_list_find_value(_GMUI.GMUI_groupScrollbars,_s);
-    
-    if (GMUI_StudioCheckDefined(_sb)) {
-        if (_sb == _sbid)
-            _found = true;
+_dc = _GMUI.GMUI_groupDrawingControl[_LayerNumber,_GroupNumber];
+if (_dc > -1) {
+    if (_SBC < 0) {
+        _SBC = _dc.GroupScrollbarHandler;
+        if (_SBC == -1) {
+            _SBC = GMUI_AddToLayer(_LayerNumber,"_GroupScrollbar_" + string(_LayerNumber) + "_" + string(_GroupNumber),
+                "scrollbarhandler",0,0,1,1,global.GMUIAnchorDefault);
+                
+            ds_list_add(_GMUI.GMUI_groupScrollbars, _SBC);
+        }
+        
+        ds_list_add(_GMUI.GMUI_groupControlList[_LayerNumber,_GroupNumber],_SBC);
+        _SBC.Group = _GroupNumber;
+        
+        with (_SBC) {
+            GMUI_ControlSetScrollbarDefaults(false); // false = set as group
+        }
+        
+        _dc.GroupScrollbarHandler = _SBC;
+        _SBC.GroupHasScrollbar = true;
+        
+        
     }
-}
-
-if (!_found) {
-    ds_list_add(_GMUI.GMUI_groupScrollbars,_sbid);
+    else if (instance_exists(_SBC)) {
+        if (instance_exists(_dc.GroupScrollbarHandler))
+            (_dc.GroupScrollbarHandler).GroupHasScrollbar = false;
+            
+        _dc.GroupScrollbarHandler = _SBC;
+        _SBC.GroupHasScrollbar = true;
+    }
+    else {
+        GMUI_ThrowErrorDetailed("Could not define scrollbar handler", GMUI_GroupSetScrollbar);
+        return false;
+    }
+    
+    
+    // Calculates the scrollbar position: X + W - scrollbar W - gridX - offset
+    return GMUI_GroupSetScrollbarX(_GMUI,_LayerNumber,_GroupNumber);
 }
 
 #define GMUI_GroupSetScrollbarX
 ///GMUI_GroupSetScrollbarX(GMUI instance, Layer number, Group number)
 ///Set the scrollbar x position to the master control of group
 
-var _GMUI, _Layer, _Group, _MC;
+var _GMUI, _Layer, _Group, _DC, _SBC;
 _GMUI = argument0;
 _Layer = argument1;
 _Group = argument2;
-_MC = _GMUI.GMUI_groupMasterControl[_Layer,_Group];
 
-// Calculate the scrollbar position: X + W - scrollbar W - gridX - offset
-// (Based from GMUI_GridViewOffsetX and GMUI_GridGetCellXOffset)
-_MC.Scrollbar_x = _GMUI.GMUI_groupActualX[_Layer,_Group]
-    + _GMUI.GMUI_groupCellsW[_Layer,_Group] * (_GMUI).cellsize
-    - _GMUI.GMUI_groupScrollWidth[_Layer,_Group]
-    - _GMUI.GMUI_grid_x[_Layer] - GMUI_GridViewOffsetX(_GMUI);
+if (_GMUI.UIEnableSurfaces)
+    _DC = _GMUI.GMUI_groupDrawingControl[_Layer,_Group];
+else
+    return false; // Currently not supported
+
+if (_DC > -1) {
+    _SBC = _DC.GroupScrollbarHandler;
+
+    // Calculate the scrollbar position: X + W - scrollbar W - gridX - offset
+    // (Based from GMUI_GridViewOffsetX and GMUI_GridGetCellXOffset)
+    _SBC.Scrollbar_x = _GMUI.GMUI_groupActualX[_Layer,_Group]
+        + _GMUI.GMUI_groupCellsW[_Layer,_Group] * (_GMUI).cellsize
+        - _GMUI.GMUI_groupScrollWidth[_Layer,_Group]
+        - _GMUI.GMUI_grid_x[_Layer] - GMUI_GridViewOffsetX(_GMUI);
+        
+    return true;
+}
+
+return false;
 
 #define GMUI_InitStudio
 ///GMUI_InitStudio() This internal script is called by GMUI_Init, if running GM:Studio 1.x,2.x
@@ -9369,6 +9793,25 @@ if (global.GMUIGameMaker8)
 //Studio: UNCOMMENT THE NEXT LINE IN GM:STUDIO
 //return !is_undefined(a0);
 
+#define GMUI_SurfaceResize
+///GMUI_SurfaceResize(GMUI instance, Surface target, Width, Height)
+///Resizes the surface only after the UI is set. Return is only for reference if needed.
+var _Surface;
+
+if ((argument0).UIInterfaceSet) {
+    if (surface_exists(argument1)) {
+        
+        _Surface = surface_create(argument2,argument3);
+        surface_copy(_Surface,0,0,argument1);
+        
+        surface_free(argument1);
+        
+        return _Surface;
+    }
+}
+    
+return -1;
+
 #define GMUI_SwitchToMenu
 ///GMUI_SwitchToMenu(GMUI, Menu number)
 ///Switches the depth of all controls in the menu of the current layer
@@ -9478,7 +9921,16 @@ else
     (GMUIid(1)).DebugData = true;
 
 #define _Disable_Button
-GMUI_ControlDisable("TestButton",1-GMUI_ControlIsDisabled("TestButton"));
+
+
+if (argument0 == 1) {
+    GMUI_ControlDisable("BtnDisable1",true);
+    GMUI_ControlDisable("BtnDisable2",false);
+}
+else {
+    GMUI_ControlDisable("BtnDisable2",true);
+    GMUI_ControlDisable("BtnDisable1",false);
+}
 
 #define _Enlarge_Button
 // Make window bigger
@@ -9524,7 +9976,7 @@ GMUI_ControlHideTooltip("Test4",true);
 #define _ListAction
 // Action to execute on selecting an item from the list, with argument0 as the ID selected
 
-show_message("You selected item of ID: " + string(argument0));
+show_message("You selected item of ID: " + string(argument0) + " From the control: " + string(valueName));
 
 #define _Move_Button
 var MyButton,MyButtonText;
@@ -9673,6 +10125,35 @@ for (_i=2; _i <=10; _i+=1) {
 
 GMUI_GroupHide(_group,_grouplayer,false);
 
+
+#define _Movement_Button
+
+
+var _move;
+
+switch (argument0) {
+    case 1: 
+        _move = -1;
+        break
+    case 2:
+        _move = easeExpOut;
+        break;
+    case 3:
+        _move = easeOutBack;
+        break;
+    case 4:
+        _move = easeElasticOut;
+        break;
+    case 5:
+        _move = easeBounceOut;
+        break;
+}
+
+
+GMUI_ControlPosition("MovementBox", 2,2, 0,0, -1); // Use current anchor (-1)
+GMUI_ControlPosition("MovementBox2", 2,2, 0,0, -1); // Use current anchor (-1)//testing
+GMUI_ControlTransitionToCell("MovementBox", 10,2, _move, room_speed);
+GMUI_ControlTransitionToCell("MovementBox2", 10,2, _move, room_speed);//testing
 
 #define _Test_Form
 ///_Test_Form() This interface is for the testing form
@@ -10603,6 +11084,7 @@ GMUI_CreateGroup(1,      2,2,   global.GMUIAnchorTopLeft);
 GMUI_GroupSetSize(1,     8,20);
 GMUI_GroupSetStyle(1, c_black, .2, c_black, .3, 0);
 GMUI_GroupSetFadeOnHide(1, room_speed/2, 0);
+GMUI_GroupSetMarginY(1, 1);
 
 var _bW; _bW = 6;
 
@@ -10680,7 +11162,7 @@ with (GMUI_Add("BtnDebug", "button",         1,31,   _bW,2,    global.GMUIAnchor
 // group border
 GMUI_CreateGroup(99, 20, 2, global.GMUIAnchorTopRight);
 GMUI_GroupSetStyle(99, c_black, .2, c_black, .3, 0);
-GMUI_GroupSetSize(99,20,33);
+GMUI_GroupSetSize(99,20,34);
 
 with (GMUI_Add("Right","label",0,0,1,1,global.GMUIAnchorTopRight)) {
     GMUI_ControlAddToGroup(99);
@@ -10692,7 +11174,7 @@ var _fadespeed; _fadespeed = room_speed/2;
 // Right Group 2: Sliders (Default)
 GMUI_CreateGroup(2,      20,2,    global.GMUIAnchorTopRight);
 GMUI_GroupSetFadeOnHide(2, _fadespeed, 0);
-//SET SIZE TO GRID - X
+GMUI_GroupSetMarginX(2, 1);
 
 with (GMUI_Add("Slider", "slider",              5,6,  10,2,   global.GMUIAnchorTopLeft)) {
     GMUI_ControlAddToGroup(2);
@@ -10759,10 +11241,17 @@ with (GMUI_Add("SliderV2", "slider",              13,9,  4,8,   global.GMUIAncho
 GMUI_CreateGroup(3,      20,2,    global.GMUIAnchorTopRight);
 GMUI_GroupHide(3,GMUI_GetCurrentLayer(),true);
 GMUI_GroupSetFadeOnHide(3, _fadespeed, 0);
-//SET SIZE TO GRID - X
+GMUI_GroupSetMarginX(3, 1);
+GMUI_GroupSetMarginY(3, 1);
+//GMUI_GroupHideOverflow(3); // Prevents group resizing to fit all controls
+GMUI_GroupSetOverflow(3, global.GMUIOverflowScroll, -1);
+with (GMUI_Add("LowLabel","label", 1,38,16,2,global.GMUIAnchorTopLeft)) {
+    GMUI_ControlAddToGroup(3);
+    GMUI_ControlSetText("This label is too low");
+}
 
 with (GMUI_Add("SpriteText","textstring",            1,1,    16,2,   global.GMUIAnchorTopLeft)) {
-GMUI_ControlAddToGroup(3);
+    GMUI_ControlAddToGroup(3);
     GMUI_ControlSetAttributes(20,0,0,0);
     GMUI_ControlSetInitValue("Select");
     GMUI_ControlSetSprite(sprite24,0,1,0);//GMUIspr_input
@@ -10795,12 +11284,27 @@ with (GMUI_Add("Test4", "intpicker",            1,10,    10,2,   global.GMUIAnch
     }
 }
 
+with (GMUI_Add("LabelDesc", "label",  1, 14, 19, 4, global.GMUIAnchorTopLeft)) {
+    GMUI_ControlAddToGroup(3);
+    GMUI_ControlSetInitValue("This group has its overflow set to hide.");
+}
+
+with (GMUI_Add("LabelLong", "label",  1, 18, 36, 2, global.GMUIAnchorTopLeft)) {
+    GMUI_ControlAddToGroup(3);
+    GMUI_ControlSetInitValue("The width for this label is waaaaaaaay too long for this group's width!");
+}
+
+with (GMUI_Add("LabelWrap", "label",  1, 22, 19, 4, global.GMUIAnchorTopLeft)) {
+    GMUI_ControlAddToGroup(3);
+    GMUI_ControlSetInitValue("This label text will wrap to the width of the control.");
+}
+
 
 // Right Group 4: Toggles
 GMUI_CreateGroup(4,      20,2,    global.GMUIAnchorTopRight);
 GMUI_GroupHide(4,GMUI_GetCurrentLayer(),true);
 GMUI_GroupSetFadeOnHide(4, _fadespeed, 0);
-//SET SIZE TO GRID - X
+GMUI_GroupSetMarginX(4, 1);
 
 with (GMUI_Add("Toggle1", "toggle",              3,6,   3,2,    global.GMUIAnchorTopLeft)) {
     GMUI_ControlSetToggleSettings(1, c_lime, c_gray, global.GMUISlideFullRoundRect, $808080, $505050, room_speed/4, global.GMUIDirectionTypeHorizontal, 0);
@@ -10824,13 +11328,13 @@ with (GMUI_Add("Toggle4", "toggle",              3,15,   3,2,    global.GMUIAnch
 }
 
 // Test checkbox and toggle
-with (GMUI_Add("CheckBox", "checkbox",          3,18,   1,1,    global.GMUIAnchorBottomLeft)) {
-    GMUI_ControlAddToGroup(4);
+with (GMUI_Add("CheckBox", "checkbox",          3,20,   1,1,    global.GMUIAnchorTopLeft)) {
+    
     GMUI_ControlSetCheckboxSettings(1, c_lime, c_gray, global.GMUISlideRoundRect, $808080, $505050, room_speed/6);
     GMUI_ControlSetHoverAction(_Hover_Checkbox);
     GMUI_ControlSetHoverOffAction(_HoverOff_Checkbox);
     GMUI_ControlSetSprite(s10, 0, 0, 0);
-    
+    GMUI_ControlAddToGroup(4);
     // Add a space at the end of the string to make sure it wraps. I know... but its Game Maker ;)
     with (GMUI_ControlAddTooltip("Checkbox!",global.GMUIAnchorBottom,6,2,12,4,-1,-1)) {
         GMUI_ControlSetFadeOnHide(id, room_speed/6);
@@ -10844,50 +11348,131 @@ with (GMUI_Add("CheckBox", "checkbox",          3,18,   1,1,    global.GMUIAncho
 GMUI_CreateGroup(5,      20,2,    global.GMUIAnchorTopRight);
 GMUI_GroupHide(5,GMUI_GetCurrentLayer(),true);
 GMUI_GroupSetFadeOnHide(5, _fadespeed, 0);
-//SET SIZE TO GRID - X
+GMUI_GroupSetMarginX(5, 1);
 
-// SELECT LIST TEST
+
 with (GMUI_Add("TestSelectList", "selectlist",            2,2,    10,5,   global.GMUIAnchorTopLeft)) {
     GMUI_ItemListSettings(26, $E3E3E3, -1, -1);
     GMUI_ItemListBackground($DEDEDE, $EAEAEA, 0.8, 1);
     GMUI_ItemListSelectAction(_ListAction);
-    GMUI_AddItem(2,10,"2-One","",-1);
-    GMUI_AddItem(4,20,"4-Two","",-1);
-    GMUI_AddItem(6,30,"6-Three","",-1);
-    GMUI_AddItem(8,40,"8-Four","",-1);
-    GMUI_AddItem(10,50,"10-Five","",-1);
-    GMUI_AddItem(12,60,"12-Six","",-1);
-    GMUI_AddItem(14,70,"14-Seven","",-1);
-    GMUI_AddItem(16,70,"16-Eight","",-1);
-    GMUI_AddItem(18,70,"18-Nine","",-1);
-    GMUI_AddItem(20,70,"20-Ten","",-1);
-    GMUI_AddItem(22,70,"22-Eleven","",-1);
-    GMUI_AddItem(24,70,"24-Twelve","",-1);
-    GMUI_AddItem(26,80,"26-Thirteen","",-1);
+    GMUI_AddItem(2,10,"2-Two","",-1);
+    GMUI_AddItem(4,20,"4-Four","",-1);
+    GMUI_AddItem(6,30,"6-Six","",-1);
+    GMUI_AddItem(8,40,"8-Eight","",-1);
+    GMUI_AddItem(10,50,"10-Ten","",-1);
+    GMUI_AddItem(12,60,"12-Twelve","",-1);
+    GMUI_AddItem(14,70,"14-Fourteen","",-1);
+    GMUI_AddItem(16,70,"16-Sixteen","",-1);
+    GMUI_AddItem(18,70,"18-Eighteen","",-1);
+    GMUI_AddItem(20,70,"20-Twenty","",-1);
+    GMUI_AddItem(22,70,"22-Twentytwo","",-1);
+    GMUI_AddItem(24,70,"24-Twentyfour","",-1);
+    GMUI_AddItem(26,80,"26-Twentysix","",-1);
     
     GMUI_ControlAddToGroup(5);
 }
+
+with (GMUI_Add("TestDropDown", "dropdown",               2,10,    10,2,   global.GMUIAnchorTopLeft)) {
+    //GMUI_ControlSetScrollbarStyle(Background Color, Alpha, Hover Color, Hover Alpha, Scrollbar Color, Alpha, Hover Color, Hover Alpha);
+    //GMUI_ControlSetFontStyle(font, font color, font align);
+    //GMUI_ControlSetStyle(Background Color, Border color, Hover color, hover border/rect, border alpha, Select color, Select alpha, show cursor);
+
+    GMUI_ItemListSettings(32, $E3E3E3, -1, -1); // set default list height??
+    GMUI_ItemListBackground($DEDEDE, $EAEAEA, 0.8, 1);
+    GMUI_AddItem(1,10,"1-One","",-1);
+    GMUI_AddItem(2,20,"2-Two","",-1);
+    GMUI_AddItem(3,30,"3-Three","",-1);
+    GMUI_AddItem(4,40,"4-Four","",-1);
+    GMUI_AddItem(5,50,"5-Five","",-1);
+    //GMUI_ItemListFont(Font, Font Color, Font Color Hover, Font Alpha, Font Alpha Hover)   
+
+    GMUI_ControlAddToGroup(5);
+}
+
+with (GMUI_Add("TestDropdown2", "dropdown",             2,20,   10,2,   global.GMUIAnchorTopLeft)) {
+    GMUI_AddItem(2,10,"2-One","",-1);
+    GMUI_ControlSetInitValue(2);
+    
+    GMUI_ControlAddToGroup(5);
+}
+
+//with (GMUI_Add("BtnTestDropdownMove", "button",             2,28,   10,2,   global.GMUIAnchorTopLeft)) {
+    //GMUI_ControlSetButtonAction1(_Disable_Button,1);
+    //GMUI_ControlSetButton("Delay Move 5s",-1,-1,-1);
+    //GMUI_ControlAddToGroup(5);
+//}
+
 
 
 // Right Group 6: Disabling
 GMUI_CreateGroup(6,      20,2,    global.GMUIAnchorTopRight);
 GMUI_GroupSetFadeOnHide(6, _fadespeed, 0);
-//SET SIZE TO GRID - X
+GMUI_GroupSetMarginX(6, 1);
 GMUI_GroupHide(6,GMUI_GetCurrentLayer(),true);
+
+with (GMUI_Add("BtnDisable1", "button",         3,6,   6,3,    global.GMUIAnchorTopLeft)) {
+    GMUI_ControlAddToGroup(6);
+    GMUI_ControlSetButtonAction1(_Disable_Button,1);
+    GMUI_ControlSetButton("Disable 1",-1,-1,-1);
+}
+
+with (GMUI_Add("BtnDisable2", "button",         11,6,   6,3,    global.GMUIAnchorTopLeft)) {
+    GMUI_ControlAddToGroup(6);
+    GMUI_ControlSetButtonAction1(_Disable_Button,2);
+    GMUI_ControlSetButton("Disable 2",-1,-1,-1);
+}
 
 
 // Right Group 7: Layering
 GMUI_CreateGroup(7,      20,2,    global.GMUIAnchorTopRight);
 GMUI_GroupSetFadeOnHide(7, _fadespeed, 0);
-//SET SIZE TO GRID - X
+GMUI_GroupSetMarginX(7, 1);
 GMUI_GroupHide(7,GMUI_GetCurrentLayer(),true);
 
 
 // Right Group 8: Movement
 GMUI_CreateGroup(8,      20,2,    global.GMUIAnchorTopRight);
 GMUI_GroupSetFadeOnHide(8, _fadespeed, 0);
-//SET SIZE TO GRID - X
+GMUI_GroupSetMarginX(8, 4);
 GMUI_GroupHide(8,GMUI_GetCurrentLayer(),true);
+
+with (GMUI_Add("MovementBox", "label", 2,2 , 2,2, global.GMUIAnchorTopLeft)) {
+    GMUI_ControlSetStyle(c_lime, c_gray, c_green, -1, -1, -1, -1, -1, -1, -1);
+    GMUI_ControlAddToGroup(8);
+}
+with (GMUI_Add("MovementBox2", "label", 2,2 , 2,2, global.GMUIAnchorTopLeft)) {//testing | something is wrong with the view...
+    GMUI_ControlSetStyle(c_maroon, c_gray, c_red, -1, -1, -1, -1, -1, -1, -1);// fine for groups, but not for controls!
+}
+
+with (GMUI_Add("BtnMovement1", "button",         2,6,   6,2,    global.GMUIAnchorTopLeft)) {
+    GMUI_ControlAddToGroup(8);
+    GMUI_ControlSetButtonAction1(_Movement_Button,1);
+    GMUI_ControlSetButton("Slide",-1,-1,-1);
+}
+
+with (GMUI_Add("BtnMovement2", "button",         2,9,   6,2,    global.GMUIAnchorTopLeft)) {
+    GMUI_ControlAddToGroup(8);
+    GMUI_ControlSetButtonAction1(_Movement_Button,2);
+    GMUI_ControlSetButton("Gradual",-1,-1,-1);
+}
+
+with (GMUI_Add("BtnMovement3", "button",         2,12,   6,2,    global.GMUIAnchorTopLeft)) {
+    GMUI_ControlAddToGroup(8);
+    GMUI_ControlSetButtonAction1(_Movement_Button,3);
+    GMUI_ControlSetButton("Ease Back",-1,-1,-1);
+}
+
+with (GMUI_Add("BtnMovement4", "button",         2,15,   6,2,    global.GMUIAnchorTopLeft)) {
+    GMUI_ControlAddToGroup(8);
+    GMUI_ControlSetButtonAction1(_Movement_Button,4);
+    GMUI_ControlSetButton("Elastic",-1,-1,-1);
+}
+
+with (GMUI_Add("BtnMovement5", "button",         2,18,   6,2,    global.GMUIAnchorTopLeft)) {
+    GMUI_ControlAddToGroup(8);
+    GMUI_ControlSetButtonAction1(_Movement_Button,5);
+    GMUI_ControlSetButton("Bounce",-1,-1,-1);
+}
 
 
 // Right Group 9: Anchoring
@@ -11053,6 +11638,7 @@ GMUI_MenuSetStyle("Test Menu", c_black, .3, c_white, 0.75, true);
 GMUI_MenuSetFadeOnHide("Test Menu", room_speed/4, 0);
 GMUI_MenuSetHidePosition("Test Menu", -9, 6, easeExpOut, room_speed/2);
 //GMUI_MenuSetActionIn("Test Menu",...)
+GMUI_MenuSetOverflow("Test Menu", global.GMUIOverflowScroll);
 
 with (GMUI_Add("CloseButton", "textbutton",   4,1,   4,1,    global.GMUIAnchorTopRight)) {
     GMUI_ControlSetButtonAction(_PopupClose_Button);
@@ -11070,6 +11656,12 @@ with (GMUI_Add("Toggle5", "toggle",              2,4,   3,2,    global.GMUIAncho
     GMUI_ControlSetToggleSettings(1, c_lime, c_gray, global.GMUISlideFullRoundRect, $808080, $505050, room_speed/4, global.GMUIDirectionTypeHorizontal, 0);
     GMUI_ControlAddToMenu("Test Menu");
 }
+
+with (GMUI_Add("LabelDown", "label", 2, 28, 10,3, global.GMUIAnchorTopRight)) {
+    GMUI_ControlAddToMenu("Test Menu");
+    GMUI_ControlSetText("This label is too low and needs to be scrolled down to");
+}
+
 
 
 // Test Menu 2
@@ -11143,6 +11735,9 @@ GMUI_ControlSetAttributes(0,0,0,999);
 
 // Default group style can be set when called
 ControlHasGroupStyle = false;
+
+
+GMUI_UseSurfaces(true);
 
 
 
