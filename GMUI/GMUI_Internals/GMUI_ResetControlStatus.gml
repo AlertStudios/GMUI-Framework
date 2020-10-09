@@ -48,8 +48,9 @@ else if (string_lower(a0) == "hovering" || a0 == "0") {
                     (ffo).HoveringDirection = 0;
                     
                     if ((ffo).ControlHasScrollbar) {
-                        if (!(ffo).Scrollbar_dragging)
+                        if (!(ffo).Scrollbar_dragging) {
                             (ffo).Scrollbar_hover = false;
+                        }
                     }
                 }
             }

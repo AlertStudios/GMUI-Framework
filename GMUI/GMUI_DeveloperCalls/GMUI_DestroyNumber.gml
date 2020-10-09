@@ -52,7 +52,7 @@ with (argument0) {
     
     ds_map_destroy(GMUI_warnings_map);
     
-    ds_map_destroy(GMUI_groupScrollbars);
+    ds_list_destroy(GMUI_groupScrollbars);
     
     ds_map_destroy(GMUI_map);
     

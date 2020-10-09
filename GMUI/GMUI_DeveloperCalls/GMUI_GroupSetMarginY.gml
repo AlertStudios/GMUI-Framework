@@ -1,4 +1,3 @@
-#define GMUI_GroupSetMarginY
 ///GMUI_GroupSetMarginY(Group, Cells height for margin)
 ///Set the height of the group by margin cells (to edge of grid)
 

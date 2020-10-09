@@ -3,7 +3,7 @@
 
 if (instance_exists(argument0)) {
     with (argument0) {
-        if (ControlItemList) {
+        if (ControlItemList || ControlType == "dropdown") {
             // Check if ID exists first, if not, add a default item
             var _m, _i, _id;
             _id = argument1;

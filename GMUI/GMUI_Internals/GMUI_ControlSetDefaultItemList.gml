@@ -24,6 +24,7 @@ with (argument0)
     ItemListFadeTime = 0;
     ControlHasScrollbar = true;
     Scrollbar_hover = false;
+    ControlDropdownParent = -1;
 }
 
 return true;

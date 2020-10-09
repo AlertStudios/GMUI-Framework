@@ -1,4 +1,3 @@
-#define GMUI_DropdownSelectItem
 ///GMUI_DropdownSelectItem(item selected)
 ///Performs the selection of the dropdown when the user selects an option
 

@@ -1,4 +1,4 @@
-///surface_target(surface, width if created, height if created)
+///surface_target(surface, width if created/modified, height if created/modified)
 ///Sets the target to the surface or creates it if it doesn't exist
 
 var _Surface;
@@ -11,6 +11,7 @@ else {
     _Surface = surface_create(argument1,argument2);
     surface_set_target(_Surface);
 }
+
 
 return _Surface;
 

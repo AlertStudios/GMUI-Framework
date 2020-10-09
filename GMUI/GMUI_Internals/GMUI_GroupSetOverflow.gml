@@ -1,7 +1,7 @@
-///GMUI_GroupSetOverflow(Group, Overflow Mode [GMUIOverflow.], scrollbar width [or -1] if used)
+///GMUI_GroupSetOverflow(Group, Overflow Mode [GMUIOverflow.], scrollbar width [or -1 for default])
 ///Set the method for overflowing groups, and scrollbar with if necessary
 
-var _GMUI, _Layer, _Group, _Direction, _MC;
+var _GMUI, _Layer, _Group, _Direction, _DC;
 _GMUI = GMUII();
 _Layer = UIAddToLayer;
 _Group = argument0;
@@ -15,13 +15,11 @@ if (argument2 > 0) {
         
         if (_GMUI.GMUI_groupMasterControl[_Layer,_Group] != -1) {
             if ((_GMUI.GMUI_groupMasterControl[_Layer,_Group]).GroupHasScrollbar == false) {
-            
-                _MC = _GMUI.GMUI_groupMasterControl[_Layer,_Group];
-                GMUI_GroupSetScrollbar(_GMUI, _MC);
-                _MC.GroupHasScrollbar = true;
+                _GMUI.GMUI_groupMasterControl[_Layer,_Group].GroupHasScrollbar = true;
                 
-                // Calculate the scrollbar position: X + W - scrollbar W - gridX - offset
-                GMUI_GroupSetScrollbarX(_GMUI,_LayerNumber,_GroupNumber);
+                if (_GMUI.UIInterfaceSet) {
+                    GMUI_GroupSetScrollbar(_GMUI,_LayerNumber,_GroupNumber,-1);
+                }
             }
         }
     }

@@ -13,8 +13,9 @@ keyboard_string = (argument0).valueString;
 
 // Double selection will overwrite the current value
 if ((GMUII()).PreviousSelectedControl == argument0) {
-    if ((GMUII()).GMUIAllowDoubleSelect)
-        (argument0).DoubleSelected = 1;   
+    if ((GMUII()).GMUIAllowDoubleSelect) {
+        (argument0).DoubleSelected = 1;
+    }   
 }
 else if (GMUI_IsScript((argument0).SelectingActionScript)) {
     // If there is a script to assigned to run it'll only be done once

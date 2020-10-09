@@ -6,7 +6,7 @@
 var isOk,G;
 isOk = true;
 for (G=1;G<=global.GMUIii;G+=1) {
-    if (id = global.GMUIiid[G]) {
+    if (id = global.GMUIi_id[G]) {
         isOk = false;
         break;
     }
@@ -20,10 +20,10 @@ else {
 }
 
 // Define the instance & number running GMUI
-global.GMUIiid[global.GMUIii] = id;
+global.GMUIi_id[global.GMUIii] = id;
 GMUInumber = global.GMUIii;
 // Current grid is now this one. The 0 index is the currently active grid
-global.GMUIiid[0] = id;
+global.GMUIi_id[0] = id;
 
 
 // Initial time to not execute any actions from the grid
@@ -124,6 +124,9 @@ HoveringControl = -1;
 SelectedControl = -1;
 PreviousSelectedControl = -1;
 
+// Request to update the layer region
+NeedsRegionsUpdate = false;
+
 // An offset change will trigger repositioning controls
 previousXOffset = 0;
 previousYOffset = 0;
@@ -144,7 +147,7 @@ GMUI_popup_map = ds_map_create();
 // Warnings
 GMUI_warnings_map = ds_map_create();
 
-// Group scrollbars
+// Add list of scrollbar controls
 GMUI_groupScrollbars = ds_list_create();
 
 
@@ -167,6 +170,7 @@ GMUI_groupRelativeCellX[0,0] = 0;
 GMUI_groupRelativeCellY[0,0] = 0;
 GMUI_groupAnchor[0,0] = global.GMUIAnchorDefault;
 GMUI_groupClickOff[0,0] = false;
+GMUI_controlClickOff = -1;
 GMUI_groupTransitioning[0,0] = false;
 //GMUI_groupTransitioningControl[0,0] = -1;
 GMUI_groupAction[0,0] = -1;

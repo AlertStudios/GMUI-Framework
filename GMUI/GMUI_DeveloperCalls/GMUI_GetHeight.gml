@@ -1,4 +1,3 @@
-#define GMUI_GetHeight
 ///GMUI_GetHeight()
 ///Get the height of the interface
 

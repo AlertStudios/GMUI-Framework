@@ -1,4 +1,3 @@
-#define _Movement_Button
 
 
 var _move;

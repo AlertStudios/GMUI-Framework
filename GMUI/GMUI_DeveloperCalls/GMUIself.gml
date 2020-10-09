@@ -7,7 +7,7 @@ var _gmuii,_G;
 _gmuii = -1;
 
 for (_G=1;_G<=global.GMUIii;_G+=1) {
-    if (id = global.GMUIiid[_G]) {
+    if (id = global.GMUIi_id[_G]) {
         _gmuii = _G;
         break;
     }
@@ -15,8 +15,8 @@ for (_G=1;_G<=global.GMUIii;_G+=1) {
 
 if (_gmuii > -1) {
     // Change current GMUI to this one:
-    global.GMUIiid[0] = id;
-    return global.GMUIiid[0];
+    global.GMUIi_id[0] = id;
+    return global.GMUIi_id[0];
 }
 
 return -1;

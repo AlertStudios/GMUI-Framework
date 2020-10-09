@@ -21,8 +21,7 @@ with (argument0) {
                 if (GMUI_groupDrawingControl[l,g] > -1) {
                     with (GMUI_groupDrawingControl[l,g]) {
                         if (GMUIP.GMUI_groupOverflow[l,g] == global.GMUIOverflowScroll) {
-                            GroupHasScrollbar = true;
-                            GMUI_ControlSetScrollbarDefaults(false); // false: set for group
+                            GMUI_GroupSetScrollbar(argument0,l,g,-1);
                         }
                     }
                 }

@@ -1,4 +1,3 @@
-#define _Demo_Form_with_layers
 ///_Demo_Form() This interface is for the demo form
 
 // DEMO INTERFACE:

@@ -6,7 +6,7 @@ if (!GMUI_IsControl() && id != GMUII())
     return false;
 }
 
-if (!ControlItemList) {
+if (!ControlItemList && ControlType != "dropdown") {
     GMUI_ThrowErrorDetailed("'" + valueName + "' is not an item list control", GMUI_ItemListBackground);
     return false;
 }
@@ -23,4 +23,6 @@ if (argument2 > -1)
     
 if (argument3 > -1)
     ItemListBackgroundAlphaHover = argument3;
+
+
 

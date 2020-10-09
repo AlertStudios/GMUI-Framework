@@ -1,4 +1,3 @@
-#define GMUI_ControlSetDefaultDropdown
 ///GMUI_ControlSetDefaultDropdown(id)
 /// Set the default attributes of the control from the controller
 

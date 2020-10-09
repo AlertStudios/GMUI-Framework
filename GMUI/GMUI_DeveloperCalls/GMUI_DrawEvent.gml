@@ -64,7 +64,7 @@ if (GMUI_GridEnabled())
                     }
                     else if (ctrlObject.ControlHasScrollbar) {
                         if (ctrlObject.Group > 0)
-                            _GX = GMUI_groupActualX[ctrlObject.Layer,ctrlObject.Group];
+                            _GX = GMUI_groupActualX[ctrlObject.Layer,ctrlObject.Group] * UIEnableSurfaces;
                         if (MX >= ctrlObject.Scrollbar_x+GMUI_grid_x[ctrlObject.Layer] + GMUI_GridViewOffsetX(id) + _GX) {
                             ctrlObject.Scrollbar_hover = true;
                         }
@@ -126,11 +126,24 @@ if (GMUI_GridEnabled())
         
         // Check if we are looking at a menu, and if this is a click outside of it first
         clickOffEvent = false;
-        if (UILayer >= GMUI_menu_layer && UILayer < GMUI_menu_layer + GMUI_menuLastId) {
-            if (GMUI_groupClickOff[UILayer,GMUI_menuCurrent]) {
-                if (!GMUI_MouseInGroupRegion(GMUI_menuCurrent,UILayer)) {
-                    GMUI_ShowMenuId(GMUI_menuCurrent,false,true);
+        if (UILayer < GMUI_menu_layer + GMUI_menuLastId) {
+            if (UILayer >= GMUI_menu_layer) {
+                if (GMUI_groupClickOff[UILayer,GMUI_menuCurrent]) {
+                    if (!GMUI_MouseInGroupRegion(GMUI_menuCurrent,UILayer)) {
+                        GMUI_ShowMenuId(GMUI_menuCurrent,false,true);
+                        clickOffEvent = true;
+                    }
+                }
+            }
+            else if (GMUI_controlClickOff > -1) {
+                // Check for click off control selection, else just cancel
+                if (GMUI_GetControlAtPosition(id,MX,MY) != GMUI_controlClickOff) {
                     clickOffEvent = true;
+                    if (GMUI_controlClickOff.ControlType == "selectlist")
+                        if (GMUI_controlClickOff.ControlDropdownParent != -1)
+                            GMUI_DropdownSelect(GMUI_controlClickOff.ControlDropdownParent,false);
+                            
+                    GMUI_controlClickOff = -1;
                 }
             }
         }
@@ -189,14 +202,15 @@ if (GMUI_GridEnabled())
                             // For lists that have a scrollbar, check which region we are in
                             if (ctrlObject.ControlHasScrollbar) {
                                 if (ctrlObject.Group > 0)
-                                    _GX = GMUI_groupActualX[ctrlObject.Layer,ctrlObject.Group];
+                                    _GX = GMUI_groupActualX[ctrlObject.Layer,ctrlObject.Group] * (UIEnableSurfaces);
+                                    
                                 if (MX >= ctrlObject.Scrollbar_x + GMUI_grid_x[ctrlObject.Layer] + GMUI_GridViewOffsetX(id) + _GX) {                                 
                                     // Drag the scrollbar
                                     var _MPos,_SPos;
                                     _MPos = MY - ctrlObject.ActualY;
-                                    _SPos = ctrlObject.Scrollbar_pos_y - ctrlObject.Scrollbar_y + GMUI_grid_y[ctrlObject.Layer] + GMUI_GridViewOffsetY(id);
+                                    _SPos = ctrlObject.Scrollbar_pos_y - ctrlObject.Scrollbar_y + GMUI_grid_y[ctrlObject.Layer] + GMUI_GridViewOffsetY(id)*UIEnableSurfaces;
                                     ctrlObject.Scrollbar_dragging = true;
-                                    
+                                    draw_text(0,80,string(_MPos) +"-"+string(_SPos));
                                     if (_MPos >= _SPos && _MPos < _SPos + ctrlObject.Scrollbar_height)
                                         ctrlObject.Scrollbar_drag_y = _MPos - _SPos;
                                     else
@@ -209,18 +223,29 @@ if (GMUI_GridEnabled())
                                     
                                     if (ctrlObject.ItemListHoverIndex > 0) {
                                         ctrlObject.ItemListSelectedId = ctrlObject.ItemListId[ctrlObject.ItemListHoverIndex];
-                                        if (script_exists(ctrlObject.ItemListActionScript))
-                                            script_execute(ctrlObject.ItemListActionScript,ctrlObject.ItemListSelectedId);
+                                        GMUI_controlClickOff = -1;
+                                        
+                                        if (script_exists(ctrlObject.ItemListActionScript)) {
+                                            with (ctrlObject) {
+                                                script_execute(ItemListActionScript,ItemListSelectedId);
+                                            }
+                                        }
                                     }
                                 }
                             }
                             else {
                                 // Select List Region click
                                 GMUI_ControlListOffset(ctrlObject, UIEnableSurfaces, MX, MY);
+                                
                                 if (ctrlObject.ItemListHoverIndex > 0) {
                                     ctrlObject.ItemListSelectedId = ctrlObject.ItemListId[ctrlObject.ItemListHoverIndex];
-                                    if (script_exists(ctrlObject.ItemListActionScript))
-                                        script_execute(ctrlObject.ItemListActionScript,ctrlObject.ItemListSelectedId);
+                                    GMUI_controlClickOff = -1;
+                                    
+                                    if (script_exists(ctrlObject.ItemListActionScript)) {
+                                        with (ctrlObject) {
+                                            script_execute(ItemListActionScript,ItemListSelectedId);
+                                        }
+                                    }
                                 }
                             }
                         }
@@ -230,6 +255,9 @@ if (GMUI_GridEnabled())
                         }
                         else if (ctrlObject.ControlType == "checkbox" || ctrlObject.ControlType == "toggle") {
                             GMUI_SetValue(ctrlObject.valueName,1-ctrlObject.value,"integer");
+                        }
+                        else if (ctrlObject.ControlType == "dropdown") {
+                            GMUI_DropdownSelect(ctrlObject, true);
                         }
                         else if (ctrlObject.ActionScript != -1) {
                             // Control buttons clicked
@@ -250,14 +278,14 @@ if (GMUI_GridEnabled())
                 GMUI_GridUpdateLayer(id,GMUI_GetCurrentLayer());
                 
                 // Check for scrollbar actions
-                var _MC, _MPos; _MC = GMUI_GroupMouseOnScrollbar(id, MX);
-                if (_MC > -1) {
-                    _MC.Scrollbar_dragging = true;
-                    _MPos = MY - GMUI_groupActualY[_MC.Layer,_MC.Group];
-                    if (_MPos > _MC.Scrollbar_y && _MPos < _MC.Scrollbar_y + _MC.Scrollbar_height)
-                        _MC.Scrollbar_drag_y = _MPos - _MC.Scrollbar_y;
+                var _SBC, _MPos; _SBC = GMUI_GroupMouseOnScrollbar(id, MX);
+                if (_SBC > -1) {
+                    _SBC.Scrollbar_dragging = true;
+                    _MPos = MY - GMUI_groupActualY[_SBC.Layer,_SBC.Group];
+                    if (_MPos > _SBC.Scrollbar_y && _MPos < _SBC.Scrollbar_y + _SBC.Scrollbar_height)
+                        _SBC.Scrollbar_drag_y = _MPos - _SBC.Scrollbar_y;
                     else
-                        _MC.Scrollbar_drag_y = _MC.Scrollbar_height/2;
+                        _SBC.Scrollbar_drag_y = _SBC.Scrollbar_height/2;
                 }
             }
         }
@@ -286,6 +314,12 @@ if (GMUI_GridEnabled())
             previousXOffset = view_xview[UIgridview];
             previousYOffset = view_yview[UIgridview];
         }
+    }
+    
+    // If a control has been repositioned, it may need a map layer update
+    if (UIInterfaceSet && NeedsRegionsUpdate) {
+        GMUI_GridSetRegionsLayer(UILayer);
+        NeedsRegionsUpdate = false;
     }
     
     

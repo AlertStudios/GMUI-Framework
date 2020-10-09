@@ -2,7 +2,7 @@
 ///Set the default variables for the scrollbar
 // This is called after the interface if in group and the overflow is set to scroll
 
-var _GMUI, _Layer, _Group, _CH,_GH,_OF;
+var _GMUI, _Layer, _Group, _CH,_GH,_OF,_SBC;
 _GMUI = GMUIP;
 _Layer = Layer;
 _Group = Group;
@@ -30,6 +30,7 @@ Scrollbar_maxtop = 0;
 Scrollbar_hover = false;
 Scrollbar_dragging = false;
 Scrollbar_drag_y = 0;
+// Default display values
 Scrollbar_padding = 0;
 Scrollbar_bgcolor = c_dkgray;
 Scrollbar_bgalpha = 0.8;
@@ -55,11 +56,6 @@ if (_GH > 0) {
             - _GMUI.GMUI_grid_x[_Layer] - GMUI_GridViewOffsetX(_GMUI);
         Scrollbar_y = ActualY - _GMUI.GMUI_grid_y[_Layer] - GMUI_GridViewOffsetY(_GMUI) + Scrollbar_padding*2;
         Scrollbar_pos_y = Scrollbar_y;
-    }
-    else {
-        GMUI_GroupSetScrollbarX(_GMUI,_Layer,_Group);
-        
-        GMUI_GroupSetScrollbar(_GMUI, id);
     }
 }
 

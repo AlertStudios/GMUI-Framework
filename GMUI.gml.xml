@@ -15,6 +15,7 @@
           <file>_Hover_Checkbox.gml</file>
           <file>_Hover_Int.gml</file>
           <file>_ListAction.gml</file>
+          <file>_Movement_Button.gml</file>
           <file>_Move_Button.gml</file>
           <file>_PopupClose_Button.gml</file>
           <file>_PopupMenu2_Button.gml</file>
@@ -108,13 +109,17 @@
           <file>GMUI_DrawDebug.gml</file>
           <file>GMUI_DrawEvent.gml</file>
           <file>GMUI_GetControl.gml</file>
+          <file>GMUI_GetHeight.gml</file>
           <file>GMUI_GetMenuLayer.gml</file>
           <file>GMUI_GetValue.gml</file>
           <file>GMUI_GetValueString.gml</file>
+          <file>GMUI_GetWidth.gml</file>
           <file>GMUI_GridSetNavigation.gml</file>
           <file>GMUI_GroupHide.gml</file>
           <file>GMUI_GroupHideOverflow.gml</file>
           <file>GMUI_GroupSetFadeOnHide.gml</file>
+          <file>GMUI_GroupSetMarginX.gml</file>
+          <file>GMUI_GroupSetMarginY.gml</file>
           <file>GMUI_GroupSetPosition.gml</file>
           <file>GMUI_GroupSetPositionActual.gml</file>
           <file>GMUI_GroupSetSize.gml</file>
@@ -129,7 +134,9 @@
           <file>GMUI_ItemListSettings.gml</file>
           <file>GMUI_LayerHide.gml</file>
           <file>GMUI_MenuControlDepth.gml</file>
+          <file>GMUI_MenuHideOverflow.gml</file>
           <file>GMUI_MenuSetHidePosition.gml</file>
+          <file>GMUI_MenuSetOverflow.gml</file>
           <file>GMUI_MenuSetPosition.gml</file>
           <file>GMUI_PopupGetResponse.gml</file>
           <file>GMUI_PopupSetAction.gml</file>
@@ -223,6 +230,7 @@
           <file>GMUI_ControlScrollbarSelect.gml</file>
           <file>GMUI_ControlSetDefaultAttributes.gml</file>
           <file>GMUI_ControlSetDefaultButton.gml</file>
+          <file>GMUI_ControlSetDefaultDropdown.gml</file>
           <file>GMUI_ControlSetDefaultFontStyle.gml</file>
           <file>GMUI_ControlSetDefaultItemList.gml</file>
           <file>GMUI_ControlSetDefaultPicker.gml</file>
@@ -243,6 +251,8 @@
           <file>GMUI_CreateSetDefaultArea.gml</file>
           <file>GMUI_CreateWarning.gml</file>
           <file>GMUI_DrawSpriteBox.gml</file>
+          <file>GMUI_DropdownSelect.gml</file>
+          <file>GMUI_DropdownSelectItem.gml</file>
           <file>GMUI_GetAnchoredCellX.gml</file>
           <file>GMUI_GetAnchoredCellY.gml</file>
           <file>GMUI_GetControlAtPosition.gml</file>
@@ -305,6 +315,7 @@
           <file>GMUI_ShowPopup.gml</file>
           <file>GMUI_ShowPopupId.gml</file>
           <file>GMUI_StudioCheckDefined.gml</file>
+          <file>GMUI_SurfaceResize.gml</file>
           <file>GMUI_ThrowError.gml</file>
           <file>GMUI_ThrowErrorDetailed.gml</file>
           <file>GMUI_ValidCellBounds.gml</file>

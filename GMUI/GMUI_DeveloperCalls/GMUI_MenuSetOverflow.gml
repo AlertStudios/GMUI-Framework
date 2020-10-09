@@ -1,4 +1,3 @@
-#define GMUI_MenuSetOverflow
 ///GMUI_MenuSetOverflow("Menu Name", overflow)
 ///Set the method for overflowing menus, and scrollbar with if necessary
 

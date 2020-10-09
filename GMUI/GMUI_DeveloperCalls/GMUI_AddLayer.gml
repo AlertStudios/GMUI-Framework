@@ -45,8 +45,9 @@ if ((GMUII()).UIEnableSurfaces) {
 }
 
 
-if ((GMUII()).UILayerTop < _Layer)
+if ((GMUII()).UILayerTop < _Layer) {
     (GMUII()).UILayerTop = _Layer;
+}
 
 return true;
 

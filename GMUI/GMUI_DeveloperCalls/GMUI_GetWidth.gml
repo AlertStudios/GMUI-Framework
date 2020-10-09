@@ -1,4 +1,3 @@
-#define GMUI_GetWidth
 ///GMUI_GetWidth()
 ///Get the width of the interface
 

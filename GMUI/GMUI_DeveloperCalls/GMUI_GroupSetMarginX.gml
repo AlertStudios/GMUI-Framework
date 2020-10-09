@@ -1,4 +1,3 @@
-#define GMUI_GroupSetMarginX
 ///GMUI_GroupSetMarginX(Group, Cells wide for margin)
 ///Set the width of the group by margin cells (to edge of grid)
 

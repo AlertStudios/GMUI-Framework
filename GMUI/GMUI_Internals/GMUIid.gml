@@ -7,10 +7,10 @@ if (!is_real(argument0))
     return -1;
 
 if (argument0 > 0 && argument0 <= global.GMUIii) {
-    if (instance_exists(global.GMUIiid[argument0])) {
+    if (instance_exists(global.GMUIi_id[argument0])) {
         // Change current GMUI to this one:
-        global.GMUIiid[0] = global.GMUIiid[argument0];
-        return global.GMUIiid[argument0];
+        global.GMUIi_id[0] = global.GMUIi_id[argument0];
+        return global.GMUIi_id[argument0];
     }
 }
 

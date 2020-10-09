@@ -1,4 +1,3 @@
-#define GMUI_SurfaceResize
 ///GMUI_SurfaceResize(GMUI instance, Surface target, Width, Height)
 ///Resizes the surface only after the UI is set. Return is only for reference if needed.
 var _Surface;

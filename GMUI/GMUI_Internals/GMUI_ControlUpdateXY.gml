@@ -1,7 +1,7 @@
 ///GMUI_ControlUpdateXY(control)
 ///Updates the actual location in the room after adjustments
 
-var _ctrl, _GMUIP, _xoffset, _yoffset, _lw, _lh;
+var _ctrl, _GMUIP, _xoffset, _yoffset, _lw, _lh, _sbOffset;
 _ctrl = argument0;
 _GMUIP = (_ctrl).GMUIP;
 
@@ -47,4 +47,15 @@ if ((_ctrl).TooltipId != -1) {
         global.GMUIAnchorTopLeft);
     ((_ctrl).TooltipId).NeedsPositionUpdate = true;
 }
+
+// If the control has a scrollbar, update the scrollbar location (copied from GMUI_ControlSetScrollbarDefaults)
+if ((_ctrl).ControlHasScrollbar && !_GMUIP.UIEnableSurfaces) {
+    (_ctrl).Scrollbar_x = (_ctrl).ActualX + (_ctrl).CellWide * _GMUIP.cellsize
+        - (_ctrl).Scrollbar_width
+        - _GMUIP.GMUI_grid_x[(_ctrl).Layer] - GMUI_GridViewOffsetX(_GMUIP);
+    _sbOffset = (_ctrl).Scrollbar_pos_y - (_ctrl).Scrollbar_y;
+    (_ctrl).Scrollbar_y = (_ctrl).ActualY - _GMUIP.GMUI_grid_y[(_ctrl).Layer] - GMUI_GridViewOffsetY(_GMUIP) + (_ctrl).Scrollbar_padding*2;
+    (_ctrl).Scrollbar_pos_y = (_ctrl).Scrollbar_y + _sbOffset;
+}
+//draw_text(0,16,"updating positioning :(");
 
