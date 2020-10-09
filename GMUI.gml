@@ -7211,8 +7211,8 @@ with (argument0) {
             if (GMUIP.UIEnableSurfaces)
                 GMUI_SurfaceResize(GMUIP,
                     GMUIP.GMUI_groupSurface[Layer,Group],
-                    GMUIP.GMUI_groupCellsW*GMUIP.cellsize+1,
-                    GMUIP.GMUI_groupCellsH*GMUIP.cellsize_h+1);
+                    GMUIP.GMUI_groupCellsW[Layer,Group]*GMUIP.cellsize+1,
+                    GMUIP.GMUI_groupCellsH[Layer,Group]*GMUIP.cellsize_h+1);
         }
         
         if (CellY + CellHigh > GMUIP.GMUI_groupCellY[Layer,Group] + GMUIP.GMUI_groupCellsH[Layer,Group]) {
@@ -7222,8 +7222,8 @@ with (argument0) {
             if (GMUIP.UIEnableSurfaces)
                 GMUI_SurfaceResize(GMUIP,
                     GMUIP.GMUI_groupSurface[Layer,Group],
-                    GMUIP.GMUI_groupCellsW*GMUIP.cellsize+1,
-                    GMUIP.GMUI_groupCellsH*GMUIP.cellsize_h+1);
+                    GMUIP.GMUI_groupCellsW[Layer,Group]*GMUIP.cellsize+1,
+                    GMUIP.GMUI_groupCellsH[Layer,Group]*GMUIP.cellsize_h+1);
         }
     }
     else if (CellY + CellHigh > GMUIP.GMUI_groupCellY[Layer,Group] + GMUIP.GMUI_groupCellsH[Layer,Group]) {
@@ -7315,6 +7315,35 @@ with (argument0)
 
 return true;
 
+#define GMUI_ControlSetDefaultDropdown
+///GMUI_ControlSetDefaultDropdown(id)
+/// Set the default attributes of the control from the controller
+
+if (!instance_exists(argument0))
+{
+    GMUI_ThrowError("Invalid control for GMUI_ControlSetDefaultDropdown");
+    return false;
+}
+
+with (argument0)
+{
+    // Default values before applying parent's values
+    ControlDropdownParent = -1;
+    ControlDropdownCellHigh = 0;
+    ControlDropdownCellHighMin = 4;
+    
+    GMUI_ControlSetPicker(
+    (GMUII()).ControlPickerWidth,
+    (GMUII()).ControlPickerHeight,
+    (GMUII()).ControlPickerDirection,
+    (GMUII()).ControlPickerSpriteRightOrUp,
+    (GMUII()).ControlPickerSpriteLeftOrDown
+    );
+}
+
+
+return true;
+
 #define GMUI_ControlSetDefaultFontStyle
 ///GMUI_ControlSetFontStyle(id)
 /// Get the default style values from the grid controller
@@ -7380,35 +7409,6 @@ if (!instance_exists(argument0))
 
 with (argument0)
 {
-    GMUI_ControlSetPicker(
-    (GMUII()).ControlPickerWidth,
-    (GMUII()).ControlPickerHeight,
-    (GMUII()).ControlPickerDirection,
-    (GMUII()).ControlPickerSpriteRightOrUp,
-    (GMUII()).ControlPickerSpriteLeftOrDown
-    );
-}
-
-
-return true;
-
-#define GMUI_ControlSetDefaultDropdown
-///GMUI_ControlSetDefaultDropdown(id)
-/// Set the default attributes of the control from the controller
-
-if (!instance_exists(argument0))
-{
-    GMUI_ThrowError("Invalid control for GMUI_ControlSetDefaultDropdown");
-    return false;
-}
-
-with (argument0)
-{
-    // Default values before applying parent's values
-    ControlDropdownParent = -1;
-    ControlDropdownCellHigh = 0;
-    ControlDropdownCellHighMin = 4;
-    
     GMUI_ControlSetPicker(
     (GMUII()).ControlPickerWidth,
     (GMUII()).ControlPickerHeight,
