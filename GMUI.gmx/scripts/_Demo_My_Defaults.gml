@@ -25,6 +25,9 @@ GMUI_ControlSetAttributes(0,0,0,999);
 ControlHasGroupStyle = false;
 
 
+GMUI_UseSurfaces(true);
+
+
 
 // Specific control initializations //
 

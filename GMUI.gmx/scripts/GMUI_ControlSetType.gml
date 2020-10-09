@@ -71,19 +71,32 @@ switch (_type) {
         IID.ControlInput = false;
         IID.ControlSelectable = false;
         break;
-    
-    case "dropdown":
     case "selectlist":
-    
+    case "dropdown":
+        
         IID.ControlItemList = true;
         GMUI_ControlSetDefaultItemList(IID);
         with (IID) { GMUI_ControlSetScrollbarDefaults(true); }
+        
+        if (_type == "dropdown") {
+            GMUI_ControlSetDefaultDropdown(IID);
+        
+            IID.ControlHasScrollbar = false;
+            IID.ControlItemList = false;
+            IID.ControlInput = false;
+            IID.ControlSelectable = false;
+            
+        }
         break;
-    case "label":
+    case "scrollbarhandler":
     case "tooltip":
-        IID.ControlInput = false;
+    
         IID.ControlInteraction = false;
+    case "label": // (Label includes interaction)
+    
+        IID.ControlInput = false;
         IID.ControlStyleDefined = false;
+        IID.ControlSelectable = false;
         break;
     default:
         // no match; override to show invalid:
