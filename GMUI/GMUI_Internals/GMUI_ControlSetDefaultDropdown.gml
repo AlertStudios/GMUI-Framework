@@ -1,5 +1,6 @@
 ///GMUI_ControlSetDefaultDropdown(id)
 /// Set the default attributes of the control from the controller
+function GMUI_ControlSetDefaultDropdown(argument0) {
 
 if (!instance_exists(argument0))
 {
@@ -25,4 +26,5 @@ with (argument0)
 
 
 return true;
+}
 

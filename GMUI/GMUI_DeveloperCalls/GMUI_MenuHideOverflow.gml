@@ -1,5 +1,6 @@
 ///GMUI_MenuHideOverflow("Menu Name")
 ///Set the method for overflowing menus, and scrollbar with if necessary
+function GMUI_MenuHideOverflow(argument0) {
 
 var _GMUI, _Layer, _menuName, _menuNumber, _Direction, _MC;
 _GMUI = GMUII();
@@ -22,5 +23,5 @@ _GMUI.GMUI_groupOverflow[_Layer,_menuNumber] = global.GMUIOverflowNone;
 //GMUIOverflowResize = 1;
 //GMUIOverflowScroll = 2;
 
-
+}
 

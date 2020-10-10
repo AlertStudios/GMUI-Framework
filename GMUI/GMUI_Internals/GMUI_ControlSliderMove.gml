@@ -1,5 +1,6 @@
 ///GMUI_ControlSliderMove([bool] Move to mouse, else stop and set)
 ///Called by control. Move the position of the thumb based on mouse position or stop where the mouse is
+function GMUI_ControlSliderMove(argument0) {
 
 // Update adjustment
 if (argument0) {
@@ -75,5 +76,5 @@ if (!argument0) {
     if (real(value) != valueSetting)
         GMUI_SetValue(valueName,valueSetting,2);
 }
-
+}
 

@@ -1,5 +1,6 @@
 ///GMUI_GroupSetScrollbar(GMUI instance, Layer Number, Group Number, scrollbar control ID [or -1])
 ///Adds the control handling the scrollbar to the list if it doesnt exist
+function GMUI_GroupSetScrollbar(argument0,argument1,argument2,argument3) {
 
 var _GMUI, _LayerNumber, _GroupNumber, _SBC, _dc;
 _GMUI = argument0;
@@ -46,5 +47,6 @@ if (_dc > -1) {
     
     // Calculates the scrollbar position: X + W - scrollbar W - gridX - offset
     return GMUI_GroupSetScrollbarX(_GMUI,_LayerNumber,_GroupNumber);
+}
 }
 

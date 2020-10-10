@@ -8,6 +8,7 @@
 // https://github.com/AlertStudios/GMUI-Framework
 //
 //
+function GMUI_Init() {
 
 // Index of global GMUI's
 global.GMUIii = 0;
@@ -86,5 +87,5 @@ global.GMUIGameMaker8 = true;
 // If studio, the flag will change to false and define the enums
 GMUI_InitStudio();
 
-
+}
 

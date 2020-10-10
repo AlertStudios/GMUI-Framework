@@ -1,5 +1,6 @@
 // DEBUGGING SCRIPT! Call this in the draw event of the GMUI main object 
 // Run only if DebugData is on
+function GMUI_DrawDebug() {
 if (DebugData && !RemovingGMUI) {
 
     var gridW,gridH,w,h,xoffset,yoffset;
@@ -57,6 +58,6 @@ if (DebugData && !RemovingGMUI) {
         }
     }
     
-
+}
 }
 

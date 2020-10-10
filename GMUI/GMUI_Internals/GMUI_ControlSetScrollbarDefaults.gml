@@ -1,6 +1,7 @@
 ///GMUI_ControlSetScrollbarDefaults(set for control[true] or for group[false])
 ///Set the default variables for the scrollbar
 // This is called after the interface if in group and the overflow is set to scroll
+function GMUI_ControlSetScrollbarDefaults(argument0) {
 
 var _GMUI, _Layer, _Group, _CH,_GH,_OF,_SBC;
 _GMUI = GMUIP;
@@ -60,4 +61,5 @@ if (_GH > 0) {
 }
 
 return true;
+}
 

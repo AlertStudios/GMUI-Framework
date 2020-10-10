@@ -1,5 +1,6 @@
 ///GMUI_AddTooltipToControl(Control id, "message string", direction/side of control, width cells [or -1], height cells [or -1], max cells width, max cells height, adjustment x [or -1], adjustment y [or -1])
 ///Adds a tooltip to the specified control
+function GMUI_AddTooltipToControl(argument0,argument1,argument2,argument3,argument4,argument5,argument6,argument7,argument8) {
 
 var _SCRIPT, _message, _direction, _adjX, _adjY, _relX, _relY, _cellX, _cellY, _newCtrl, _isVertical,
     _width, _height, _newwidth, _newheight, _actwidth, _actheight, _maxwidth, _maxheight, gcellsize, gcellsize_h;
@@ -124,5 +125,5 @@ with (newCtrl) {
 (_ctrl).TooltipId = newCtrl;
 
 return newCtrl;
-
+}
 

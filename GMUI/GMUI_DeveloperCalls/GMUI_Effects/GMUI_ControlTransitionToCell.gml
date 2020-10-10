@@ -1,5 +1,5 @@
 ///GMUI_ControlTransitionToCell("ControlName",Cell X, Cell Y, Transition Script, Time)
-///
+function GMUI_ControlTransitionToCell(argument0,argument1,argument2,argument3,argument4) {
 
 // Get coordinates of CellX and CellY and pass to actual position
 var _ActualX, _ActualY, _Ctrl;
@@ -14,4 +14,5 @@ if (_Ctrl.Group > 0) {
 }
 
 GMUI_ControlTransitionToActual(argument0,_ActualX,_ActualY,argument3,argument4);
+}
 

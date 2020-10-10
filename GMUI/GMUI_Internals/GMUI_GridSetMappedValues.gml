@@ -1,5 +1,6 @@
 ///GMUI_GridSetMappedValues(GMUI instance, layer, group number)
 ///Iterate over the value map for the specific group to set values
+function GMUI_GridSetMappedValues(argument0,argument1,argument2) {
 
 var _SCRIPT, _Layer, _Map, _Key, _i, _prevLayer;
 _SCRIPT = GMUI_GridSetMappedValues;
@@ -79,5 +80,6 @@ with (argument0) {
     UIAddToLayer = _prevLayer;
 
     return true;
+}
 }
 

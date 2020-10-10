@@ -1,5 +1,6 @@
 ///GMUI_MouseInGroupRegion(group number, layer number)
 ///Returns if the mouse is in the bounds of the group
+function GMUI_MouseInGroupRegion(argument0,argument1) {
 
 var SCRIPT,_Group, _Layer, _mouseCellX, _mouseCellY;
 SCRIPT = GMUI_MouseInGroupRegion;
@@ -27,4 +28,5 @@ if (_mouseCellX < (GMUII()).GMUI_groupCellX[_Layer,_Group] || _mouseCellY < (GMU
 }
 
 return true;
+}
 

@@ -1,5 +1,6 @@
 ///GMUI_LayerHide(layer number, Hide(1) or show(0))
 /// Hide all of the controls within the specified layer
+function GMUI_LayerHide(argument0, argument1) {
 
 var _Layer, _Hide, i, j, ctrl, _GMUI;
 _GMUI = GMUII();
@@ -48,5 +49,5 @@ for(i=0;i<ds_list_size((_GMUI).GMUI_groupList[_Layer]);i+=1) {
 }
 
 GMUI_GridUpdateLayer(_GMUI,_Layer);
-
+}
 

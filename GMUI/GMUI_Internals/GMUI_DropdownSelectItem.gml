@@ -1,5 +1,6 @@
 ///GMUI_DropdownSelectItem(item selected)
 ///Performs the selection of the dropdown when the user selects an option
+function GMUI_DropdownSelectItem(argument0) {
 
 // Adjust the parent control value
 
@@ -17,4 +18,5 @@ ControlDropdownParent.valueString = ItemListName[argument0];
 // Hide the select list, disabling input
 
 GMUI_ControlHide("DDSL|" + ControlDropdownParent.valueName,true);
+}
 

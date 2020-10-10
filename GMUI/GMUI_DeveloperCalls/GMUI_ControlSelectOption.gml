@@ -1,5 +1,6 @@
 ///GMUI_ControlSelectOption("ControlName", key value)
 ///Safely set the value of a selection control using key value
+function GMUI_ControlSelectOption(argument0,argument1) {
 
 with (GMUII())
 {
@@ -30,5 +31,6 @@ with (GMUII())
         GMUI_ThrowErrorDetailed("Not yet initialized. No options for '" + argument0 + "'?",_SCRIPT);
     }
     
+}
 }
 

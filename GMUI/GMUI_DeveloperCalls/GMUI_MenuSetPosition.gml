@@ -1,5 +1,6 @@
 ///GMUI_MenuSetPosition("menu name", Cell X, Cell Y, X Adjustment, Y Adjustment)
 // Sets menu position
+function GMUI_MenuSetPosition(argument0,argument1,argument2,argument3,agument4) {
 
 // Get menu number and check its valid
 var _MenuName, _MenuNumber, _MenuLayer;
@@ -15,5 +16,5 @@ _MenuLayer = GMUI_GetMenuLayer(GMUII(),_MenuNumber);
 
 // Set position by anchor of the group
 GMUI_GroupSetPositionAnchored(_MenuLayer, _MenuNumber, argument1, argument2, argument3, argument4, (GMUII()).GMUI_groupAnchor[_MenuLayer,_MenuNumber]);
-
+}
 

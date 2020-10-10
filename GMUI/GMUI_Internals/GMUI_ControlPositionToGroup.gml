@@ -1,4 +1,5 @@
 ///GMUI_ControlPositionToGroup(Control id)
+function GMUI_ControlPositionToGroup(argument0) {
 
 with (argument0) {
     // Reset positioning to base on group's position
@@ -47,5 +48,5 @@ with (argument0) {
     // Update control draw location in the room
     GMUI_ControlUpdateXY(id);
 }
-
+}
 

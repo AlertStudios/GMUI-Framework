@@ -1,5 +1,7 @@
 ///GMUI_GroupSetStyle(Group, Background Color, Background Alpha, Border color, Border Alpha, Is RoundRect)
 ///Set the style of the controls that will be used for new controls (to override the defaults)
+function GMUI_GroupSetStyle(argument0,argument1,argument2,argument3,argument4,argument5) {
+
 var _SCRIPT, _Layer, _Group;
 _SCRIPT = GMUI_GroupSetStyle;
 if (!GMUI_IsControl() && id != GMUII())
@@ -52,5 +54,5 @@ with ((GMUII()).GMUI_groupMasterControl[UIAddToLayer,_Group]) {
 }
 
 return true;
-    
+}
 

@@ -1,5 +1,6 @@
 ///GMUI_GroupSetHidePosition(Group Number, Cell X, Cell Y, Transition_script [or -1], speed in steps)
 // Set a group position to transition from and to when showing or hiding group
+function GMUI_GroupSetHidePosition(argument0,argument1,argument2,argument3,argument4) {
 
 //todo: get master control and set coordinates to it
 var _GMUI, _LayerNumber, _GroupNumber, _MasterControl;
@@ -65,5 +66,5 @@ else {
     (_MasterControl).T_hspeed_group = argument4;
     return true;
 }
-
+}
 

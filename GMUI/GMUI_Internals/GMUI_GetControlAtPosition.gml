@@ -1,5 +1,6 @@
 ///GMUI_GetControlAtPosition(GMUI instance,X,Y)
 ///Returns the control that is present in the cell if one exists there
+function GMUI_GetControlAtPosition(argument0,argument1,argument2) {
 
 var _CellHor, _CellVer, _PosX, _PosY, _GMUII, _ctrlObject;
 _GMUII = argument0;
@@ -33,4 +34,5 @@ if (is_real(_ctrlObject)) {
 
 // Couldn't find the instance, or none assigned at this cell.
 return -1;
+}
 

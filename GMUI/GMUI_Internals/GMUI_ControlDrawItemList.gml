@@ -1,5 +1,6 @@
 ///GMUI_ControlDrawItemList(Control ID, Using Surface[bool])
 ///Draws the group if set to do any drawing - Called by master control of group
+function GMUI_ControlDrawItemList(argument0,argument1) {
 
 var _GMUII, _Ctrl, _UsingSurface, _Surface, _i, _id, _relMY, _cx, _cy, _sbw, _canDraw, _offPos;
 _Ctrl = argument0;
@@ -155,6 +156,6 @@ if (_UsingSurface)
 
 return _Surface;
 
-
+}
 
 

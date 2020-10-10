@@ -1,5 +1,6 @@
 /// GMUI_SetForm(name of form script)
 /// Playbook to create all of the UI component objects for the project
+function GMUI_SetForm(argument0) {
 //
 // PLEASE READ THE MANUAL ONLINE FOR INSTRUCTIONS ON HOW TO USE GMUI!
 //
@@ -42,5 +43,6 @@ if (is_real(OptionalInterfaceName)) {
             GMUI_ThrowError("Form doesn't exist");
         }
     }
+}
 }
 

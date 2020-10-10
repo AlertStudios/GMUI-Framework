@@ -1,5 +1,6 @@
 ///GMUI_AddToLayer(Layer, "Name", "Type String" or GMUIControl.[], cell# x, cell# y, cells wide (min 1), cells high (min 1), Anchor)
 ///Adds a component(instance) to the GMUI grid on the given layer
+function GMUI_AddToLayer(argument0,argument1,argument2,argument3,argument4,argument5,argument6,argument7) {
 
 var _SCRIPT,_Layer,_IsString,_Anchor,_CellX,_CellY,_CellWide,_CellHigh;
 _SCRIPT = GMUI_AddToLayer;
@@ -145,6 +146,6 @@ if (GMUI_GetDataType(thetype) == global.GMUIDataTypeString) {
 
 return thecontrol;
 
-
+}
 
 

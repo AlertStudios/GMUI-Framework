@@ -1,4 +1,5 @@
 ///GMUI_ItemListSettings(Item height, Border color [or -1], Custom Draw Script [or -1], Fade time [frames])
+function GMUI_ItemListSettings(argument0,argument1,argument2,argument3) {
 
 if (!GMUI_IsControl() && id != GMUII())
 {
@@ -28,4 +29,6 @@ if (is_real(argument3)) {
 // Calculate the middle and quarter height to reuse for drawing
 ItemListMidHeight = ItemListHeight / 2;
 ItemListThirdHeight = floor(ItemListHeight / 3);
+
+}
 

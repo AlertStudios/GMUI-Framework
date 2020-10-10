@@ -1,5 +1,6 @@
 ///GMUI_ControlAddOption(OptionKeyValue, OptionText/Sprite)
 ///Adds an option to the picker control
+function GMUI_ControlAddOption(argument0,argument1) {
 
 if (!GMUI_IsControl() && id != GMUII())
 {
@@ -43,5 +44,6 @@ if (is_real(argument0)) {
         GMUI_ThrowErrorDetailed("Key " + string(argument0) + " already exists", GMUI_ControlAddOption);
         return false;
     }
+}
 }
 

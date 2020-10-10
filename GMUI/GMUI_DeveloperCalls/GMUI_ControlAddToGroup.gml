@@ -1,5 +1,6 @@
 ///GMUI_ControlAddToGroup(group number)
 ///Adds control to a group if it exists in the layer
+function GMUI_ControlAddToGroup(argument0) {
 
 var _SCRIPT, _Group, _Layer, _Depth, _prev;
 _SCRIPT = GMUI_ControlAddToGroup;
@@ -78,6 +79,6 @@ GMUI_ControlPositionToGroup(id);
 
 
 return true;
-    
+}
     
 

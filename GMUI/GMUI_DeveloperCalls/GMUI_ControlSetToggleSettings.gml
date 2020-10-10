@@ -1,5 +1,6 @@
 ///GMUI_ControlSetToggleSettings(padding [pixels], color on, color off, slide shape/sprite, slide color on, slide color off, transition speed, orientation, Toggle Thickness [cell decimal])
 ///Required to be called to set the SETTINGS of the toggle
+function GMUI_ControlSetToggleSettings(argument0,argument1,argument2,argument3,argument4,argument5,argument6,argument7,argument8) {
 //todo: create checkbox alias for this script (alpha value will utilize the toggle change vars)
 
 if (!GMUI_IsControl() && id != GMUII())
@@ -103,5 +104,5 @@ if (argument5 >= 0)
     
 
 return true;
-    
+}
 

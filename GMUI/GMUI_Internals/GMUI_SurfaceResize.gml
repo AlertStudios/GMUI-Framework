@@ -1,5 +1,6 @@
 ///GMUI_SurfaceResize(GMUI instance, Surface target, Width, Height)
 ///Resizes the surface only after the UI is set. Return is only for reference if needed.
+function GMUI_SurfaceResize(argument0,argument1,argument2,argument3) {
 var _Surface;
 
 if ((argument0).UIInterfaceSet) {
@@ -15,4 +16,5 @@ if ((argument0).UIInterfaceSet) {
 }
     
 return -1;
+}
 

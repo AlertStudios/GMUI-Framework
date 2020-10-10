@@ -1,6 +1,7 @@
 ///GMUI_GetDataType("Control Type")
 ///Takes the control type and returns the data type it is
 // Datatypes are defined in GMUI_Init()
+function GMUI_GetDataType(argument0) {
 
 var _controlType;
     _controlType = string_lower(string_replace(string(argument0)," ",""));
@@ -34,5 +35,6 @@ switch (_controlType) {
     default:
         return -1;
         break;
+}
 }
 

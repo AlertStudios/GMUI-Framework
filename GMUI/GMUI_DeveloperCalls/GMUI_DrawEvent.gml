@@ -1,6 +1,6 @@
 ///GMUI_DrawEvent()
 ///Actions done to operate the grid, executed by the GMUI object in the draw event
-
+function GMUI_DrawEvent() {
 
 // Count down initial disable before executing actions
 if (GMUI_GridEnabled())
@@ -392,7 +392,6 @@ if (GMUI_GridEnabled())
     
     // Check if the room size has changed to move any anchored controls positions?
     
-
 }
-
+}
 

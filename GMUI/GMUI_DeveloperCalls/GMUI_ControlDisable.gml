@@ -1,7 +1,7 @@
 ///GMUI_ControlDisable("ControlName", Disable?)
 ///Disable or enable a control
 // argument1 is to disable (1) or enable (0)
-
+function GMUI_ControlDisable(argument0,argument1) {
 with (GMUII()) {
     // Retrieve control from the reference map
     var _ctrl;
@@ -15,5 +15,6 @@ with (GMUII()) {
         (_ctrl).Disabled = argument1;
         return true;
     }
+}
 }
 

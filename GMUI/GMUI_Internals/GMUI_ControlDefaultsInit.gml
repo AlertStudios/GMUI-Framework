@@ -1,4 +1,5 @@
 ///GMUI_ControlDefaultsInit() Sets the GMUI default values for all controls if they are not specified in GMUI_Form
+function GMUI_ControlDefaultsInit() {
 
 // ! NOTE ! These values are the defaults provided by the framework
 // If you want to change default values, use: GMUI_SetControlDefaults()
@@ -36,5 +37,5 @@ GMUI_ControlSetPicker(
 
 // Text Button control (Text or "", graphic in button, button image sprite, text alignment, hover color)
 GMUI_ControlSetButton("", -1, -1, -1);
-    
+}
 

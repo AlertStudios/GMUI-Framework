@@ -1,6 +1,7 @@
 ///GMUI_GroupSetFadeOnHide(Group Number, Speed in steps, Fade Mode [0: alpha-sequential, 1: all-together])
 ///Set the fade in/out when the control is hidden or not
 ///Fade Mode: 0 = fade dimmest last, 1 = fade all together
+function GMUI_GroupSetFadeOnHide(argument0,argument1,argument2) {
 
 // Arguments
 var _SCRIPT,_LayerNumber,_GroupNumber,_Speed,_FadeMode, _ctrl;
@@ -60,4 +61,5 @@ for(i=0;i<ds_list_size((GMUII()).GMUI_groupControlList[_LayerNumber,_GroupNumber
 }
 
 return true;
+}
 

@@ -1,5 +1,6 @@
 ///GMUI_ControlDrawSlider(id of slider control object)
 /// Draw the control as a slider
+function GMUI_ControlDrawSlider(argument0) {
 
 var _tt_id, _SCRIPT;
 _tt_id = argument0;
@@ -280,5 +281,7 @@ with (_tt_id) {
     //_dtx = cx + padx;
     
     //draw_text_ext(_dtx,cy + (chy-cy)/2,_txt,-1,cwx);
+}
+
 }
 

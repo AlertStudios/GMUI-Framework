@@ -1,5 +1,6 @@
 ///GMUI_ControlDrawEvent(Draw the control [bool])
 /// The actions done per step for a control added to the grid, along with drawing things
+function GMUI_ControlDrawEvent(argument0) {
 
 // STEP actions:
 
@@ -726,5 +727,5 @@ if (argument0 == true) {
         }
     }
 }
-//
+}
 

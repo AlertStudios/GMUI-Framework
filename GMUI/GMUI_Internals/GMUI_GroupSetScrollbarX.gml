@@ -1,5 +1,6 @@
 ///GMUI_GroupSetScrollbarX(GMUI instance, Layer number, Group number)
 ///Set the scrollbar x position to the master control of group
+function GMUI_GroupSetScrollbarX(argument0,argument1,argument2) {
 
 var _GMUI, _Layer, _Group, _DC, _SBC;
 _GMUI = argument0;
@@ -25,4 +26,5 @@ if (_DC > -1) {
 }
 
 return false;
+}
 

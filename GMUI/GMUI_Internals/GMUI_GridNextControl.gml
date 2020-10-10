@@ -1,5 +1,6 @@
 ///GMUI_GridNextControl(next control /or previous: false)
 ///Changes the selected control to the next control in the list by ID
+function GMUI_GridNextControl(argument0) {
 
 // Select the first control if none are selected, otherwise pull the next ID
 var ctrlIndex,ctrl,i;
@@ -53,4 +54,5 @@ while (i < ds_list_size((GMUII()).GMUI_controlList)) {
 
 
 return false;
+}
 

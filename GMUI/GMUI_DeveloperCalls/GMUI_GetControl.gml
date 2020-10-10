@@ -1,6 +1,6 @@
 ///GMUI_GetControl("ControlName")
 ///Return the control id back to use in user code
-
+function GMUI_GetControl(argument0) {
 with (GMUII()) {
     // Retrieve control from the reference map
     var control;
@@ -9,5 +9,6 @@ with (GMUII()) {
         return -1;
     else
         return control;
+}
 }
 

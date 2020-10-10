@@ -1,5 +1,6 @@
 ///GMUI_GroupMouseOnScrollbar(GMUI instance, Mouse X position)
 ///Adds the control handling the scrollbar to the list if it doesnt exist
+function GMUI_GroupMouseOnScrollbar(argument0,argument1) {
 
 var _GMUI, _Si, _SBC, _L, _G, _MX;
 _GMUI = argument0;
@@ -22,5 +23,5 @@ for(_Si=0;_Si<ds_list_size(_GMUI.GMUI_groupScrollbars);_Si+=1) {
 
 return -1;
 
-
+}
 

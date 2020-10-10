@@ -1,5 +1,6 @@
 ///GMUI_AddItem(id, value, name, description, sprite [or -1])
 ///Adds an item to a control with an item list
+function GMUI_AddItem(argument0,argument1,argument2,argument3,argument4) {
 
 if (!GMUI_IsControl() && id != GMUII())
 {
@@ -45,4 +46,6 @@ else
     return false;
     
 return true;
+
+}
 

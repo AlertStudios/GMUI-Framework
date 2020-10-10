@@ -2,6 +2,7 @@
 ///Returns the GMUI object instance with the given GMUI number and sets current grid ref to it
 // Usage: with (GMUIid(1)) { do something; }
 // Alternate Usage: if (GMUIid(1)) { call GMUI commands; }
+function GMUIid(argument0) {
 
 if (!is_real(argument0))
     return -1;
@@ -15,4 +16,5 @@ if (argument0 > 0 && argument0 <= global.GMUIii) {
 }
 
 return -1;
+}
 

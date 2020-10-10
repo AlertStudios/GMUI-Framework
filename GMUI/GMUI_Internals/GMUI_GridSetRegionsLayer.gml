@@ -1,4 +1,5 @@
 /// Set the control regions for the given layer
+function GMUI_GridSetRegionsLayer(argument0) {
 
 var _Layer,_Grid;
 _Layer = argument0;
@@ -29,5 +30,6 @@ for(i=0;i<ds_list_size((GMUII()).GMUI_controlList);i+=1) {
             GMUI_ControlUpdateXY(_ctrl);
     }
     
+}
 }
 

@@ -1,4 +1,5 @@
 ///GMUI_ItemListSelectAction(Script with argument0 as ID)
+function GMUI_ItemListSelectAction(argument0) {
 
 if (!GMUI_IsControl() && id != GMUII())
 {
@@ -17,4 +18,5 @@ if (script_exists(argument0)) {
 }
 
 return false;
+}
 

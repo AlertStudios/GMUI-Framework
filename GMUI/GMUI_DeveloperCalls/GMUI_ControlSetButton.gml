@@ -1,5 +1,6 @@
 ///GMUI_ControlSetButton(Text in button or "" , graphic inside button or -1 , font alignment or -1, text color on hover or -1)
 ///Set the picker values of the control (to override the defaults)
+function GMUI_ControlSetButton(arugment0,argument1,argument2,argument3) {
 
 if (!GMUI_IsControl() && id != GMUII())
 {
@@ -31,5 +32,5 @@ if (!GMUI_IsControl() && id != GMUII())
     
 
 return true;
-    
+}
 

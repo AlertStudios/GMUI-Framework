@@ -1,6 +1,6 @@
 ///GMUI_GetValueString("ControlName")
 ///Return the value string of a control back to use in user code
-
+function GMUI_GetValueString(argument0) {
 with (GMUII()) {
     // Retrieve control from the reference map
     var control;
@@ -9,5 +9,6 @@ with (GMUII()) {
         return 0;
     else
         return (control).valueString;
+}
 }
 

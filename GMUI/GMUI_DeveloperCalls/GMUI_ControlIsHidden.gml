@@ -1,5 +1,6 @@
 ///GMUI_ControlIsHidden("ControlName")
 ///Is control of name hidden
+function GMUI_ControlIsHidden(argument0) {
 
 with (GMUII()) {
     // Retrieve control from the reference map
@@ -12,5 +13,6 @@ with (GMUII()) {
     else {
         return (control).Hidden;
     }
+}
 }
 

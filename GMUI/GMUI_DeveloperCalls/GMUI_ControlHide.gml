@@ -1,6 +1,7 @@
 ///GMUI_ControlHide("ControlName", Hide?)
 ///Hide or show a control
 // argument1 is to hide (1) or show (0)
+function GMUI_ControlHide(argument0,argument1) {
 
 with (GMUII()) {
     // Retrieve control from the reference map
@@ -36,5 +37,6 @@ with (GMUII()) {
         
         return true;
     }
+}
 }
 

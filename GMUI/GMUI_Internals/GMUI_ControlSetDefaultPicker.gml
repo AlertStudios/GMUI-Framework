@@ -1,5 +1,6 @@
 ///GMUI_ControlSetDefaultPicker(id)
 /// Set the default attributes of the control from the controller
+function GMUI_ControlSetDefaultPicker(argument0) {
 
 if (!instance_exists(argument0))
 {
@@ -20,4 +21,5 @@ with (argument0)
 
 
 return true;
+}
 

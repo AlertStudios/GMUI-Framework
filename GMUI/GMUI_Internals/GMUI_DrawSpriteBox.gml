@@ -1,5 +1,6 @@
 ///GMUI_DrawSpriteBox(GMUI instance, Layer, Group, Control[0] / Group [1] / Menu[2], Alpha)
 ///Draws the box of the specified type
+function GMUI_DrawSpriteBox(argument0,argument1,argument2,argument3,argument4) {
 
 var _GMUII, _layer, _group, _bType, _alpha;
 _GMUII = argument0;
@@ -102,5 +103,6 @@ if (_spr_isFixed) {
 }
 else {
     draw_sprite_stretched_ext(_sprCenter,-1,_dbx+_spr_width,_dby+_spr_height,_dbw-_spr_width*2,_dbh-_spr_height*2,c_white,_alpha);
+}
 }
 

@@ -1,5 +1,6 @@
 ///GMUI_Settings() Settings for GMUI - Do not delete! Modify to fit your preferences
 ///Called from the initialization of each GMUI interface.
+function GMUI_Settings() {
 
 // Required: Flexibility to add graphical effects settings to the controls:
 // (currently unused)
@@ -20,6 +21,6 @@ CaptureMouseEvents = false;
 // Required: Allow setting debug data for testing
 DebugData = false;
 
-
+}
 
 

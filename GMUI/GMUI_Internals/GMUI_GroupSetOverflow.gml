@@ -1,5 +1,6 @@
 ///GMUI_GroupSetOverflow(Group, Overflow Mode [GMUIOverflow.], scrollbar width [or -1 for default])
 ///Set the method for overflowing groups, and scrollbar with if necessary
+function GMUI_GroupSetOverflow(argument0,argument1,argument2) {
 
 var _GMUI, _Layer, _Group, _Direction, _DC;
 _GMUI = GMUII();
@@ -28,5 +29,5 @@ if (argument2 > 0) {
 //GMUIOverflowResize = 1;
 //GMUIOverflowScroll = 2;
 
-
+}
 

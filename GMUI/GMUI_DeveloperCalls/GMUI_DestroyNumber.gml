@@ -1,6 +1,6 @@
 ///GMUI_Destroy(GMUI number)
 ///Only call this when you want to remove all traces of the GMUI instance provided, including the object itself
-
+function GMUI_Destroy(argument0) {
 
 with (argument0) {
 
@@ -64,5 +64,6 @@ with (argument0) {
     // Destroy the object when done
     RemovingGMUI = true;
     instance_destroy();
+}
 }
 

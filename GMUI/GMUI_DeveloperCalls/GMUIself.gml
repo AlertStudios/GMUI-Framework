@@ -2,6 +2,7 @@
 ///Returns id of the GMUI object instance or -1 if not
 // Usage: with (GMUIself()) { do something; }
 // Alternate Usage: if (GMUIself()) { call GMUI commands; }
+function GMUIself() {
 
 var _gmuii,_G;
 _gmuii = -1;
@@ -20,4 +21,5 @@ if (_gmuii > -1) {
 }
 
 return -1;
+}
 

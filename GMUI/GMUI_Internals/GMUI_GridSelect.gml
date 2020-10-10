@@ -1,6 +1,6 @@
 ///GMUI_GridSelect(control object)
 /// Selects a control object from the grid (Called by GMUI_GridStep)
-
+function GMUI_GridSelect(argument0) {
 
 // Set the keyboard string to the value string
 (argument0).valuePrevious = (argument0).value;
@@ -20,5 +20,6 @@ if ((GMUII()).PreviousSelectedControl == argument0) {
 else if (GMUI_IsScript((argument0).SelectingActionScript)) {
     // If there is a script to assigned to run it'll only be done once
     script_execute((argument0).SelectingActionScript);
+}
 }
 

@@ -1,5 +1,6 @@
 ///GMUI_MenuSetOverflow("Menu Name", overflow)
 ///Set the method for overflowing menus, and scrollbar with if necessary
+function GMUI_MenuSetOverflow(argument0,argument1) {
 
 var _GMUI, _Layer, _menuName, _menuNumber, _Direction, _MC;
 _GMUI = GMUII();
@@ -23,5 +24,5 @@ _GMUI.GMUI_groupOverflow[_Layer,_menuNumber] = max(0,argument1);
 //GMUIOverflowScroll = 2;
 
 
-
+}
 

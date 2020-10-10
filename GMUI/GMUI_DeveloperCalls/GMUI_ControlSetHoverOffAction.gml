@@ -1,5 +1,6 @@
 ///GMUI_ControlSetHoverOffAction(Action Script)
 ///When hovering off, execute script (can also draw)
+function GMUI_ControlSetHoverOffAction(argument0) {
 
 if (!GMUI_IsControl() && id != GMUII())
 {
@@ -16,5 +17,5 @@ else {
 }
 
 return false;
-    
+}
 

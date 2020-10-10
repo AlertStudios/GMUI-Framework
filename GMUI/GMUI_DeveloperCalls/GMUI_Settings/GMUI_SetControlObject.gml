@@ -1,4 +1,5 @@
 ///GMUI_SetControlObject(object of which controls are created with)
+function GMUI_SetControlObject(argument0) {
 
 var _ctrl;
 _ctrl = argument0;
@@ -15,4 +16,6 @@ else if (global.GMUIii > 0)
     GMUI_controlobject = _ctrl;
 else
     global.GMUI_controlobject = _ctrl;
+    
+}
 

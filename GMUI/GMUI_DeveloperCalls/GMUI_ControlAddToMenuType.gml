@@ -1,5 +1,6 @@
 ///GMUI_ControlAddToMenuType(script [menu type], "menu name")
 ///Adds control to a group if it exists in the layer
+function GMUI_ControlAddToMenuType(argument0,argument1) {
 
 var SCRIPT, _menuName, _menuNumber, _Layer;
 SCRIPT = argument0;
@@ -56,6 +57,6 @@ if ((GMUIP).UILayer < (GMUIP).GMUI_menu_layer || (GMUIP).UILayer != (GMUIP).GMUI
 }
 
 return true;
-    
+}
     
 

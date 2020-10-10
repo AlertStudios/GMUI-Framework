@@ -1,6 +1,6 @@
 ///GMUI_CreateEvent(Form Script, Cell Width, Cell Height)
 ///Called from creation of new GMUI instance for the grid interfaces and variables
-
+function GMUI_CreateEvent(argument0,argument1,argument2) {
 // // Create grid variables
 // Is this already using a GMUI? Assign the instance number as long as its not
 var isOk,G;
@@ -187,5 +187,5 @@ GMUI_GridSetRegions();
 
 // Upon success, give the GMUI id back
 return GMUInumber;
-
+}
 

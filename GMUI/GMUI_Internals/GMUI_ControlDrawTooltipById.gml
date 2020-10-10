@@ -1,5 +1,6 @@
 ///GMUI_ControlDrawTooltipById(id of tooltip control object)
 /// Draw the control as a tooltip
+function GMUI_ControlDrawTooltipById(argument0) {
 
 var _tt_id;
 _tt_id = argument0;
@@ -55,5 +56,6 @@ with (_tt_id) {
     //color_alpha(c_red,0.15)
     //draw_rectangle(cx, cy, CellWide*(GMUII()).cellsize, chy, 1)
     //draw_rectangle(cx, cy, cwx, chy, 1)
+}
 }
 

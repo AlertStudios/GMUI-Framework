@@ -1,5 +1,6 @@
 ///GMUI_GridSetAllGroupValues(GMUI instance);
 ///Set all mapped values to groups, called after the UI is set
+function GMUI_GridSetAllGroupValues(argument0) {
 
 with (argument0) {
 
@@ -29,5 +30,6 @@ with (argument0) {
         }
     }
 
+}
 }
 

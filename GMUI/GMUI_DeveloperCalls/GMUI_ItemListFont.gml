@@ -1,4 +1,5 @@
 ///GMUI_ItemListFont(Font, Font Color, Font Color Hover, Font Alpha, Font Alpha Hover)
+function GMUI_ItemListFont(argument0,argument1,argument2,argument3,argument4) {
 
 if (!GMUI_IsControl() && id != GMUII())
 {
@@ -26,4 +27,5 @@ if (argument3 > -1)
     
 if (argument4 > -1)
     ItemListFontAlphaHover = argument4;
+}
 

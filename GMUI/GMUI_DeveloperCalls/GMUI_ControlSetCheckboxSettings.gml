@@ -1,6 +1,6 @@
 ///GMUI_ControlSetCheckboxSettings(padding [pixels], color on, color off, outline shape/sprite, outline color on, outline color off, transition speed)
 ///Required to be called to set the SETTINGS of the checkbox
-
+function GMUI_ControlSetCheckboxSettings(argument0,argument1,argument2,argument3,argument4,argument5,argument6) {
 if (!GMUI_IsControl() && id != GMUII())
 {
     GMUI_ThrowErrorDetailed("Invalid control",GMUI_ControlSetCheckboxSettings);
@@ -64,5 +64,5 @@ if (argument5 >= 0)
     
 
 return true;
-    
+}
 

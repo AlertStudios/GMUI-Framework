@@ -1,5 +1,6 @@
 ///GMUI_ControlUpdateXY(control)
 ///Updates the actual location in the room after adjustments
+function GMUI_ControlUpdateXY(argument0) {
 
 var _ctrl, _GMUIP, _xoffset, _yoffset, _lw, _lh, _sbOffset;
 _ctrl = argument0;
@@ -58,4 +59,5 @@ if ((_ctrl).ControlHasScrollbar && !_GMUIP.UIEnableSurfaces) {
     (_ctrl).Scrollbar_pos_y = (_ctrl).Scrollbar_y + _sbOffset;
 }
 //draw_text(0,16,"updating positioning :(");
+}
 

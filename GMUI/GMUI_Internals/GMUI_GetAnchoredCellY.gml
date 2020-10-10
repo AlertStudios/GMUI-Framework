@@ -1,6 +1,6 @@
 ///GMUI_GetAnchoredCellY(GMUII, Layer, Cell Y given, Anchor Type)
-/// Returns the new X cell position in the grid based on the anchoring
-
+/// Returns the new Y cell position in the grid based on the anchoring
+function GMUI_GetAnchoredCellY(argument0,argument1,argument2) {
 
 // Height of a GMUI grid is usually: ds_grid_height((GMUII()).GMUI_grid[Layer]);
 
@@ -24,5 +24,6 @@ else {
         return __GridH - __CellY - 1;
     else
         return __CellY;
+}
 }
 

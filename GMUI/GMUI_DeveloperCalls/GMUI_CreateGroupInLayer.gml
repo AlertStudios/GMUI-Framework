@@ -1,6 +1,6 @@
 ///GMUI_CreateGroupInLayer(layer number, group number, cell# x, cell# y, cells wide, cells high, Anchor)
 ///Adds a group to a GMUI layer that controls can be put into
-
+function GMUI_CreateGroupInLayerargument0,argument1,argument2,argument3,argument4) {
 
 // Arguments
 var _Group,_CellX,_CellY,_Layer,_Anchor;
@@ -80,5 +80,5 @@ with (GMUII()) {
 
 
 return GMUII();
-
+}
 

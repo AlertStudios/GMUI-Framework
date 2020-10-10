@@ -1,5 +1,6 @@
 ///GMUI_SetGroupStyle(Background Color, Background Alpha, Border color, Border Alpha, Is RoundRect)
 ///Set the style of the controls that will be used for new controls (to override the defaults)
+function GMUI_SetGroupStyle(argument0,argument1,argument2,argument3,argument4) {
 if (!GMUI_IsControl() && id != GMUII())
 {
     GMUI_ThrowError("Invalid control for GMUI_SetGroupStyle");
@@ -23,5 +24,5 @@ GroupIsRoundRect = minmax(argument4,0,1);
 ControlHasGroupStyle = true;
 
 return true;
-    
+}
 

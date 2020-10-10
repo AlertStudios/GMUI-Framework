@@ -1,5 +1,6 @@
 ///GMUI_MouseInAdjustedSpecialRegion(Control Object, mouse x, mouse y)
 /// Returns direction if mouse is in the adjusted region of the control
+function GMUI_MouseInAdjustedSpecialRegion(argument0,argument1,argument2) {
 
 var _Control, _MX, _MY, _D, _CW, _CH, sizingW, sizingH, _xoffset, _yoffset;
 _Control = argument0;
@@ -78,5 +79,5 @@ else if (_D == global.GMUIDirectionTypeSideVertical || _D == global.GMUIDirectio
 // No Conditions were met
 return global.GMUIHoveringDirection_None;
 
-
+}
 

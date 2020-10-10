@@ -1,7 +1,7 @@
 ///GMUI_DropdownSelect(control, isOpening)
 /// Creates a select list around the dropdown region from the parent control
 /// isOpening either creates the new select list, or removes it when closing
-
+function GMUI_DropdownSelect(argument0,argument1) {
 
 // 1. values from parent (control) to use to create new control
 
@@ -82,5 +82,6 @@ else {
     // Remove the select list, and update the parent control with the new value
     GMUI_ControlHide(_SLName, true);
     
+}
 }
 

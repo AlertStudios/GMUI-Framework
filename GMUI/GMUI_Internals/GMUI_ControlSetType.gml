@@ -1,5 +1,6 @@
 ///GMUI_ControlSetType(Control, "Control Type")
 ///Set the type variables based on the control the developer wants to make
+function GMUI_ControlSetType(argument0, argument1) {
 
 var IID,            _type,           _getType;
     IID=argument0;  _type=argument1; _getType=0;
@@ -122,6 +123,6 @@ else if (_getType == global.GMUIDataTypeString) {
 
 // Return sanitized and processed type back
 return _type;
-
+}
 
 

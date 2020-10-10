@@ -1,5 +1,6 @@
 ///GMUI_ControlDrawGroup(GMUI instance, Layer, Group, Alpha, FadeMode [0 or 1])
 ///Draws the group if set to do any drawing - Called by master control of group
+function GMUI_ControlDrawGroup(argument0,argument1,argument2,argument3,argument4) {
 
 var _GMUII, _layer, _group, gx, gy, gw, gh, _fadeMode;
 _GMUII = argument0;
@@ -41,5 +42,6 @@ if (ControlHasGroupStyle) {
     else
         draw_rectangle(x1,y1,x2,y2,true);
         
+}
 }
 

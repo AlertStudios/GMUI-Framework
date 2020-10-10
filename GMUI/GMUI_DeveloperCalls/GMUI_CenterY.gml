@@ -1,5 +1,6 @@
 ///GMUI_CenterY(Layer, Control Height Cells #, Anchor)
 ///Get X Cell of Anchor for centering on layer
+function GMUI_CenterY(argument0,argument1,argument2) {
 
 var _Layer, _CellsWide, _Anchor, _CenterCell, _HalfHeight, _LayerHeight;
 _Layer = argument0;
@@ -25,4 +26,6 @@ else if (_Anchor == global.GMUIAnchorBottomLeft || _Anchor == global.GMUIAnchorB
     return _LayerHeight - _CenterCell + _HalfHeight - 1;
 else
     return _CenterCell - _HalfHeight;
+    
+}
 

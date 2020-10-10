@@ -1,5 +1,6 @@
 ///GMUI_ControlSetPicker(picker width, picker height, picker direction, picker_right/up sprite, picker_left/down sprite)
 ///Set the picker values of the control (to override the defaults)
+function GMUI_ControlSetPicker(argument0,argument1,argument2,argument3,argument4) {
 if (!GMUI_IsControl() && id != GMUII())
 {
     GMUI_ThrowError("Invalid control for GMUI_ControlSetPicker");
@@ -24,5 +25,5 @@ if (!GMUI_IsControl() && id != GMUII())
     
 
 return true;
-
+}
 

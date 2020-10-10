@@ -1,5 +1,6 @@
 ///GMUI_ControlScrollbarSelect(control id with scrollbar, X cordinate, Y cordinate)
 ///Adjust the scrollbar to the position
+function GMUI_ControlScrollbarSelect(argument0,argument1,argument2) {
 
 var _SCRIPT,_Ctrl, _MX, _MY, _relY;
 _SCRIPT = GMUI_ControlScrollbarSelect;
@@ -29,4 +30,5 @@ else
     GMUI_ThrowErrorDetailed("Control " + _Ctrl.valueName + " does not have scrollbar",_SCRIPT);
     
 return false;
+}
 

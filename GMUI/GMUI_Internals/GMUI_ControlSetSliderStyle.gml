@@ -13,6 +13,7 @@
 // 4: Rectangle
 // 5: Rounded Rectangle
 // 6: hexagon
+function GMUI_ControlSetSliderStyle(argument0,argument1,argument2,argument3,argument4,argument5,argument6,argument7,argument8,argument9,argument10,argument11) {
 
 if (!GMUI_IsControl() && id != GMUII()) {
     GMUI_ThrowErrorDetailed("Invalid control",GMUI_ControlSetSliderStyle);
@@ -54,5 +55,5 @@ SliderTickAlpha = minmax(argument11,0,1);
 
 
 return true;
-    
+}
 

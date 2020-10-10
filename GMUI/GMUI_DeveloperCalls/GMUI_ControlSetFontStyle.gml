@@ -1,5 +1,6 @@
 ///GMUI_ControlSetFontStyle(font, font color, font align)
 ///Set the style of the controls that will be used for new controls (to override the defaults)
+function argument0, argument1, argument2) {
 if (!GMUI_IsControl() && id != GMUII())
 {
     GMUI_ThrowErrorDetailed("Invalid control", GMUI_ControlSetFontStyle);
@@ -17,5 +18,5 @@ if (argument2 > -1)
 ControlFontAlpha = 1;
     
 return true;
-    
+}
 

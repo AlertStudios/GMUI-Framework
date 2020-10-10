@@ -1,6 +1,6 @@
 ///GMUI_ControlSetText(string)
 ///Similar to setting the value for the label, but will adjust the height to fit as well
-
+function GMUI_ControlSetText(argument0) {
 
 if (!GMUI_IsControl() && id != GMUII())
 {
@@ -16,6 +16,6 @@ CellHigh = minmax(ceil(str_h/GMUIP.cellsize_h),CellHigh,CellHighMax);
 GMUI_GridUpdateLayer(GMUIP,Layer);
 
 return GMUI_ControlSetInitValue(argument0);
-
+}
 
 
