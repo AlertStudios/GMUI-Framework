@@ -1,6 +1,6 @@
 ///GMUI_CreateSetDefaultArea() Set the default area to use to set the grid size for layers called by GMUI_Create()
 ///This depends on views or room size to set the grid size
-//@function GMUI_CreateSetDefaultArea() {
+function GMUI_CreateSetDefaultArea() {
 //UIsnaptoview = true;
 //UIgridview = 0;
 

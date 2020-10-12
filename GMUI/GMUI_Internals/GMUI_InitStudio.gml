@@ -10,7 +10,6 @@
 //
 
 // THIS SCRIPT ONLY RUNS IN GM:STUDIO:
-/*
 function GMUI_InitStudio() {
 global.GMUIGameMaker8 = false;
 
@@ -87,6 +86,5 @@ enum GMUIOverflow {
     Scroll = 2 //global.GMUIOverflowScroll
 }
 }
-*/
 
 

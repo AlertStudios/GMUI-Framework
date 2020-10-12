@@ -1,5 +1,5 @@
 ///GMUI_ShowMenuId(menu id, show[1] or hide[0], animate [bool])
-fuction GMUI_ShowMenuId(argument0,argument1,argument2) {
+function GMUI_ShowMenuId(argument0,argument1,argument2) {
 
 // Arguments
 var _SCRIPT, _GMUII, _animate, _show, _menuNumber, _layerNumber, _masterControl;

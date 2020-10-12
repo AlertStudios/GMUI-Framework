@@ -4937,9 +4937,9 @@ return false;
 ///@}
 
 #define GMUI_ControlSetSliderMovement
-///GMUI_ControlSetSliderStyle(Movement script for slider)
+///GMUI_ControlSetSliderMovement(Movement script for slider)
 ///Set the script called when smoothly moving the slider
-///@function GMUI_ControlSetSliderStyle(argument0) {
+///@function GMUI_ControlSetSliderMovement(argument0) {
 if (script_exists(argument0))
     SliderMovementScript = argument0;
 ///@}
@@ -5705,14 +5705,14 @@ return GMUInumber;
 #define GMUI_CreateGroup
 ///GMUI_CreateGroup(group number, cell# x, cell# y, cells wide, cells high, Anchor)
 ///Adds a group to the current GMUI layer that controls can be put into
-///@function GMUI_CreateGroupargument0,argument1,argument2,argument3) {
+///@function GMUI_CreateGroup(argument0,argument1,argument2,argument3) {
 return GMUI_CreateGroupInLayer((GMUII()).UIAddToLayer,argument0,argument1,argument2,argument3);
 ///@}
 
 #define GMUI_CreateGroupInLayer
 ///GMUI_CreateGroupInLayer(layer number, group number, cell# x, cell# y, cells wide, cells high, Anchor)
 ///Adds a group to a GMUI layer that controls can be put into
-///@function GMUI_CreateGroupInLayerargument0,argument1,argument2,argument3,argument4) {
+///@function GMUI_CreateGroupInLayer(argument0,argument1,argument2,argument3,argument4) {
 
 // Arguments
 var _Group,_CellX,_CellY,_Layer,_Anchor;
@@ -5928,9 +5928,9 @@ else {
 ///@}
 
 #define GMUI_DestroyNumber
-///GMUI_Destroy(GMUI number)
+///GMUI_DestroyNumber(GMUI number)
 ///Only call this when you want to remove all traces of the GMUI instance provided, including the object itself
-///@function GMUI_Destroy(argument0) {
+///@function GMUI_DestroyNumber(argument0) {
 
 with (argument0) {
 
@@ -7781,7 +7781,7 @@ return GMUI_ShowMenuId(_menuNumber,_show,_animate);
 
 #define GMUI_ShowMenuId
 ///GMUI_ShowMenuId(menu id, show[1] or hide[0], animate [bool])
-///@fuction GMUI_ShowMenuId(argument0,argument1,argument2) {
+///@function GMUI_ShowMenuId(argument0,argument1,argument2) {
 
 // Arguments
 var _SCRIPT, _GMUII, _animate, _show, _menuNumber, _layerNumber, _masterControl;
@@ -9444,9 +9444,9 @@ return true;
 ///@}
 
 #define GMUI_ControlSetDefaultFontStyle
-///GMUI_ControlSetFontStyle(id)
+///GMUI_ControlSetDefaultFontStyle(id)
 /// Get the default style values from the grid controller
-///@function GMUI_ControlSetFontStyle(argument0) {
+///@function GMUI_ControlSetDefaultFontStyle(argument0) {
 
 if (!instance_exists(argument0))
 {
@@ -10061,7 +10061,7 @@ return _menuNumber;
 #define GMUI_CreateSetDefaultArea
 ///GMUI_CreateSetDefaultArea() Set the default area to use to set the grid size for layers called by GMUI_Create()
 ///This depends on views or room size to set the grid size
-//@function GMUI_CreateSetDefaultArea() {
+///@function GMUI_CreateSetDefaultArea() {
 //UIsnaptoview = true;
 //UIgridview = 0;
 
