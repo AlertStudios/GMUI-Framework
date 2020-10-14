@@ -28,15 +28,19 @@ _lh = GMUI_GridGetHeight((_ctrl).GMUIP,(_ctrl).Layer);
 (_ctrl).RoomY = (_ctrl).ActualY + (_ctrl).RelativeY + (_GMUIP).GMUI_grid_y[(_ctrl).Layer] + _yoffset;
 
 // Width and height
-if ((_ctrl).ActualW > 0)
+if ((_ctrl).ActualW > 0) {
     (_ctrl).RoomW = (_ctrl).RoomX + (_ctrl).ActualW;
-else
+}
+else {
     (_ctrl).RoomW = (_ctrl).RoomX + (_ctrl).CellWide * (_GMUIP).cellsize;
+}
     
-if ((_ctrl).ActualH > 0)
+if ((_ctrl).ActualH > 0) {
     (_ctrl).RoomH = (_ctrl).RoomY + (_ctrl).ActualH;
-else
+}
+else {
     (_ctrl).RoomH = (_ctrl).RoomY + (_ctrl).CellHigh * (_GMUIP).cellsize_h;
+}
     
 // If the control has a tooltip, update the tooltip location (based on top-left)
 if ((_ctrl).TooltipId != -1) {

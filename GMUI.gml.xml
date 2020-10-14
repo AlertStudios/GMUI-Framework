@@ -292,7 +292,6 @@
           <file>GMUI_GroupSetScrollbar.gml</file>
           <file>GMUI_GroupSetScrollbarX.gml</file>
           <file>GMUI_GroupSetStyle.gml</file>
-          <file>GMUI_InitStudio.gml</file>
           <file>GMUI_IsControl.gml</file>
           <file>GMUI_IsControlID.gml</file>
           <file>GMUI_IsScript.gml</file>
@@ -314,7 +313,6 @@
           <file>GMUI_ShowMenuId.gml</file>
           <file>GMUI_ShowPopup.gml</file>
           <file>GMUI_ShowPopupId.gml</file>
-          <file>GMUI_StudioCheckDefined.gml</file>
           <file>GMUI_SurfaceResize.gml</file>
           <file>GMUI_ThrowError.gml</file>
           <file>GMUI_ThrowErrorDetailed.gml</file>

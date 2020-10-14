@@ -1,6 +1,6 @@
 ///GMUI_SetValue("ControlName", value, value type - string:0, integer:1, decimal:2)
 ///Set the value of a control to GMUI to reference in user code (GMUI_GetValue)
-function GMUI_SetValue(argument0,argument1) {
+function GMUI_SetValue(argument0,argument1,argument2) {
 
 with (GMUII())
 {

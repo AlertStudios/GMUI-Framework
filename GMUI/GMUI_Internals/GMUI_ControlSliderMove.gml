@@ -73,8 +73,10 @@ else {
     
 // Update actual value
 if (!argument0) {
-    if (real(value) != valueSetting)
-        GMUI_SetValue(valueName,valueSetting,2);
+    if (is_real(value)) {
+        if (real(value) != valueSetting)
+            GMUI_SetValue(valueName,valueSetting,2);
+    }
 }
 }
 

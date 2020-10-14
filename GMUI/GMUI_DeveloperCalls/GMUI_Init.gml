@@ -8,7 +8,7 @@
 // https://github.com/AlertStudios/GMUI-Framework
 //
 //
-function GMUI_Init() {
+function GMUI_Init(argument0) {
 
 // Index of global GMUI's
 global.GMUIii = 0;

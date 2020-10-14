@@ -1864,7 +1864,7 @@ else
 // https://github.com/AlertStudios/GMUI-Framework
 //
 //
-///@function GMUI_Init() {
+///@function GMUI_Init(argument0) {
 
 // Index of global GMUI's
 global.GMUIii = 0;
@@ -4525,7 +4525,7 @@ with (GMUII())
 #define GMUI_ControlSetAttributes
 ///GMUI_ControlSetAttributes(max string length(or 0 for none), max decimal length (if applicable), min value, max value, )
 ///Set the attributes of the control for the different types (to override the defaults)
-///@function GMUI_ControlSetAttributes(argument0,argument1,argument2,argument3,) {
+///@function GMUI_ControlSetAttributes(argument0,argument1,argument2,argument3) {
 if (!GMUI_IsControl() && id != GMUII())
 {
     GMUI_ThrowErrorDetailed("Invalid control", GMUI_ControlSetAttributes);
@@ -7691,7 +7691,7 @@ return true;
 #define GMUI_SetValue
 ///GMUI_SetValue("ControlName", value, value type - string:0, integer:1, decimal:2)
 ///Set the value of a control to GMUI to reference in user code (GMUI_GetValue)
-///@function GMUI_SetValue(argument0,argument1) {
+///@function GMUI_SetValue(argument0,argument1,argument2) {
 
 with (GMUII())
 {
@@ -9902,8 +9902,10 @@ else {
     
 // Update actual value
 if (!argument0) {
-    if (real(value) != valueSetting)
-        GMUI_SetValue(valueName,valueSetting,2);
+    if (is_real(value)) {
+        if (real(value) != valueSetting)
+            GMUI_SetValue(valueName,valueSetting,2);
+    }
 }
 ///@}
 
@@ -9965,15 +9967,19 @@ _lh = GMUI_GridGetHeight((_ctrl).GMUIP,(_ctrl).Layer);
 (_ctrl).RoomY = (_ctrl).ActualY + (_ctrl).RelativeY + (_GMUIP).GMUI_grid_y[(_ctrl).Layer] + _yoffset;
 
 // Width and height
-if ((_ctrl).ActualW > 0)
+if ((_ctrl).ActualW > 0) {
     (_ctrl).RoomW = (_ctrl).RoomX + (_ctrl).ActualW;
-else
+}
+else {
     (_ctrl).RoomW = (_ctrl).RoomX + (_ctrl).CellWide * (_GMUIP).cellsize;
+}
     
-if ((_ctrl).ActualH > 0)
+if ((_ctrl).ActualH > 0) {
     (_ctrl).RoomH = (_ctrl).RoomY + (_ctrl).ActualH;
-else
+}
+else {
     (_ctrl).RoomH = (_ctrl).RoomY + (_ctrl).CellHigh * (_GMUIP).cellsize_h;
+}
     
 // If the control has a tooltip, update the tooltip location (based on top-left)
 if ((_ctrl).TooltipId != -1) {
