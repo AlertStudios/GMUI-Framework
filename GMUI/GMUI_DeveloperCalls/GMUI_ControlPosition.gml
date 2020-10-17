@@ -2,7 +2,7 @@
 ///Set the relative positioning and sizing of the control within its cell
 function GMUI_ControlPosition(argument0,argument1,argument2,argument3,argument4,argument5) {
 
-var _ctrl,_anchor,_CellX,_CellY,_gridW,_gridH;
+var _ctrl,_Anchor,_CellX,_CellY,_gridW,_gridH;
 _CellX = argument1;
 _CellY = argument2;
 _Anchor = argument5;

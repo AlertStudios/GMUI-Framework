@@ -3,7 +3,7 @@
 function GMUI_GroupSetHidePosition(argument0,argument1,argument2,argument3,argument4) {
 
 //todo: get master control and set coordinates to it
-var _GMUI, _LayerNumber, _GroupNumber, _MasterControl;
+var _GMUI, _Layer, _Group, _MasterControl;
 _GMUI = GMUII();
 _Layer = UIAddToLayer;
 _Group = argument0;

@@ -3,7 +3,7 @@
 function GMUI_CreateMenuType(argument0,argument1,argument2,argument3,argument4,argument5,argument6) {
 
 // Arguments
-var _SCRIPT,_GMUI,_menuName,_CellX,_CellY,_CW,_CH,_Anchor,_menuNumber,_layerNumber, _menuType, _prevLayer;
+var _SCRIPT,_GMUI,_menuName,_CellX,_CellY,_CW,_CH,_Anchor,_menuNumber,_layerNumber, _prevLayer; //_menuType
 _SCRIPT = GMUI_CreateMenuType;
 _GMUI = GMUII();
 _menuScript = argument0;

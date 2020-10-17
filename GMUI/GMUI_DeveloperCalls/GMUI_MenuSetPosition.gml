@@ -1,6 +1,6 @@
 ///GMUI_MenuSetPosition("menu name", Cell X, Cell Y, X Adjustment, Y Adjustment)
 // Sets menu position
-function GMUI_MenuSetPosition(argument0,argument1,argument2,argument3,agument4) {
+function GMUI_MenuSetPosition(argument0,argument1,argument2,argument3,argument4) {
 
 // Get menu number and check its valid
 var _MenuName, _MenuNumber, _MenuLayer;

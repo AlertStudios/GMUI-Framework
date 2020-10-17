@@ -2,7 +2,7 @@
 ///Set the method for overflowing groups, and scrollbar with if necessary
 function GMUI_GroupSetOverflow(argument0,argument1,argument2) {
 
-var _GMUI, _Layer, _Group, _Direction, _DC;
+var _GMUI, _Layer, _Group, _Overflow;
 _GMUI = GMUII();
 _Layer = UIAddToLayer;
 _Group = argument0;
@@ -19,7 +19,7 @@ if (argument2 > 0) {
                 _GMUI.GMUI_groupMasterControl[_Layer,_Group].GroupHasScrollbar = true;
                 
                 if (_GMUI.UIInterfaceSet) {
-                    GMUI_GroupSetScrollbar(_GMUI,_LayerNumber,_GroupNumber,-1);
+                    GMUI_GroupSetScrollbar(_GMUI,_Layer,_Group,-1);
                 }
             }
         }

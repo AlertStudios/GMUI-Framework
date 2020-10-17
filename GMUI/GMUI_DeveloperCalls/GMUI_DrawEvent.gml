@@ -8,7 +8,7 @@ if (GMUI_GridEnabled())
     //do grid stuff:
     
     // Assign mouse values here to easily switch out later if needed
-    var MX, MY, GX, inRegion, onDirection, mouseHor, mouseVert, ctrlObject, clickOffEvent, mouseEvent;
+    var MX, MY, GX, inRegion, onDirection, ctrlObject, clickOffEvent, mouseEvent;
     MX = mouse_x;
     MY = mouse_y;
     GX = 0;
@@ -64,7 +64,7 @@ if (GMUI_GridEnabled())
                     }
                     else if (ctrlObject.ControlHasScrollbar) {
                         if (ctrlObject.Group > 0)
-                            _GX = GMUI_groupActualX[ctrlObject.Layer,ctrlObject.Group] * UIEnableSurfaces;
+                            GX = GMUI_groupActualX[ctrlObject.Layer,ctrlObject.Group] * UIEnableSurfaces;
                         if (MX >= ctrlObject.Scrollbar_x+GMUI_grid_x[ctrlObject.Layer] + GMUI_GridViewOffsetX(id) + _GX) {
                             ctrlObject.Scrollbar_hover = true;
                         }

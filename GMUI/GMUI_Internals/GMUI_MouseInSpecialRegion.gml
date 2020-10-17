@@ -1,6 +1,6 @@
-///GMUI_MouseInAdjustedSpecialRegion(Control Object, mouse x, mouse y)
+///GMUI_MouseInSpecialRegion(Control Object, mouse x, mouse y)
 /// Returns direction if mouse is in the adjusted region of the control
-function GMUI_MouseInAdjustedSpecialRegion(argument0,argument1,argument2) {
+function GMUI_MouseInSpecialRegion(argument0,argument1,argument2) {
 
 var _Control, _MX, _MY, _D, _CW, _CH, sizingW, sizingH, _xoffset, _yoffset;
 _Control = argument0;

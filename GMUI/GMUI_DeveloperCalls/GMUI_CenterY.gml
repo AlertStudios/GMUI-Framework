@@ -2,7 +2,7 @@
 ///Get X Cell of Anchor for centering on layer
 function GMUI_CenterY(argument0,argument1,argument2) {
 
-var _Layer, _CellsWide, _Anchor, _CenterCell, _HalfHeight, _LayerHeight;
+var _Layer, _CellsHigh, _Anchor, _CenterCell, _HalfHeight, _LayerHeight;
 _Layer = argument0;
 _CellsHigh = argument1;
 _Anchor = argument2;

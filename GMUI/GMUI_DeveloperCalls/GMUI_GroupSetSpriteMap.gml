@@ -25,55 +25,75 @@ if (!GMUI_GroupExists(_LayerNumber,_GroupNumber)) {
 }
 
 
-if (sprite_exists(argument1))
+if (sprite_exists(argument1)) {
     (GMUII()).GMUI_groupGraphicTop[_LayerNumber,_GroupNumber] = argument1;
-else
+}
+else {
     (GMUII()).GMUI_groupGraphicTop[_LayerNumber,_GroupNumber] = -1;
+}
     
-if (sprite_exists(argument2))
+if (sprite_exists(argument2)) {
     (GMUII()).GMUI_groupGraphicTopRight[_LayerNumber,_GroupNumber] = argument2;
-else
+}
+else {
     (GMUII()).GMUI_groupGraphicTopRight[_LayerNumber,_GroupNumber] = -1;
+}
 
-if (sprite_exists(argument3))
+if (sprite_exists(argument3)) {
     (GMUII()).GMUI_groupGraphicRight[_LayerNumber,_GroupNumber] = argument3;
-else
+}
+else {
     (GMUII()).GMUI_groupGraphicRight[_LayerNumber,_GroupNumber] = -1;
+}
     
-if (sprite_exists(argument4))
+if (sprite_exists(argument4)) {
     (GMUII()).GMUI_groupGraphicBottomRight[_LayerNumber,_GroupNumber] = argument4;
-else
+}
+else {
     (GMUII()).GMUI_groupGraphicBottomRight[_LayerNumber,_GroupNumber] = -1;
+}
     
-if (sprite_exists(argument5))
+if (sprite_exists(argument5)) {
     (GMUII()).GMUI_groupGraphicBottom[_LayerNumber,_GroupNumber] = argument5;
-else
+}
+else {
     (GMUII()).GMUI_groupGraphicBottom[_LayerNumber,_GroupNumber] = -1;
+}
     
-if (sprite_exists(argument6))
+if (sprite_exists(argument6)) {
     (GMUII()).GMUI_groupGraphicBottomLeft[_LayerNumber,_GroupNumber] = argument6;
-else
+}
+else {
     (GMUII()).GMUI_groupGraphicBottomLeft[_LayerNumber,_GroupNumber] = -1;
+}
     
-if (sprite_exists(argument7))
+if (sprite_exists(argument7)) {
     (GMUII()).GMUI_groupGraphicLeft[_LayerNumber,_GroupNumber] = argument7;
-else
+}
+else {
     (GMUII()).GMUI_groupGraphicLeft[_LayerNumber,_GroupNumber] = -1;
+}
     
-if (sprite_exists(argument8))
+if (sprite_exists(argument8)) {
     (GMUII()).GMUI_groupGraphicTopLeft[_LayerNumber,_GroupNumber] = argument8;
-else
+}
+else {
     (GMUII()).GMUI_groupGraphicTopLeft[_LayerNumber,_GroupNumber] = -1;
+}
     
-if (sprite_exists(argument9))
+if (sprite_exists(argument9)) {
     (GMUII()).GMUI_groupGraphicCenter[_LayerNumber,_GroupNumber] = argument9;
-else
+}
+else {
     (GMUII()).GMUI_groupGraphicCenter[_LayerNumber,_GroupNumber] = -1;
+}
     
-if (is_real(argument10))
+if (is_real(argument10)) {
     (GMUII()).GMUI_groupGraphicCenterIsFixed[_LayerNumber,_GroupNumber] = !(argument10 < 1);
-else
+}
+else {
     (GMUII()).GMUI_groupGraphicCenterIsFixed[_LayerNumber,_GroupNumber] = 0;
+}
     
     
 

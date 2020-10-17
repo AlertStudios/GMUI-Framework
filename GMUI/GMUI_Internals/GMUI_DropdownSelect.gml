@@ -5,7 +5,7 @@ function GMUI_DropdownSelect(argument0,argument1) {
 
 // 1. values from parent (control) to use to create new control
 
-var _Control,_isOpening,_Layer,_SLName,_checkSL,_newSL,_newCellY,_newCellHigh;
+var _Control,_isOpening,_SLName,_checkSL,_newSL,_newCellY,_newCellHigh;
 
 _Control = argument0;
 _isOpening = argument1;

@@ -151,7 +151,7 @@ if (Group > 0) {
             else if (Scrollbar_hover) {
                 if (mouse_x != GMUIP.mouse_px || mouse_y != GMUIP.mouse_py) {
                     // Check to un-hover
-                    if (GMUI_GroupMouseOnScrollbar(GMUIP, MX) != id) {
+                    if (GMUI_GroupMouseOnScrollbar(GMUIP, mouse_x) != id) {
                         Scrollbar_hover = false;
                     }
                 }
@@ -599,7 +599,7 @@ if (argument0 == true) {
             dtx = RoomW - padx;
         else if (ControlFontAlign != fa_left) {
             ControlFontAlign = (GMUIP).ControlFontAlign;
-            GMUI_ThrowErrorDetailed("Invalid font align",GMUI_ControlDraw);
+            GMUI_ThrowErrorDetailed("Invalid font align",GMUI_ControlDrawEvent);
         }
         
         if (ActualH > 0)

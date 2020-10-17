@@ -2,7 +2,7 @@
 ///Draws the group if set to do any drawing - Called by master control of group
 function GMUI_ControlDrawGroup(argument0,argument1,argument2,argument3,argument4) {
 
-var _GMUII, _layer, _group, gx, gy, gw, gh, _fadeMode;
+var _GMUII, _layer, _group, _alpha, _fadeMode;
 _GMUII = argument0;
 _layer = argument1;
 _group = argument2;

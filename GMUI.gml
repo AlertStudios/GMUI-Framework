@@ -1,9 +1,11 @@
 #define _Debug_Button
 // Show/hide debug for the first interface
-if ((GMUIid(1)).DebugData)
+if ((GMUIid(1)).DebugData) {
     (GMUIid(1)).DebugData = false;
-else
+}
+else {
     (GMUIid(1)).DebugData = true;
+}
 
 #define _Disable_Button
 
@@ -177,11 +179,7 @@ t1 = GMUI_GetValueString("Test1");
 t2 = GMUI_GetValueString("Test2");
 t3 = GMUI_GetValueString("Test3");
 t4 = GMUI_GetValueString("Test4");
-show_message("Result:
-" + t1 + "
-" + t2 + "
-" + t3 + "
-" + t4);
+show_message("Result:\n" + t1 + "\n" + t2 + "\n" + t3 + "\n" + t4);
 
 #define _Show_Group
 // Uses an argument to determine which group to show
@@ -2204,7 +2202,7 @@ GMUI_CloseMenu(true);
 /// Bounce Ease for moving controls smoothly
 ///@function easeBounceOut(argument0,argument1,argument2,argument3) {
 
-var t,_b,_c,_d;
+var _t,_b,_c,_d;
 
 _t = argument0;
 _b = argument1;
@@ -2503,8 +2501,8 @@ GMUI_ControlTransitionToActual(argument0,_ActualX,_ActualY,argument3,argument4);
 ///@}
 
 #define GMUI_ControlTransitionToActual
-///GMUI_ControlTranstionToActual("ControlName",Grid X, Grid Y, Transition Script, Time)
-///@function GMUI_ControlTranstionToActual(argument0,argument1,argument2,argument3,argument4) {
+///GMUI_ControlTransitionToActual("ControlName",Grid X, Grid Y, Transition Script, Time)
+///@function GMUI_ControlTransitionToActual(argument0,argument1,argument2,argument3,argument4) {
 
 var _ctrl, _GridX, _GridY;
 _GridX = argument1;
@@ -3168,7 +3166,7 @@ else
 ///Get X Cell of Anchor for centering on layer
 ///@function GMUI_CenterY(argument0,argument1,argument2) {
 
-var _Layer, _CellsWide, _Anchor, _CenterCell, _HalfHeight, _LayerHeight;
+var _Layer, _CellsHigh, _Anchor, _CenterCell, _HalfHeight, _LayerHeight;
 _Layer = argument0;
 _CellsHigh = argument1;
 _Anchor = argument2;
@@ -3638,7 +3636,7 @@ if (Group > 0) {
             else if (Scrollbar_hover) {
                 if (mouse_x != GMUIP.mouse_px || mouse_y != GMUIP.mouse_py) {
                     // Check to un-hover
-                    if (GMUI_GroupMouseOnScrollbar(GMUIP, MX) != id) {
+                    if (GMUI_GroupMouseOnScrollbar(GMUIP, mouse_x) != id) {
                         Scrollbar_hover = false;
                     }
                 }
@@ -4086,7 +4084,7 @@ if (argument0 == true) {
             dtx = RoomW - padx;
         else if (ControlFontAlign != fa_left) {
             ControlFontAlign = (GMUIP).ControlFontAlign;
-            GMUI_ThrowErrorDetailed("Invalid font align",GMUI_ControlDraw);
+            GMUI_ThrowErrorDetailed("Invalid font align",GMUI_ControlDrawEvent);
         }
         
         if (ActualH > 0)
@@ -4388,7 +4386,7 @@ else {
 ///Set the relative positioning and sizing of the control within its cell
 ///@function GMUI_ControlPosition(argument0,argument1,argument2,argument3,argument4,argument5) {
 
-var _ctrl,_anchor,_CellX,_CellY,_gridW,_gridH;
+var _ctrl,_Anchor,_CellX,_CellY,_gridW,_gridH;
 _CellX = argument1;
 _CellY = argument2;
 _Anchor = argument5;
@@ -4601,7 +4599,7 @@ return false;
 #define GMUI_ControlSetButtonAction1
 ///GMUI_ControlSetButtonAction1(Action Script, script argument0)
 // Set the control button action, also with an argument
-///@function GMUI_ControlSetButtonAction1(argumetn0,argument1) {
+///@function GMUI_ControlSetButtonAction1(argument0,argument1) {
 if (!GMUI_IsControl() && id != GMUII())
 {
     GMUI_ThrowErrorDetailed("Invalid control", GMUI_ControlSetButtonAction1);
@@ -5819,7 +5817,7 @@ GMUI_CreateMenuType(_SCRIPT,string(argument0),_CellX,_CellY,argument3,argument4,
 #define GMUI_CreatePopup
 ///GMUI_CreatePopup (popup name, cell# x, cell# y, cells wide, cells high, Anchor, global.GMUIPopup...)
 ///Adds a popup to a GMUI layer that has typical control options for prompt
-///@function GMUI_CreatePopup(argument0,argument1,argument2,argument3,argument4,argument5) {
+///@function GMUI_CreatePopup(argument0,argument1,argument2,argument3,argument4,argument5,argument6) {
 
 // Arguments
 var _SCRIPT,_CellX,_CellY,_menu,_name;
@@ -6008,7 +6006,7 @@ if (GMUI_GridEnabled())
     //do grid stuff:
     
     // Assign mouse values here to easily switch out later if needed
-    var MX, MY, GX, inRegion, onDirection, mouseHor, mouseVert, ctrlObject, clickOffEvent, mouseEvent;
+    var MX, MY, GX, inRegion, onDirection, ctrlObject, clickOffEvent, mouseEvent;
     MX = mouse_x;
     MY = mouse_y;
     GX = 0;
@@ -6064,7 +6062,7 @@ if (GMUI_GridEnabled())
                     }
                     else if (ctrlObject.ControlHasScrollbar) {
                         if (ctrlObject.Group > 0)
-                            _GX = GMUI_groupActualX[ctrlObject.Layer,ctrlObject.Group] * UIEnableSurfaces;
+                            GX = GMUI_groupActualX[ctrlObject.Layer,ctrlObject.Group] * UIEnableSurfaces;
                         if (MX >= ctrlObject.Scrollbar_x+GMUI_grid_x[ctrlObject.Layer] + GMUI_GridViewOffsetX(id) + _GX) {
                             ctrlObject.Scrollbar_hover = true;
                         }
@@ -6579,7 +6577,7 @@ return true;
 ///GMUI_GroupHideOverflow(Group)
 ///Set the method for overflowing groups, and scrollbar with if necessary
 ///@function GMUI_GroupHideOverflow(argument0) {
-var _GMUI, _Layer, _Group, _Direction, _MC;
+var _GMUI, _Layer, _Group; //_Direction, _MC
 _GMUI = GMUII();
 _Layer = UIAddToLayer;
 _Group = argument0;
@@ -6712,7 +6710,7 @@ GMUI_groupCellsH[_LayerNumber,_GroupNumber] = max(1,
 ///Set the method for overflowing groups, and scrollbar with if necessary
 ///@function GMUI_GroupSetOverflow(argument0,argument1,argument2) {
 
-var _GMUI, _Layer, _Group, _Direction, _DC;
+var _GMUI, _Layer, _Group, _Overflow;
 _GMUI = GMUII();
 _Layer = UIAddToLayer;
 _Group = argument0;
@@ -6729,7 +6727,7 @@ if (argument2 > 0) {
                 _GMUI.GMUI_groupMasterControl[_Layer,_Group].GroupHasScrollbar = true;
                 
                 if (_GMUI.UIInterfaceSet) {
-                    GMUI_GroupSetScrollbar(_GMUI,_LayerNumber,_GroupNumber,-1);
+                    GMUI_GroupSetScrollbar(_GMUI,_Layer,_Group,-1);
                 }
             }
         }
@@ -6853,55 +6851,75 @@ if (!GMUI_GroupExists(_LayerNumber,_GroupNumber)) {
 }
 
 
-if (sprite_exists(argument1))
+if (sprite_exists(argument1)) {
     (GMUII()).GMUI_groupGraphicTop[_LayerNumber,_GroupNumber] = argument1;
-else
+}
+else {
     (GMUII()).GMUI_groupGraphicTop[_LayerNumber,_GroupNumber] = -1;
+}
     
-if (sprite_exists(argument2))
+if (sprite_exists(argument2)) {
     (GMUII()).GMUI_groupGraphicTopRight[_LayerNumber,_GroupNumber] = argument2;
-else
+}
+else {
     (GMUII()).GMUI_groupGraphicTopRight[_LayerNumber,_GroupNumber] = -1;
+}
 
-if (sprite_exists(argument3))
+if (sprite_exists(argument3)) {
     (GMUII()).GMUI_groupGraphicRight[_LayerNumber,_GroupNumber] = argument3;
-else
+}
+else {
     (GMUII()).GMUI_groupGraphicRight[_LayerNumber,_GroupNumber] = -1;
+}
     
-if (sprite_exists(argument4))
+if (sprite_exists(argument4)) {
     (GMUII()).GMUI_groupGraphicBottomRight[_LayerNumber,_GroupNumber] = argument4;
-else
+}
+else {
     (GMUII()).GMUI_groupGraphicBottomRight[_LayerNumber,_GroupNumber] = -1;
+}
     
-if (sprite_exists(argument5))
+if (sprite_exists(argument5)) {
     (GMUII()).GMUI_groupGraphicBottom[_LayerNumber,_GroupNumber] = argument5;
-else
+}
+else {
     (GMUII()).GMUI_groupGraphicBottom[_LayerNumber,_GroupNumber] = -1;
+}
     
-if (sprite_exists(argument6))
+if (sprite_exists(argument6)) {
     (GMUII()).GMUI_groupGraphicBottomLeft[_LayerNumber,_GroupNumber] = argument6;
-else
+}
+else {
     (GMUII()).GMUI_groupGraphicBottomLeft[_LayerNumber,_GroupNumber] = -1;
+}
     
-if (sprite_exists(argument7))
+if (sprite_exists(argument7)) {
     (GMUII()).GMUI_groupGraphicLeft[_LayerNumber,_GroupNumber] = argument7;
-else
+}
+else {
     (GMUII()).GMUI_groupGraphicLeft[_LayerNumber,_GroupNumber] = -1;
+}
     
-if (sprite_exists(argument8))
+if (sprite_exists(argument8)) {
     (GMUII()).GMUI_groupGraphicTopLeft[_LayerNumber,_GroupNumber] = argument8;
-else
+}
+else {
     (GMUII()).GMUI_groupGraphicTopLeft[_LayerNumber,_GroupNumber] = -1;
+}
     
-if (sprite_exists(argument9))
+if (sprite_exists(argument9)) {
     (GMUII()).GMUI_groupGraphicCenter[_LayerNumber,_GroupNumber] = argument9;
-else
+}
+else {
     (GMUII()).GMUI_groupGraphicCenter[_LayerNumber,_GroupNumber] = -1;
+}
     
-if (is_real(argument10))
+if (is_real(argument10)) {
     (GMUII()).GMUI_groupGraphicCenterIsFixed[_LayerNumber,_GroupNumber] = !(argument10 < 1);
-else
+}
+else {
     (GMUII()).GMUI_groupGraphicCenterIsFixed[_LayerNumber,_GroupNumber] = 0;
+}
     
     
 
@@ -7332,7 +7350,7 @@ _GMUI.GMUI_groupOverflow[_Layer,_menuNumber] = max(0,argument1);
 #define GMUI_MenuSetPosition
 ///GMUI_MenuSetPosition("menu name", Cell X, Cell Y, X Adjustment, Y Adjustment)
 // Sets menu position
-///@function GMUI_MenuSetPosition(argument0,argument1,argument2,argument3,agument4) {
+///@function GMUI_MenuSetPosition(argument0,argument1,argument2,argument3,argument4) {
 
 // Get menu number and check its valid
 var _MenuName, _MenuNumber, _MenuLayer;
@@ -8195,7 +8213,7 @@ GMUI_ControlSetButton("", -1, -1, -1);
 ///Draws the group if set to do any drawing - Called by master control of group
 ///@function GMUI_ControlDrawGroup(argument0,argument1,argument2,argument3,argument4) {
 
-var _GMUII, _layer, _group, gx, gy, gw, gh, _fadeMode;
+var _GMUII, _layer, _group, _alpha, _fadeMode;
 _GMUII = argument0;
 _layer = argument1;
 _group = argument2;
@@ -10010,7 +10028,7 @@ if ((_ctrl).ControlHasScrollbar && !_GMUIP.UIEnableSurfaces) {
 ///@function GMUI_CreateMenuType(argument0,argument1,argument2,argument3,argument4,argument5,argument6) {
 
 // Arguments
-var _SCRIPT,_GMUI,_menuName,_CellX,_CellY,_CW,_CH,_Anchor,_menuNumber,_layerNumber, _menuType, _prevLayer;
+var _SCRIPT,_GMUI,_menuName,_CellX,_CellY,_CW,_CH,_Anchor,_menuNumber,_layerNumber, _prevLayer; //_menuType
 _SCRIPT = GMUI_CreateMenuType;
 _GMUI = GMUII();
 _menuScript = argument0;
@@ -10197,7 +10215,7 @@ else {
 
 // 1. values from parent (control) to use to create new control
 
-var _Control,_isOpening,_Layer,_SLName,_checkSL,_newSL,_newCellY,_newCellHigh;
+var _Control,_isOpening,_SLName,_checkSL,_newSL,_newCellY,_newCellHigh;
 
 _Control = argument0;
 _isOpening = argument1;
@@ -11195,7 +11213,7 @@ return (ds_list_find_index((GMUII()).GMUI_groupList[L],G) != -1);
 ///Adds the control handling the scrollbar to the list if it doesnt exist
 ///@function GMUI_GroupMouseOnScrollbar(argument0,argument1) {
 
-var _GMUI, _Si, _SBC, _L, _G, _MX;
+var _GMUI, _Si, _SBC, _L, _MX;
 _GMUI = argument0;
 _MX = argument1;
 _L = _GMUI.UILayer;
@@ -11204,7 +11222,7 @@ for(_Si=0;_Si<ds_list_size(_GMUI.GMUI_groupScrollbars);_Si+=1) {
     _SBC = ds_list_find_value(_GMUI.GMUI_groupScrollbars,_Si);
     if (GMUI_StudioCheckDefined(_SBC)) {
         if (GMUI_MouseInGroupRegion(_SBC.Group,_SBC.Layer)) {
-            _MC = _GMUI.GMUI_groupMasterControl[_SBC.Layer,_SBC.Group];
+            //_MC = _GMUI.GMUI_groupMasterControl[_SBC.Layer,_SBC.Group];
             // Calculated: X + W - scrollbar W - gridX - offset
             if (_MX >= _SBC.Scrollbar_x) {
                 return _SBC;
@@ -11224,7 +11242,7 @@ return -1;
 ///@function GMUI_GroupSetHidePosition(argument0,argument1,argument2,argument3,argument4) {
 
 //todo: get master control and set coordinates to it
-var _GMUI, _LayerNumber, _GroupNumber, _MasterControl;
+var _GMUI, _Layer, _Group, _MasterControl;
 _GMUI = GMUII();
 _Layer = UIAddToLayer;
 _Group = argument0;
@@ -11734,9 +11752,9 @@ else
 ///@}
 
 #define GMUI_MouseInSpecialRegion
-///GMUI_MouseInAdjustedSpecialRegion(Control Object, mouse x, mouse y)
+///GMUI_MouseInSpecialRegion(Control Object, mouse x, mouse y)
 /// Returns direction if mouse is in the adjusted region of the control
-///@function GMUI_MouseInAdjustedSpecialRegion(argument0,argument1,argument2) {
+///@function GMUI_MouseInSpecialRegion(argument0,argument1,argument2) {
 
 var _Control, _MX, _MY, _D, _CW, _CH, sizingW, sizingH, _xoffset, _yoffset;
 _Control = argument0;

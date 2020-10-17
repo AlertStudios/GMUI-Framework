@@ -2,7 +2,7 @@
 /// Bounce Ease for moving controls smoothly
 function easeBounceOut(argument0,argument1,argument2,argument3) {
 
-var t,_b,_c,_d;
+var _t,_b,_c,_d;
 
 _t = argument0;
 _b = argument1;
