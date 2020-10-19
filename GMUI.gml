@@ -309,7 +309,7 @@ with (GMUI_Add("test13","textstring",10,1,12,2,global.GMUIAnchorTopLeft)) {
 
 with (GMUI_Add("Test2", "textint",              0,0,    10,2,   global.GMUIAnchorTopLeft)) {
     GMUI_ControlSetAttributes(5,0,-1000,1000);
-    GMUI_ControlSetStyle(hsv(85,55,255),rgb(20,20,20),-1,-1,-1,-1,-1,-1,-1,-1);
+    GMUI_ControlSetStyle(GMUIhsv(85,55,255),GMUIrgb(20,20,20),-1,-1,-1,-1,-1,-1,-1,-1);
     GMUI_ControlAddToGroup(2);
 }
 /*
@@ -796,7 +796,7 @@ GMUI_ControlAddToGroup(3);
 
 with (GMUI_Add("IntegerText", "textint",              1,4,    10,2,   global.GMUIAnchorTopLeft)) {
     GMUI_ControlSetAttributes(5,0,-1000,1000);
-    GMUI_ControlSetStyle(hsv(85,55,255),rgb(20,20,20),-1,-1,-1,-1,-1,-1,-1,-1);
+    GMUI_ControlSetStyle(GMUIhsv(85,55,255),GMUIrgb(20,20,20),-1,-1,-1,-1,-1,-1,-1,-1);
     GMUI_ControlAddToGroup(3);
 }
 
@@ -1342,7 +1342,7 @@ with (GMUI_Add("SpriteText","textstring",            1,1,    16,2,   global.GMUI
 
 with (GMUI_Add("IntegerText", "textint",              1,4,    10,2,   global.GMUIAnchorTopLeft)) {
     GMUI_ControlSetAttributes(5,0,-1000,1000);
-    GMUI_ControlSetStyle(hsv(85,55,255),rgb(20,20,20),-1,-1,-1,-1,-1,-1,-1,-1);
+    GMUI_ControlSetStyle(GMUIhsv(85,55,255),GMUIrgb(20,20,20),-1,-1,-1,-1,-1,-1,-1,-1);
     GMUI_ControlAddToGroup(3);
 }
 
@@ -1801,8 +1801,8 @@ GMUI_PopupSetHidePosition("Test Popup", -14, 0, easeExpOut, room_speed/4);
 // overwrite color, overwrite alpha, select color, select alpha, 
 // showcursor)
 GMUI_ControlSetStyle(
-    rgb(250,250,255),hsv(135,30,100),rgb(20,160,230),true,0.5,
-    rgb(40,40,40),0.1,rgb(240,140,40),0.3,
+    GMUIrgb(250,250,255),GMUIhsv(135,30,100),GMUIrgb(20,160,230),true,0.5,
+    GMUIrgb(40,40,40),0.1,GMUIrgb(240,140,40),0.3,
     true
     );
     
@@ -1811,7 +1811,7 @@ GMUI_ControlSetSpriteExt(-1,0,0,0,1,1,c_white,1);
 GMUI_ControlSetSpriteMap(-1,-1,-1,-1,-1,-1,-1,-1,-1,false);
 
 // Default font style (font, font color, font align)
-GMUI_ControlSetFontStyle(fontNumeric,rgb(42,42,42), fa_left);
+GMUI_ControlSetFontStyle(fontNumeric,GMUIrgb(42,42,42), fa_left);
 
 // Set the default control attributes(id, Max string length/Whole number padding(KEEP @ 0!), max decimal (if applicable), Min value, Max value)
 GMUI_ControlSetAttributes(0,0,0,999);
@@ -2044,7 +2044,7 @@ else
 ///@function GMUI_SetKeyNavigation(argument0, argument1, argument2, argument3, argument4, argument5) {
 
 var _navdir, _back, _forward, _backalt, _forwardalt, _allowtab;
-_navdir = minmax(argument0,0,2); // 3 and 2 count as the same
+_navdir = GMUIminmax(argument0,0,2); // 3 and 2 count as the same
 _back = argument1;
 _forward = argument2;
 _backalt = argument3;
@@ -2662,35 +2662,41 @@ with (GMUII()) {
 return true;
 ///@}
 
-#define hsv
-///hsv(hue, saturation, value) Shortcut for making an hsv based color
-///@function hsv(argument0,argument1,argument2) {
+#define GMUIhsv
+///@function GMUIhsv(argument0,argument1,argument2) {
+///(hue, saturation, value)
+/// Shortcut for making an hsv based color
+
 return make_color_hsv(argument0,argument1,argument2);
 ///@}
 
-#define rgb
-///rgb(red, green, blue) Shortcut for making a rgb based color
-///@function rgb(argument0,argument1,argument2) {
+#define GMUIrgb
+///@function GMUIrgb(argument0,argument1,argument2) {
+///(red, green, blue) Shortcut for making a rgb based color
+
 return make_color_rgb(argument0,argument1,argument2);
 ///@}
 
-#define color_alpha
-///color_alpha(color, alpha) Shortcut to set the color and alpha in one call
-///@function color_alpha(argument0,argument1) {
+#define GMUIcolor_alpha
+///@function GMUIcolor_alpha(argument0,argument1) {
+///(color, alpha)
+/// Shortcut to set the color and alpha in one call
 draw_set_color(argument0);
 draw_set_alpha(argument1);
 ///@}
 
-#define align
-///align(left align, right align) Shortcut to set both horizontal and vertical align in one call
-///@function align(argument0,argument1) {
+#define GMUIalign
+///@function GMUIalign(argument0,argument1) {
+///(left align, right align)
+/// Shortcut to set both horizontal and vertical align in one call
 draw_set_halign(argument0);
 draw_set_valign(argument1);
 ///@}
 
-#define minmax
-///minmax(original value, minimum value, maximum value) Shortcut to keep the value within the min & max range given
-///@function minmax(argument0,argument1,argument2) {
+#define GMUIminmax
+///@function GMUIminmax(argument0,argument1,argument2) {
+///(original value, minimum value, maximum value)
+/// Shortcut to keep the value within the min & max range given
 if (is_real(argument0))
     return min(max(argument0,argument1),argument2);
 else
@@ -3626,7 +3632,7 @@ if (Group > 0) {
                 if (mouse_check_button(mb_left)) {
                     // Recalculate drag position (from GMUI_GridGetCellYOffset)
                     // may need to apply offset here
-                    Scrollbar_y = minmax(Scrollbar_padding,Scrollbar_maxtop,//todo: test for group and non-group control
+                    Scrollbar_y = GMUIminmax(Scrollbar_padding,Scrollbar_maxtop,//todo: test for group and non-group control
                         mouse_y - GMUIP.GMUI_grid_y[Layer] - GMUI_groupActualY[Layer,Group] - Scrollbar_drag_y);
                 }
                 else {
@@ -3931,13 +3937,13 @@ if (argument0 == true) {
             else if (ControlType != "image") {
                 // Background
                 if (ControlBackgroundColor > -1) {
-                    color_alpha(ControlBackgroundColor,_BackgroundAlpha);
+                    GMUIcolor_alpha(ControlBackgroundColor,_BackgroundAlpha);
                     draw_rectangle(RoomX, RoomY, RoomW, RoomH, 0);
                 }
                 
                 // Border
                 if (ControlBorderColor > -1) {
-                    color_alpha(ControlBorderColor,_BackgroundAlpha);
+                    GMUIcolor_alpha(ControlBorderColor,_BackgroundAlpha);
                     draw_rectangle(RoomX, RoomY, RoomW, RoomH, 1);
                 }
             
@@ -3945,9 +3951,9 @@ if (argument0 == true) {
                 if (Hovering || Selected) {
                     // Draw the hovering effect
                     if (!Selected && ControlHoverColor > -1)
-                        color_alpha(ControlHoverColor,_HoverAlpha);
+                        GMUIcolor_alpha(ControlHoverColor,_HoverAlpha);
                     else if (ControlSelectColor > -1)
-                        color_alpha(ControlSelectColor,_SelectAlpha);
+                        GMUIcolor_alpha(ControlSelectColor,_SelectAlpha);
                         
                     if ((!Selected && ControlHoverColor > -1) || (Selected && ControlSelectColor > -1))
                     draw_rectangle(RoomX+1,RoomY+1,RoomW-1,RoomH-1, ControlHoverBorder);
@@ -3955,7 +3961,7 @@ if (argument0 == true) {
                 
                 if (DoubleSelected && ControlInput && ControlOverwriteColor > -1) {
                     // Draw 'Overwrite' affect
-                    color_alpha(ControlOverwriteColor,_OverwriteAlpha);
+                    GMUIcolor_alpha(ControlOverwriteColor,_OverwriteAlpha);
                     draw_rectangle(RoomX+2,RoomY+2,RoomW-2,RoomH-2,0);
                 }
                 
@@ -3964,7 +3970,7 @@ if (argument0 == true) {
                     _dax1 = RoomW-ControlPickerWidth/2;
                     _dhh = (RoomH-RoomY)/2;
                     _day2 = RoomH-ControlPickerHeight/3;
-                    color_alpha(ControlBorderColor, 1);
+                    GMUIcolor_alpha(ControlBorderColor, 1);
                     draw_triangle(_dax1,_day2-ControlPickerHeight/3,
                         _dax1-ControlPickerWidth/4,_day2-_dhh,_dax1+ControlPickerWidth/4,_day2-_dhh,0);
                 }
@@ -4021,7 +4027,7 @@ if (argument0 == true) {
             if (ControlPickerSpriteRightOrUp > -1)
                 draw_sprite_ext(ControlPickerSpriteRightOrUp,0,_ax1,_ay1,1,1,0,c_white,_BackgroundAlpha);
             else {
-                color_alpha(ControlBorderColor, 1);
+                GMUIcolor_alpha(ControlBorderColor, 1);
                 if (ControlPickerDirection == global.GMUIDirectionTypeHorizontal)
                     draw_triangle(_ax1-ControlPickerWidth/4,_ay1,
                         _ax1-ControlPickerWidth/2,_ay1-_hh/2,_ax1-ControlPickerWidth/2,_ay1+_hh/2,0);
@@ -4032,7 +4038,7 @@ if (argument0 == true) {
             if (ControlPickerSpriteLeftOrDown > -1)
                 draw_sprite_ext(ControlPickerSpriteLeftOrDown,0,_ax2,_ay2,1,1,0,c_white,_BackgroundAlpha);
             else {
-                color_alpha(ControlBorderColor, 1);
+                GMUIcolor_alpha(ControlBorderColor, 1);
                 if (ControlPickerDirection == global.GMUIDirectionTypeHorizontal)
                     draw_triangle(_ax2+ControlPickerWidth/4,_ay1,
                         _ax2+ControlPickerWidth/2,_ay1-_hh/2,_ax2+ControlPickerWidth/2,_ay1+_hh/2,0);
@@ -4042,7 +4048,7 @@ if (argument0 == true) {
             }
             
             // Top arrow and bottom arrow selection regions
-            color_alpha(ControlHoverColor,_HoverAlpha);
+            GMUIcolor_alpha(ControlHoverColor,_HoverAlpha);
             if (ControlPickerDirection == global.GMUIDirectionTypeHorizontal) {
                 if (HoveringDirection == global.GMUIHoveringDirection_Right)
                     draw_rectangle(_ax3,RoomY+1,RoomW-1,RoomH,0);
@@ -4095,13 +4101,13 @@ if (argument0 == true) {
         // Set control font and alignment
         if (ControlFont != noone)
             draw_set_font(ControlFont);
-        align(ControlFontAlign,ControlFontAlignV);
+        GMUIalign(ControlFontAlign,ControlFontAlignV);
         
         // Specific controls may override display
         if (ControlDataType == global.GMUIDataTypeButton && ControlButtonTextHoveringOn && Hovering)
-            color_alpha(ControlButtonTextHoverColor,_FontAlpha);
+            GMUIcolor_alpha(ControlButtonTextHoverColor,_FontAlpha);
         else
-            color_alpha(ControlFontColor,_FontAlpha);
+            GMUIcolor_alpha(ControlFontColor,_FontAlpha);
             
         // TEMPORARY SOLUTION FOR DISABLED CONTROLS! :
         if (Disabled)
@@ -5091,23 +5097,23 @@ SliderStyle = round(argument1);
 if (argument2 >= 0)
 SliderBackgroundColor = argument2;
 if (argument3 >= 0)
-SliderBackgroundAlpha = minmax(argument3,0,1);
+SliderBackgroundAlpha = GMUIminmax(argument3,0,1);
 if (argument4 >= 0)
 SliderColor = argument4;
 if (argument5 >= 0)
-SliderAlpha = minmax(argument5,0,1);
+SliderAlpha = GMUIminmax(argument5,0,1);
 if (argument6 >= 0)
 SliderBorderColor = argument6;
 if (argument7 >= 0)
-SliderBorderAlpha = minmax(argument7,0,1);
+SliderBorderAlpha = GMUIminmax(argument7,0,1);
 if (argument8 >= 0)
 SliderSelectColor = argument8;
 if (argument9 >= 0)
-SliderSelectAlpha = minmax(argument9,0,1);
+SliderSelectAlpha = GMUIminmax(argument9,0,1);
 if (argument10 >= 0)
 SliderTickColor = argument10;
 if (argument11 >= 0)
-SliderTickAlpha = minmax(argument11,0,1);
+SliderTickAlpha = GMUIminmax(argument11,0,1);
 
 
 
@@ -5291,7 +5297,7 @@ ControlHoverColor = argument2;
 if (argument3 >= 0)
 ControlHoverBorder = argument3; // Draw a second border on hover (1), or rectangle over control (0)
 if (argument4 >= 0)
-ControlHoverAlpha = minmax(argument4,0,1);
+ControlHoverAlpha = GMUIminmax(argument4,0,1);
 if (argument5 >= 0)
 ControlOverwriteColor = argument5;
 if (argument6 >= 0)
@@ -5324,7 +5330,7 @@ if (!GMUI_IsControl() && id != GMUII())
 var str_h;
 str_h = string_height_ext(argument0,-1,CellWide*GMUIP.cellsize-ControlPaddingX*2);
 
-CellHigh = minmax(ceil(str_h/GMUIP.cellsize_h),CellHigh,CellHighMax);
+CellHigh = GMUIminmax(ceil(str_h/GMUIP.cellsize_h),CellHigh,CellHighMax);
 
 GMUI_GridUpdateLayer(GMUIP,Layer);
 
@@ -6407,7 +6413,7 @@ if (DebugData && !RemovingGMUI) {
     yoffset = GMUI_GridViewOffsetY(GMUII());
     
     // draw the grid lines 
-    color_alpha(c_black,0.1);
+    GMUIcolor_alpha(c_black,0.1);
     for (w=0;w<gridW;w+=1) {
         draw_line(w*cellsize+(GMUII()).GMUI_grid_x[0]+xoffset,yoffset,w*cellsize+(GMUII()).GMUI_grid_x[0]+xoffset,(GMUII()).UIgridheight+yoffset);
     }
@@ -6417,8 +6423,8 @@ if (DebugData && !RemovingGMUI) {
     
     // draw the errors
     if (GMUI_ErrorNumber > 0) {
-        color_alpha(c_red,0.5);
-        align(fa_center,fa_bottom);
+        GMUIcolor_alpha(c_red,0.5);
+        GMUIalign(fa_center,fa_bottom);
         draw_text_ext(view_wview[0]/2+xoffset,view_hview[0]-64+yoffset,
             string(GMUI_ErrorNumber) + ".) " + GMUI_LastError(), -1, view_wview[0]-32);
     }
@@ -6426,11 +6432,11 @@ if (DebugData && !RemovingGMUI) {
     var groupId, _layer, i, m, ff, ffo;
     
     // draw the group boundaries
-    color_alpha(c_green,0.5);
+    GMUIcolor_alpha(c_green,0.5);
     for(i=0;i<ds_list_size((GMUII()).GMUI_gridlist);i+=1) {
         _layer = ds_list_find_value((GMUII()).GMUI_gridlist,i);
         if (_layer >= (GMUII()).GMUI_menu_layer)
-            color_alpha(c_lime,0.25);
+            GMUIcolor_alpha(c_lime,0.25);
         
         for(j=0;j<ds_list_size((GMUII()).GMUI_groupList[_layer]);j+=1) {
             groupId = ds_list_find_value((GMUII()).GMUI_groupList[_layer],j);
@@ -6447,7 +6453,7 @@ if (DebugData && !RemovingGMUI) {
     }
     
     // draw control lines
-    color_alpha(c_red,0.8);
+    GMUIcolor_alpha(c_red,0.8);
     with (GMUI_controlobject) {
         if (ControlType == "label" && GMUIP == GMUII()) {
             draw_rectangle(RoomX, RoomY, RoomW, RoomH, 1);
@@ -6973,13 +6979,13 @@ with ((GMUII()).GMUI_groupMasterControl[UIAddToLayer,_Group]) {
     if (argument1 >= 0)
     GroupBackgroundColor = argument1;
     if (argument2 >= 0)
-    GroupBackgroundAlpha = minmax(argument2,0,1);
+    GroupBackgroundAlpha = GMUIminmax(argument2,0,1);
     if (argument3 >= 0)
     GroupBorderColor = argument3;
     if (argument4 >= 0)
-    GroupBorderAlpha = minmax(argument4,0,1);
+    GroupBorderAlpha = GMUIminmax(argument4,0,1);
     if (argument5 >= 0)
-    GroupIsRoundRect = minmax(argument5,0,1);
+    GroupIsRoundRect = GMUIminmax(argument5,0,1);
     
     
     ControlHasGroupStyle = true;
@@ -7727,12 +7733,12 @@ with (GMUII())
     }
     else if (a2 == "1" || string_lower(a2) == "integer" || string_lower(a2) == "int")
     {
-        (control).value = minmax(round(real(argument1)),(control).ControlMinValue,(control).ControlMaxValue);
+        (control).value = GMUIminmax(round(real(argument1)),(control).ControlMinValue,(control).ControlMaxValue);
         (control).valueString = string((control).value);
     }
     else if (a2 == "2" || string_lower(a2) == "double")
     {
-        (control).value = minmax(real(argument1),(control).ControlMinValue,(control).ControlMaxValue);
+        (control).value = GMUIminmax(real(argument1),(control).ControlMinValue,(control).ControlMaxValue);
         // Remove any trailing zeros if option is turned on, otherwise use simple format
         var formatValue,c,z,strLenFmtVal;
         formatValue = string_format((control).value,(control).ControlMaxStringLength,(control).ControlMaxDecimalLength);
@@ -8175,8 +8181,8 @@ return true;
 
 // Set the default control styling
 GMUI_ControlSetStyle(
-    rgb(250,250,255),hsv(135,30,100),rgb(20,160,230),true,0.5,
-    rgb(40,40,40),0.1,rgb(240,140,40),0.3,
+    GMUIrgb(250,250,255),GMUIhsv(135,30,100),GMUIrgb(20,160,230),true,0.5,
+    GMUIrgb(40,40,40),0.1,GMUIrgb(240,140,40),0.3,
     true
     );
     
@@ -8185,7 +8191,7 @@ GMUI_ControlSetSpriteExt(-1,0,0,0,1,1,c_white,1);
 GMUI_ControlSetSpriteMap(-1,-1,-1,-1,-1,-1,-1,-1,-1,false);
 
 // Default font style (font, font color, font align)
-GMUI_ControlSetFontStyle(noone,rgb(42,42,42), fa_left);
+GMUI_ControlSetFontStyle(noone,GMUIrgb(42,42,42), fa_left);
 
 // Set the default control attributes
 GMUI_ControlSetAttributes(0,0,0,999);
@@ -8218,7 +8224,7 @@ _GMUII = argument0;
 _layer = argument1;
 _group = argument2;
 _alpha = argument3;
-_fadeMode = round(minmax(argument4,0,1));
+_fadeMode = round(GMUIminmax(argument4,0,1));
 
 // Draw the selected group if set from the form
 if ((_GMUII).GMUI_groupGraphicMapIsUsed[_layer,_group]) {
@@ -8240,14 +8246,14 @@ if (ControlHasGroupStyle) {
     
     alphadiff = GroupBackgroundAlpha - GroupBorderAlpha;
     // Background
-    color_alpha(GroupBackgroundColor,min(GroupBackgroundAlpha, _alpha+(alphadiff*(alphadiff<0))*_fadeMode ));
+    GMUIcolor_alpha(GroupBackgroundColor,min(GroupBackgroundAlpha, _alpha+(alphadiff*(alphadiff<0))*_fadeMode ));
     if (GroupIsRoundRect)
         draw_roundrect(x1,y1,x2,y2,false);
     else
         draw_rectangle(x1,y1,x2,y2,false);
         
     // Border
-    color_alpha(GroupBorderColor,min(GroupBorderAlpha, _alpha-(alphadiff*(alphadiff>0))*_fadeMode ));
+    GMUIcolor_alpha(GroupBorderColor,min(GroupBorderAlpha, _alpha-(alphadiff*(alphadiff>0))*_fadeMode ));
     if (GroupIsRoundRect)
         draw_roundrect(x1,y1,x2,y2,true);
     else
@@ -8273,8 +8279,8 @@ if (!_UsingSurface) {
     _cy = _Ctrl.ActualY+_Ctrl.GMUIP.GMUI_grid_y[_Ctrl.Layer]+GMUI_GridViewOffsetY(_Ctrl.GMUIP);
 }
 else {
-    _Surface = surface_target(_Ctrl.SelectListSurface,_Ctrl.RoomW-_Ctrl.RoomX,max(_Ctrl.RoomH-_Ctrl.RoomY,ItemListHeight*ItemListSize));
-    surface_clear(_Surface);
+    _Surface = GMUIsurface_target(_Ctrl.SelectListSurface,_Ctrl.RoomW-_Ctrl.RoomX,max(_Ctrl.RoomH-_Ctrl.RoomY,ItemListHeight*ItemListSize));
+    GMUIsurface_clear(_Surface);
 }
 
 _sbw = 0;
@@ -8302,7 +8308,7 @@ else
     _Ctrl.NeedsDrawUpdate = true;
 
 // Set alignments (for now this is static)
-align(fa_left,fa_middle);
+GMUIalign(fa_left,fa_middle);
 
 // Array index [0] holds default values
 // Draw the select list control, and all of its items
@@ -8491,7 +8497,7 @@ with (_tt_id) {
         
         // Check if the slider position is within the padding amount
         GMUI_ControlSliderUpdate(id);
-        SliderRelativeFinalXorY = minmax(SliderRelativeFinalXorY,SliderStartEndPadding,RoomWorH-SliderStartEndPadding);
+        SliderRelativeFinalXorY = GMUIminmax(SliderRelativeFinalXorY,SliderStartEndPadding,RoomWorH-SliderStartEndPadding);
         SliderRelativeXorY = SliderRelativeFinalXorY;
         Slider_t = Slider_d;
         
@@ -8500,7 +8506,7 @@ with (_tt_id) {
     
     // Draw the slider region first, based on type
     if (SliderTickStyle == 2 || SliderTickStyle == 3) {
-        color_alpha(SliderBackgroundColor,min(SliderBackgroundAlpha,FadeAlpha));
+        GMUIcolor_alpha(SliderBackgroundColor,min(SliderBackgroundAlpha,FadeAlpha));
     }
     switch (SliderTickStyle) {
         case 1: // Free (No horizontal line)
@@ -8527,7 +8533,7 @@ with (_tt_id) {
     // If 0 draw none, optionally use sprite script instead
     if (SliderTickStyle > 0) {
         // Set the properties of the ticks
-        color_alpha(SliderTickColor,min(SliderTickAlpha,FadeAlpha));
+        GMUIcolor_alpha(SliderTickColor,min(SliderTickAlpha,FadeAlpha));
         
         if (SliderTickHeight > 0 && SliderTickDistance > 1) {
             if (!SliderVertical) {
@@ -8688,15 +8694,15 @@ with (_tt_id) {
     
     // implement these above:
     //SliderBorderColor = argument6;
-    //SliderBorderAlpha = minmax(argument7,0,1);
+    //SliderBorderAlpha = GMUIminmax(argument7,0,1);
     //SliderSelectColor = argument8;
-    //SliderSelectAlpha = minmax(argument9,0,1);
+    //SliderSelectAlpha = GMUIminmax(argument9,0,1);
     
     
     
     //todo: drawing the value in/below the control may be an option later on?
     
-    //color_alpha(ControlFontColor,min(ControlFontAlpha,FadeAlpha));
+    //GMUIcolor_alpha(ControlFontColor,min(ControlFontAlpha,FadeAlpha));
     
     //var _dtx, _midHeight;
     //_dtx = cx + padx;
@@ -8904,7 +8910,7 @@ with (_tt_id) {
     pady = ControlPaddingY;
     
     // Draw the area
-    color_alpha(ControlBackgroundColor,min(ControlBackgroundAlpha,FadeAlpha));
+    GMUIcolor_alpha(ControlBackgroundColor,min(ControlBackgroundAlpha,FadeAlpha));
     draw_rectangle(cx, cy, cwx+padx*2, chy, 0);
     
     
@@ -8930,10 +8936,10 @@ with (_tt_id) {
     }
     
     // Set control color, font, and alignment
-    color_alpha(ControlFontColor,min(ControlFontAlpha,FadeAlpha));
+    GMUIcolor_alpha(ControlFontColor,min(ControlFontAlpha,FadeAlpha));
     if (ControlFont != noone)
         draw_set_font(ControlFont);
-    align(ControlFontAlign,ControlFontAlignV);
+    GMUIalign(ControlFontAlign,ControlFontAlignV);
     
     var _dtx, _midHeight;
     _dtx = cx + padx;
@@ -8941,7 +8947,7 @@ with (_tt_id) {
     draw_text_ext(_dtx,cy + (chy-cy)/2,_txt,-1,cwx);
     
     //debug
-    //color_alpha(c_red,0.15)
+    //GMUIcolor_alpha(c_red,0.15)
     //draw_rectangle(cx, cy, CellWide*(GMUII()).cellsize, chy, 1)
     //draw_rectangle(cx, cy, cwx, chy, 1)
 }
@@ -9267,7 +9273,7 @@ if (_Ctrl.ControlItemList) {
                 _offset = ItemListOffsetY;
         }
         else if (Hovering)
-            _offset = minmax(_relMY,0,RoomY + RoomH + GMUI_GridViewOffsetY(_Ctrl.GMUIP)*_UsingSurface) / (RoomY - RoomH)
+            _offset = GMUIminmax(_relMY,0,RoomY + RoomH + GMUI_GridViewOffsetY(_Ctrl.GMUIP)*_UsingSurface) / (RoomY - RoomH)
                 * ((ItemListSize - ceil(ItemListAreaHeight / ItemListHeight)) * ItemListHeight);
         else
             _offset = ItemListOffsetY;
@@ -9365,7 +9371,7 @@ if (_Ctrl.ControlHasScrollbar) {
         if (_Ctrl.Group > 0 && _Ctrl.GMUIP.UIEnableSurfaces)
             _relY -= (_Ctrl.GMUIP).GMUI_groupActualY[_Ctrl.Layer,_Ctrl.Group];
     
-        Scrollbar_pos_y = minmax(Scrollbar_y + _relY, Scrollbar_y + Scrollbar_padding, Scrollbar_y + Scrollbar_maxtop);
+        Scrollbar_pos_y = GMUIminmax(Scrollbar_y + _relY, Scrollbar_y + Scrollbar_padding, Scrollbar_y + Scrollbar_maxtop);
 
         // Pixel-based suface offset
         ItemListOffsetY = (Scrollbar_pos_y - Scrollbar_y + Scrollbar_padding) / Scrollbar_maxtop * 
@@ -9861,9 +9867,9 @@ if (argument0) {
     }
     
     if (!SliderVertical)
-        SliderRelativeFinalXorY = minmax(MX,RoomX+SliderStartEndPadding,RoomW-SliderStartEndPadding)-RoomX;
+        SliderRelativeFinalXorY = GMUIminmax(MX,RoomX+SliderStartEndPadding,RoomW-SliderStartEndPadding)-RoomX;
     else
-        SliderRelativeFinalXorY = minmax(MY,RoomY+SliderStartEndPadding,RoomH-SliderStartEndPadding)-RoomY;
+        SliderRelativeFinalXorY = GMUIminmax(MY,RoomY+SliderStartEndPadding,RoomH-SliderStartEndPadding)-RoomY;
 }
     
 // Set value to position
@@ -10108,7 +10114,7 @@ _GMUII = argument0;
 _layer = argument1;
 _group = argument2;
 _bType = argument3;
-_alpha = minmax(argument4,0,1);
+_alpha = GMUIminmax(argument4,0,1);
 
 var _dbx, _dby, _dbw, _dbh, _xoffset, _yoffset, _spr_width, _spr_height, _spr_isFixed,
     _sprTopLeft, _sprTop, _sprTopRight, _sprRight, _sprBottomRight, _sprBottom, _sprBottomLeft, _sprLeft, _sprCenter;
@@ -11975,13 +11981,13 @@ if (!GMUI_IsControl() && id != GMUII())
 if (argument0 >= 0)
 GroupBackgroundColor = argument0;
 if (argument1 >= 0)
-GroupBackgroundAlpha = minmax(argument1,0,1);
+GroupBackgroundAlpha = GMUIminmax(argument1,0,1);
 if (argument2 >= 0)
 GroupBorderColor = argument2;
 if (argument3 >= 0)
-GroupBorderAlpha = minmax(argument3,0,1);
+GroupBorderAlpha = GMUIminmax(argument3,0,1);
 if (argument4 >= 0)
-GroupIsRoundRect = minmax(argument4,0,1);
+GroupIsRoundRect = GMUIminmax(argument4,0,1);
 
 
 ControlHasGroupStyle = true;
