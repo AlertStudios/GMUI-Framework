@@ -80,6 +80,9 @@ global.GMUIOverflowNone = 0;
 global.GMUIOverflowResize = 1;
 global.GMUIOverflowScroll = 2;
 
+// Surface tracking for Studio 2.x
+global.GMUISurfaceTarget = -1;
+
 
 // THIS VALUE WILL REMAIN TRUE IF RUNNING IN GAME MAKER 8.x
 global.GMUIGameMaker8 = true;

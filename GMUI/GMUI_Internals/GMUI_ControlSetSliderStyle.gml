@@ -34,23 +34,23 @@ SliderStyle = round(argument1);
 if (argument2 >= 0)
 SliderBackgroundColor = argument2;
 if (argument3 >= 0)
-SliderBackgroundAlpha = minmax(argument3,0,1);
+SliderBackgroundAlpha = GMUIminmax(argument3,0,1);
 if (argument4 >= 0)
 SliderColor = argument4;
 if (argument5 >= 0)
-SliderAlpha = minmax(argument5,0,1);
+SliderAlpha = GMUIminmax(argument5,0,1);
 if (argument6 >= 0)
 SliderBorderColor = argument6;
 if (argument7 >= 0)
-SliderBorderAlpha = minmax(argument7,0,1);
+SliderBorderAlpha = GMUIminmax(argument7,0,1);
 if (argument8 >= 0)
 SliderSelectColor = argument8;
 if (argument9 >= 0)
-SliderSelectAlpha = minmax(argument9,0,1);
+SliderSelectAlpha = GMUIminmax(argument9,0,1);
 if (argument10 >= 0)
 SliderTickColor = argument10;
 if (argument11 >= 0)
-SliderTickAlpha = minmax(argument11,0,1);
+SliderTickAlpha = GMUIminmax(argument11,0,1);
 
 
 

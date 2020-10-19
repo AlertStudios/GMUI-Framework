@@ -4,7 +4,7 @@
 function GMUI_SetKeyNavigation(argument0, argument1, argument2, argument3, argument4, argument5) {
 
 var _navdir, _back, _forward, _backalt, _forwardalt, _allowtab;
-_navdir = minmax(argument0,0,2); // 3 and 2 count as the same
+_navdir = GMUIminmax(argument0,0,2); // 3 and 2 count as the same
 _back = argument1;
 _forward = argument2;
 _backalt = argument3;

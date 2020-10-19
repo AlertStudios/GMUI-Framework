@@ -6,8 +6,8 @@
 // overwrite color, overwrite alpha, select color, select alpha, 
 // showcursor)
 GMUI_ControlSetStyle(
-    rgb(250,250,255),hsv(135,30,100),rgb(20,160,230),true,0.5,
-    rgb(40,40,40),0.1,rgb(240,140,40),0.3,
+    GMUIrgb(250,250,255),GMUIhsv(135,30,100),GMUIrgb(20,160,230),true,0.5,
+    GMUIrgb(40,40,40),0.1,GMUIrgb(240,140,40),0.3,
     true
     );
     
@@ -16,7 +16,7 @@ GMUI_ControlSetSpriteExt(-1,0,0,0,1,1,c_white,1);
 GMUI_ControlSetSpriteMap(-1,-1,-1,-1,-1,-1,-1,-1,-1,false);
 
 // Default font style (font, font color, font align)
-GMUI_ControlSetFontStyle(fontNumeric,rgb(42,42,42), fa_left);
+GMUI_ControlSetFontStyle(fontNumeric,GMUIrgb(42,42,42), fa_left);
 
 // Set the default control attributes(id, Max string length/Whole number padding(KEEP @ 0!), max decimal (if applicable), Min value, Max value)
 GMUI_ControlSetAttributes(0,0,0,999);

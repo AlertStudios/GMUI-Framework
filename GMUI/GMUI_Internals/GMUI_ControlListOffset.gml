@@ -36,7 +36,7 @@ if (_Ctrl.ControlItemList) {
                 _offset = ItemListOffsetY;
         }
         else if (Hovering)
-            _offset = minmax(_relMY,0,RoomY + RoomH + GMUI_GridViewOffsetY(_Ctrl.GMUIP)*_UsingSurface) / (RoomY - RoomH)
+            _offset = GMUIminmax(_relMY,0,RoomY + RoomH + GMUI_GridViewOffsetY(_Ctrl.GMUIP)*_UsingSurface) / (RoomY - RoomH)
                 * ((ItemListSize - ceil(ItemListAreaHeight / ItemListHeight)) * ItemListHeight);
         else
             _offset = ItemListOffsetY;

@@ -11,7 +11,7 @@ if (DebugData && !RemovingGMUI) {
     yoffset = GMUI_GridViewOffsetY(GMUII());
     
     // draw the grid lines 
-    color_alpha(c_black,0.1);
+    GMUIcolor_alpha(c_black,0.1);
     for (w=0;w<gridW;w+=1) {
         draw_line(w*cellsize+(GMUII()).GMUI_grid_x[0]+xoffset,yoffset,w*cellsize+(GMUII()).GMUI_grid_x[0]+xoffset,(GMUII()).UIgridheight+yoffset);
     }
@@ -21,8 +21,8 @@ if (DebugData && !RemovingGMUI) {
     
     // draw the errors
     if (GMUI_ErrorNumber > 0) {
-        color_alpha(c_red,0.5);
-        align(fa_center,fa_bottom);
+        GMUIcolor_alpha(c_red,0.5);
+        GMUIalign(fa_center,fa_bottom);
         draw_text_ext(view_wview[0]/2+xoffset,view_hview[0]-64+yoffset,
             string(GMUI_ErrorNumber) + ".) " + GMUI_LastError(), -1, view_wview[0]-32);
     }
@@ -30,11 +30,11 @@ if (DebugData && !RemovingGMUI) {
     var groupId, _layer, i, m, ff, ffo;
     
     // draw the group boundaries
-    color_alpha(c_green,0.5);
+    GMUIcolor_alpha(c_green,0.5);
     for(i=0;i<ds_list_size((GMUII()).GMUI_gridlist);i+=1) {
         _layer = ds_list_find_value((GMUII()).GMUI_gridlist,i);
         if (_layer >= (GMUII()).GMUI_menu_layer)
-            color_alpha(c_lime,0.25);
+            GMUIcolor_alpha(c_lime,0.25);
         
         for(j=0;j<ds_list_size((GMUII()).GMUI_groupList[_layer]);j+=1) {
             groupId = ds_list_find_value((GMUII()).GMUI_groupList[_layer],j);
@@ -51,7 +51,7 @@ if (DebugData && !RemovingGMUI) {
     }
     
     // draw control lines
-    color_alpha(c_red,0.8);
+    GMUIcolor_alpha(c_red,0.8);
     with (GMUI_controlobject) {
         if (ControlType == "label" && GMUIP == GMUII()) {
             draw_rectangle(RoomX, RoomY, RoomW, RoomH, 1);

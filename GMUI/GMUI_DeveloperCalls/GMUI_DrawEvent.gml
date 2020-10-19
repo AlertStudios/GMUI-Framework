@@ -65,7 +65,7 @@ if (GMUI_GridEnabled())
                     else if (ctrlObject.ControlHasScrollbar) {
                         if (ctrlObject.Group > 0)
                             GX = GMUI_groupActualX[ctrlObject.Layer,ctrlObject.Group] * UIEnableSurfaces;
-                        if (MX >= ctrlObject.Scrollbar_x+GMUI_grid_x[ctrlObject.Layer] + GMUI_GridViewOffsetX(id) + _GX) {
+                        if (MX >= ctrlObject.Scrollbar_x+GMUI_grid_x[ctrlObject.Layer] + GMUI_GridViewOffsetX(id) + GX) {
                             ctrlObject.Scrollbar_hover = true;
                         }
                         else {

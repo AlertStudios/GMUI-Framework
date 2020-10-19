@@ -1934,6 +1934,9 @@ global.GMUIOverflowNone = 0;
 global.GMUIOverflowResize = 1;
 global.GMUIOverflowScroll = 2;
 
+// Surface tracking for Studio 2.x
+global.GMUISurfaceTarget = -1;
+
 
 // THIS VALUE WILL REMAIN TRUE IF RUNNING IN GAME MAKER 8.x
 global.GMUIGameMaker8 = true;
@@ -2697,16 +2700,18 @@ draw_set_valign(argument1);
 ///@function GMUIminmax(argument0,argument1,argument2) {
 ///(original value, minimum value, maximum value)
 /// Shortcut to keep the value within the min & max range given
+
 if (is_real(argument0))
     return min(max(argument0,argument1),argument2);
 else
     return argument1;
 ///@}
 
-#define surface_target
-///surface_target(surface, width if created/modified, height if created/modified)
+#define GMUIsurface_target
+///@function GMUIsurface_target(argument0, argument1, argument2) {
+///(surface, width if created/modified, height if created/modified)
 ///Sets the target to the surface or creates it if it doesn't exist
-///@function surface_target(argument0, argument1, argument2) {
+
 
 var _Surface;
 
@@ -2714,19 +2719,25 @@ if (surface_exists(argument0)) {
     surface_set_target(argument0);
     _Surface = argument0;
 }
-else {
+else if (argument1 > -1 || argument2 > -1) {
     _Surface = surface_create(argument1,argument2);
     surface_set_target(_Surface);
+}
+else
+    _Surface = -1;
+
+if (_Surface > 0) {
+    global.GMUISurfaceTarget = _Surface;
 }
 
 
 return _Surface;
 ///@}
 
-#define surface_clear
-///surface_clear(surface)
+#define GMUIsurface_clear
+///@function GMUIsurface_clear(argument0) {
+///(surface)
 ///Draws a subtracting rectangle over the whole surface
-///@function surface_clear(argument0) {
 
 var _Surface;
 
@@ -2737,6 +2748,24 @@ if (surface_exists(argument0)) {
     draw_rectangle(0,0,surface_get_width(argument0),surface_get_height(argument0),0);
     draw_set_blend_mode(bm_normal);
 }
+///@}
+
+#define GMUIsurface_reset
+///@function GMUIsurface_reset() {
+/// If a surface target has been established, reset it
+
+if (global.GMUISurfaceTarget > -1) {
+
+    surface_reset_target();
+    global.GMUISurfaceTarget = -1;
+    
+    return true;
+}
+else
+    global.GMUISurfaceTarget -= 1;
+
+return false;
+
 ///@}
 
 #define GMUI_Add
@@ -3842,7 +3871,7 @@ if (argument0 == true) {
                 // Only create the surface of the list and return
                 SelectListSurface = GMUI_ControlDrawItemList(id, true);
                 if (surface_exists(GMUIP.GMUI_groupSurface[Layer,Group]))
-                    surface_set_target(GMUIP.GMUI_groupSurface[Layer,Group]);
+                    GMUIsurface_target(GMUIP.GMUI_groupSurface[Layer,Group],-1,-1);
             }
         }
         
@@ -3850,12 +3879,12 @@ if (argument0 == true) {
         if (GMUIP.GMUI_gridNeedsDrawUpdate[Layer] == 2 || GMUIP.GMUI_gridMasterControl[Layer] == id || NeedsDrawUpdate || NeedsGroupUpdate) {
             CurrentSurfaceW = GMUIP.UIgridwidth;
             CurrentSurfaceH = GMUIP.UIgridheight;
-            CurrentSurface = surface_target(GMUIP.GMUI_gridSurface[Layer], CurrentSurfaceW, CurrentSurfaceH);
+            CurrentSurface = GMUIsurface_target(GMUIP.GMUI_gridSurface[Layer], CurrentSurfaceW, CurrentSurfaceH);
             GMUIP.GMUI_gridSurface[Layer] = CurrentSurface;
             SurfaceSet = true;
             
             if (GMUIP.GMUI_gridNeedsDrawUpdate[Layer] == 2 && (GMUIP).GMUI_gridMasterControl[Layer] == id) {
-                surface_clear(GMUIP.GMUI_gridSurface[Layer]);
+                GMUIsurface_clear(GMUIP.GMUI_gridSurface[Layer]);
                 GMUIP.GMUI_gridNeedsDrawUpdate[Layer] = 0;
             }
         }
@@ -3864,15 +3893,15 @@ if (argument0 == true) {
             if (Group > 0) {// && (!GroupHidden || FadeCalled != 0)) {
                 if (GMUIP.GMUI_groupMasterControl[Layer,Group] == id) {
                     if (SurfaceSet)
-                        surface_reset_target();
+                        GMUIsurface_reset();
                     CurrentSurfaceW = (GMUIP).GMUI_groupCellsW[Layer,Group] * (GMUIP).cellsize + 1; //(GMUIP).GMUI_groupActualX[Layer,Group]
                     CurrentSurfaceH = (GMUIP).GMUI_groupCellsH[Layer,Group] * (GMUIP).cellsize_h + 1;
-                    CurrentSurface = surface_target(GMUIP.GMUI_groupSurface[Layer,Group], CurrentSurfaceW, CurrentSurfaceH);
+                    CurrentSurface = GMUIsurface_target(GMUIP.GMUI_groupSurface[Layer,Group], CurrentSurfaceW, CurrentSurfaceH);
                     GMUIP.GMUI_groupSurface[Layer,Group] = CurrentSurface;
                     
                     //(GMUIP).GMUI_gridMasterControl[Layer] == id
                     if (NeedsGroupUpdate && GMUIP.GMUI_groupMasterControl[Layer,Group] == id) {
-                        surface_clear(GMUIP.GMUI_groupSurface[Layer,Group]);
+                        GMUIsurface_clear(GMUIP.GMUI_groupSurface[Layer,Group]);
                         //if (!skipgroup) {
                         if (!GroupHidden || FadeCalled != 0){
                             draw_set_blend_mode_ext(bm_one,bm_inv_src_alpha); // Tricky...
@@ -3885,8 +3914,8 @@ if (argument0 == true) {
                 }
                 else if (surface_exists(GMUIP.GMUI_groupSurface[Layer,Group])) {
                     if (SurfaceSet)
-                        surface_reset_target();
-                    surface_set_target(GMUIP.GMUI_groupSurface[Layer,Group]);
+                        GMUIsurface_reset();
+                    GMUIsurface_target(GMUIP.GMUI_groupSurface[Layer,Group],-1,-1);
                 }
             }
             else if (Group > 0) {
@@ -4201,14 +4230,14 @@ if (argument0 == true) {
     
     // Reset the surface if using one, draw the group if needed
     if (GMUIP.UIEnableSurfaces) {
-        surface_reset_target();
+        GMUIsurface_reset();
         if (Group > 0 && GMUIP.GMUI_groupDrawingControl[Layer,Group] == id && (NeedsDrawUpdate || NeedsGroupUpdate)) {
             if (surface_exists(GMUIP.GMUI_groupSurface[Layer,Group])) {
-                GMUIP.GMUI_gridSurface[Layer] = surface_target(GMUIP.GMUI_gridSurface[Layer], GMUIP.UIgridwidth, GMUIP.UIgridheight);
+                GMUIP.GMUI_gridSurface[Layer] = GMUIsurface_target(GMUIP.GMUI_gridSurface[Layer], GMUIP.UIgridwidth, GMUIP.UIgridheight);
                 draw_surface(GMUIP.GMUI_groupSurface[Layer,Group],
                     //0,global.showsurface,surface_get_width(GMUIP.GMUI_groupSurface[Layer,Group]),surface_get_height(GMUIP.GMUI_groupSurface[Layer,Group])-50+global.showsurface,
                     GMUIP.GMUI_groupActualX[Layer,Group],GMUIP.GMUI_groupActualY[Layer,Group]);
-                surface_reset_target();
+                GMUIsurface_reset();
             }
         }
         
@@ -6069,7 +6098,7 @@ if (GMUI_GridEnabled())
                     else if (ctrlObject.ControlHasScrollbar) {
                         if (ctrlObject.Group > 0)
                             GX = GMUI_groupActualX[ctrlObject.Layer,ctrlObject.Group] * UIEnableSurfaces;
-                        if (MX >= ctrlObject.Scrollbar_x+GMUI_grid_x[ctrlObject.Layer] + GMUI_GridViewOffsetX(id) + _GX) {
+                        if (MX >= ctrlObject.Scrollbar_x+GMUI_grid_x[ctrlObject.Layer] + GMUI_GridViewOffsetX(id) + GX) {
                             ctrlObject.Scrollbar_hover = true;
                         }
                         else {
@@ -8417,7 +8446,7 @@ for (_i=1;_i<=ItemListSize;_i+=1) {
 }
 
 if (_UsingSurface)
-    surface_reset_target();
+    GMUIsurface_reset();
 
 return _Surface;
 
@@ -10291,6 +10320,7 @@ if (_isOpening) {
     }
     
     GMUI_GridUpdateLayer(_Control.GMUIP,_Control.Layer);
+    _Control.GMUIP.GMUI_gridNeedsDrawUpdate[_Control.Layer] = true;
     
 }
 else {

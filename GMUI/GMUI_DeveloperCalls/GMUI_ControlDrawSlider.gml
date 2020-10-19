@@ -70,7 +70,7 @@ with (_tt_id) {
         
         // Check if the slider position is within the padding amount
         GMUI_ControlSliderUpdate(id);
-        SliderRelativeFinalXorY = minmax(SliderRelativeFinalXorY,SliderStartEndPadding,RoomWorH-SliderStartEndPadding);
+        SliderRelativeFinalXorY = GMUIminmax(SliderRelativeFinalXorY,SliderStartEndPadding,RoomWorH-SliderStartEndPadding);
         SliderRelativeXorY = SliderRelativeFinalXorY;
         Slider_t = Slider_d;
         
@@ -79,7 +79,7 @@ with (_tt_id) {
     
     // Draw the slider region first, based on type
     if (SliderTickStyle == 2 || SliderTickStyle == 3) {
-        color_alpha(SliderBackgroundColor,min(SliderBackgroundAlpha,FadeAlpha));
+        GMUIcolor_alpha(SliderBackgroundColor,min(SliderBackgroundAlpha,FadeAlpha));
     }
     switch (SliderTickStyle) {
         case 1: // Free (No horizontal line)
@@ -106,7 +106,7 @@ with (_tt_id) {
     // If 0 draw none, optionally use sprite script instead
     if (SliderTickStyle > 0) {
         // Set the properties of the ticks
-        color_alpha(SliderTickColor,min(SliderTickAlpha,FadeAlpha));
+        GMUIcolor_alpha(SliderTickColor,min(SliderTickAlpha,FadeAlpha));
         
         if (SliderTickHeight > 0 && SliderTickDistance > 1) {
             if (!SliderVertical) {
@@ -267,15 +267,15 @@ with (_tt_id) {
     
     // implement these above:
     //SliderBorderColor = argument6;
-    //SliderBorderAlpha = minmax(argument7,0,1);
+    //SliderBorderAlpha = GMUIminmax(argument7,0,1);
     //SliderSelectColor = argument8;
-    //SliderSelectAlpha = minmax(argument9,0,1);
+    //SliderSelectAlpha = GMUIminmax(argument9,0,1);
     
     
     
     //todo: drawing the value in/below the control may be an option later on?
     
-    //color_alpha(ControlFontColor,min(ControlFontAlpha,FadeAlpha));
+    //GMUIcolor_alpha(ControlFontColor,min(ControlFontAlpha,FadeAlpha));
     
     //var _dtx, _midHeight;
     //_dtx = cx + padx;

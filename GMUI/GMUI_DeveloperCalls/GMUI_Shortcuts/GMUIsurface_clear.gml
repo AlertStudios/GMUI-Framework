@@ -1,6 +1,6 @@
-///surface_clear(surface)
+function GMUIsurface_clear(argument0) {
+///(surface)
 ///Draws a subtracting rectangle over the whole surface
-function surface_clear(argument0) {
 
 var _Surface;
 

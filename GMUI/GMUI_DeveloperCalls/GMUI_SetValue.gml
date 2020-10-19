@@ -18,12 +18,12 @@ with (GMUII())
     }
     else if (a2 == "1" || string_lower(a2) == "integer" || string_lower(a2) == "int")
     {
-        (control).value = minmax(round(real(argument1)),(control).ControlMinValue,(control).ControlMaxValue);
+        (control).value = GMUIminmax(round(real(argument1)),(control).ControlMinValue,(control).ControlMaxValue);
         (control).valueString = string((control).value);
     }
     else if (a2 == "2" || string_lower(a2) == "double")
     {
-        (control).value = minmax(real(argument1),(control).ControlMinValue,(control).ControlMaxValue);
+        (control).value = GMUIminmax(real(argument1),(control).ControlMinValue,(control).ControlMaxValue);
         // Remove any trailing zeros if option is turned on, otherwise use simple format
         var formatValue,c,z,strLenFmtVal;
         formatValue = string_format((control).value,(control).ControlMaxStringLength,(control).ControlMaxDecimalLength);

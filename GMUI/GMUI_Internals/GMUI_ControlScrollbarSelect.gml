@@ -17,7 +17,7 @@ if (_Ctrl.ControlHasScrollbar) {
         if (_Ctrl.Group > 0 && _Ctrl.GMUIP.UIEnableSurfaces)
             _relY -= (_Ctrl.GMUIP).GMUI_groupActualY[_Ctrl.Layer,_Ctrl.Group];
     
-        Scrollbar_pos_y = minmax(Scrollbar_y + _relY, Scrollbar_y + Scrollbar_padding, Scrollbar_y + Scrollbar_maxtop);
+        Scrollbar_pos_y = GMUIminmax(Scrollbar_y + _relY, Scrollbar_y + Scrollbar_padding, Scrollbar_y + Scrollbar_maxtop);
 
         // Pixel-based suface offset
         ItemListOffsetY = (Scrollbar_pos_y - Scrollbar_y + Scrollbar_padding) / Scrollbar_maxtop * 

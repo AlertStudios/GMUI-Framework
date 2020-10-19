@@ -41,13 +41,13 @@ with ((GMUII()).GMUI_groupMasterControl[UIAddToLayer,_Group]) {
     if (argument1 >= 0)
     GroupBackgroundColor = argument1;
     if (argument2 >= 0)
-    GroupBackgroundAlpha = minmax(argument2,0,1);
+    GroupBackgroundAlpha = GMUIminmax(argument2,0,1);
     if (argument3 >= 0)
     GroupBorderColor = argument3;
     if (argument4 >= 0)
-    GroupBorderAlpha = minmax(argument4,0,1);
+    GroupBorderAlpha = GMUIminmax(argument4,0,1);
     if (argument5 >= 0)
-    GroupIsRoundRect = minmax(argument5,0,1);
+    GroupIsRoundRect = GMUIminmax(argument5,0,1);
     
     
     ControlHasGroupStyle = true;

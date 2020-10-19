@@ -7,7 +7,7 @@ _GMUII = argument0;
 _layer = argument1;
 _group = argument2;
 _bType = argument3;
-_alpha = minmax(argument4,0,1);
+_alpha = GMUIminmax(argument4,0,1);
 
 var _dbx, _dby, _dbw, _dbh, _xoffset, _yoffset, _spr_width, _spr_height, _spr_isFixed,
     _sprTopLeft, _sprTop, _sprTopRight, _sprRight, _sprBottomRight, _sprBottom, _sprBottomLeft, _sprLeft, _sprCenter;

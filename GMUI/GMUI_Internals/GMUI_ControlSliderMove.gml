@@ -14,9 +14,9 @@ if (argument0) {
     }
     
     if (!SliderVertical)
-        SliderRelativeFinalXorY = minmax(MX,RoomX+SliderStartEndPadding,RoomW-SliderStartEndPadding)-RoomX;
+        SliderRelativeFinalXorY = GMUIminmax(MX,RoomX+SliderStartEndPadding,RoomW-SliderStartEndPadding)-RoomX;
     else
-        SliderRelativeFinalXorY = minmax(MY,RoomY+SliderStartEndPadding,RoomH-SliderStartEndPadding)-RoomY;
+        SliderRelativeFinalXorY = GMUIminmax(MY,RoomY+SliderStartEndPadding,RoomH-SliderStartEndPadding)-RoomY;
 }
     
 // Set value to position

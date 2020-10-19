@@ -14,8 +14,8 @@ if (!_UsingSurface) {
     _cy = _Ctrl.ActualY+_Ctrl.GMUIP.GMUI_grid_y[_Ctrl.Layer]+GMUI_GridViewOffsetY(_Ctrl.GMUIP);
 }
 else {
-    _Surface = surface_target(_Ctrl.SelectListSurface,_Ctrl.RoomW-_Ctrl.RoomX,max(_Ctrl.RoomH-_Ctrl.RoomY,ItemListHeight*ItemListSize));
-    surface_clear(_Surface);
+    _Surface = GMUIsurface_target(_Ctrl.SelectListSurface,_Ctrl.RoomW-_Ctrl.RoomX,max(_Ctrl.RoomH-_Ctrl.RoomY,ItemListHeight*ItemListSize));
+    GMUIsurface_clear(_Surface);
 }
 
 _sbw = 0;
@@ -43,7 +43,7 @@ else
     _Ctrl.NeedsDrawUpdate = true;
 
 // Set alignments (for now this is static)
-align(fa_left,fa_middle);
+GMUIalign(fa_left,fa_middle);
 
 // Array index [0] holds default values
 // Draw the select list control, and all of its items
@@ -152,7 +152,7 @@ for (_i=1;_i<=ItemListSize;_i+=1) {
 }
 
 if (_UsingSurface)
-    surface_reset_target();
+    GMUIsurface_reset();
 
 return _Surface;
 

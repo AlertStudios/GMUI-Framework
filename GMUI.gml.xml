@@ -193,13 +193,14 @@
               <folders />
             </folder>
             <folder folderName="GMUI_Shortcuts">
-              <file>surface_clear.gml</file>
-              <file>surface_target.gml</file>
               <file>GMUIalign.gml</file>
               <file>GMUIcolor_alpha.gml</file>
               <file>GMUIhsv.gml</file>
               <file>GMUIminmax.gml</file>
               <file>GMUIrgb.gml</file>
+              <file>GMUIsurface_clear.gml</file>
+              <file>GMUIsurface_reset.gml</file>
+              <file>GMUIsurface_target.gml</file>
               <folders />
             </folder>
           </folders>

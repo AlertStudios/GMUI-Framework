@@ -12,13 +12,13 @@ if (!GMUI_IsControl() && id != GMUII())
 if (argument0 >= 0)
 GroupBackgroundColor = argument0;
 if (argument1 >= 0)
-GroupBackgroundAlpha = minmax(argument1,0,1);
+GroupBackgroundAlpha = GMUIminmax(argument1,0,1);
 if (argument2 >= 0)
 GroupBorderColor = argument2;
 if (argument3 >= 0)
-GroupBorderAlpha = minmax(argument3,0,1);
+GroupBorderAlpha = GMUIminmax(argument3,0,1);
 if (argument4 >= 0)
-GroupIsRoundRect = minmax(argument4,0,1);
+GroupIsRoundRect = GMUIminmax(argument4,0,1);
 
 
 ControlHasGroupStyle = true;
