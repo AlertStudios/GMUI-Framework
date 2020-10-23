@@ -2870,7 +2870,7 @@ ds_list_add((GMUII()).GMUI_gridlist,_Layer);
 // If using surfaces, the draw update flag is set on the layer level
 if ((GMUII()).UIEnableSurfaces) {
     (GMUII()).GMUI_gridSurface[_Layer] = noone;
-    (GMUII()).GMUI_gridNeedsDrawUpdate[_Layer] = true;
+    (GMUII()).GMUI_gridNeedsDrawUpdate[_Layer] = 1;
     (GMUII()).GMUI_gridMasterControl[_Layer] = -1;
     (GMUII()).GMUI_gridDrawFirst[_Layer] = noone;
 }
@@ -3642,7 +3642,7 @@ if (FadeCalled != 0) {
         
         if (GMUIP.GMUI_gridMasterControl[Layer] != -1) {
             //GMUIP.GMUI_groupNeedsDrawUpdate[Layer,Group] = 2;
-            NeedsDrawUpdate = true;
+            NeedsDrawUpdate = 1;
             if (FadeCalled == 0) {
                 //GMUIP.GMUI_gridFader[Layer] = -1;//GroupIsFading = false;
                 if (!Transitioning) {
@@ -3717,7 +3717,7 @@ if (!Hidden) {
             else
                 Toggle_t = Toggle_d;
             GMUI_GridUpdateLayer(GMUIP,Layer);
-            NeedsDrawUpdate = true;
+            NeedsDrawUpdate = 1;
             if (string(value) == "0")
                 ToggleRelativeXorY = ToggleDistance - (Toggle_c * Toggle_t);
             else if (string(value) == "1")
@@ -3815,7 +3815,7 @@ if (ControlHasScrollbar) {
         else {
             GMUI_ControlScrollbarSelect(id,mouse_x,mouse_y);
         }
-        NeedsDrawUpdate = true;
+        NeedsDrawUpdate = 1;
     }
 }
 
@@ -3866,7 +3866,7 @@ if (argument0 == true) {
         }
         
         // Create surfaces for controls that use them first, and later draw to grid
-        if (NeedsDrawUpdate || NeedsGroupUpdate) {
+        if (NeedsDrawUpdate > 0 || NeedsGroupUpdate > 0) {
             if (ControlType == "selectlist") {
                 // Only create the surface of the list and return
                 SelectListSurface = GMUI_ControlDrawItemList(id, true);
@@ -3876,7 +3876,7 @@ if (argument0 == true) {
         }
         
         // Check for grid update
-        if (GMUIP.GMUI_gridNeedsDrawUpdate[Layer] == 2 || GMUIP.GMUI_gridMasterControl[Layer] == id || NeedsDrawUpdate || NeedsGroupUpdate) {
+        if (GMUIP.GMUI_gridNeedsDrawUpdate[Layer] == 2 || GMUIP.GMUI_gridMasterControl[Layer] == id || NeedsDrawUpdate > 0 || NeedsGroupUpdate > 0) {
             CurrentSurfaceW = GMUIP.UIgridwidth;
             CurrentSurfaceH = GMUIP.UIgridheight;
             CurrentSurface = GMUIsurface_target(GMUIP.GMUI_gridSurface[Layer], CurrentSurfaceW, CurrentSurfaceH);
@@ -3888,7 +3888,7 @@ if (argument0 == true) {
                 GMUIP.GMUI_gridNeedsDrawUpdate[Layer] = 0;
             }
         }
-        if (NeedsDrawUpdate || NeedsGroupUpdate) {
+        if (NeedsDrawUpdate > 0 || NeedsGroupUpdate > 0) {
             // Update group if in one and visible or fading in/out
             if (Group > 0) {// && (!GroupHidden || FadeCalled != 0)) {
                 if (GMUIP.GMUI_groupMasterControl[Layer,Group] == id) {
@@ -3900,7 +3900,7 @@ if (argument0 == true) {
                     GMUIP.GMUI_groupSurface[Layer,Group] = CurrentSurface;
                     
                     //(GMUIP).GMUI_gridMasterControl[Layer] == id
-                    if (NeedsGroupUpdate && GMUIP.GMUI_groupMasterControl[Layer,Group] == id) {
+                    if (NeedsGroupUpdate > 0 && GMUIP.GMUI_groupMasterControl[Layer,Group] == id) {
                         GMUIsurface_clear(GMUIP.GMUI_groupSurface[Layer,Group]);
                         //if (!skipgroup) {
                         if (!GroupHidden || FadeCalled != 0){
@@ -3919,7 +3919,7 @@ if (argument0 == true) {
                 }
             }
             else if (Group > 0) {
-                NeedsDrawUpdate = false;
+                NeedsDrawUpdate = 0;
             }
         }
     
@@ -3931,15 +3931,15 @@ if (argument0 == true) {
     
     // If hidden and not fading out, no draw is needed...
     if ((Hidden || GroupHidden) && FadeCalled == 0) {
-        NeedsDrawUpdate = false;
+        NeedsDrawUpdate = 0;
     }
     else if (!GMUIP.UIEnableSurfaces) {
-        NeedsDrawUpdate = true;
+        NeedsDrawUpdate = 1;
     }
         
         
     // Draw the control based on the type and user-defined settings
-    if (NeedsDrawUpdate) {
+    if (NeedsDrawUpdate > 0) {
         var padx;
         padx = ControlPaddingX;
         _BackgroundAlpha = min(ControlBackgroundAlpha,FadeAlpha);
@@ -4231,7 +4231,7 @@ if (argument0 == true) {
     // Reset the surface if using one, draw the group if needed
     if (GMUIP.UIEnableSurfaces) {
         GMUIsurface_reset();
-        if (Group > 0 && GMUIP.GMUI_groupDrawingControl[Layer,Group] == id && (NeedsDrawUpdate || NeedsGroupUpdate)) {
+        if (Group > 0 && GMUIP.GMUI_groupDrawingControl[Layer,Group] == id && (NeedsDrawUpdate > 0 || NeedsGroupUpdate > 0)) {
             if (surface_exists(GMUIP.GMUI_groupSurface[Layer,Group])) {
                 GMUIP.GMUI_gridSurface[Layer] = GMUIsurface_target(GMUIP.GMUI_gridSurface[Layer], GMUIP.UIgridwidth, GMUIP.UIgridheight);
                 draw_surface(GMUIP.GMUI_groupSurface[Layer,Group],
@@ -4242,8 +4242,8 @@ if (argument0 == true) {
         }
         
         if (GMUIP.GMUI_gridNeedsDrawUpdate[Layer] != 1) {
-            NeedsDrawUpdate = false;
-            NeedsGroupUpdate = false;
+            NeedsDrawUpdate -= (NeedsDrawUpdate > 0)*1;
+            NeedsGroupUpdate -= (NeedsGroupUpdate > 0)*1;
         }
     }
 }
@@ -4300,7 +4300,7 @@ with (GMUII()) {
         }
         else {
             GMUI_GridUpdateLayer(_ctrl.GMUIP,_ctrl.Layer);
-            _ctrl.NeedsDrawUpdate = true;
+            _ctrl.NeedsDrawUpdate = 1;
         }
         
         // Re-set the control region on the map
@@ -4577,7 +4577,7 @@ return true;
 #define GMUI_ControlSetButton
 ///GMUI_ControlSetButton(Text in button or "" , graphic inside button or -1 , font alignment or -1, text color on hover or -1)
 ///Set the picker values of the control (to override the defaults)
-///@function GMUI_ControlSetButton(arugment0,argument1,argument2,argument3) {
+///@function GMUI_ControlSetButton(argument0,argument1,argument2,argument3) {
 
 if (!GMUI_IsControl() && id != GMUII())
 {
@@ -4690,7 +4690,7 @@ if (!toggleInitialized) {
 if (NeedsPositionUpdate) {
     GMUI_ControlUpdateXY(id);
     NeedsPositionUpdate = false;
-    NeedsDrawUpdate = true;
+    NeedsDrawUpdate = 1;
 }
 
 // If any values are given as negative numbers, those values will remain as the control default
@@ -4752,7 +4752,7 @@ with (GMUII()) {
 #define GMUI_ControlSetFontStyle
 ///GMUI_ControlSetFontStyle(font, font color, font align)
 ///Set the style of the controls that will be used for new controls (to override the defaults)
-///@function argument0, argument1, argument2) {
+///@function GMUI_ControlSetFontStyle(argument0, argument1, argument2) {
 if (!GMUI_IsControl() && id != GMUII())
 {
     GMUI_ThrowErrorDetailed("Invalid control", GMUI_ControlSetFontStyle);
@@ -5411,7 +5411,7 @@ if (!toggleInitialized) {
 if (NeedsPositionUpdate) {
     GMUI_ControlUpdateXY(id);
     NeedsPositionUpdate = false;
-    NeedsDrawUpdate = true;
+    NeedsDrawUpdate = 1;
 }
 
 // If any values are given as negative numbers, those values will remain as the control default
@@ -5730,6 +5730,7 @@ UIInterfaceSet = true;
 GMUI_GridSetAllGroupValues(id);
 //GMUI_GridSetAllMenuValues(id);
 GMUI_GridSetRegions();
+GMUI_GridUpdateLayer(id,UILayer);
 
 // Upon success, give the GMUI id back
 return GMUInumber;
@@ -5816,7 +5817,7 @@ with (GMUII()) {
     // Surface specific
     if (UIEnableSurfaces) {
         GMUI_groupSurface[_Layer,_Group] = noone;
-        //GMUI_groupNeedsDrawUpdate[_Layer,_Group] = true;
+        //GMUI_groupNeedsDrawUpdate[_Layer,_Group] = 1;
         GMUI_groupDrawingControl[_Layer,_Group] = -1;
         GMUI_groupDrawingFirst[_Layer,_Group] = -1;
         GMUI_groupDrawingLast[_Layer,_Group] = -1;
@@ -6579,7 +6580,7 @@ if (!(GMUII()).UIInterfaceSet) {
     return true;
 }
 
-(GMUII()).GMUI_groupNeedsDrawUpdate[_Layer,_Group] = true;
+(GMUII()).GMUI_groupNeedsDrawUpdate[_Layer,_Group] = 1;
 
 // Change the value for each of the controls within the group
 for(i=0;i<ds_list_size((GMUII()).GMUI_groupControlList[_Layer,_Group]);i+=1) {
@@ -7212,7 +7213,7 @@ for(i=0;i<ds_list_size((_GMUI).GMUI_controlList);i+=1) {
     }
     else if (((ctrl).Layer == _Layer) && ctrl.Group == 0) {
         ctrl.Hidden = _Hide;
-        ctrl.NeedsDrawUpdate = true;
+        ctrl.NeedsDrawUpdate = 1;
     }
 }
 
@@ -7222,7 +7223,7 @@ for(i=0;i<ds_list_size((_GMUI).GMUI_groupList[_Layer]);i+=1) {
     _Group = ds_list_find_value((_GMUI).GMUI_groupList[_Layer],i);
     
     if (GMUI_StudioCheckDefined(_Group)) {
-        (GMUII()).GMUI_groupNeedsDrawUpdate[_Layer,_Group] = true;
+        (GMUII()).GMUI_groupNeedsDrawUpdate[_Layer,_Group] = 1;
         
         // Change the value for each of the controls within the group
         for(j=0;j<ds_list_size((GMUII()).GMUI_groupControlList[_Layer,_Group]);j+=1) {
@@ -8334,7 +8335,7 @@ if (_UsingSurface) {
 if (!_Ctrl.Hovering)
     _Ctrl.ItemListHoverIndex = -1;
 else
-    _Ctrl.NeedsDrawUpdate = true;
+    _Ctrl.NeedsDrawUpdate = 1;
 
 // Set alignments (for now this is static)
 GMUIalign(fa_left,fa_middle);
@@ -9012,8 +9013,8 @@ i.ControlType = "";
 i.ControlDataType = global.GMUIDataTypeString; // Default (0)
 
 i.NeedsPositionUpdate = false;
-i.NeedsDrawUpdate = false;
-i.NeedsGroupUpdate = false;
+i.NeedsDrawUpdate = 0;
+i.NeedsGroupUpdate = 0;
 
 // Redundant control options based on the datatype
 i.ControlIsNumeric = false;
@@ -10320,7 +10321,7 @@ if (_isOpening) {
     }
     
     GMUI_GridUpdateLayer(_Control.GMUIP,_Control.Layer);
-    _Control.GMUIP.GMUI_gridNeedsDrawUpdate[_Control.Layer] = true;
+    
     
 }
 else {
@@ -11178,7 +11179,7 @@ with (argument0) {
             }
             else if (GMUI_ControlIsInLayer(_ctrl,_Layer)) {
                 if (!_ctrl.Hidden)
-                    _ctrl.NeedsDrawUpdate = true;
+                    _ctrl.NeedsDrawUpdate = 1;
             }
         }
         
@@ -11189,10 +11190,10 @@ with (argument0) {
             if (GMUI_StudioCheckDefined(_g)) {
 //            if (sg > 0){
 //                if (GMUI_groupMasterControl[_Layer,_g] < sg)
-                (GMUI_groupMasterControl[_Layer,_g]).NeedsGroupUpdate = true;
+                (GMUI_groupMasterControl[_Layer,_g]).NeedsGroupUpdate = 1;
                 
 //                if (GMUI_groupDrawingControl[_Layer,_g] < sg)
-                (GMUI_groupDrawingControl[_Layer,_g]).NeedsGroupUpdate = true;
+                (GMUI_groupDrawingControl[_Layer,_g]).NeedsGroupUpdate = 1;
 //            }
             }
         }
