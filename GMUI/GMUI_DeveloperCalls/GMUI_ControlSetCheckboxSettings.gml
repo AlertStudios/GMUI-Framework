@@ -33,7 +33,7 @@ if (!toggleInitialized) {
 if (NeedsPositionUpdate) {
     GMUI_ControlUpdateXY(id);
     NeedsPositionUpdate = false;
-    NeedsDrawUpdate = true;
+    NeedsDrawUpdate = 1;
 }
 
 // If any values are given as negative numbers, those values will remain as the control default

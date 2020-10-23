@@ -122,7 +122,7 @@ if (FadeCalled != 0) {
         
         if (GMUIP.GMUI_gridMasterControl[Layer] != -1) {
             //GMUIP.GMUI_groupNeedsDrawUpdate[Layer,Group] = 2;
-            NeedsDrawUpdate = true;
+            NeedsDrawUpdate = 1;
             if (FadeCalled == 0) {
                 //GMUIP.GMUI_gridFader[Layer] = -1;//GroupIsFading = false;
                 if (!Transitioning) {
@@ -197,7 +197,7 @@ if (!Hidden) {
             else
                 Toggle_t = Toggle_d;
             GMUI_GridUpdateLayer(GMUIP,Layer);
-            NeedsDrawUpdate = true;
+            NeedsDrawUpdate = 1;
             if (string(value) == "0")
                 ToggleRelativeXorY = ToggleDistance - (Toggle_c * Toggle_t);
             else if (string(value) == "1")
@@ -295,7 +295,7 @@ if (ControlHasScrollbar) {
         else {
             GMUI_ControlScrollbarSelect(id,mouse_x,mouse_y);
         }
-        NeedsDrawUpdate = true;
+        NeedsDrawUpdate = 1;
     }
 }
 
@@ -346,7 +346,7 @@ if (argument0 == true) {
         }
         
         // Create surfaces for controls that use them first, and later draw to grid
-        if (NeedsDrawUpdate || NeedsGroupUpdate) {
+        if (NeedsDrawUpdate > 0 || NeedsGroupUpdate > 0) {
             if (ControlType == "selectlist") {
                 // Only create the surface of the list and return
                 SelectListSurface = GMUI_ControlDrawItemList(id, true);
@@ -356,7 +356,7 @@ if (argument0 == true) {
         }
         
         // Check for grid update
-        if (GMUIP.GMUI_gridNeedsDrawUpdate[Layer] == 2 || GMUIP.GMUI_gridMasterControl[Layer] == id || NeedsDrawUpdate || NeedsGroupUpdate) {
+        if (GMUIP.GMUI_gridNeedsDrawUpdate[Layer] == 2 || GMUIP.GMUI_gridMasterControl[Layer] == id || NeedsDrawUpdate > 0 || NeedsGroupUpdate > 0) {
             CurrentSurfaceW = GMUIP.UIgridwidth;
             CurrentSurfaceH = GMUIP.UIgridheight;
             CurrentSurface = GMUIsurface_target(GMUIP.GMUI_gridSurface[Layer], CurrentSurfaceW, CurrentSurfaceH);
@@ -368,7 +368,7 @@ if (argument0 == true) {
                 GMUIP.GMUI_gridNeedsDrawUpdate[Layer] = 0;
             }
         }
-        if (NeedsDrawUpdate || NeedsGroupUpdate) {
+        if (NeedsDrawUpdate > 0 || NeedsGroupUpdate > 0) {
             // Update group if in one and visible or fading in/out
             if (Group > 0) {// && (!GroupHidden || FadeCalled != 0)) {
                 if (GMUIP.GMUI_groupMasterControl[Layer,Group] == id) {
@@ -380,7 +380,7 @@ if (argument0 == true) {
                     GMUIP.GMUI_groupSurface[Layer,Group] = CurrentSurface;
                     
                     //(GMUIP).GMUI_gridMasterControl[Layer] == id
-                    if (NeedsGroupUpdate && GMUIP.GMUI_groupMasterControl[Layer,Group] == id) {
+                    if (NeedsGroupUpdate > 0 && GMUIP.GMUI_groupMasterControl[Layer,Group] == id) {
                         GMUIsurface_clear(GMUIP.GMUI_groupSurface[Layer,Group]);
                         //if (!skipgroup) {
                         if (!GroupHidden || FadeCalled != 0){
@@ -399,7 +399,7 @@ if (argument0 == true) {
                 }
             }
             else if (Group > 0) {
-                NeedsDrawUpdate = false;
+                NeedsDrawUpdate = 0;
             }
         }
     
@@ -411,15 +411,15 @@ if (argument0 == true) {
     
     // If hidden and not fading out, no draw is needed...
     if ((Hidden || GroupHidden) && FadeCalled == 0) {
-        NeedsDrawUpdate = false;
+        NeedsDrawUpdate = 0;
     }
     else if (!GMUIP.UIEnableSurfaces) {
-        NeedsDrawUpdate = true;
+        NeedsDrawUpdate = 1;
     }
         
         
     // Draw the control based on the type and user-defined settings
-    if (NeedsDrawUpdate) {
+    if (NeedsDrawUpdate > 0) {
         var padx;
         padx = ControlPaddingX;
         _BackgroundAlpha = min(ControlBackgroundAlpha,FadeAlpha);
@@ -711,7 +711,7 @@ if (argument0 == true) {
     // Reset the surface if using one, draw the group if needed
     if (GMUIP.UIEnableSurfaces) {
         GMUIsurface_reset();
-        if (Group > 0 && GMUIP.GMUI_groupDrawingControl[Layer,Group] == id && (NeedsDrawUpdate || NeedsGroupUpdate)) {
+        if (Group > 0 && GMUIP.GMUI_groupDrawingControl[Layer,Group] == id && (NeedsDrawUpdate > 0 || NeedsGroupUpdate > 0)) {
             if (surface_exists(GMUIP.GMUI_groupSurface[Layer,Group])) {
                 GMUIP.GMUI_gridSurface[Layer] = GMUIsurface_target(GMUIP.GMUI_gridSurface[Layer], GMUIP.UIgridwidth, GMUIP.UIgridheight);
                 draw_surface(GMUIP.GMUI_groupSurface[Layer,Group],
@@ -722,8 +722,8 @@ if (argument0 == true) {
         }
         
         if (GMUIP.GMUI_gridNeedsDrawUpdate[Layer] != 1) {
-            NeedsDrawUpdate = false;
-            NeedsGroupUpdate = false;
+            NeedsDrawUpdate -= (NeedsDrawUpdate > 0)*1;
+            NeedsGroupUpdate -= (NeedsGroupUpdate > 0)*1;
         }
     }
 }

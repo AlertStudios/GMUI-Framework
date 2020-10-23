@@ -184,6 +184,7 @@ UIInterfaceSet = true;
 GMUI_GridSetAllGroupValues(id);
 //GMUI_GridSetAllMenuValues(id);
 GMUI_GridSetRegions();
+GMUI_GridUpdateLayer(id,UILayer);
 
 // Upon success, give the GMUI id back
 return GMUInumber;

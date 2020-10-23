@@ -71,7 +71,7 @@ with (GMUII()) {
     // Surface specific
     if (UIEnableSurfaces) {
         GMUI_groupSurface[_Layer,_Group] = noone;
-        //GMUI_groupNeedsDrawUpdate[_Layer,_Group] = true;
+        //GMUI_groupNeedsDrawUpdate[_Layer,_Group] = 1;
         GMUI_groupDrawingControl[_Layer,_Group] = -1;
         GMUI_groupDrawingFirst[_Layer,_Group] = -1;
         GMUI_groupDrawingLast[_Layer,_Group] = -1;

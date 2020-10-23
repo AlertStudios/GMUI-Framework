@@ -40,7 +40,7 @@ if (_UsingSurface) {
 if (!_Ctrl.Hovering)
     _Ctrl.ItemListHoverIndex = -1;
 else
-    _Ctrl.NeedsDrawUpdate = true;
+    _Ctrl.NeedsDrawUpdate = 1;
 
 // Set alignments (for now this is static)
 GMUIalign(fa_left,fa_middle);

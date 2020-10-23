@@ -29,7 +29,7 @@ with (GMUII()) {
         }
         else {
             GMUI_GridUpdateLayer(_ctrl.GMUIP,_ctrl.Layer);
-            _ctrl.NeedsDrawUpdate = true;
+            _ctrl.NeedsDrawUpdate = 1;
         }
         
         // Re-set the control region on the map

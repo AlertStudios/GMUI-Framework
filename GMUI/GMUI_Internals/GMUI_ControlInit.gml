@@ -27,8 +27,8 @@ i.ControlType = "";
 i.ControlDataType = global.GMUIDataTypeString; // Default (0)
 
 i.NeedsPositionUpdate = false;
-i.NeedsDrawUpdate = false;
-i.NeedsGroupUpdate = false;
+i.NeedsDrawUpdate = 0;
+i.NeedsGroupUpdate = 0;
 
 // Redundant control options based on the datatype
 i.ControlIsNumeric = false;

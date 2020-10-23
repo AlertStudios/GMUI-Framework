@@ -75,7 +75,7 @@ if (_isOpening) {
     }
     
     GMUI_GridUpdateLayer(_Control.GMUIP,_Control.Layer);
-    _Control.GMUIP.GMUI_gridNeedsDrawUpdate[_Control.Layer] = true;
+    
     
 }
 else {
