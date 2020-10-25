@@ -60,7 +60,7 @@ if (_isOpening) {
             _Control.ItemListDrawScript, _Control.ItemListFadeTime);
             
         GMUI_ItemListBackground(_Control.ItemListBackgroundColor[0], _Control.ItemListBackgroundColorHover[0],
-            _Control.ItemListBackgroundAlpha, _Control.ItemListBackgroundAlphaHover);
+            _Control.ItemListBackgroundAlpha[0], _Control.ItemListBackgroundAlphaHover[0]);
         
         // Add all items from parent
         var i,_id;

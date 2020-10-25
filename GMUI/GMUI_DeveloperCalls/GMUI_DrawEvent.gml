@@ -202,9 +202,9 @@ if (GMUI_GridEnabled())
                             // For lists that have a scrollbar, check which region we are in
                             if (ctrlObject.ControlHasScrollbar) {
                                 if (ctrlObject.Group > 0)
-                                    _GX = GMUI_groupActualX[ctrlObject.Layer,ctrlObject.Group] * (UIEnableSurfaces);
+                                    GX = GMUI_groupActualX[ctrlObject.Layer,ctrlObject.Group] * (UIEnableSurfaces);
                                     
-                                if (MX >= ctrlObject.Scrollbar_x + GMUI_grid_x[ctrlObject.Layer] + GMUI_GridViewOffsetX(id) + _GX) {                                 
+                                if (MX >= ctrlObject.Scrollbar_x + GMUI_grid_x[ctrlObject.Layer] + GMUI_GridViewOffsetX(id) + GX) {                                 
                                     // Drag the scrollbar
                                     var _MPos,_SPos;
                                     _MPos = MY - ctrlObject.ActualY;

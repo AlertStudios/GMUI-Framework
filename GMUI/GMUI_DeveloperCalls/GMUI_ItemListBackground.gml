@@ -20,10 +20,10 @@ if (argument1 > -1)
     ItemListBackgroundColorHover[0] = argument1;
 
 if (argument2 > -1)
-    ItemListBackgroundAlpha = argument2;
+    ItemListBackgroundAlpha[0] = argument2;
     
 if (argument3 > -1)
-    ItemListBackgroundAlphaHover = argument3;
+    ItemListBackgroundAlphaHover[0] = argument3;
 
 }
 
