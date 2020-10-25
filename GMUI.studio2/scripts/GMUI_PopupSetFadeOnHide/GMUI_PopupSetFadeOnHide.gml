@@ -1,6 +1,7 @@
 ///GMUI_PopupSetFadeOnHide("Popup Name", Speed in steps, Fade Mode [0: alpha-sequential, 1: all-together])
 ///Set the fade in/out when the menu is hidden or not
 ///Fade Mode: 0 = fade dimmest last, 1 = fade all together
+function GMUI_PopupSetFadeOnHide(argument0,argument1,argument2) {
 
 // Arguments
 var SCRIPT,_MenuName,_MenuNumber,_Speed,_FadeMode;
@@ -25,4 +26,5 @@ _result = GMUI_GroupSetFadeOnHide(_MenuNumber,_Speed,_FadeMode);
 
 UIAddToLayer = _prevLayer;
 return _result;
+}
 

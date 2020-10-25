@@ -1,5 +1,6 @@
 ///GMUI_ControlCenterY("control name" or id)
 ///Centers the control in its layer vertically
+function GMUI_ControlCenterY(argument0) {
 
 var _NameOrId, _Control;
 _NameOrId = argument0;
@@ -24,5 +25,6 @@ else {
         GMUI_GridSetRegionsLayer((_Control).Layer);
         
     return true;
+}
 }
 

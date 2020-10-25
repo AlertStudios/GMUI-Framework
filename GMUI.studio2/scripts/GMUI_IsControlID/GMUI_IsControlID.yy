@@ -1,8 +1,12 @@
 {
-    "id": "43f70760-3ca5-4b5f-b43b-04a104b3e876",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "GMUI_IsControlID",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "GMUI_Internals",
+    "path": "folders/Scripts/GMUI/GMUI_Internals.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "GMUI_IsControlID",
+  "tags": [],
+  "resourceType": "GMScript",
 }

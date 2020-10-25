@@ -1,8 +1,12 @@
 {
-    "id": "09a7cd14-c62f-497d-b150-2b09e5f170ed",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "easeInOutBack",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "GMUI_Effects",
+    "path": "folders/Scripts/GMUI/GMUI_DeveloperCalls/GMUI_Effects.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "easeInOutBack",
+  "tags": [],
+  "resourceType": "GMScript",
 }

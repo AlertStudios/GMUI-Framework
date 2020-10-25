@@ -1,8 +1,12 @@
 {
-    "id": "1712aefb-f91c-4bc4-b3ca-0a770dbea93f",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "GMUI_ControlSetCheckboxSettings",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "GMUI_DeveloperCalls",
+    "path": "folders/Scripts/GMUI/GMUI_DeveloperCalls.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "GMUI_ControlSetCheckboxSettings",
+  "tags": [],
+  "resourceType": "GMScript",
 }

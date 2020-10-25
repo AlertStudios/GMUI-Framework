@@ -1,5 +1,6 @@
 ///GMUI_GroupSetPositionActual(Layer Number, Group Number, x, y)
 ///Set a group to a position in the room by x, y
+function GMUI_GroupSetPositionActual(argument0,argument1,argument2,argument3) {
 
 var _LayerNumber, _GroupNumber, _xcord, _ycord, _adjx, _adjy, _offsetx, _offsety;
 _LayerNumber = argument0;
@@ -31,4 +32,5 @@ _adjy = _ycord - _offsety - GMUI_CellGetActualY(GMUI_GridGetCellY(GMUII(),_Layer
 
 // Set position by default anchor (topleft), and adjustment to the given coordinates
 GMUI_GroupSetPositionAnchored(_LayerNumber,_GroupNumber,GMUI_GridGetCellX(GMUII(),_LayerNumber,_xcord),GMUI_GridGetCellY(GMUII(),_LayerNumber,_ycord),_adjx,_adjy,0);
+}
 

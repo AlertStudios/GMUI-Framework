@@ -1,8 +1,12 @@
 {
-    "id": "a44dc350-548b-42ad-b75e-ec4f189b674a",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "GMUI_GroupSetHidePosition",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "GMUI_Internals",
+    "path": "folders/Scripts/GMUI/GMUI_Internals.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "GMUI_GroupSetHidePosition",
+  "tags": [],
+  "resourceType": "GMScript",
 }

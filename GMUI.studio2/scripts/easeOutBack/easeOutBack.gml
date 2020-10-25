@@ -1,5 +1,6 @@
 ///easeOutBack(t,b,c,d) where t is current time, b is start value, c is change in value, and d is duration
 ///Smooth overshot Ease for moving controls smoothly
+function easeOutBack(argument0,argument1,argument2,argument3) {
 
 var _t,_tt,_b,_c,_d, _p,_s;
 _t = argument0;
@@ -14,4 +15,5 @@ return _c*((_t)*_t*((_s+1)*_t + _s) + 1) + _b;
 
 //To see copyright notice for this script please click on the following text then press F12:
 //ease_CopyrightNotice
+}
 

@@ -1,5 +1,6 @@
 ///GMUI_ControlDrawTooltip("name of control with the tooltip")
 /// Draw the control's tooltip
+function GMUI_ControlDrawTooltip(argument0) {
 
 with (GMUII()) {
     // Retrieve control from the reference map
@@ -12,5 +13,6 @@ with (GMUII()) {
     else {
         GMUI_ControlDrawTooltipById((control).TooltipId);
     }
+}
 }
 

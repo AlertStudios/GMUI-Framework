@@ -1,4 +1,5 @@
 ///GMUI_ControlActionScript(control object) Runs the script assigned to the control, if there is one
+function GMUI_ControlActionScript(argument0) {
 
 if (!GMUI_IsControlID(argument0))
 {
@@ -21,4 +22,5 @@ else {
 }
 
 return false;
+}
 

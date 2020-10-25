@@ -1,8 +1,12 @@
 {
-    "id": "eec258b2-4ca9-41f3-9694-a5a8bb9970ee",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "GMUI_SetOnLayer",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "GMUI_DeveloperCalls",
+    "path": "folders/Scripts/GMUI/GMUI_DeveloperCalls.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "GMUI_SetOnLayer",
+  "tags": [],
+  "resourceType": "GMScript",
 }

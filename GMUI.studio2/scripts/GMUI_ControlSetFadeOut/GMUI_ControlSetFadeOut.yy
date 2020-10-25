@@ -1,8 +1,12 @@
 {
-    "id": "6687ded1-044c-4b27-96aa-7f02ebf67f44",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "GMUI_ControlSetFadeOut",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "GMUI_Effects",
+    "path": "folders/Scripts/GMUI/GMUI_DeveloperCalls/GMUI_Effects.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "GMUI_ControlSetFadeOut",
+  "tags": [],
+  "resourceType": "GMScript",
 }

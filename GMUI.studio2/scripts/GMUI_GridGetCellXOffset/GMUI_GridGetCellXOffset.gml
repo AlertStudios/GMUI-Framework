@@ -3,6 +3,7 @@
 // argument1 is the layer
 // argument2 is the X coordinate
 // argument3 is the X offset
+function GMUI_GridGetCellXOffset(argument0,argument1,argument2,argument3) {
 
 var _GMUII, _LayerNumber, _offset;
 _GMUII = argument0;
@@ -11,5 +12,5 @@ _offset = argument3;
 
 return ceil((argument2-(_GMUII).GMUI_grid_x[_LayerNumber]-_offset+1)/(_GMUII).cellsize)-1;
 
-
+}
 

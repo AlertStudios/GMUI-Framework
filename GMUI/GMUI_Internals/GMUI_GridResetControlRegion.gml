@@ -1,6 +1,6 @@
 ///GMUI_GridResetControlRegion(Layer, previous CellX, previous CellY, Cell Width, Cell Height, control id)
 /// Resets any control values in the control's previous region
-
+function GMUI_GridResetControlRegion(argument0,argument1,argument2,argument3,argument4,argument5) {
 
 var _Layer, _pCellX, _pCellY, _CellW, _CellH, _CtrlId;
 _Layer = argument0;
@@ -18,5 +18,6 @@ for (i=0;i<_CellW;i+=1) {
                 ds_grid_set((GMUII()).GMUI_grid[_Layer],_pCellX+i,_pCellY+j,0);
         }
     }
+}
 }
 

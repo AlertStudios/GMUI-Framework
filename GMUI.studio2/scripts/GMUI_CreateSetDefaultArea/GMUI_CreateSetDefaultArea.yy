@@ -1,8 +1,12 @@
 {
-    "id": "8bafd4bd-f54b-4a3f-9d9f-5bf45e27d90a",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "GMUI_CreateSetDefaultArea",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "GMUI_Internals",
+    "path": "folders/Scripts/GMUI/GMUI_Internals.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "GMUI_CreateSetDefaultArea",
+  "tags": [],
+  "resourceType": "GMScript",
 }

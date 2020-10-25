@@ -1,8 +1,12 @@
 {
-    "id": "c3a757fd-31bc-4c6c-90bf-9c476337e1be",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "GMUI_GetMenuLayer",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "GMUI_DeveloperCalls",
+    "path": "folders/Scripts/GMUI/GMUI_DeveloperCalls.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "GMUI_GetMenuLayer",
+  "tags": [],
+  "resourceType": "GMScript",
 }

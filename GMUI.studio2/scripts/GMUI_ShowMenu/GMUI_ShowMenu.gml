@@ -1,4 +1,5 @@
 ///GMUI_ShowMenu("menu name", show[1] or hide[0], animate [bool])
+function GMUI_ShowMenu(argument0,argument1,argument2) {
 
 // Arguments
 var _SCRIPT,_menuName,_animate, _show, _menuNumber;
@@ -15,4 +16,5 @@ if (string(_menuNumber) == "0")
     
 
 return GMUI_ShowMenuId(_menuNumber,_show,_animate);
+}
 

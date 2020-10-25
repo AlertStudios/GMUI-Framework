@@ -1,6 +1,6 @@
 ///GMUI_ControlSetHoverAction(Action Script)
 ///When hovering, execute script (can also draw)
-
+function GMUI_ControlSetHoverAction(argument0) {
 if (!GMUI_IsControl() && id != GMUII())
 {
     GMUI_ThrowErrorDetailed("Invalid control", GMUI_ControlSetHoverAction);
@@ -16,5 +16,5 @@ else {
 }
 
 return false;
-    
+}
 

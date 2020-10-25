@@ -1,8 +1,12 @@
 {
-    "id": "5c7b4cf3-ce21-4503-8b4d-eb23d33a817c",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "GMUI_ControlSetDefaultButton",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "GMUI_Internals",
+    "path": "folders/Scripts/GMUI/GMUI_Internals.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "GMUI_ControlSetDefaultButton",
+  "tags": [],
+  "resourceType": "GMScript",
 }

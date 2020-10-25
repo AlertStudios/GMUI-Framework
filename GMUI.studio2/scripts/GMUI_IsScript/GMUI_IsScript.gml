@@ -1,5 +1,6 @@
 ///GMUI_IsScript(script)
 ///Determines whether the value provided is an existing script
+function GMUI_IsScript(argument0) {
 
 var _ScrVar;
 
@@ -14,4 +15,5 @@ if (is_real(_ScrVar)) {
 }
 
 return false;
+}
 

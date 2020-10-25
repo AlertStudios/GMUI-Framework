@@ -1,8 +1,12 @@
 {
-    "id": "c15e5aba-33aa-4c5a-b9a0-3a432a42496d",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "GMUI_GridGetMouseCellX",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "GMUI_Internals",
+    "path": "folders/Scripts/GMUI/GMUI_Internals.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "GMUI_GridGetMouseCellX",
+  "tags": [],
+  "resourceType": "GMScript",
 }

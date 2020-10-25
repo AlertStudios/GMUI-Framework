@@ -1,8 +1,12 @@
 {
-    "id": "df0d7657-6466-457d-83e6-de9280964ba5",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "GMUI_MenuSetFadeOnHide",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "GMUI_Internals",
+    "path": "folders/Scripts/GMUI/GMUI_Internals.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "GMUI_MenuSetFadeOnHide",
+  "tags": [],
+  "resourceType": "GMScript",
 }

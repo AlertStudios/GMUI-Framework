@@ -1,5 +1,6 @@
 ///GMUI_ControlSetDefaultStyle(id, SetBlank[bool])
 /// Get the default style values from the grid controller
+function GMUI_ControlSetDefaultStyle(argument0,argument1) {
 
 if (!instance_exists(argument0))
 {
@@ -39,4 +40,5 @@ with (argument0)
 }
 
 return true;
+}
 

@@ -1,8 +1,12 @@
 {
-    "id": "9ef47288-3876-495f-8ced-68c0e77c4e39",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "GMUI_GridGetCellYRoom",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "GMUI_Internals",
+    "path": "folders/Scripts/GMUI/GMUI_Internals.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "GMUI_GridGetCellYRoom",
+  "tags": [],
+  "resourceType": "GMScript",
 }

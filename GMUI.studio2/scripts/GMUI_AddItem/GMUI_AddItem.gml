@@ -1,5 +1,6 @@
 ///GMUI_AddItem(id, value, name, description, sprite [or -1])
 ///Adds an item to a control with an item list
+function GMUI_AddItem(argument0,argument1,argument2,argument3,argument4) {
 
 if (!GMUI_IsControl() && id != GMUII())
 {
@@ -7,7 +8,7 @@ if (!GMUI_IsControl() && id != GMUII())
     return false;
 }
 
-if (ControlItemList) {
+if (ControlItemList || ControlType == "dropdown") {
     var _id, _OF; _id = argument0;
     // Check if item exists, creating it if it doesnt
     if (!GMUI_AddItemDefaults(id,_id))
@@ -25,7 +26,7 @@ if (ControlItemList) {
         // Recalculate the height of the selectable scrollbar based on the number of items
         _OF = max(CellHigh,ItemListSize);
         if (ControlHasScrollbar) {
-            Scrollbar_height = max(GMUIP.cellsize_h, CellHigh / _OF * Scrollbar_max) - Scrollbar_padding*2;
+            Scrollbar_height = max(GMUIP.cellsize_h, CellHigh / _OF * Scrollbar_max) - Scrollbar_padding*2 + 2;
             Scrollbar_maxtop = Scrollbar_max - Scrollbar_height;
         }
         
@@ -45,4 +46,6 @@ else
     return false;
     
 return true;
+
+}
 

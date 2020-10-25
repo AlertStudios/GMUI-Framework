@@ -17,6 +17,7 @@ GMUI_CreateGroup(1,      2,2,   GMUIAnchor.TopLeft);
 GMUI_GroupSetSize(1,     8,20);
 GMUI_GroupSetStyle(1, c_black, .2, c_black, .3, 0);
 GMUI_GroupSetFadeOnHide(1, room_speed/2, 0);
+GMUI_GroupSetMarginY(1, 1);
 
 var _bW; _bW = 6;
 
@@ -106,7 +107,7 @@ var _fadespeed; _fadespeed = room_speed/2;
 // Right Group 2: Sliders (Default)
 GMUI_CreateGroup(2,      20,2,    GMUIAnchor.TopRight);
 GMUI_GroupSetFadeOnHide(2, _fadespeed, 0);
-//SET SIZE TO GRID - X
+GMUI_GroupSetMarginX(2, 1);
 
 with (GMUI_Add("Slider", "slider",              5,6,  10,2,   GMUIAnchor.TopLeft)) {
     GMUI_ControlAddToGroup(2);
@@ -173,7 +174,8 @@ with (GMUI_Add("SliderV2", "slider",              13,9,  4,8,   global.GMUIAncho
 GMUI_CreateGroup(3,      20,2,    GMUIAnchor.TopRight);
 GMUI_GroupHide(3,GMUI_GetCurrentLayer(),true);
 GMUI_GroupSetFadeOnHide(3, _fadespeed, 0);
-//SET SIZE TO GRID - X
+GMUI_GroupSetMarginX(3, 1);
+GMUI_GroupSetMarginY(3, 1);
 
 with (GMUI_Add("SpriteText","textstring",            1,1,    16,2,   GMUIAnchor.TopLeft)) {
 GMUI_ControlAddToGroup(3);
@@ -209,12 +211,27 @@ with (GMUI_Add("Test4", "intpicker",            1,10,    10,2,   GMUIAnchor.TopL
     }
 }
 
+with (GMUI_Add("LabelDesc", "label",  1, 14, 19, 4, GMUIAnchor.TopLeft)) {
+    GMUI_ControlAddToGroup(3);
+    GMUI_ControlSetInitValue("This group has its overflow set to hide.");
+}
+
+with (GMUI_Add("LabelLong", "label",  1, 18, 36, 2, GMUIAnchor.TopLeft)) {
+    GMUI_ControlAddToGroup(3);
+    GMUI_ControlSetInitValue("The width for this label is waaaaaaaay too long for this group's width!");
+}
+
+with (GMUI_Add("LabelWrap", "label",  1, 22, 19, 4, GMUIAnchor.TopLeft)) {
+    GMUI_ControlAddToGroup(3);
+    GMUI_ControlSetInitValue("This label text will wrap to the width of the control.");
+}
+
 
 // Right Group 4: Toggles
 GMUI_CreateGroup(4,      20,2,    GMUIAnchor.TopRight);
 GMUI_GroupHide(4,GMUI_GetCurrentLayer(),true);
 GMUI_GroupSetFadeOnHide(4, _fadespeed, 0);
-//SET SIZE TO GRID - X
+GMUI_GroupSetMarginX(4, 1);
 
 with (GMUI_Add("Toggle1", "toggle",              3,6,   3,2,    GMUIAnchor.TopLeft)) {
     GMUI_ControlSetToggleSettings(1, c_lime, c_gray, global.GMUISlideFullRoundRect, $808080, $505050, room_speed/4, GMUIDirection.Horizontal, 0);
@@ -238,7 +255,7 @@ with (GMUI_Add("Toggle4", "toggle",              3,15,   3,2,    GMUIAnchor.TopL
 }
 
 // Test checkbox and toggle
-with (GMUI_Add("CheckBox", "checkbox",          3,18,   1,1,    GMUIAnchor.BottomLeft)) {
+with (GMUI_Add("CheckBox", "checkbox",          3,20,   1,1,    GMUIAnchor.TopLeft)) {
     GMUI_ControlAddToGroup(4);
     GMUI_ControlSetCheckboxSettings(1, c_lime, c_gray, GMUISlideShape.RoundRectangle, $808080, $505050, room_speed/6);
     GMUI_ControlSetHoverAction(_Hover_Checkbox);
@@ -258,50 +275,118 @@ with (GMUI_Add("CheckBox", "checkbox",          3,18,   1,1,    GMUIAnchor.Botto
 GMUI_CreateGroup(5,      20,2,    GMUIAnchor.TopRight);
 GMUI_GroupHide(5,GMUI_GetCurrentLayer(),true);
 GMUI_GroupSetFadeOnHide(5, _fadespeed, 0);
-//SET SIZE TO GRID - X
+GMUI_GroupSetMarginX(5, 1);
 
 // SELECT LIST TEST
 with (GMUI_Add("TestSelectList", "selectlist",            2,2,    10,5,   GMUIAnchor.TopLeft)) {
     GMUI_ItemListSettings(26, $E3E3E3, -1, -1);
     GMUI_ItemListBackground($DEDEDE, $EAEAEA, 0.8, 1);
     GMUI_ItemListSelectAction(_ListAction);
-    GMUI_AddItem(2,10,"2-One","",-1);
-    GMUI_AddItem(4,20,"4-Two","",-1);
-    GMUI_AddItem(6,30,"6-Three","",-1);
-    GMUI_AddItem(8,40,"8-Four","",-1);
-    GMUI_AddItem(10,50,"10-Five","",-1);
-    GMUI_AddItem(12,60,"12-Six","",-1);
-    GMUI_AddItem(14,70,"14-Seven","",-1);
-    GMUI_AddItem(16,70,"16-Eight","",-1);
-    GMUI_AddItem(18,70,"18-Nine","",-1);
-    GMUI_AddItem(20,70,"20-Ten","",-1);
-    GMUI_AddItem(22,70,"22-Eleven","",-1);
-    GMUI_AddItem(24,70,"24-Twelve","",-1);
-    GMUI_AddItem(26,80,"26-Thirteen","",-1);
+    GMUI_AddItem(2,10,"2-Two","",-1);
+    GMUI_AddItem(4,20,"4-Four","",-1);
+    GMUI_AddItem(6,30,"6-Six","",-1);
+    GMUI_AddItem(8,40,"8-Eight","",-1);
+    GMUI_AddItem(10,50,"10-Ten","",-1);
+    GMUI_AddItem(12,60,"12-Twelve","",-1);
+    GMUI_AddItem(14,70,"14-Fourteen","",-1);
+    GMUI_AddItem(16,70,"16-Sixteen","",-1);
+    GMUI_AddItem(18,70,"18-Eighteen","",-1);
+    GMUI_AddItem(20,70,"20-Twenty","",-1);
+    GMUI_AddItem(22,70,"22-Twentytwo","",-1);
+    GMUI_AddItem(24,70,"24-Twentyfour","",-1);
+    GMUI_AddItem(26,80,"26-Twentysix","",-1);
     
     GMUI_ControlAddToGroup(5);
 }
+
+with (GMUI_Add("TestDropDown", "dropdown",               2,10,    10,2,   GMUIAnchor.TopLeft)) {
+    //GMUI_ControlSetScrollbarStyle(Background Color, Alpha, Hover Color, Hover Alpha, Scrollbar Color, Alpha, Hover Color, Hover Alpha);
+    //GMUI_ControlSetFontStyle(font, font color, font align);
+    //GMUI_ControlSetStyle(Background Color, Border color, Hover color, hover border/rect, border alpha, Select color, Select alpha, show cursor);
+
+    GMUI_ItemListSettings(32, $E3E3E3, -1, -1); // set default list height??
+    GMUI_ItemListBackground($DEDEDE, $EAEAEA, 0.8, 1);
+    GMUI_AddItem(1,10,"1-One","",-1);
+    GMUI_AddItem(2,20,"2-Two","",-1);
+    GMUI_AddItem(3,30,"3-Three","",-1);
+    GMUI_AddItem(4,40,"4-Four","",-1);
+    GMUI_AddItem(5,50,"5-Five","",-1);
+    //GMUI_ItemListFont(Font, Font Color, Font Color Hover, Font Alpha, Font Alpha Hover)   
+
+    GMUI_ControlAddToGroup(5);
+}
+
+with (GMUI_Add("TestDropdown2", "dropdown",             2,20,   10,2,   GMUIAnchor.TopLeft)) {
+    GMUI_AddItem(2,10,"2-One","",-1);
+    GMUI_ControlSetInitValue(2);
+    
+    GMUI_ControlAddToGroup(5);
+}
+
+//with (GMUI_Add("BtnTestDropdownMove", "button",             2,28,   10,2,   global.GMUIAnchorTopLeft)) {
+    //GMUI_ControlSetButtonAction1(_Disable_Button,1);
+    //GMUI_ControlSetButton("Delay Move 5s",-1,-1,-1);
+    //GMUI_ControlAddToGroup(5);
+//}
 
 
 // Right Group 6: Disabling
 GMUI_CreateGroup(6,      20,2,    GMUIAnchor.TopRight);
 GMUI_GroupSetFadeOnHide(6, _fadespeed, 0);
-//SET SIZE TO GRID - X
+GMUI_GroupSetMarginX(6, 1);
 GMUI_GroupHide(6,GMUI_GetCurrentLayer(),true);
 
 
 // Right Group 7: Layering
 GMUI_CreateGroup(7,      20,2,    GMUIAnchor.TopRight);
 GMUI_GroupSetFadeOnHide(7, _fadespeed, 0);
-//SET SIZE TO GRID - X
+GMUI_GroupSetMarginX(7, 1);
 GMUI_GroupHide(7,GMUI_GetCurrentLayer(),true);
 
 
 // Right Group 8: Movement
 GMUI_CreateGroup(8,      20,2,    GMUIAnchor.TopRight);
 GMUI_GroupSetFadeOnHide(8, _fadespeed, 0);
-//SET SIZE TO GRID - X
+GMUI_GroupSetMarginX(8, 4);
 GMUI_GroupHide(8,GMUI_GetCurrentLayer(),true);
+
+with (GMUI_Add("MovementBox", "label", 2,2 , 2,2, global.GMUIAnchorTopLeft)) {
+    GMUI_ControlSetStyle(c_lime, c_gray, c_green, -1, -1, -1, -1, -1, -1, -1);
+    GMUI_ControlAddToGroup(8);
+}
+with (GMUI_Add("MovementBox2", "label", 2,2 , 2,2, global.GMUIAnchorTopLeft)) {//testing | something is wrong with the view...
+    GMUI_ControlSetStyle(c_maroon, c_gray, c_red, -1, -1, -1, -1, -1, -1, -1);// fine for groups, but not for controls!
+}
+
+with (GMUI_Add("BtnMovement1", "button",         2,6,   6,2,    global.GMUIAnchorTopLeft)) {
+    GMUI_ControlAddToGroup(8);
+    GMUI_ControlSetButtonAction1(_Movement_Button,1);
+    GMUI_ControlSetButton("Slide",-1,-1,-1);
+}
+
+with (GMUI_Add("BtnMovement2", "button",         2,9,   6,2,    global.GMUIAnchorTopLeft)) {
+    GMUI_ControlAddToGroup(8);
+    GMUI_ControlSetButtonAction1(_Movement_Button,2);
+    GMUI_ControlSetButton("Gradual",-1,-1,-1);
+}
+
+with (GMUI_Add("BtnMovement3", "button",         2,12,   6,2,    global.GMUIAnchorTopLeft)) {
+    GMUI_ControlAddToGroup(8);
+    GMUI_ControlSetButtonAction1(_Movement_Button,3);
+    GMUI_ControlSetButton("Ease Back",-1,-1,-1);
+}
+
+with (GMUI_Add("BtnMovement4", "button",         2,15,   6,2,    global.GMUIAnchorTopLeft)) {
+    GMUI_ControlAddToGroup(8);
+    GMUI_ControlSetButtonAction1(_Movement_Button,4);
+    GMUI_ControlSetButton("Elastic",-1,-1,-1);
+}
+
+with (GMUI_Add("BtnMovement5", "button",         2,18,   6,2,    global.GMUIAnchorTopLeft)) {
+    GMUI_ControlAddToGroup(8);
+    GMUI_ControlSetButtonAction1(_Movement_Button,5);
+    GMUI_ControlSetButton("Bounce",-1,-1,-1);
+}
 
 
 // Right Group 9: Anchoring

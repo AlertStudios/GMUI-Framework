@@ -1,4 +1,5 @@
 ///GMUI_ControlInit(control object to instantiate)
+function GMUI_ControlInit(argument0) {
 /// Initialize the values to use with a GMUI control
 // These values are controlled by the GMUI controller, and if commented, they are actually intialized by the Add script.
 
@@ -26,8 +27,8 @@ i.ControlType = "";
 i.ControlDataType = global.GMUIDataTypeString; // Default (0)
 
 i.NeedsPositionUpdate = false;
-i.NeedsDrawUpdate = false;
-i.NeedsGroupUpdate = false;
+i.NeedsDrawUpdate = 0;
+i.NeedsGroupUpdate = 0;
 
 // Redundant control options based on the datatype
 i.ControlIsNumeric = false;
@@ -192,4 +193,5 @@ i.valueChangeDetected = 0;
 /// ???:
 // The control will be disabled for this many steps before allowing action
 //i.Disable = floor(room_speed/20);
+}
 

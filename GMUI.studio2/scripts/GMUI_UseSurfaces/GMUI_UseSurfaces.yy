@@ -1,8 +1,12 @@
 {
-    "id": "de5d404d-0fc7-4b37-b321-0b893015a48d",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "GMUI_UseSurfaces",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "GMUI_Settings",
+    "path": "folders/Scripts/GMUI/GMUI_DeveloperCalls/GMUI_Settings.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "GMUI_UseSurfaces",
+  "tags": [],
+  "resourceType": "GMScript",
 }

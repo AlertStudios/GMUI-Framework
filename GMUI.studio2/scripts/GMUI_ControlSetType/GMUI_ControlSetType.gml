@@ -1,5 +1,6 @@
 ///GMUI_ControlSetType(Control, "Control Type")
 ///Set the type variables based on the control the developer wants to make
+function GMUI_ControlSetType(argument0, argument1) {
 
 var IID,            _type,           _getType;
     IID=argument0;  _type=argument1; _getType=0;
@@ -71,19 +72,32 @@ switch (_type) {
         IID.ControlInput = false;
         IID.ControlSelectable = false;
         break;
-    
-    case "dropdown":
     case "selectlist":
-    
+    case "dropdown":
+        
         IID.ControlItemList = true;
         GMUI_ControlSetDefaultItemList(IID);
         with (IID) { GMUI_ControlSetScrollbarDefaults(true); }
+        
+        if (_type == "dropdown") {
+            GMUI_ControlSetDefaultDropdown(IID);
+        
+            IID.ControlHasScrollbar = false;
+            IID.ControlItemList = false;
+            IID.ControlInput = false;
+            IID.ControlSelectable = false;
+            
+        }
         break;
-    case "label":
+    case "scrollbarhandler":
     case "tooltip":
-        IID.ControlInput = false;
+    
         IID.ControlInteraction = false;
+    case "label": // (Label includes interaction)
+    
+        IID.ControlInput = false;
         IID.ControlStyleDefined = false;
+        IID.ControlSelectable = false;
         break;
     default:
         // no match; override to show invalid:
@@ -109,6 +123,6 @@ else if (_getType == global.GMUIDataTypeString) {
 
 // Return sanitized and processed type back
 return _type;
-
+}
 
 

@@ -1,8 +1,12 @@
 {
-    "id": "0541ed08-36ce-4b70-9c1f-2f8968766b33",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "GMUI_SetConfirmKey",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "GMUI_Settings",
+    "path": "folders/Scripts/GMUI/GMUI_DeveloperCalls/GMUI_Settings.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "GMUI_SetConfirmKey",
+  "tags": [],
+  "resourceType": "GMScript",
 }

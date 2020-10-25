@@ -1,8 +1,12 @@
 {
-    "id": "05c5fc76-173d-4424-98d6-547d708dead9",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "GMUI_ControlSetDefaultItemList",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "GMUI_Internals",
+    "path": "folders/Scripts/GMUI/GMUI_Internals.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "GMUI_ControlSetDefaultItemList",
+  "tags": [],
+  "resourceType": "GMScript",
 }

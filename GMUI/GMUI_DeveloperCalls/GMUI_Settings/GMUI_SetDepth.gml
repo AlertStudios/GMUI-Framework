@@ -1,5 +1,6 @@
 ///GMUI_SetDepth(depth of bottom-most layer of instance)
 ///Key to automatically submit the form (WIP)
+function GMUI_SetDepth(argument0) {
 
 var _depth;
 _depth = argument0;
@@ -11,4 +12,6 @@ if (global.GMUIii > 0)
     depth = _depth;
 else
     global.GMUIDepth = _depth;
+    
+}
 

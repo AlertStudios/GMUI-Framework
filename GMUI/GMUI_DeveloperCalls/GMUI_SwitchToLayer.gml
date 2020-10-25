@@ -1,5 +1,6 @@
 ///GMUI_SwitchToLayer(Layer number)
 ///Switches the active layer
+function GMUI_SwitchToLayer(argument0) {
 
 // Arguments
 var SCRIPT,_Layer;
@@ -34,5 +35,5 @@ if (!(GMUII()).UIInterfaceSet) {
 
 
 return true;
-
+}
 

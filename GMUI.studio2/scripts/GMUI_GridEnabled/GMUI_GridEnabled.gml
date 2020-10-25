@@ -1,5 +1,6 @@
 ///GMUI_GridEnabled()
 /// Returns if the entire grid is enabled to be used
+function GMUI_GridEnabled() {
 
 if (InitialDisable > 0)
 {
@@ -9,5 +10,6 @@ if (InitialDisable > 0)
 else
 {
     return true;
+}
 }
 

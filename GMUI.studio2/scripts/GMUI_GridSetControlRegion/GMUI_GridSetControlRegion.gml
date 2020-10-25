@@ -1,5 +1,5 @@
 ///GMUI_GridSetControlRegion(grid to add to, control, add [bool] else remove)
-///
+function GMUI_GridSetControlRegion(argument0,argument1,argument2) {
 
 var _grid,_ctrl,_add,_CX2,_CY2;
 _grid = argument0;
@@ -17,5 +17,5 @@ else {
     ds_grid_set_region(_grid,_ctrl.CellX,_ctrl.CellY,_CX2,_CY2,0);
 }
 
-
+}
 

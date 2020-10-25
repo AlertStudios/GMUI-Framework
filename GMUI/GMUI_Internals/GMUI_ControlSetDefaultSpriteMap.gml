@@ -1,5 +1,6 @@
 ///GMUI_ControlSetDefaultSpriteMap(id)
 ///Set the default attributes of the control from the controller
+function GMUI_ControlSetDefaultSpriteMap(argument0) {
 
 if (!instance_exists(argument0)) {
     GMUI_ThrowErrorDetailed("Invalid control",GMUI_ControlSetDefaultSpriteMap);
@@ -25,4 +26,5 @@ with (argument0) {
 
 
 return true;
+}
 

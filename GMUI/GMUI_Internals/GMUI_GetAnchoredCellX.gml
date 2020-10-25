@@ -1,6 +1,6 @@
 ///GMUI_GetAnchoredCellX(Area Width, Cell X given, Anchor Type)
 /// Returns the new X cell position in the grid based on the anchoring
-
+function GMUI_GetAnchoredCellX(argument0,argument1,argument2) {
 
 // Width of a GMUI grid is usually: ds_grid_width((GMUII()).GMUI_grid[Layer]);
 
@@ -24,5 +24,6 @@ else {
         return __GridW - __CellX - 1;
     else
         return __CellX;
+}
 }
 

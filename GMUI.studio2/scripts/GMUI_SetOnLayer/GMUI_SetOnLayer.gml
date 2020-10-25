@@ -1,5 +1,6 @@
 ///GMUI_SetOnLayer(Layer number)
 /// Switches the layer to create / modify on
+function GMUI_SetOnLayer(argument0) {
 
 // Arguments
 var _SCRIPT,_LayerNumber;
@@ -21,5 +22,5 @@ if (!GMUI_LayerExists(_LayerNumber)) {
 UIAddToLayer = _LayerNumber;
 
 return true;
-
+}
 

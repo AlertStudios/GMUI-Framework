@@ -1,8 +1,12 @@
 {
-    "id": "82f21117-6264-4086-8b8f-2fc65b5757ad",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "GMUI_ControlSetSpriteExt",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "GMUI_DeveloperCalls",
+    "path": "folders/Scripts/GMUI/GMUI_DeveloperCalls.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "GMUI_ControlSetSpriteExt",
+  "tags": [],
+  "resourceType": "GMScript",
 }

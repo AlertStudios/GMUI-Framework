@@ -1,5 +1,6 @@
 ///GMUI_SetConfirmKey(confirmation key: vk_* or vk_nokey to disable)
 ///Key to automatically submit the form (WIP)
+function GMUI_SetConfirmKey(argument0) {
 
 var _key, _set;
 _key = argument0;
@@ -17,4 +18,6 @@ if (global.GMUIii > 0)
     GMUIConfirmKey = _key;
 else
     global.GMUIConfirmKey = _key;
+    
+}
 

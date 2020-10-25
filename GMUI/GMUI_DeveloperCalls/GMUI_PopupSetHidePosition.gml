@@ -1,5 +1,6 @@
 ///GMUI_PopupSetHidePosition("popup name", Cell X, Cell Y, transition_script [or -1], speed in steps)
 // Sets popup position to come from and go to when shown or hidden
+function GMUI_PopupSetHidePosition(argument0,argument1,argument2,argument3,argument4) {
 
 // Get popup number and check its valid
 var _MenuName, _MenuNumber;
@@ -20,4 +21,5 @@ _result = GMUI_GroupSetHidePosition(_MenuNumber,argument1,argument2,argument3,ar
 
 UIAddToLayer = _prevLayer;
 return _result;
+}
 

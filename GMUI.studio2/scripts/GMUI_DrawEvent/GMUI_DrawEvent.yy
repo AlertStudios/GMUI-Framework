@@ -1,8 +1,12 @@
 {
-    "id": "960afa75-f583-4362-99b9-7d9345c0c942",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "GMUI_DrawEvent",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "GMUI_DeveloperCalls",
+    "path": "folders/Scripts/GMUI/GMUI_DeveloperCalls.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "GMUI_DrawEvent",
+  "tags": [],
+  "resourceType": "GMScript",
 }

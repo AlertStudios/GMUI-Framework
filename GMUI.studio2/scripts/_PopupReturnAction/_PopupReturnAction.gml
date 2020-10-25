@@ -1,3 +1,5 @@
+function _popupReturnAction() {
+
 // Show result
 var str;
 
@@ -13,3 +15,4 @@ with (GMUI_GetControl("ResponseLabel")) {
 }
 
 
+}

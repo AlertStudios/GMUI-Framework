@@ -1,8 +1,12 @@
 {
-    "id": "47988b99-e0ce-47c3-b589-4493fe657d9b",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "GMUI_AddItemDefaults",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "GMUI_Internals",
+    "path": "folders/Scripts/GMUI/GMUI_Internals.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "GMUI_AddItemDefaults",
+  "tags": [],
+  "resourceType": "GMScript",
 }

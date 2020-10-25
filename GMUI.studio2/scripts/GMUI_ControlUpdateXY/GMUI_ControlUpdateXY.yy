@@ -1,8 +1,12 @@
 {
-    "id": "ae9c19cf-360c-4231-bf6e-45e1f42fcd03",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "GMUI_ControlUpdateXY",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "GMUI_Internals",
+    "path": "folders/Scripts/GMUI/GMUI_Internals.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "GMUI_ControlUpdateXY",
+  "tags": [],
+  "resourceType": "GMScript",
 }

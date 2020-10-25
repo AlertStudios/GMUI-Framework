@@ -1,8 +1,12 @@
 {
-    "id": "c40aa4b4-6790-4b44-af85-cabbe8d7a6e0",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "GMUI_GridSetAllGroupValues",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "GMUI_Internals",
+    "path": "folders/Scripts/GMUI/GMUI_Internals.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "GMUI_GridSetAllGroupValues",
+  "tags": [],
+  "resourceType": "GMScript",
 }

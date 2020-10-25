@@ -1,5 +1,6 @@
 ///GMUI_ControlFadeOut("ControlName", speed in steps)
 ///Fade out a control
+function GMUI_ControlFadeOut(argument0,argument1) {
 
 with (GMUII()) {
     // Retrieve control from the reference map
@@ -16,5 +17,6 @@ with (GMUII()) {
         (_ctrl).FadeTime = argument1;
         return true;
     }
+}
 }
 

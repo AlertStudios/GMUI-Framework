@@ -1,5 +1,6 @@
 ///GMUI_ControlListOffset(control id with List, Using Surface[bool], Mouse X, Mouse Y)
 ///Return the offset amount of the list and update the hover index based on mouse position
+function GMUI_ControlListOffset(argument0,argument1,argument2,argument3) {
 
 var _SCRIPT, _Ctrl, _offset, _relMY, _UsingSurface, _MX;
 _SCRIPT = GMUI_ControlListOffset;
@@ -35,7 +36,7 @@ if (_Ctrl.ControlItemList) {
                 _offset = ItemListOffsetY;
         }
         else if (Hovering)
-            _offset = minmax(_relMY,0,RoomY + RoomH + GMUI_GridViewOffsetY(_Ctrl.GMUIP)*_UsingSurface) / (RoomY - RoomH)
+            _offset = GMUIminmax(_relMY,0,RoomY + RoomH + GMUI_GridViewOffsetY(_Ctrl.GMUIP)*_UsingSurface) / (RoomY - RoomH)
                 * ((ItemListSize - ceil(ItemListAreaHeight / ItemListHeight)) * ItemListHeight);
         else
             _offset = ItemListOffsetY;
@@ -58,5 +59,5 @@ else
     GMUI_ThrowErrorDetailed("Control " + _Ctrl.valueName + " is not a list control",_SCRIPT);
     
 return 0;
-
+}
 

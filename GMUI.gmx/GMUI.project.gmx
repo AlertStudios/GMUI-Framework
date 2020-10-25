@@ -142,8 +142,10 @@
         <script>scripts\GMUI_DrawEvent.gml</script>
         <script>scripts\GMUI_GetControl.gml</script>
         <script>scripts\GMUI_GetCurrentLayer.gml</script>
+        <script>scripts\GMUI_GetHeight.gml</script>
         <script>scripts\GMUI_GetValue.gml</script>
         <script>scripts\GMUI_GetValueString.gml</script>
+        <script>scripts\GMUI_GetWidth.gml</script>
         <script>scripts\GMUI_GroupHide.gml</script>
         <script>scripts\GMUI_GroupHideOverflow.gml</script>
         <script>scripts\GMUI_GroupSetStyle.gml</script>
@@ -151,10 +153,12 @@
         <script>scripts\GMUI_GridSetNavigation.gml</script>
         <script>scripts\GMUI_GroupSetClickOff.gml</script>
         <script>scripts\GMUI_GroupSetFadeOnHide.gml</script>
-        <script>scripts\GMUI_GroupSetSize.gml</script>
-        <script>scripts\GMUI_GroupSetSpriteMap.gml</script>
+        <script>scripts\GMUI_GroupSetMarginX.gml</script>
+        <script>scripts\GMUI_GroupSetMarginY.gml</script>
         <script>scripts\GMUI_GroupSetPosition.gml</script>
         <script>scripts\GMUI_GroupSetPositionActual.gml</script>
+        <script>scripts\GMUI_GroupSetSize.gml</script>
+        <script>scripts\GMUI_GroupSetSpriteMap.gml</script>
         <script>scripts\GMUI_GroupSetStretchToGrid.gml</script>
         <script>scripts\GMUI_Init.gml</script>
         <script>scripts\GMUI_IsMenuOpen.gml</script>
@@ -163,9 +167,11 @@
         <script>scripts\GMUI_ItemListSelectAction.gml</script>
         <script>scripts\GMUI_ItemListSettings.gml</script>
         <script>scripts\GMUI_LayerHide.gml</script>
+        <script>scripts\GMUI_MenuHideOverflow.gml</script>
         <script>scripts\GMUI_MenuSetClickOff.gml</script>
         <script>scripts\GMUI_MenuSetFadeOnHide.gml</script>
         <script>scripts\GMUI_MenuSetHidePosition.gml</script>
+        <script>scripts\GMUI_MenuSetOverflow.gml</script>
         <script>scripts\GMUI_MenuSetPosition.gml</script>
         <script>scripts\GMUI_MenuSetStyle.gml</script>
         <script>scripts\GMUI_MouseInGroupRegion.gml</script>
@@ -212,6 +218,7 @@
         <script>scripts\GMUI_ControlSetInitValue.gml</script>
         <script>scripts\GMUI_ControlSetDefaultAttributes.gml</script>
         <script>scripts\GMUI_ControlSetDefaultButton.gml</script>
+        <script>scripts\GMUI_ControlSetDefaultDropdown.gml</script>
         <script>scripts\GMUI_ControlSetDefaultFontStyle.gml</script>
         <script>scripts\GMUI_ControlSetDefaultItemList.gml</script>
         <script>scripts\GMUI_ControlSetDefaultPicker.gml</script>
@@ -228,6 +235,8 @@
         <script>scripts\GMUI_CreateMenuType.gml</script>
         <script>scripts\GMUI_CreateSetDefaultArea.gml</script>
         <script>scripts\GMUI_DrawSpriteBox.gml</script>
+        <script>scripts\GMUI_DropdownSelect.gml</script>
+        <script>scripts\GMUI_DropdownSelectItem.gml</script>
         <script>scripts\GMUI_GetAnchoredCellX.gml</script>
         <script>scripts\GMUI_GetAnchoredCellY.gml</script>
         <script>scripts\GMUI_GetControlAtPosition.gml</script>
@@ -279,6 +288,7 @@
         <script>scripts\GMUI_ResetControlStatus.gml</script>
         <script>scripts\GMUI_SetGroupStyle.gml</script>
         <script>scripts\GMUI_StudioCheckDefined.gml</script>
+        <script>scripts\GMUI_SurfaceResize.gml</script>
         <script>scripts\GMUI_ThrowError.gml</script>
         <script>scripts\GMUI_ThrowErrorDetailed.gml</script>
         <script>scripts\GMUI_ValidCellBounds.gml</script>
@@ -298,6 +308,7 @@
       <script>scripts\_HoverOff_Int.gml</script>
       <script>scripts\_ListAction.gml</script>
       <script>scripts\_Move_Button.gml</script>
+      <script>scripts\_Movement_Button.gml</script>
       <script>scripts\_Popup_Button.gml</script>
       <script>scripts\_PopupClose_Button.gml</script>
       <script>scripts\_PopupMenu_Button.gml</script>
@@ -314,6 +325,7 @@
     <scripts name="My Interfaces">
       <script>scripts\_Demo_Form.gml</script>
       <script>scripts\_Demo_Form_old.gml</script>
+      <script>scripts\_Demo_Form_with_layers.gml</script>
       <script>scripts\_Demo_My_Defaults.gml</script>
     </scripts>
   </scripts>

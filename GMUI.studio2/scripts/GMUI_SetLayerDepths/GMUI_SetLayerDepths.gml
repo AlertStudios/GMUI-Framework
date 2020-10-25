@@ -1,5 +1,6 @@
 ///GMUI_SetLayerDepths() Creates a set of layers with their relative depth values from the GMUI default
 // This is called by the Create script
+function GMUI_SetLayerDepths() {
 
 layerDepth = depth;
 
@@ -20,10 +21,6 @@ layerDepth_menus = layerDepth_messages - 1;
 // Warnings are for anything from menus to popups or anything
 
 
-//remove these?
-////layerDepth_popups = layerDepth_menus - 1;
 
-
-////layerDepth_warnings = layerDepth_popups - 1;
-
+}
 

@@ -1,5 +1,6 @@
 ///GMUI_ControlSetScrollbarStyle(Background Color, Alpha, Hover Color, Hover Alpha, Scrollbar Color, Alpha, Hover Color, Hover Alpha)
 /// Set the scrollbar styling
+function GMUI_ControlSetScrollbarStyle(argument0,argument1,argument2,argument3,argument4,argument5,argument6,argument7) {
 
 if (!GMUI_IsControl() && id != GMUII()) {
     GMUI_ThrowErrorDetailed("Invalid control",GMUI_ControlSetScrollbarStyle);
@@ -50,5 +51,5 @@ if (is_real(argument7)) {
 
 
 return true;
-    
+}
 

@@ -1,8 +1,12 @@
 {
-    "id": "bc0f953b-d985-4825-9af2-5cf9f95ca1b1",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "GMUI_GroupSetPosition",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "GMUI_DeveloperCalls",
+    "path": "folders/Scripts/GMUI/GMUI_DeveloperCalls.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "GMUI_GroupSetPosition",
+  "tags": [],
+  "resourceType": "GMScript",
 }

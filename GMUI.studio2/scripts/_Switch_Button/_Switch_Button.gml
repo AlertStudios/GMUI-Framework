@@ -1,3 +1,5 @@
+
+function _Switch_Button() {
 //switch group positions
 
 if (!global.Switched) {
@@ -17,3 +19,4 @@ else {
     global.Switched = false;
 }
 
+}

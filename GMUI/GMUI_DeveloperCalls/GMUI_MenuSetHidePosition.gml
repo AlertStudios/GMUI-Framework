@@ -1,5 +1,6 @@
 ///GMUI_MenuSetHidePosition("menu name", Cell X, Cell Y, transition_script [or -1], speed in steps)
 // Sets menu position to come from and go to when shown or hidden
+function GMUI_MenuSetHidePosition(argument0,argument1,argument2,argument3,argument4) {
 
 // Get menu number and check its valid
 var _MenuName, _MenuNumber, _prevLayer, _result;
@@ -19,4 +20,5 @@ _result = GMUI_GroupSetHidePosition(_MenuNumber,argument1,argument2,argument3,ar
 
 UIAddToLayer = _prevLayer;
 return _result;
+}
 

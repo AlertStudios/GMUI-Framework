@@ -1,8 +1,12 @@
 {
-    "id": "9e3bb93b-0e50-4139-abbc-23e332c8f050",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "GMUI_PopupSetClickOff",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "GMUI_Internals",
+    "path": "folders/Scripts/GMUI/GMUI_Internals.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "GMUI_PopupSetClickOff",
+  "tags": [],
+  "resourceType": "GMScript",
 }

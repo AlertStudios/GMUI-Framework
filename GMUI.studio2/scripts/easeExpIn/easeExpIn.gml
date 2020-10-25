@@ -1,5 +1,6 @@
 ///easeExpIn(t,b,c,d) where t is current time, b is start value, c is change in value, and d is duration
 ///Exponential Ease for moving controls smoothly
+function easeExpIn(argument0,argument1,argument2,argument3) {
 
 var _t,_b,_c,_d;
 
@@ -13,4 +14,5 @@ return _c * power( 2, 10 * (_t/_d - 1) ) + _b;
 
 //To see copyright notice for this script please click on the following text then press F12:
 //ease_CopyrightNotice
+}
 

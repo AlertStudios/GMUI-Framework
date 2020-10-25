@@ -1,8 +1,12 @@
 {
-    "id": "e9682879-170e-4526-b1e1-82774475b5e9",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "GMUI_ControlTransitionStop",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "GMUI_Effects",
+    "path": "folders/Scripts/GMUI/GMUI_DeveloperCalls/GMUI_Effects.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "GMUI_ControlTransitionStop",
+  "tags": [],
+  "resourceType": "GMScript",
 }

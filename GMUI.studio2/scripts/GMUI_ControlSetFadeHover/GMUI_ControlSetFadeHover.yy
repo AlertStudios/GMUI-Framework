@@ -1,8 +1,12 @@
 {
-    "id": "a55e320b-104f-4601-92d7-f3a37b35c2f1",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "GMUI_ControlSetFadeHover",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "GMUI_Effects",
+    "path": "folders/Scripts/GMUI/GMUI_DeveloperCalls/GMUI_Effects.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "GMUI_ControlSetFadeHover",
+  "tags": [],
+  "resourceType": "GMScript",
 }

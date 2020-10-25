@@ -1,6 +1,6 @@
 ///GMUI_ControlSetFadeOnHide("ControlName" or id, speed in steps)
 ///Set the fade in/out when the control is hidden or not
-
+function GMUI_ControlSetFadeOnHide(argument0,argument1) {
 with (GMUII()) {
     // Retrieve control from the reference map
     var _ctrl;
@@ -15,9 +15,11 @@ with (GMUII()) {
         // Set the fade settings for when hiding or unhiding
         (_ctrl).FadeTime = argument1;
         (_ctrl).FadeOnHide = true;
-        if ((_ctrl).Hidden)
+        if ((_ctrl).Hidden) {
             (_ctrl).FadeAlpha = 0;
+        }
         return true;
     }
+}
 }
 

@@ -1,8 +1,12 @@
 {
-    "id": "3c0b6458-aa7c-4515-88d9-35ebff4f5055",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "GMUI_ControlSetDefaultFontStyle",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "GMUI_Internals",
+    "path": "folders/Scripts/GMUI/GMUI_Internals.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "GMUI_ControlSetDefaultFontStyle",
+  "tags": [],
+  "resourceType": "GMScript",
 }

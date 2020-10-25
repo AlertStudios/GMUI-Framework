@@ -1,8 +1,12 @@
 {
-    "id": "754b1db3-15aa-4f84-96d1-d4ce253521e5",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "GMUI_ControlIsDisabled",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "GMUI_DeveloperCalls",
+    "path": "folders/Scripts/GMUI/GMUI_DeveloperCalls.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "GMUI_ControlIsDisabled",
+  "tags": [],
+  "resourceType": "GMScript",
 }

@@ -1,4 +1,5 @@
 ///GMUI_ControlSetDefaultItemList(id)
+function GMUI_ControlSetDefaultItemList(argument0) {
 
 if (!instance_exists(argument0))
 {
@@ -24,7 +25,9 @@ with (argument0)
     ItemListFadeTime = 0;
     ControlHasScrollbar = true;
     Scrollbar_hover = false;
+    ControlDropdownParent = -1;
 }
 
 return true;
+}
 

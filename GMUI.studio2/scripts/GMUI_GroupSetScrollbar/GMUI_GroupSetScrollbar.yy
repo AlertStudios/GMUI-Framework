@@ -1,8 +1,12 @@
 {
-    "id": "61a2f54a-4584-49be-bbe0-a601a764a3aa",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "GMUI_GroupSetScrollbar",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "GMUI_Internals",
+    "path": "folders/Scripts/GMUI/GMUI_Internals.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "GMUI_GroupSetScrollbar",
+  "tags": [],
+  "resourceType": "GMScript",
 }

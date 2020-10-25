@@ -124,6 +124,9 @@ HoveringControl = -1;
 SelectedControl = -1;
 PreviousSelectedControl = -1;
 
+// Request to update the layer region
+NeedsRegionsUpdate = false;
+
 // An offset change will trigger repositioning controls
 previousXOffset = 0;
 previousYOffset = 0;
@@ -144,7 +147,7 @@ GMUI_popup_map = ds_map_create();
 // Warnings
 GMUI_warnings_map = ds_map_create();
 
-// Group scrollbars
+// Add list of scrollbar controls
 GMUI_groupScrollbars = ds_list_create();
 
 
@@ -167,6 +170,7 @@ GMUI_groupRelativeCellX[0,0] = 0;
 GMUI_groupRelativeCellY[0,0] = 0;
 GMUI_groupAnchor[0,0] = global.GMUIAnchorDefault;
 GMUI_groupClickOff[0,0] = false;
+GMUI_controlClickOff = -1;
 GMUI_groupTransitioning[0,0] = false;
 //GMUI_groupTransitioningControl[0,0] = -1;
 GMUI_groupAction[0,0] = -1;

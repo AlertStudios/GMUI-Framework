@@ -1,8 +1,12 @@
 {
-    "id": "56f56aa6-30a0-4932-866a-e86a79b32946",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "GMUI_GridDrawGroups",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "GMUI_Internals",
+    "path": "folders/Scripts/GMUI/GMUI_Internals.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "GMUI_GridDrawGroups",
+  "tags": [],
+  "resourceType": "GMScript",
 }

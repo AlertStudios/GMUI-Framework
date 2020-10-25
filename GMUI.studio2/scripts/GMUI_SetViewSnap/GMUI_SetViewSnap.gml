@@ -1,4 +1,5 @@
 ///GMUI_SetViewSnap(enable adjusting to view [bool], view # to bind to)
+function GMUI_SetViewSnap(argument0, argument1) {
 
 var _enable, _view;
 _enable = argument0;
@@ -19,5 +20,7 @@ if (global.GMUIii > 0) {
 else {
     global.UIsnaptoview = _enable;
     global.UIgridview = _view;
+}
+
 }
 

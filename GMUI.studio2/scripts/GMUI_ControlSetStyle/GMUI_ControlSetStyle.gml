@@ -1,5 +1,6 @@
 ///GMUI_ControlSetStyle(Background Color, Border color, Hover color, hover border/rect, border alpha, Select color, Select alpha, show cursor)
 ///Set the style of the controls that will be used for new controls (to override the defaults)
+function GMUI_ControlSetStyle(argument0,argument1,argument2,argument3,argument4,argument5,argument6,argument7,argument8,argument9) {
 if (!GMUI_IsControl() && id != GMUII())
 {
     GMUI_ThrowErrorDetailed("Invalid control", GMUI_ControlSetStyle);
@@ -17,7 +18,7 @@ ControlHoverColor = argument2;
 if (argument3 >= 0)
 ControlHoverBorder = argument3; // Draw a second border on hover (1), or rectangle over control (0)
 if (argument4 >= 0)
-ControlHoverAlpha = minmax(argument4,0,1);
+ControlHoverAlpha = GMUIminmax(argument4,0,1);
 if (argument5 >= 0)
 ControlOverwriteColor = argument5;
 if (argument6 >= 0)
@@ -34,5 +35,5 @@ ControlShowCursor = argument9;
 ControlBackgroundAlpha = 1;
 
 return true;
-    
+}
 

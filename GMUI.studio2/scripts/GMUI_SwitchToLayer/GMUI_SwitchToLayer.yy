@@ -1,8 +1,12 @@
 {
-    "id": "7c779403-291c-413c-956e-196b33ad5413",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "GMUI_SwitchToLayer",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "GMUI_DeveloperCalls",
+    "path": "folders/Scripts/GMUI/GMUI_DeveloperCalls.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "GMUI_SwitchToLayer",
+  "tags": [],
+  "resourceType": "GMScript",
 }

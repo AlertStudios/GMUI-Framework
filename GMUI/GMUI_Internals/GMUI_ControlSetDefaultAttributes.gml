@@ -1,5 +1,6 @@
 ///GMUI_ControlSetDefaultAttributes(id)
 /// Set the default attributes of the control from the controller
+function GMUI_ControlSetDefaultAttributes(argument0) {
 
 if (!instance_exists(argument0))
 {
@@ -19,4 +20,5 @@ with (argument0)
 
 
 return true;
+}
 

@@ -1,9 +1,9 @@
 ///GMUI_CreateMenuType (Type[script calling], menu name, cell# x, cell# y, cells wide, cells high, Anchor)
 ///Adds a menu to a GMUI layer that controls can be put into
-
+function GMUI_CreateMenuType(argument0,argument1,argument2,argument3,argument4,argument5,argument6) {
 
 // Arguments
-var _SCRIPT,_GMUI,_menuName,_CellX,_CellY,_CW,_CH,_Anchor,_menuNumber,_layerNumber, _menuType, _prevLayer;
+var _SCRIPT,_GMUI,_menuName,_CellX,_CellY,_CW,_CH,_Anchor,_menuNumber,_layerNumber, _prevLayer; //_menuType
 _SCRIPT = GMUI_CreateMenuType;
 _GMUI = GMUII();
 _menuScript = argument0;
@@ -55,4 +55,5 @@ else {
 
 
 return _menuNumber;
+}
 

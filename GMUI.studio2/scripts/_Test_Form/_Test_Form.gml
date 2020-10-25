@@ -1,3 +1,5 @@
+function _Test_Form() {
+
 ///_Test_Form() This interface is for the testing form
 
 // TESTING
@@ -68,7 +70,7 @@ with (GMUI_Add("test13","textstring",10,1,12,2,global.GMUIAnchorTopLeft)) {
 
 with (GMUI_Add("Test2", "textint",              0,0,    10,2,   global.GMUIAnchorTopLeft)) {
     GMUI_ControlSetAttributes(5,0,-1000,1000);
-    GMUI_ControlSetStyle(hsv(85,55,255),rgb(20,20,20),-1,-1,-1,-1,-1,-1,-1,-1);
+    GMUI_ControlSetStyle(GMUIhsv(85,55,255),GMUIrgb(20,20,20),-1,-1,-1,-1,-1,-1,-1,-1);
     GMUI_ControlAddToGroup(2);
 }
 /*
@@ -360,3 +362,4 @@ GMUI_PopupSetHidePosition("Test Popup", -14, 0, easeExpOut, room_speed/4);
 
 
 
+}

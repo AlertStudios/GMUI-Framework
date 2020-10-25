@@ -1,6 +1,7 @@
 ///GMUI_GridDrawGroups(GMUI instance)
 ///Draws the groups if set to do so
 // CURRENTLY NOT USED!!!!! //
+function GMUI_GridDrawGroups(argument0) {
 
 var _GMUII, _layer, l, g, gx, gy, gw, gh, xoffset, yoffset, spr_width, spr_height;
 _GMUII = argument0;
@@ -61,5 +62,6 @@ for(l=0;l<ds_list_size((_GMUII).GMUI_gridlist);l+=1) {
         }
     
     }
+}
 }
 

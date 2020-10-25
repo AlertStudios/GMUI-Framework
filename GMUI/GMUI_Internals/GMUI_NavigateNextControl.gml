@@ -1,5 +1,6 @@
 ///GMUI_NavigateNextControl(check for next control [true] or previous [false])
 ///Check for the keys to change control selection
+function GMUI_NavigateNextControl(argument0) {
 
 if (keyboard_check_pressed(vk_anykey)) {
     // Next control
@@ -32,4 +33,5 @@ if (keyboard_check_pressed(vk_anykey)) {
 }
 
 return false;
+}
 

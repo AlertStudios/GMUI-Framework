@@ -1,8 +1,12 @@
 {
-    "id": "91fe35df-93e1-4bb9-a6e4-a828b7451d1b",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "GMUI_ResetControlStatus",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "GMUI_Internals",
+    "path": "folders/Scripts/GMUI/GMUI_Internals.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "GMUI_ResetControlStatus",
+  "tags": [],
+  "resourceType": "GMScript",
 }

@@ -1,8 +1,12 @@
 {
-    "id": "dba86d6f-c08a-4d46-abf7-bb3705e6c505",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "GMUI_SetDepth",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "GMUI_Settings",
+    "path": "folders/Scripts/GMUI/GMUI_DeveloperCalls/GMUI_Settings.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "GMUI_SetDepth",
+  "tags": [],
+  "resourceType": "GMScript",
 }

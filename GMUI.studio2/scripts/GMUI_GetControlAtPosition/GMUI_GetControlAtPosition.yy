@@ -1,8 +1,12 @@
 {
-    "id": "ca2f7d76-792e-4a22-8d40-c46a54eba2a8",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "GMUI_GetControlAtPosition",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "GMUI_Internals",
+    "path": "folders/Scripts/GMUI/GMUI_Internals.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "GMUI_GetControlAtPosition",
+  "tags": [],
+  "resourceType": "GMScript",
 }

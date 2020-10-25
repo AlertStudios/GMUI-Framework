@@ -1,9 +1,10 @@
 ///GMUI_AddItemDefaults(Control ID, id)
 ///Initialize item with all default values
+function GMUI_AddItemDefaults(argument0,argument1) {
 
 if (instance_exists(argument0)) {
     with (argument0) {
-        if (ControlItemList) {
+        if (ControlItemList || ControlType == "dropdown") {
             // Check if ID exists first, if not, add a default item
             var _m, _i, _id;
             _id = argument1;
@@ -44,4 +45,5 @@ if (instance_exists(argument0)) {
 }
 
 return false;
+}
 

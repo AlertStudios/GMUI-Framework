@@ -1,8 +1,12 @@
 {
-    "id": "1b205bc8-7c2f-4f1f-aa45-9749c031206d",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "GMUI_GridNextControl",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "GMUI_Internals",
+    "path": "folders/Scripts/GMUI/GMUI_Internals.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "GMUI_GridNextControl",
+  "tags": [],
+  "resourceType": "GMScript",
 }

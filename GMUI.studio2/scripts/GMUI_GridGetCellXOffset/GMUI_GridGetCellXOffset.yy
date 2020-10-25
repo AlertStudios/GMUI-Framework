@@ -1,8 +1,12 @@
 {
-    "id": "6b4a759d-13c1-47a5-88d3-72d7b57f22dc",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "GMUI_GridGetCellXOffset",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "GMUI_Internals",
+    "path": "folders/Scripts/GMUI/GMUI_Internals.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "GMUI_GridGetCellXOffset",
+  "tags": [],
+  "resourceType": "GMScript",
 }

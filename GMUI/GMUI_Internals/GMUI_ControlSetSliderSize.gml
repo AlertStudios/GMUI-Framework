@@ -1,5 +1,6 @@
 ///GMUI_ControlSetSliderSize(Slider width, Slider height, Slide height, end tick height [or 0], mid tick height [or 0], quarter tick height [or 0], tick height [or 0], Pixels of padding [or 0])
 ///Set the ONLY THE SIZING of the slider
+function GMUI_ControlSetSliderSize(argument0,argument1,argument2,argument3,argument4,argument5,argument6,argument7) {
 
 // todo: needs default script, but will only be called if it is a slider control (default is 0 to 100)
 if (!GMUI_IsControl() && id != GMUII()) {
@@ -39,5 +40,5 @@ if (argument7 >= 0) {
 }
 
 return true;
-
+}
 

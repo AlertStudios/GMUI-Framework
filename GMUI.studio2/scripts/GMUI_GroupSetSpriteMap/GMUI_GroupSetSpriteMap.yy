@@ -1,8 +1,12 @@
 {
-    "id": "30941401-37ad-4efa-8eaf-dcf91acc3d9d",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "GMUI_GroupSetSpriteMap",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "GMUI_DeveloperCalls",
+    "path": "folders/Scripts/GMUI/GMUI_DeveloperCalls.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "GMUI_GroupSetSpriteMap",
+  "tags": [],
+  "resourceType": "GMScript",
 }

@@ -1,5 +1,5 @@
 ///GMUI_Create(GMUI-compatible Object, Interface Script, cell size width [0: default], cell size height [0: default])
-
+function GMUI_Create(argument0,argument1,argument2,argument3) {
 // Must be an object
 if (!object_exists(argument0)) {
     GMUI_ThrowErrorDetailed("Object provided doesn't exist", GMUI_Create);
@@ -9,5 +9,6 @@ if (!object_exists(argument0)) {
 // Initialize
 with (instance_create(0,0,argument0)) {
     return GMUI_CreateEvent(argument1, argument2, argument3);
+}
 }
 

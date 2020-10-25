@@ -1,5 +1,6 @@
 ///GMUI_ControlSetSpriteMap(sprite top, sprite top right, right, bottom right, bottom, bottom left, left, top left, center, center fixed partial [1] / stretched[0])
 ///Replace the control drawing with a sprite map of each corner, side, and center
+function GMUI_ControlSetSpriteMap(argument0,argument1,argument2,argument3,argument4,argument5,argument6,argument7,argument8,argument9) {
 
 if (!GMUI_IsControl() && id != GMUII())
 {
@@ -61,4 +62,5 @@ else
 ControlGraphicMapIsUsed = true; 
 
 return true;
+}
 

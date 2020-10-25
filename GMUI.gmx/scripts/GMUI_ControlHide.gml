@@ -13,6 +13,13 @@ with (GMUII()) {
         return false;
     else {
         _ctrl.Hidden = argument1;
+        
+        if (argument1 == false)
+            if (_ctrl.ControlType == "selectlist")
+                if (_ctrl.ControlDropdownParent != -1)  
+                    if (_ctrl.ControlDropdownParent.Selected == false)
+                        _ctrl.Hidden = true;
+        
         if (_ctrl.FadeOnHide) {
             if (argument1 > 0)
                 GMUI_ControlFadeOut(argument0,_ctrl.FadeTime);

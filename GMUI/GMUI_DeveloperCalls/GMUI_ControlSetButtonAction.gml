@@ -1,4 +1,5 @@
 ///GMUI_ControlSetButtonAction(Action Script)
+function GMUI_ControlSetButtonAction(argument0) {
 if (!GMUI_IsControl() && id != GMUII())
 {
     GMUI_ThrowErrorDetailed("Invalid control", GMUI_ControlSetButtonAction);
@@ -14,5 +15,5 @@ else {
 }
 
 return false;
-    
+}
 

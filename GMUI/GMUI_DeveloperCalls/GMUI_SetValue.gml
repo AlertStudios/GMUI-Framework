@@ -1,5 +1,6 @@
 ///GMUI_SetValue("ControlName", value, value type - string:0, integer:1, decimal:2)
 ///Set the value of a control to GMUI to reference in user code (GMUI_GetValue)
+function GMUI_SetValue(argument0,argument1,argument2) {
 
 with (GMUII())
 {
@@ -17,12 +18,12 @@ with (GMUII())
     }
     else if (a2 == "1" || string_lower(a2) == "integer" || string_lower(a2) == "int")
     {
-        (control).value = minmax(round(real(argument1)),(control).ControlMinValue,(control).ControlMaxValue);
+        (control).value = GMUIminmax(round(real(argument1)),(control).ControlMinValue,(control).ControlMaxValue);
         (control).valueString = string((control).value);
     }
     else if (a2 == "2" || string_lower(a2) == "double")
     {
-        (control).value = minmax(real(argument1),(control).ControlMinValue,(control).ControlMaxValue);
+        (control).value = GMUIminmax(real(argument1),(control).ControlMinValue,(control).ControlMaxValue);
         // Remove any trailing zeros if option is turned on, otherwise use simple format
         var formatValue,c,z,strLenFmtVal;
         formatValue = string_format((control).value,(control).ControlMaxStringLength,(control).ControlMaxDecimalLength);
@@ -63,5 +64,6 @@ with (GMUII())
     if (!_invalid && GMUI_IsScript((control).ValueChangedActionScript)) {
         script_execute((control).ValueChangedActionScript);
     }
+}
 }
 

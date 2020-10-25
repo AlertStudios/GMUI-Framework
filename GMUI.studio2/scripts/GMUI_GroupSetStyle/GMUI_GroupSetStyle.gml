@@ -1,5 +1,7 @@
 ///GMUI_GroupSetStyle(Group, Background Color, Background Alpha, Border color, Border Alpha, Is RoundRect)
 ///Set the style of the controls that will be used for new controls (to override the defaults)
+function GMUI_GroupSetStyle(argument0,argument1,argument2,argument3,argument4,argument5) {
+
 var _SCRIPT, _Layer, _Group;
 _SCRIPT = GMUI_GroupSetStyle;
 if (!GMUI_IsControl() && id != GMUII())
@@ -39,18 +41,18 @@ with ((GMUII()).GMUI_groupMasterControl[UIAddToLayer,_Group]) {
     if (argument1 >= 0)
     GroupBackgroundColor = argument1;
     if (argument2 >= 0)
-    GroupBackgroundAlpha = minmax(argument2,0,1);
+    GroupBackgroundAlpha = GMUIminmax(argument2,0,1);
     if (argument3 >= 0)
     GroupBorderColor = argument3;
     if (argument4 >= 0)
-    GroupBorderAlpha = minmax(argument4,0,1);
+    GroupBorderAlpha = GMUIminmax(argument4,0,1);
     if (argument5 >= 0)
-    GroupIsRoundRect = minmax(argument5,0,1);
+    GroupIsRoundRect = GMUIminmax(argument5,0,1);
     
     
     ControlHasGroupStyle = true;
 }
 
 return true;
-    
+}
 

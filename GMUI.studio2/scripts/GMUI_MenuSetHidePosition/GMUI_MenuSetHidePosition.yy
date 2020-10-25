@@ -1,8 +1,12 @@
 {
-    "id": "6cdafea5-fcf6-40d2-9ac3-3bef538d38fe",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "GMUI_MenuSetHidePosition",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "GMUI_DeveloperCalls",
+    "path": "folders/Scripts/GMUI/GMUI_DeveloperCalls.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "GMUI_MenuSetHidePosition",
+  "tags": [],
+  "resourceType": "GMScript",
 }

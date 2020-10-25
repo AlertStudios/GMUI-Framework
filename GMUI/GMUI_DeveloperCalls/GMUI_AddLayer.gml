@@ -1,6 +1,7 @@
 ///GMUI_AddLayer(Layer Number,x offset, y offset)
 /// Adds a new grid layer to GMUI for controls to exist on
 // returns false on failure (bad params)
+function GMUI_AddLayer(argument0,argument1,argument2) {
 
 var _Layer;
 _Layer = floor(argument0);
@@ -39,14 +40,16 @@ ds_list_add((GMUII()).GMUI_gridlist,_Layer);
 // If using surfaces, the draw update flag is set on the layer level
 if ((GMUII()).UIEnableSurfaces) {
     (GMUII()).GMUI_gridSurface[_Layer] = noone;
-    (GMUII()).GMUI_gridNeedsDrawUpdate[_Layer] = true;
+    (GMUII()).GMUI_gridNeedsDrawUpdate[_Layer] = 1;
     (GMUII()).GMUI_gridMasterControl[_Layer] = -1;
     (GMUII()).GMUI_gridDrawFirst[_Layer] = noone;
 }
 
 
-if ((GMUII()).UILayerTop < _Layer)
+if ((GMUII()).UILayerTop < _Layer) {
     (GMUII()).UILayerTop = _Layer;
+}
 
 return true;
+}
 

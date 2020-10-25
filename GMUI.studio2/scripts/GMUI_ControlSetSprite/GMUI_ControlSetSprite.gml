@@ -1,5 +1,6 @@
 ///GMUI_ControlSetSprite(sprite, subimage, hover subimage, selected subimage)
 ///Replace the control drawing with a sprite instead
+function GMUI_ControlSetSprite(argument0,argument1,argument2,argument3) {
 
 if (!GMUI_IsControl() && id != GMUII())
 {
@@ -28,5 +29,5 @@ if (!GMUI_IsControl() && id != GMUII())
         ControlGraphicSelectedIndex = 0;
 
 return true;
-
+}
 

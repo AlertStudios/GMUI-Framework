@@ -1,6 +1,6 @@
 ///GMUI_ControlSetSelectingAction(Action Script)
 ///On initial selection, execute script (can also draw)
-
+function GMUI_ControlSetSelectingAction(argument0) {
 if (!GMUI_IsControl() && id != GMUII())
 {
     GMUI_ThrowError("Invalid control for GMUI_ControlSetSelectingAction");
@@ -16,5 +16,5 @@ else {
 }
 
 return false;
-    
+}
 

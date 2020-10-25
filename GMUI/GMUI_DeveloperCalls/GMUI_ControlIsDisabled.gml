@@ -1,5 +1,6 @@
 ///GMUI_ControlIsDisabled("ControlName")
 ///Is control of name disabled
+function GMUI_ControlIsDisabled(argument0) {
 
 with (GMUII()) {
     // Retrieve control from the reference map
@@ -12,5 +13,6 @@ with (GMUII()) {
     else {
         return (control).Disabled;
     }
+}
 }
 

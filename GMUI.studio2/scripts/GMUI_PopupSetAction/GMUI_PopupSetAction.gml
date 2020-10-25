@@ -1,5 +1,6 @@
 ///GMUI_PopupSetAction("popup name", Script to execute)
 ///Action to execute after responding to the popup
+function GMUI_PopupSetAction(argument0,argument1) {
 
 var _SCRIPT, _menuName, _menuNumber;
 _SCRIPT = GMUI_PopupSetAction;
@@ -16,4 +17,5 @@ if (string(_menuNumber) == "0") {
 (GMUII()).GMUI_groupAction[GMUI_GetMenuLayer(GMUII(),_menuNumber),_menuNumber] = argument1;
 
 return true;
+}
 

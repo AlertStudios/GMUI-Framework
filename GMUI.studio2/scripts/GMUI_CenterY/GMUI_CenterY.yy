@@ -1,8 +1,12 @@
 {
-    "id": "0b407036-1fd0-4aeb-af96-f284bb8f7dbc",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "GMUI_CenterY",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "GMUI_DeveloperCalls",
+    "path": "folders/Scripts/GMUI/GMUI_DeveloperCalls.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "GMUI_CenterY",
+  "tags": [],
+  "resourceType": "GMScript",
 }

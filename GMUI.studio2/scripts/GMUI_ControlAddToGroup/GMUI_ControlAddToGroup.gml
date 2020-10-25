@@ -1,5 +1,6 @@
 ///GMUI_ControlAddToGroup(group number)
 ///Adds control to a group if it exists in the layer
+function GMUI_ControlAddToGroup(argument0) {
 
 var _SCRIPT, _Group, _Layer, _Depth, _prev;
 _SCRIPT = GMUI_ControlAddToGroup;
@@ -47,15 +48,15 @@ if (GMUIP.GMUI_groupMasterControl[_Layer,_Group] == -1 || GMUIP.GMUI_groupMaster
             depth = _Depth-1;
         }
         // Reset scrollbar list if necessary
-        _prev = ds_list_find_index(GMUIP.GMUI_groupScrollbars,GMUIP.GMUI_groupMasterControl[_Layer,_Group]);
-        if (GMUI_StudioCheckDefined(_prev)) {
-            if (_prev != -1) {
-                if ((GMUIP.GMUI_groupMasterControl[_Layer,_Group]).GroupHasScrollbar) {
-                    ds_list_delete(GMUIP.GMUI_groupScrollbars,_prev);
-                    (GMUIP.GMUI_groupMasterControl[_Layer,_Group]).GroupHasScrollbar = false;
-                }
-            }
-        }
+        //_prev = ds_list_find_index(GMUIP.GMUI_groupScrollbars,GMUIP.GMUI_groupMasterControl[_Layer,_Group]);
+        //if (GMUI_StudioCheckDefined(_prev)) {
+        //    if (_prev != -1) {
+        //        if ((GMUIP.GMUI_groupMasterControl[_Layer,_Group]).GroupHasScrollbar) {
+        //            ds_list_delete(GMUIP.GMUI_groupScrollbars,_prev);
+        //            (GMUIP.GMUI_groupMasterControl[_Layer,_Group]).GroupHasScrollbar = false;
+        //        }
+        //    }
+        //}
     }
     
     
@@ -69,6 +70,7 @@ else
 if (GMUIP.UIEnableSurfaces) {
     if (GMUIP.GMUI_groupDrawingControl[_Layer,_Group] == -1 || GMUIP.GMUI_groupDrawingControl[_Layer,_Group] < id) {
         GMUIP.GMUI_groupDrawingControl[_Layer,_Group] = id;
+        GroupScrollbarHandler = -1;
         NeedsGroupUpdate = true;
     }
 }
@@ -77,6 +79,6 @@ GMUI_ControlPositionToGroup(id);
 
 
 return true;
-    
+}
     
 

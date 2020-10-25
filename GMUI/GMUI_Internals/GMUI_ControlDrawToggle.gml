@@ -1,5 +1,6 @@
 ///GMUI_ControlDrawToggle(id of toggle control object)
 /// Draw the control as a toggle
+function GMUI_ControlDrawToggle(argument0) {
 
 var _tt_id, _SCRIPT;
 _tt_id = argument0;
@@ -172,5 +173,6 @@ with (_tt_id) {
     return true;
     
     
+}
 }
 
