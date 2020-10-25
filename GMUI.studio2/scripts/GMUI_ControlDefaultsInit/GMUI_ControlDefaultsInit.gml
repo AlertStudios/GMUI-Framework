@@ -1,12 +1,13 @@
 ///GMUI_ControlDefaultsInit() Sets the GMUI default values for all controls if they are not specified in GMUI_Form
+function GMUI_ControlDefaultsInit() {
 
 // ! NOTE ! These values are the defaults provided by the framework
 // If you want to change default values, use: GMUI_SetControlDefaults()
 
 // Set the default control styling
 GMUI_ControlSetStyle(
-    rgb(250,250,255),hsv(135,30,100),rgb(20,160,230),true,0.5,
-    rgb(40,40,40),0.1,rgb(240,140,40),0.3,
+    GMUIrgb(250,250,255),GMUIhsv(135,30,100),GMUIrgb(20,160,230),true,0.5,
+    GMUIrgb(40,40,40),0.1,GMUIrgb(240,140,40),0.3,
     true
     );
     
@@ -15,7 +16,7 @@ GMUI_ControlSetSpriteExt(-1,0,0,0,1,1,c_white,1);
 GMUI_ControlSetSpriteMap(-1,-1,-1,-1,-1,-1,-1,-1,-1,false);
 
 // Default font style (font, font color, font align)
-GMUI_ControlSetFontStyle(noone,rgb(42,42,42), fa_left);
+GMUI_ControlSetFontStyle(noone,GMUIrgb(42,42,42), fa_left);
 
 // Set the default control attributes
 GMUI_ControlSetAttributes(0,0,0,999);
@@ -36,5 +37,5 @@ GMUI_ControlSetPicker(
 
 // Text Button control (Text or "", graphic in button, button image sprite, text alignment, hover color)
 GMUI_ControlSetButton("", -1, -1, -1);
-    
+}
 

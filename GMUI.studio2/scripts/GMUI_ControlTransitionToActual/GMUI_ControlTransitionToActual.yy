@@ -1,8 +1,12 @@
 {
-    "id": "306a151b-a67a-4e70-a876-fa4371a4abfd",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "GMUI_ControlTransitionToActual",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "GMUI_Effects",
+    "path": "folders/Scripts/GMUI/GMUI_DeveloperCalls/GMUI_Effects.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "GMUI_ControlTransitionToActual",
+  "tags": [],
+  "resourceType": "GMScript",
 }

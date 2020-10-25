@@ -1,8 +1,12 @@
 {
-    "id": "417203a4-82ec-43ab-b844-7cef587a37e3",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "GMUI_ControlDrawTooltipById",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "GMUI_Internals",
+    "path": "folders/Scripts/GMUI/GMUI_Internals.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "GMUI_ControlDrawTooltipById",
+  "tags": [],
+  "resourceType": "GMScript",
 }

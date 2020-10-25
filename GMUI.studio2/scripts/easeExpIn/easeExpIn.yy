@@ -1,8 +1,12 @@
 {
-    "id": "af1d5eac-18b9-467e-86f5-197f664a2a14",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "easeExpIn",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "GMUI_Effects",
+    "path": "folders/Scripts/GMUI/GMUI_DeveloperCalls/GMUI_Effects.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "easeExpIn",
+  "tags": [],
+  "resourceType": "GMScript",
 }

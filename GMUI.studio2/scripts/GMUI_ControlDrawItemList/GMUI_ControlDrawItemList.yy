@@ -1,8 +1,12 @@
 {
-    "id": "9579d46b-ae21-4843-9333-da0fc23dc862",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "GMUI_ControlDrawItemList",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "GMUI_Internals",
+    "path": "folders/Scripts/GMUI/GMUI_Internals.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "GMUI_ControlDrawItemList",
+  "tags": [],
+  "resourceType": "GMScript",
 }

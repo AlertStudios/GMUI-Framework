@@ -1,8 +1,12 @@
 {
-    "id": "146b42ce-06fa-41f1-afba-0c1a0d36d1a1",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "easeBounceOut",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "GMUI_Effects",
+    "path": "folders/Scripts/GMUI/GMUI_DeveloperCalls/GMUI_Effects.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "easeBounceOut",
+  "tags": [],
+  "resourceType": "GMScript",
 }

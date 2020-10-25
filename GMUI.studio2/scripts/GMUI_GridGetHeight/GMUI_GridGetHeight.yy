@@ -1,8 +1,12 @@
 {
-    "id": "7b039abd-b129-41b0-9d36-25903afbc739",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "GMUI_GridGetHeight",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "GMUI_Internals",
+    "path": "folders/Scripts/GMUI/GMUI_Internals.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "GMUI_GridGetHeight",
+  "tags": [],
+  "resourceType": "GMScript",
 }

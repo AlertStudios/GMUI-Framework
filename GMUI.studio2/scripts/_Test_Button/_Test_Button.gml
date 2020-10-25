@@ -1,3 +1,5 @@
+function _Test_Button() {
+
 // Demo Test Button action
 
 // Get all the values and display them:
@@ -6,9 +8,6 @@ t1 = GMUI_GetValueString("Test1");
 t2 = GMUI_GetValueString("Test2");
 t3 = GMUI_GetValueString("Test3");
 t4 = GMUI_GetValueString("Test4");
-show_message("Result:
-" + t1 + "
-" + t2 + "
-" + t3 + "
-" + t4);
+show_message("Result:\n" + t1 + "\n" + t2 + "\n" + t3 + "\n" + t4);
 
+}

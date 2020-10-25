@@ -1,5 +1,6 @@
-///GMUI_PopupSetButton("popup name", )
+///GMUI_PopupSetButton("popup name", Click-off[bool])
 ///This option allows the user to click outside of the menu to close it
+function GMUI_PopupSetButton(argument0,argument1) {
 
 //todo: put above: GMUI_PopupSetButton("Test Popup", which button, Text or "", graphic or -1, text align, text color on hover)
 
@@ -24,4 +25,5 @@ _Layer = GMUI_GetMenuLayer(GMUII(),_menuNumber);
 
 
 return true;
+}
 

@@ -1,12 +1,13 @@
 ///GMUI_ControlDrawGroup(GMUI instance, Layer, Group, Alpha, FadeMode [0 or 1])
 ///Draws the group if set to do any drawing - Called by master control of group
+function GMUI_ControlDrawGroup(argument0,argument1,argument2,argument3,argument4) {
 
-var _GMUII, _layer, _group, gx, gy, gw, gh, _fadeMode;
+var _GMUII, _layer, _group, _alpha, _fadeMode;
 _GMUII = argument0;
 _layer = argument1;
 _group = argument2;
 _alpha = argument3;
-_fadeMode = round(minmax(argument4,0,1));
+_fadeMode = round(GMUIminmax(argument4,0,1));
 
 // Draw the selected group if set from the form
 if ((_GMUII).GMUI_groupGraphicMapIsUsed[_layer,_group]) {
@@ -28,18 +29,19 @@ if (ControlHasGroupStyle) {
     
     alphadiff = GroupBackgroundAlpha - GroupBorderAlpha;
     // Background
-    color_alpha(GroupBackgroundColor,min(GroupBackgroundAlpha, _alpha+(alphadiff*(alphadiff<0))*_fadeMode ));
+    GMUIcolor_alpha(GroupBackgroundColor,min(GroupBackgroundAlpha, _alpha+(alphadiff*(alphadiff<0))*_fadeMode ));
     if (GroupIsRoundRect)
         draw_roundrect(x1,y1,x2,y2,false);
     else
         draw_rectangle(x1,y1,x2,y2,false);
         
     // Border
-    color_alpha(GroupBorderColor,min(GroupBorderAlpha, _alpha-(alphadiff*(alphadiff>0))*_fadeMode ));
+    GMUIcolor_alpha(GroupBorderColor,min(GroupBorderAlpha, _alpha-(alphadiff*(alphadiff>0))*_fadeMode ));
     if (GroupIsRoundRect)
         draw_roundrect(x1,y1,x2,y2,true);
     else
         draw_rectangle(x1,y1,x2,y2,true);
         
+}
 }
 

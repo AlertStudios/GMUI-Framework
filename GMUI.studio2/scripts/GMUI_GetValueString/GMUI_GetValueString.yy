@@ -1,8 +1,12 @@
 {
-    "id": "5c586d94-fdbc-4bab-9fc7-30ccd28f6c0d",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "GMUI_GetValueString",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "GMUI_DeveloperCalls",
+    "path": "folders/Scripts/GMUI/GMUI_DeveloperCalls.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "GMUI_GetValueString",
+  "tags": [],
+  "resourceType": "GMScript",
 }

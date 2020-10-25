@@ -1,3 +1,6 @@
+function _Show_Group() {
+
+
 // Uses an argument to determine which group to show
 
 
@@ -25,3 +28,4 @@ for (_i=2; _i <=10; _i+=1) {
 GMUI_GroupHide(_group,_grouplayer,false);
 
 
+}

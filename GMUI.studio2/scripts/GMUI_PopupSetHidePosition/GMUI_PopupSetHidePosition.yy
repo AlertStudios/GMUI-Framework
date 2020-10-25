@@ -1,8 +1,12 @@
 {
-    "id": "35b25ef7-e532-4121-a403-79489417ea31",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "GMUI_PopupSetHidePosition",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "GMUI_DeveloperCalls",
+    "path": "folders/Scripts/GMUI/GMUI_DeveloperCalls.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "GMUI_PopupSetHidePosition",
+  "tags": [],
+  "resourceType": "GMScript",
 }

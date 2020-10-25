@@ -1,8 +1,12 @@
 {
-    "id": "34b1ffeb-772a-4bfb-ae06-e741e0f26b6b",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "GMUI_SetKeyNavigation",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "GMUI_Settings",
+    "path": "folders/Scripts/GMUI/GMUI_DeveloperCalls/GMUI_Settings.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "GMUI_SetKeyNavigation",
+  "tags": [],
+  "resourceType": "GMScript",
 }

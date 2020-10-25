@@ -1,8 +1,12 @@
 {
-    "id": "82e59ea8-d3b2-4bab-8a89-f614a35840fb",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "GMUI_GroupHideOverflow",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "GMUI_DeveloperCalls",
+    "path": "folders/Scripts/GMUI/GMUI_DeveloperCalls.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "GMUI_GroupHideOverflow",
+  "tags": [],
+  "resourceType": "GMScript",
 }

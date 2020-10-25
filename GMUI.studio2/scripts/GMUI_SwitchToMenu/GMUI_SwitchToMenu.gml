@@ -1,5 +1,6 @@
 ///GMUI_SwitchToMenu(GMUI, Menu number)
 ///Switches the depth of all controls in the menu of the current layer
+function GMUI_SwitchToMenu(argument0,argument1) {
 
 // Arguments
 var _SCRIPT, _GMUII, _LayerNumber, _MenuNumber, _MasterControl;
@@ -42,5 +43,5 @@ for(i=0;i<ds_list_size((_GMUII).GMUI_groupControlList[_LayerNumber,_MenuNumber])
             - (_MasterControl != ctrl);
     }
 }
-
+}
 

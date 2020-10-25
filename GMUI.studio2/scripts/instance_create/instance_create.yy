@@ -1,8 +1,12 @@
 {
-    "id": "03b0b336-5085-4bc4-a529-e9a93f24f516",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "instance_create",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "GMUI_Compatibility",
+    "path": "folders/Scripts/GMUI/GMUI_Compatibility.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "instance_create",
+  "tags": [],
+  "resourceType": "GMScript",
 }

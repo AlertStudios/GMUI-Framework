@@ -1,8 +1,12 @@
 {
-    "id": "0525ea28-3e5b-4f27-9606-92aae9914b6f",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "GMUI_DefaultActionNo",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "GMUI_DefaultActions",
+    "path": "folders/Scripts/GMUI/GMUI_DeveloperCalls/GMUI_DefaultActions.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "GMUI_DefaultActionNo",
+  "tags": [],
+  "resourceType": "GMScript",
 }

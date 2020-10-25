@@ -1,8 +1,12 @@
 {
-    "id": "5780bd35-1779-4ba8-a99a-70236717703a",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "GMUI_ControlFadeIn",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "GMUI_DeveloperCalls",
+    "path": "folders/Scripts/GMUI/GMUI_DeveloperCalls.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "GMUI_ControlFadeIn",
+  "tags": [],
+  "resourceType": "GMScript",
 }

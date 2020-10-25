@@ -1,8 +1,12 @@
 {
-    "id": "e09ca041-ce19-4ad0-8e2e-9301be5c40c7",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "GMUI_ControlSetValueChangedAction",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "GMUI_DeveloperCalls",
+    "path": "folders/Scripts/GMUI/GMUI_DeveloperCalls.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "GMUI_ControlSetValueChangedAction",
+  "tags": [],
+  "resourceType": "GMScript",
 }

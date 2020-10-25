@@ -1,8 +1,12 @@
 {
-    "id": "499d6cd9-cb63-477a-a21e-5af9c87d00d6",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "GMUI_GridEnabled",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "GMUI_Internals",
+    "path": "folders/Scripts/GMUI/GMUI_Internals.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "GMUI_GridEnabled",
+  "tags": [],
+  "resourceType": "GMScript",
 }

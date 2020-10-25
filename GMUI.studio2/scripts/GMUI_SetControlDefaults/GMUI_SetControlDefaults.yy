@@ -1,8 +1,12 @@
 {
-    "id": "1c819388-9876-4499-831b-56ffaf0fd3ca",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "GMUI_SetControlDefaults",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "GMUI_DeveloperConfigs",
+    "path": "folders/Scripts/GMUI/GMUI_DeveloperConfigs.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "GMUI_SetControlDefaults",
+  "tags": [],
+  "resourceType": "GMScript",
 }

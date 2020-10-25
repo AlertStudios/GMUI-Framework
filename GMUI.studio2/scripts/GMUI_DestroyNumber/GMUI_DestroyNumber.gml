@@ -1,6 +1,6 @@
-///GMUI_Destroy(GMUI number)
+///GMUI_DestroyNumber(GMUI number)
 ///Only call this when you want to remove all traces of the GMUI instance provided, including the object itself
-
+function GMUI_DestroyNumber(argument0) {
 
 with (argument0) {
 
@@ -52,7 +52,7 @@ with (argument0) {
     
     ds_map_destroy(GMUI_warnings_map);
     
-    ds_map_destroy(GMUI_groupScrollbars);
+    ds_list_destroy(GMUI_groupScrollbars);
     
     ds_map_destroy(GMUI_map);
     
@@ -64,5 +64,6 @@ with (argument0) {
     // Destroy the object when done
     RemovingGMUI = true;
     instance_destroy();
+}
 }
 

@@ -1,5 +1,6 @@
 ///GMUI_PopupSetMessage("popup name", "Message", # of Padding Cells, font [or -1], color [or -1])
 ///Creates a message label inside of the popup
+function GMUI_PopupSetMessage(argument0,argument1,argument2,argument3,argument4) {
 
 var _G, _SCRIPT, _menuNumber, _Layer, _menuName, _message, _pad, _wcells, _hcells;
 _G = GMUII();
@@ -30,4 +31,5 @@ with (GMUI_Add("GMUIPopupMessage" + string(_menuNumber), "label", _pad, _pad, _w
 }
 
 return true;
+}
 

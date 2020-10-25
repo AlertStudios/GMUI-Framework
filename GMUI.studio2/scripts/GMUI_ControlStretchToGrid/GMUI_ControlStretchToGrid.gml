@@ -1,6 +1,6 @@
 ///GMUI_ControlStretchToGrid(true/false)
 ///Set the control to stretch across the grid on the opposite anchor axis, offset by the X/Y cell
-
+function GMUI_ControlStretchToGrid(argument0) {
 if (!GMUI_IsControl() && id != GMUII())
 {
     GMUI_ThrowErrorDetailed("Invalid control", GMUI_ControlStretchToGrid);
@@ -25,6 +25,6 @@ GMUI_ControlPosition(id,RelativeCellX,RelativeCellY,RelativeX,RelativeY,Anchor);
     
 
 return true;
-
+}
 
 

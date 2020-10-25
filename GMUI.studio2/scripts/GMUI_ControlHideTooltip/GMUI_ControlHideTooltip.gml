@@ -1,6 +1,7 @@
 ///GMUI_ControlHideTooltip("ControlName that has tooltip", Hide?)
 ///Hide or show a control's tooltip
 // argument1 is to hide (1) or show (0)
+function GMUI_ControlHideTooltip(argument0,argument1) {
 
 with (GMUII()) {
     // Retrieve control from the reference map
@@ -18,5 +19,6 @@ with (GMUII()) {
         GMUI_ControlHide(_ctrlTT,argument1);
         return true;
     }
+}
 }
 

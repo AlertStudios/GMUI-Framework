@@ -1,8 +1,12 @@
 {
-    "id": "98abc0c3-6f53-42a8-a433-a302217c7624",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "GMUI_ControlSetFade",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "GMUI_Effects",
+    "path": "folders/Scripts/GMUI/GMUI_DeveloperCalls/GMUI_Effects.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "GMUI_ControlSetFade",
+  "tags": [],
+  "resourceType": "GMScript",
 }

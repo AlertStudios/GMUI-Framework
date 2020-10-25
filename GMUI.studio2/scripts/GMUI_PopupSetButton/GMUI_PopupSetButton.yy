@@ -1,8 +1,12 @@
 {
-    "id": "1e34a6f4-5992-45e0-9491-ca94c929ca52",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "GMUI_PopupSetButton",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "GMUI_DeveloperCalls",
+    "path": "folders/Scripts/GMUI/GMUI_DeveloperCalls.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "GMUI_PopupSetButton",
+  "tags": [],
+  "resourceType": "GMScript",
 }

@@ -1,5 +1,6 @@
 ///GMUI_AddToLayer(Layer, "Name", "Type String" or GMUIControl.[], cell# x, cell# y, cells wide (min 1), cells high (min 1), Anchor)
 ///Adds a component(instance) to the GMUI grid on the given layer
+function GMUI_AddToLayer(argument0,argument1,argument2,argument3,argument4,argument5,argument6,argument7) {
 
 var _SCRIPT,_Layer,_IsString,_Anchor,_CellX,_CellY,_CellWide,_CellHigh;
 _SCRIPT = GMUI_AddToLayer;
@@ -65,8 +66,9 @@ thecontrol.Group = 0;
 ds_list_add((GMUII()).GMUI_controlList,thecontrol);
 
 if ((GMUII()).UIEnableSurfaces) {
-    if ((GMUII()).GMUI_gridMasterControl[_Layer] == -1)
+    if ((GMUII()).GMUI_gridMasterControl[_Layer] == -1) {
         (GMUII()).GMUI_gridMasterControl[_Layer] = thecontrol;
+    }
     
     // Also set possible surface defaults
     thecontrol.SelectListSurface = noone;
@@ -144,6 +146,6 @@ if (GMUI_GetDataType(thetype) == global.GMUIDataTypeString) {
 
 return thecontrol;
 
-
+}
 
 

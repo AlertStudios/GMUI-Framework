@@ -1,8 +1,12 @@
 {
-    "id": "b4977a7e-f1dd-474b-82f0-94dadb798744",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "GMUI_NavigateNextControl",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "GMUI_Internals",
+    "path": "folders/Scripts/GMUI/GMUI_Internals.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "GMUI_NavigateNextControl",
+  "tags": [],
+  "resourceType": "GMScript",
 }

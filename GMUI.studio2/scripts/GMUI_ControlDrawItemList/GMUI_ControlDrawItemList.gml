@@ -1,5 +1,6 @@
 ///GMUI_ControlDrawItemList(Control ID, Using Surface[bool])
 ///Draws the group if set to do any drawing - Called by master control of group
+function GMUI_ControlDrawItemList(argument0,argument1) {
 
 var _GMUII, _Ctrl, _UsingSurface, _Surface, _i, _id, _relMY, _cx, _cy, _sbw, _canDraw, _offPos;
 _Ctrl = argument0;
@@ -13,9 +14,8 @@ if (!_UsingSurface) {
     _cy = _Ctrl.ActualY+_Ctrl.GMUIP.GMUI_grid_y[_Ctrl.Layer]+GMUI_GridViewOffsetY(_Ctrl.GMUIP);
 }
 else {
-    //surface_reset_target();
-    _Surface = surface_target(_Ctrl.SelectListSurface,_Ctrl.RoomW-_Ctrl.RoomX,max(_Ctrl.RoomH-_Ctrl.RoomY,ItemListHeight*ItemListSize));
-    surface_clear(_Surface);
+    _Surface = GMUIsurface_target(_Ctrl.SelectListSurface,_Ctrl.RoomW-_Ctrl.RoomX,max(_Ctrl.RoomH-_Ctrl.RoomY,ItemListHeight*ItemListSize));
+    GMUIsurface_clear(_Surface);
 }
 
 _sbw = 0;
@@ -40,10 +40,10 @@ if (_UsingSurface) {
 if (!_Ctrl.Hovering)
     _Ctrl.ItemListHoverIndex = -1;
 else
-    _Ctrl.NeedsDrawUpdate = true;
+    _Ctrl.NeedsDrawUpdate = 1;
 
 // Set alignments (for now this is static)
-align(fa_left,fa_middle);
+GMUIalign(fa_left,fa_middle);
 
 // Array index [0] holds default values
 // Draw the select list control, and all of its items
@@ -76,17 +76,31 @@ for (_i=1;_i<=ItemListSize;_i+=1) {
         // Draw the individual item depending on the provided parameters
         if (_canDraw) {
             // Draw background if defined
-            if (ItemListBackgroundColor[_id] != -1) {
+            _ibgc = ItemListBackgroundColor[_id];
+            if (_ibgc == -1)
+                _ibgc = ItemListBackgroundColor[0];
+            
+            if (_ibgc != -1) {
                 if (ItemListHoverIndex == _i) {
                     if (ItemListBackgroundColorHover[_id] != -1)
                         draw_set_color(ItemListBackgroundColorHover[_id]);
+                    else if (ItemListBackgroundColorHover[0] != -1)
+                        draw_set_color(ItemListBackgroundColorHover[0]);
                     if (ItemListBackgroundAlphaHover[_id] != -1)
                         draw_set_alpha(min(FadeAlpha,ItemListBackgroundAlphaHover[_id]));
+                    else if (ItemListBackgroundAlphaHover[0] != -1)
+                        draw_set_alpha(min(FadeAlpha,ItemListBackgroundAlphaHover[0]));
                 }
                 else {
-                    draw_set_color(ItemListBackgroundColor[_id]);
+                    if (ItemListBackgroundColor[_id] != -1)
+                        draw_set_color(ItemListBackgroundColor[_id]);
+                    else if (ItemListBackgroundColor[0] != -1)
+                        draw_set_color(ItemListBackgroundColor[0]);
+                    
                     if (ItemListBackgroundAlpha[_id] != -1)
                         draw_set_alpha(min(FadeAlpha,ItemListBackgroundAlpha[_id]));
+                    else if (ItemListBackgroundAlpha[0] != -1)
+                        draw_set_alpha(min(FadeAlpha,ItemListBackgroundAlpha[0]));
                 }
                 
                 draw_rectangle(_cx,_cy + (_i-_offPos-1) * ItemListHeight,_cx + ItemListAreaWidth - _sbw,_cy + (_i-_offPos) * ItemListHeight - 1,false);
@@ -97,6 +111,7 @@ for (_i=1;_i<=ItemListSize;_i+=1) {
                 draw_set_font(ItemListFont[_id]);
             else if (ItemListFont[0] != -1)
                 draw_set_font(ItemListFont[0]);
+                
             // Set font color if defined, and if hovering
             if (ItemListHoverIndex == _i) {
                 if (ItemListFontColorHover[_id] != -1)
@@ -108,6 +123,7 @@ for (_i=1;_i<=ItemListSize;_i+=1) {
                 draw_set_color(ItemListFontColor[_id]);
             else if (ItemListFontColor[0] != -1)
                 draw_set_color(ItemListFontColor[0]);
+                
             // Set opacity
             draw_set_alpha(min(FadeAlpha,ItemListOpacity[_id]));
             
@@ -135,8 +151,11 @@ for (_i=1;_i<=ItemListSize;_i+=1) {
     //ItemListFadeTime
 }
 
+if (_UsingSurface)
+    GMUIsurface_reset();
+
 return _Surface;
 
-
+}
 
 

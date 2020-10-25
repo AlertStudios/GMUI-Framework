@@ -1,8 +1,12 @@
 {
-    "id": "4163eeac-6ccf-4521-9344-e7e27579e773",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "GMUI_LayerTransitionToXY",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "GMUI_Effects",
+    "path": "folders/Scripts/GMUI/GMUI_DeveloperCalls/GMUI_Effects.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "GMUI_LayerTransitionToXY",
+  "tags": [],
+  "resourceType": "GMScript",
 }

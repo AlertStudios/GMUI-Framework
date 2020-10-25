@@ -1,8 +1,12 @@
 {
-    "id": "29e845f3-49dd-417f-931b-f67d8d68bc81",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "easeInOutSine",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "GMUI_Effects",
+    "path": "folders/Scripts/GMUI/GMUI_DeveloperCalls/GMUI_Effects.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "easeInOutSine",
+  "tags": [],
+  "resourceType": "GMScript",
 }

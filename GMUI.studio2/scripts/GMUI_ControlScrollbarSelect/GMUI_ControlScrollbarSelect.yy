@@ -1,8 +1,12 @@
 {
-    "id": "ab637ad8-51b0-4b80-9f1c-6d790b3bbc18",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "GMUI_ControlScrollbarSelect",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "GMUI_Internals",
+    "path": "folders/Scripts/GMUI/GMUI_Internals.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "GMUI_ControlScrollbarSelect",
+  "tags": [],
+  "resourceType": "GMScript",
 }

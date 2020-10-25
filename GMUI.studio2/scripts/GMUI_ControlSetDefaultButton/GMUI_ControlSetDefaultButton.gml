@@ -1,5 +1,6 @@
 ///GMUI_ControlSetDefaultButton(id)
 /// Set the default attributes of the control from the controller
+function GMUI_ControlSetDefaultButton(argument0) {
 
 if (!instance_exists(argument0))
 {
@@ -19,4 +20,5 @@ with (argument0)
 
 
 return true;
+}
 

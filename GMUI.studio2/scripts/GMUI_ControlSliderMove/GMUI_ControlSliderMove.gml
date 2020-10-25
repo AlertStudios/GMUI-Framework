@@ -1,5 +1,6 @@
 ///GMUI_ControlSliderMove([bool] Move to mouse, else stop and set)
 ///Called by control. Move the position of the thumb based on mouse position or stop where the mouse is
+function GMUI_ControlSliderMove(argument0) {
 
 // Update adjustment
 if (argument0) {
@@ -7,15 +8,15 @@ if (argument0) {
     MX = mouse_x-(GMUIP).GMUI_grid_x[Layer]-GMUI_GridViewOffsetX(GMUIP);
     MY = mouse_y-(GMUIP).GMUI_grid_y[Layer]-GMUI_GridViewOffsetY(GMUIP);
     //todo: fix view and group offsets!
-    if (Group > 0) {
+    if (Group > 0 && GMUIP.UIEnableSurfaces) {
         MX -= (GMUIP).GMUI_groupActualX[Layer,Group];
         MY -= (GMUIP).GMUI_groupActualY[Layer,Group];
     }
     
     if (!SliderVertical)
-        SliderRelativeFinalXorY = minmax(MX,RoomX+SliderStartEndPadding,RoomW-SliderStartEndPadding)-RoomX;
+        SliderRelativeFinalXorY = GMUIminmax(MX,RoomX+SliderStartEndPadding,RoomW-SliderStartEndPadding)-RoomX;
     else
-        SliderRelativeFinalXorY = minmax(MY,RoomY+SliderStartEndPadding,RoomH-SliderStartEndPadding)-RoomY;
+        SliderRelativeFinalXorY = GMUIminmax(MY,RoomY+SliderStartEndPadding,RoomH-SliderStartEndPadding)-RoomY;
 }
     
 // Set value to position
@@ -72,8 +73,10 @@ else {
     
 // Update actual value
 if (!argument0) {
-    if (real(value) != valueSetting)
-        GMUI_SetValue(valueName,valueSetting,2);
+    if (is_real(value)) {
+        if (real(value) != valueSetting)
+            GMUI_SetValue(valueName,valueSetting,2);
+    }
 }
-
+}
 

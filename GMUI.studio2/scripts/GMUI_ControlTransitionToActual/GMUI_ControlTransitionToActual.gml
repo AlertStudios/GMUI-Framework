@@ -1,5 +1,5 @@
-///GMUI_ControlTranstionToActual("ControlName",Grid X, Grid Y, Transition Script, Time)
-///
+///GMUI_ControlTransitionToActual("ControlName",Grid X, Grid Y, Transition Script, Time)
+function GMUI_ControlTransitionToActual(argument0,argument1,argument2,argument3,argument4) {
 
 var _ctrl, _GridX, _GridY;
 _GridX = argument1;
@@ -26,5 +26,6 @@ if (!GMUI_IsScript(argument3))
 
 (_ctrl).TransitionScript = argument3;
 (_ctrl).Transitioning = true;
+}
 
 

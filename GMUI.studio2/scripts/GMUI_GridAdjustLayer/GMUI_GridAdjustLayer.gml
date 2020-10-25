@@ -1,5 +1,6 @@
 ///GMUI_GridAdjustLayer(Layer Number [or all: -1], cells wide, cells high)
 /// Adjusts the layer's grid based on new dimensions and moves the controls according to their anchors
+function GMUI_GridAdjustLayer(argument0,argument1,argument2) {
 
 // Layer needs to exist
 if (!GMUI_LayerExists(argument0))
@@ -109,5 +110,5 @@ GMUI_GridSetRegionsLayer(_Layer);
 
 
 return true;
-
+}
 

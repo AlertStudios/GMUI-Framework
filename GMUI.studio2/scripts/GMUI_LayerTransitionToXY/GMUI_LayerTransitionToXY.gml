@@ -1,4 +1,5 @@
 ///GMUI_LayerTransitionToXY(Layer number, Room X, Room Y, Alpha [or -1], Transition Script, Time)
+function GMUI_LayerTransitionToXY(argument0,argument1,argument2,argument3,argument4,argument5) {
 
 var _Layer; _Layer = argument0;
 
@@ -39,4 +40,5 @@ with (GMUII()) {
 }
 
 return true;
+}
 

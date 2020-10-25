@@ -1,8 +1,12 @@
 {
-    "id": "40d01a63-2933-4087-90a8-81e59692aea2",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "GMUI_MenuControlDepth",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "GMUI_DeveloperCalls",
+    "path": "folders/Scripts/GMUI/GMUI_DeveloperCalls.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "GMUI_MenuControlDepth",
+  "tags": [],
+  "resourceType": "GMScript",
 }

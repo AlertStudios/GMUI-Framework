@@ -1,8 +1,12 @@
 {
-    "id": "28d4e98f-6730-498f-ab15-2f0a51198d8f",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "GMUI_GridViewOffsetX",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "GMUI_Internals",
+    "path": "folders/Scripts/GMUI/GMUI_Internals.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "GMUI_GridViewOffsetX",
+  "tags": [],
+  "resourceType": "GMScript",
 }

@@ -1,8 +1,12 @@
 {
-    "id": "bb4c5e47-f2cc-4560-95fc-4c1241601dba",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "GMUI_ControlSetSliderSize",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "GMUI_Internals",
+    "path": "folders/Scripts/GMUI/GMUI_Internals.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "GMUI_ControlSetSliderSize",
+  "tags": [],
+  "resourceType": "GMScript",
 }

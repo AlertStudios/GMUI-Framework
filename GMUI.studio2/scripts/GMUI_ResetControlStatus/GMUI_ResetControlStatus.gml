@@ -1,5 +1,6 @@
 ///GMUI_ResetControlStatus("Hovering" / "Selected" / "Position", GridID)
 /// Resets the hovering or selected values of the controls
+function GMUI_ResetControlStatus(argument0,argument1) {
 
 var _SCRIPT,_GridID,a0,ff,ffo,m,ms; a0 = string(argument0);
 _SCRIPT = GMUI_ResetControlStatus;
@@ -48,8 +49,9 @@ else if (string_lower(a0) == "hovering" || a0 == "0") {
                     (ffo).HoveringDirection = 0;
                     
                     if ((ffo).ControlHasScrollbar) {
-                        if (!(ffo).Scrollbar_dragging)
+                        if (!(ffo).Scrollbar_dragging) {
                             (ffo).Scrollbar_hover = false;
+                        }
                     }
                 }
             }
@@ -79,5 +81,6 @@ else if (string_lower(a0) == "position" || a0 == "2") {
 }
 else {
     GMUI_ThrowErrorDetailed("Incorrect parameter given",_SCRIPT);
+}
 }
 

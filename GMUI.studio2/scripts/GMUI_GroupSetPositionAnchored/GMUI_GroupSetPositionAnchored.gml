@@ -1,5 +1,6 @@
 ///GMUI_GroupSetPositionAnchored(Layer, Group Number, Cell X, Cell Y, X Adjustment, Y Adjustment, Anchor)
 ///Change the position of the group (and all of the controls inside it) according to its anchor
+function GMUI_GroupSetPositionAnchored(argument0,argument1,argument2,argument3,argument4,argument5,argument6) {
 
 // Arguments
 var _SCRIPT, _LayerNumber,_GroupNumber,_CellX,_CellY,_AdjustmentX,_AdjustmentY, _gridW, _gridH, ctrl, _MasterControl;
@@ -142,5 +143,5 @@ for(i=0;i<ds_list_size((GMUII()).GMUI_groupControlList[_LayerNumber,_GroupNumber
 
 // Reset all control regions for the layer
 GMUI_GridSetRegionsLayer(_LayerNumber);
-
+}
 

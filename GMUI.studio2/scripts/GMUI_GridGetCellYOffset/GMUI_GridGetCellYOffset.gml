@@ -3,6 +3,7 @@
 // argument1 is the layer
 // argument2 is the Y coordinate
 // argument3 is the Y offset
+function GMUI_GridGetCellYOffset(argument0,argument1,argument2,argument3) {
 
 var _GMUII, _LayerNumber, _offset;
 _GMUII = argument0;
@@ -11,5 +12,5 @@ _offset = argument3;
 
 return ceil((argument2-(_GMUII).GMUI_grid_y[_LayerNumber]-_offset+1)/(_GMUII).cellsize_h)-1;
 
-
+}
 

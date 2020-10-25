@@ -1,5 +1,6 @@
 ///GMUI_ControlSetDefaultSprite(id)
 ///Set the default attributes of the control from the controller
+function GMUI_ControlSetDefaultSprite(argument0) {
 
 if (!instance_exists(argument0)) {
     GMUI_ThrowErrorDetailed("Invalid control",GMUI_ControlSetDefaultSprite);
@@ -23,4 +24,5 @@ with (argument0) {
 
 
 return true;
+}
 

@@ -1,8 +1,12 @@
 {
-    "id": "fb6820fc-51cf-4293-be08-54045de03b08",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "GMUI_ControlCenterX",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "GMUI_DeveloperCalls",
+    "path": "folders/Scripts/GMUI/GMUI_DeveloperCalls.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "GMUI_ControlCenterX",
+  "tags": [],
+  "resourceType": "GMScript",
 }

@@ -1,8 +1,12 @@
 {
-    "id": "c2f3f810-7c17-426b-869f-a21e10564268",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "GMUI_CreateEvent",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "GMUI_Internals",
+    "path": "folders/Scripts/GMUI/GMUI_Internals.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "GMUI_CreateEvent",
+  "tags": [],
+  "resourceType": "GMScript",
 }

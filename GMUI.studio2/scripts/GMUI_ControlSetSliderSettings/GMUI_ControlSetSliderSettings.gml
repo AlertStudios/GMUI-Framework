@@ -1,5 +1,6 @@
 ///GMUI_ControlSetSliderSettings(ticks amount, min value, max value, round values to ticks[bool], snap [bool], smooth adjust and snap[bool], vertical orientation[bool])
 ///Required to be called to set the SETTINGS of the slider
+function GMUI_ControlSetSliderSettings(argument0,argument1,argument2,argument3,argument4,argument5,argument6) {
 
 if (!GMUI_IsControl() && id != GMUII())
 {
@@ -61,5 +62,5 @@ if (argument6 >= 0)
 
 
 return true;
-    
+}
 

@@ -1,8 +1,12 @@
 {
-    "id": "062831a7-02bc-4f58-9397-d9f7d71bd7b9",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "GMUI_GroupTransitionToCell",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "GMUI_Effects",
+    "path": "folders/Scripts/GMUI/GMUI_DeveloperCalls/GMUI_Effects.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "GMUI_GroupTransitionToCell",
+  "tags": [],
+  "resourceType": "GMScript",
 }

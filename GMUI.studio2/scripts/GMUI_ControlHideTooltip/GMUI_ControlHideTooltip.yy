@@ -1,8 +1,12 @@
 {
-    "id": "5f498519-c260-470b-8802-72dc3087ab74",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "GMUI_ControlHideTooltip",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "GMUI_DeveloperCalls",
+    "path": "folders/Scripts/GMUI/GMUI_DeveloperCalls.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "GMUI_ControlHideTooltip",
+  "tags": [],
+  "resourceType": "GMScript",
 }

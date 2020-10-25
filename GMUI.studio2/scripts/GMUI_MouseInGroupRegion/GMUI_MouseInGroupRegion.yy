@@ -1,8 +1,12 @@
 {
-    "id": "db3364f0-5b47-4b44-92fa-18a9204821df",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "GMUI_MouseInGroupRegion",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "GMUI_Internals",
+    "path": "folders/Scripts/GMUI/GMUI_Internals.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "GMUI_MouseInGroupRegion",
+  "tags": [],
+  "resourceType": "GMScript",
 }

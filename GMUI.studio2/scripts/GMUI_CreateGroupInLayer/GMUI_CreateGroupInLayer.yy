@@ -1,8 +1,12 @@
 {
-    "id": "f7b38004-d901-4ee3-9b61-00600c27edf7",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "GMUI_CreateGroupInLayer",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "GMUI_DeveloperCalls",
+    "path": "folders/Scripts/GMUI/GMUI_DeveloperCalls.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "GMUI_CreateGroupInLayer",
+  "tags": [],
+  "resourceType": "GMScript",
 }

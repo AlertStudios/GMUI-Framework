@@ -1,8 +1,12 @@
 {
-    "id": "b80d4ce7-a23b-4ba0-9e97-02969e3d1ea7",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "GMUI_GetAnchoredCellX",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "GMUI_Internals",
+    "path": "folders/Scripts/GMUI/GMUI_Internals.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "GMUI_GetAnchoredCellX",
+  "tags": [],
+  "resourceType": "GMScript",
 }

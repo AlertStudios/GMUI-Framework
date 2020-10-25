@@ -1,8 +1,12 @@
 {
-    "id": "144e8cad-ad7c-4bb9-9551-cf9d121c8f07",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "GMUI_ControlHide",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "GMUI_DeveloperCalls",
+    "path": "folders/Scripts/GMUI/GMUI_DeveloperCalls.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "GMUI_ControlHide",
+  "tags": [],
+  "resourceType": "GMScript",
 }

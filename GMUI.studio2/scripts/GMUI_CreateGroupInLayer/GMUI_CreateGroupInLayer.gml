@@ -1,6 +1,6 @@
 ///GMUI_CreateGroupInLayer(layer number, group number, cell# x, cell# y, cells wide, cells high, Anchor)
 ///Adds a group to a GMUI layer that controls can be put into
-
+function GMUI_CreateGroupInLayer(argument0,argument1,argument2,argument3,argument4) {
 
 // Arguments
 var _Group,_CellX,_CellY,_Layer,_Anchor;
@@ -71,7 +71,7 @@ with (GMUII()) {
     // Surface specific
     if (UIEnableSurfaces) {
         GMUI_groupSurface[_Layer,_Group] = noone;
-        //GMUI_groupNeedsDrawUpdate[_Layer,_Group] = true;
+        //GMUI_groupNeedsDrawUpdate[_Layer,_Group] = 1;
         GMUI_groupDrawingControl[_Layer,_Group] = -1;
         GMUI_groupDrawingFirst[_Layer,_Group] = -1;
         GMUI_groupDrawingLast[_Layer,_Group] = -1;
@@ -80,5 +80,5 @@ with (GMUII()) {
 
 
 return GMUII();
-
+}
 

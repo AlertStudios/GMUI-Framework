@@ -1,8 +1,12 @@
 {
-    "id": "c786390c-44b9-4971-91a4-fd8f64be0db0",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "GMUI_MenuSetStyle",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "GMUI_Internals",
+    "path": "folders/Scripts/GMUI/GMUI_Internals.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "GMUI_MenuSetStyle",
+  "tags": [],
+  "resourceType": "GMScript",
 }

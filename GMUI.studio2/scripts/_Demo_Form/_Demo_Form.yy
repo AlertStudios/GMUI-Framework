@@ -1,8 +1,12 @@
 {
-    "id": "e06433f6-16cf-43a3-888e-7bce3d44e691",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "_Demo_Form",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "Demo Interfaces",
+    "path": "folders/Scripts/Demo Interfaces.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "_Demo_Form",
+  "tags": [],
+  "resourceType": "GMScript",
 }

@@ -1,5 +1,6 @@
 ///GMUI_ControlDrawTooltipById(id of tooltip control object)
 /// Draw the control as a tooltip
+function GMUI_ControlDrawTooltipById(argument0) {
 
 var _tt_id;
 _tt_id = argument0;
@@ -15,7 +16,7 @@ with (_tt_id) {
     pady = ControlPaddingY;
     
     // Draw the area
-    color_alpha(ControlBackgroundColor,min(ControlBackgroundAlpha,FadeAlpha));
+    GMUIcolor_alpha(ControlBackgroundColor,min(ControlBackgroundAlpha,FadeAlpha));
     draw_rectangle(cx, cy, cwx+padx*2, chy, 0);
     
     
@@ -41,10 +42,10 @@ with (_tt_id) {
     }
     
     // Set control color, font, and alignment
-    color_alpha(ControlFontColor,min(ControlFontAlpha,FadeAlpha));
+    GMUIcolor_alpha(ControlFontColor,min(ControlFontAlpha,FadeAlpha));
     if (ControlFont != noone)
         draw_set_font(ControlFont);
-    align(ControlFontAlign,ControlFontAlignV);
+    GMUIalign(ControlFontAlign,ControlFontAlignV);
     
     var _dtx, _midHeight;
     _dtx = cx + padx;
@@ -52,8 +53,9 @@ with (_tt_id) {
     draw_text_ext(_dtx,cy + (chy-cy)/2,_txt,-1,cwx);
     
     //debug
-    //color_alpha(c_red,0.15)
+    //GMUIcolor_alpha(c_red,0.15)
     //draw_rectangle(cx, cy, CellWide*(GMUII()).cellsize, chy, 1)
     //draw_rectangle(cx, cy, cwx, chy, 1)
+}
 }
 

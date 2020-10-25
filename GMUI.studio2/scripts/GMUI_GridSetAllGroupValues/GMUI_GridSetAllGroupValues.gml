@@ -1,5 +1,6 @@
 ///GMUI_GridSetAllGroupValues(GMUI instance);
 ///Set all mapped values to groups, called after the UI is set
+function GMUI_GridSetAllGroupValues(argument0) {
 
 with (argument0) {
 
@@ -21,8 +22,7 @@ with (argument0) {
                 if (GMUI_groupDrawingControl[l,g] > -1) {
                     with (GMUI_groupDrawingControl[l,g]) {
                         if (GMUIP.GMUI_groupOverflow[l,g] == global.GMUIOverflowScroll) {
-                            GroupHasScrollbar = true;
-                            GMUI_ControlSetScrollbarDefaults(false); // false: set for group
+                            GMUI_GroupSetScrollbar(argument0,l,g,-1);
                         }
                     }
                 }
@@ -30,5 +30,6 @@ with (argument0) {
         }
     }
 
+}
 }
 

@@ -1,6 +1,7 @@
 ///GMUI_ControlFilterInput(Control Type, Input String - keyboard_string)
 ///Modifies keyboard string to be acceptable for the control. Typcially called on a keypress.
 // Returns: new input string
+function GMUI_ControlFilterInput(argument0,argument1) {
 
 var filter, CT, ks, _getDataType, isNumeric;
 CT = string_lower(string_replace(string(argument0)," ",""));
@@ -49,5 +50,5 @@ else if (_getDataType == global.GMUIDataTypeString) {
 }
 
 return ks;
-
+}
 

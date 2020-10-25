@@ -1,4 +1,5 @@
 ///GMUI_GridUpdateLayer(GMUI instance, Layer)
+function GMUI_GridUpdateLayer(argument0,argument1) {
 ///[BETA]Update the draw flag for all controls on the layer
 var _i, _g,_ctrl, _Layer, sg, gg;
 _Layer = argument1;
@@ -22,7 +23,7 @@ with (argument0) {
             }
             else if (GMUI_ControlIsInLayer(_ctrl,_Layer)) {
                 if (!_ctrl.Hidden)
-                    _ctrl.NeedsDrawUpdate = true;
+                    _ctrl.NeedsDrawUpdate = 1;
             }
         }
         
@@ -33,13 +34,14 @@ with (argument0) {
             if (GMUI_StudioCheckDefined(_g)) {
 //            if (sg > 0){
 //                if (GMUI_groupMasterControl[_Layer,_g] < sg)
-                (GMUI_groupMasterControl[_Layer,_g]).NeedsGroupUpdate = true;
+                (GMUI_groupMasterControl[_Layer,_g]).NeedsGroupUpdate = 1;
                 
 //                if (GMUI_groupDrawingControl[_Layer,_g] < sg)
-                (GMUI_groupDrawingControl[_Layer,_g]).NeedsGroupUpdate = true;
+                (GMUI_groupDrawingControl[_Layer,_g]).NeedsGroupUpdate = 1;
 //            }
             }
         }
     }
 } 
+}
 

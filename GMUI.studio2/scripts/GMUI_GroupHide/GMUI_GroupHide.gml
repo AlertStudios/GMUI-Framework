@@ -1,6 +1,6 @@
 ///GMUI_GroupHide(group number, layer number, Hide(1) or show(0))
 /// Hide all of the controls within the specified group
-
+function GMUI_GroupHide(argument0,argument1,argument2) {
 var _Group, _Layer, _Hide, i, ctrl;
 _Group = argument0;
 _Layer = argument1;
@@ -15,7 +15,7 @@ if (!(GMUII()).UIInterfaceSet) {
     return true;
 }
 
-(GMUII()).GMUI_groupNeedsDrawUpdate[_Layer,_Group] = true;
+(GMUII()).GMUI_groupNeedsDrawUpdate[_Layer,_Group] = 1;
 
 // Change the value for each of the controls within the group
 for(i=0;i<ds_list_size((GMUII()).GMUI_groupControlList[_Layer,_Group]);i+=1) {
@@ -42,4 +42,5 @@ for(i=0;i<ds_list_size((GMUII()).GMUI_groupControlList[_Layer,_Group]);i+=1) {
 }
 
 return true;
+}
 

@@ -1,4 +1,5 @@
 ///GMUI_ItemListBackground(Background Color, Background Color Hover, Background Alpha, Background Alpha Hover)
+function GMUI_ItemListBackground(argument0,argument1,argument2,argument3) {
 
 if (!GMUI_IsControl() && id != GMUII())
 {
@@ -6,7 +7,7 @@ if (!GMUI_IsControl() && id != GMUII())
     return false;
 }
 
-if (!ControlItemList) {
+if (!ControlItemList && ControlType != "dropdown") {
     GMUI_ThrowErrorDetailed("'" + valueName + "' is not an item list control", GMUI_ItemListBackground);
     return false;
 }
@@ -19,8 +20,10 @@ if (argument1 > -1)
     ItemListBackgroundColorHover[0] = argument1;
 
 if (argument2 > -1)
-    ItemListBackgroundAlpha = argument2;
+    ItemListBackgroundAlpha[0] = argument2;
     
 if (argument3 > -1)
-    ItemListBackgroundAlphaHover = argument3;
+    ItemListBackgroundAlphaHover[0] = argument3;
+
+}
 

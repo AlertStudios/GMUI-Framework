@@ -1,5 +1,6 @@
 ///GMUI_GroupStretchToGrid(Group, true/false)
 ///Stretch group to edges
+function GMUI_GroupStretchToGrid(argument0,argument1) {
 
 var _Layer, _Group, _Stretch;
 _Layer = (GMUII()).UIAddToLayer;
@@ -35,5 +36,5 @@ GMUI_GroupSetPositionAnchored(_Layer, _Group,
 // Resize group?
 // (Also resize if setting size after)
 
-
+}
 
