@@ -19,6 +19,28 @@ else {
     GMUI_ControlDisable("BtnDisable1",false);
 }
 
+#define _Disable_Slider_Button
+
+
+if (GMUI_GetControl("Slider").Disabled) {
+
+    GMUI_ControlDisable("Slider",false);
+    GMUI_ControlDisable("SliderV",false);
+    
+    with (GMUI_GetControl("BtnDisableSlider")) {
+        GMUI_ControlSetButton("Disable It",-1,-1,-1);
+    }
+}
+else {
+
+    GMUI_ControlDisable("Slider",true);
+    GMUI_ControlDisable("SliderV",true);
+    
+    with (GMUI_GetControl("BtnDisableSlider")) {
+        GMUI_ControlSetButton("Enable It",-1,-1,-1);
+    }
+}
+
 #define _Enlarge_Button
 // Make window bigger
 
@@ -234,7 +256,7 @@ switch (argument0) {
 
 
 GMUI_ControlPosition("MovementBox", 2,2, 0,0, -1); // Use current anchor (-1)
-GMUI_ControlPosition("MovementBox2", 2,2, 0,0, -1); // Use current anchor (-1)//testing
+GMUI_ControlPosition("MovementBox2", 1,1, 0,0, -1); // Use current anchor (-1)//testing
 GMUI_ControlTransitionToCell("MovementBox", 10,2, _move, room_speed);
 GMUI_ControlTransitionToCell("MovementBox2", 10,2, _move, room_speed);//testing
 
@@ -1300,6 +1322,12 @@ with (GMUI_Add("SliderV", "slider",              6,9,  4,8,   global.GMUIAnchorT
     GMUI_ControlSetInitValue(20);
 }
 
+with (GMUI_Add("BtnDisableSlider", "button",         12,16,   6,3,    global.GMUIAnchorTopLeft)) {
+    GMUI_ControlAddToGroup(2);
+    GMUI_ControlSetButtonAction(_Disable_Slider_Button);
+    GMUI_ControlSetButton("Disable It",-1,-1,-1);
+}
+
 //TESTESTESTESTESTEST
 /*
 with (GMUI_Add("Slider2", "slider",              10,6,  6,2,   global.GMUIAnchorTopLeft)) {
@@ -1523,8 +1551,8 @@ with (GMUI_Add("MovementBox", "label", 2,2 , 2,2, global.GMUIAnchorTopLeft)) {
     GMUI_ControlSetStyle(c_lime, c_gray, c_green, -1, -1, -1, -1, -1, -1, -1);
     GMUI_ControlAddToGroup(8);
 }
-with (GMUI_Add("MovementBox2", "label", 2,2 , 2,2, global.GMUIAnchorTopLeft)) {//testing | something is wrong with the view...
-    GMUI_ControlSetStyle(c_maroon, c_gray, c_red, -1, -1, -1, -1, -1, -1, -1);// fine for groups, but not for controls!
+with (GMUI_Add("MovementBox2", "label", 1,1 , 2,2, global.GMUIAnchorTopLeft)) {//testing | something is wrong with the view...
+    GMUI_ControlSetStyle(c_maroon, c_gray, c_red, -1, .5, -1, -1, -1, -1, -1);// fine for groups, but not for controls!
 }
 
 with (GMUI_Add("BtnMovement1", "button",         2,6,   6,2,    global.GMUIAnchorTopLeft)) {
@@ -3870,8 +3898,10 @@ if (argument0 == true) {
             if (ControlType == "selectlist") {
                 // Only create the surface of the list and return
                 SelectListSurface = GMUI_ControlDrawItemList(id, true);
-                if (surface_exists(GMUIP.GMUI_groupSurface[Layer,Group]))
-                    GMUIsurface_target(GMUIP.GMUI_groupSurface[Layer,Group],-1,-1);
+                if (Group > 0) {
+                    if (surface_exists(GMUIP.GMUI_groupSurface[Layer,Group]))
+                        GMUIsurface_target(GMUIP.GMUI_groupSurface[Layer,Group],-1,-1);
+                }
             }
         }
         
@@ -3879,6 +3909,7 @@ if (argument0 == true) {
         if (GMUIP.GMUI_gridNeedsDrawUpdate[Layer] == 2 || GMUIP.GMUI_gridMasterControl[Layer] == id || NeedsDrawUpdate > 0 || NeedsGroupUpdate > 0) {
             CurrentSurfaceW = GMUIP.UIgridwidth;
             CurrentSurfaceH = GMUIP.UIgridheight;
+            GMUIsurface_reset();
             CurrentSurface = GMUIsurface_target(GMUIP.GMUI_gridSurface[Layer], CurrentSurfaceW, CurrentSurfaceH);
             GMUIP.GMUI_gridSurface[Layer] = CurrentSurface;
             SurfaceSet = true;
@@ -6236,9 +6267,9 @@ if (GMUI_GridEnabled())
                             // For lists that have a scrollbar, check which region we are in
                             if (ctrlObject.ControlHasScrollbar) {
                                 if (ctrlObject.Group > 0)
-                                    _GX = GMUI_groupActualX[ctrlObject.Layer,ctrlObject.Group] * (UIEnableSurfaces);
+                                    GX = GMUI_groupActualX[ctrlObject.Layer,ctrlObject.Group] * (UIEnableSurfaces);
                                     
-                                if (MX >= ctrlObject.Scrollbar_x + GMUI_grid_x[ctrlObject.Layer] + GMUI_GridViewOffsetX(id) + _GX) {                                 
+                                if (MX >= ctrlObject.Scrollbar_x + GMUI_grid_x[ctrlObject.Layer] + GMUI_GridViewOffsetX(id) + GX) {                                 
                                     // Drag the scrollbar
                                     var _MPos,_SPos;
                                     _MPos = MY - ctrlObject.ActualY;
@@ -7088,10 +7119,10 @@ if (argument1 > -1)
     ItemListBackgroundColorHover[0] = argument1;
 
 if (argument2 > -1)
-    ItemListBackgroundAlpha = argument2;
+    ItemListBackgroundAlpha[0] = argument2;
     
 if (argument3 > -1)
-    ItemListBackgroundAlphaHover = argument3;
+    ItemListBackgroundAlphaHover[0] = argument3;
 
 ///@}
 
@@ -10306,7 +10337,7 @@ if (_isOpening) {
             _Control.ItemListDrawScript, _Control.ItemListFadeTime);
             
         GMUI_ItemListBackground(_Control.ItemListBackgroundColor[0], _Control.ItemListBackgroundColorHover[0],
-            _Control.ItemListBackgroundAlpha, _Control.ItemListBackgroundAlphaHover);
+            _Control.ItemListBackgroundAlpha[0], _Control.ItemListBackgroundAlphaHover[0]);
         
         // Add all items from parent
         var i,_id;

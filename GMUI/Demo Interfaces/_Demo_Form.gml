@@ -150,6 +150,12 @@ with (GMUI_Add("SliderV", "slider",              6,9,  4,8,   global.GMUIAnchorT
     GMUI_ControlSetInitValue(20);
 }
 
+with (GMUI_Add("BtnDisableSlider", "button",         12,16,   6,3,    global.GMUIAnchorTopLeft)) {
+    GMUI_ControlAddToGroup(2);
+    GMUI_ControlSetButtonAction(_Disable_Slider_Button);
+    GMUI_ControlSetButton("Disable It",-1,-1,-1);
+}
+
 //TESTESTESTESTESTEST
 /*
 with (GMUI_Add("Slider2", "slider",              10,6,  6,2,   global.GMUIAnchorTopLeft)) {
@@ -373,8 +379,8 @@ with (GMUI_Add("MovementBox", "label", 2,2 , 2,2, global.GMUIAnchorTopLeft)) {
     GMUI_ControlSetStyle(c_lime, c_gray, c_green, -1, -1, -1, -1, -1, -1, -1);
     GMUI_ControlAddToGroup(8);
 }
-with (GMUI_Add("MovementBox2", "label", 2,2 , 2,2, global.GMUIAnchorTopLeft)) {//testing | something is wrong with the view...
-    GMUI_ControlSetStyle(c_maroon, c_gray, c_red, -1, -1, -1, -1, -1, -1, -1);// fine for groups, but not for controls!
+with (GMUI_Add("MovementBox2", "label", 1,1 , 2,2, global.GMUIAnchorTopLeft)) {//testing | something is wrong with the view...
+    GMUI_ControlSetStyle(c_maroon, c_gray, c_red, -1, .5, -1, -1, -1, -1, -1);// fine for groups, but not for controls!
 }
 
 with (GMUI_Add("BtnMovement1", "button",         2,6,   6,2,    global.GMUIAnchorTopLeft)) {

@@ -350,8 +350,10 @@ if (argument0 == true) {
             if (ControlType == "selectlist") {
                 // Only create the surface of the list and return
                 SelectListSurface = GMUI_ControlDrawItemList(id, true);
-                if (surface_exists(GMUIP.GMUI_groupSurface[Layer,Group]))
-                    GMUIsurface_target(GMUIP.GMUI_groupSurface[Layer,Group],-1,-1);
+                if (Group > 0) {
+                    if (surface_exists(GMUIP.GMUI_groupSurface[Layer,Group]))
+                        GMUIsurface_target(GMUIP.GMUI_groupSurface[Layer,Group],-1,-1);
+                }
             }
         }
         
@@ -359,6 +361,7 @@ if (argument0 == true) {
         if (GMUIP.GMUI_gridNeedsDrawUpdate[Layer] == 2 || GMUIP.GMUI_gridMasterControl[Layer] == id || NeedsDrawUpdate > 0 || NeedsGroupUpdate > 0) {
             CurrentSurfaceW = GMUIP.UIgridwidth;
             CurrentSurfaceH = GMUIP.UIgridheight;
+            GMUIsurface_reset();
             CurrentSurface = GMUIsurface_target(GMUIP.GMUI_gridSurface[Layer], CurrentSurfaceW, CurrentSurfaceH);
             GMUIP.GMUI_gridSurface[Layer] = CurrentSurface;
             SurfaceSet = true;

@@ -6,6 +6,7 @@
         <folder folderName="Demo Actions">
           <file>_Debug_Button.gml</file>
           <file>_Disable_Button.gml</file>
+          <file>_Disable_Slider_Button.gml</file>
           <file>_Enlarge_Button.gml</file>
           <file>_Exit_Button.gml</file>
           <file>_Hide_Button.gml</file>
