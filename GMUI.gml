@@ -1502,6 +1502,7 @@ with (GMUI_Add("TestDropDown", "dropdown",               2,10,    10,2,   global
 
 with (GMUI_Add("TestDropdown2", "dropdown",             2,20,   10,2,   global.GMUIAnchorTopLeft)) {
     GMUI_AddItem(2,10,"2-One","",-1);
+    GMUI_AddItem(4,40,"4-Two","",-1);
     GMUI_ControlSetInitValue(2);
     
     GMUI_ControlAddToGroup(5);
@@ -2547,9 +2548,10 @@ GMUI_ControlTransitionToActual(argument0,_ActualX,_ActualY,argument3,argument4);
 ///GMUI_ControlTransitionToActual("ControlName",Grid X, Grid Y, Transition Script, Time)
 ///@function GMUI_ControlTransitionToActual(argument0,argument1,argument2,argument3,argument4) {
 
-var _ctrl, _GridX, _GridY;
+var _ctrl, _GridX, _GridY, _Transition;
 _GridX = argument1;
 _GridY = argument2;
+_Transition = argument3;
 
 // Retrieve _ctrl from the reference map
 _ctrl = ds_map_find_value((GMUII()).GMUI_map,string(argument0));
@@ -2558,7 +2560,7 @@ if (string(_ctrl) == "0")
     
 // Check that the transition script is valid
 if (!GMUI_IsScript(argument3))
-    return false;
+    _Transition = easeLinear;
 
 // Calculate coordinates and set the room positions and start transition
 (_ctrl).T_t = 0;
@@ -2570,7 +2572,7 @@ if (!GMUI_IsScript(argument3))
 (_ctrl).T_cx = _GridX - (_ctrl).ActualX;
 (_ctrl).T_cy = _GridY - (_ctrl).ActualY;
 
-(_ctrl).TransitionScript = argument3;
+(_ctrl).TransitionScript = _Transition;
 (_ctrl).Transitioning = true;
 ///@}
 
@@ -2597,17 +2599,18 @@ GMUI_GroupTransitionToActual(argument0, argument1,_ActualX,_ActualY,argument4,ar
 ///GMUI_GroupTransitionToActual(Layer Number, Group Id, Grid X, Grid Y, Transition Script, Time)
 ///@function GMUI_GroupTransitionToActual(argument0,argument1,argument2,argument3,argument4,argument5) {
 
-var _SCRIPT, _ctrl, _iid, _LayerNumber,  _GridX, _GridY;
+var _SCRIPT, _ctrl, _iid, _LayerNumber,  _GridX, _GridY, _Transition;
 _SCRIPT = GMUI_GroupTransitionToActual;
 _iid = GMUII();
 _LayerNumber = argument0;
 _GroupNumber = argument1;
 _GridX = argument2;
 _GridY = argument3;
+_Transition = argument4;
 
 // Check that the transition script is valid
-if (!GMUI_IsScript(argument4))
-    return false;
+if (!GMUI_IsScript(_Transition))
+    _Transition = easeLinear;
     
 (_iid).GMUI_groupTransitioning[_LayerNumber,_GroupNumber] = true;
 
@@ -2643,7 +2646,7 @@ for(i=0;i<ds_list_size((_iid).GMUI_groupControlList[_LayerNumber,_GroupNumber]);
         
         (_ctrl).TransitioningGroup = true;
         
-        GMUI_ControlTransitionToActual((_ctrl).valueName,_GridX+_relX,_GridY+_relY,argument4,argument5);
+        GMUI_ControlTransitionToActual((_ctrl).valueName,_GridX+_relX,_GridY+_relY,_Transition,argument5);
     }
     
 }
@@ -2842,9 +2845,9 @@ if (ControlItemList || ControlType == "dropdown") {
             ItemListSprite[_id] = -1;
             
         // Recalculate the height of the selectable scrollbar based on the number of items
-        _OF = max(CellHigh,ItemListSize);
+        _OF = max(CellHigh,(ItemListSize-1)*1.25+(ItemListSize>CellHigh)*1.25);
         if (ControlHasScrollbar) {
-            Scrollbar_height = max(GMUIP.cellsize_h, CellHigh / _OF * Scrollbar_max) - Scrollbar_padding*2 + 2;
+            Scrollbar_height = max(GMUIP.cellsize_h, CellHigh / _OF * Scrollbar_max) - Scrollbar_padding*2;
             Scrollbar_maxtop = Scrollbar_max - Scrollbar_height;
         }
         
@@ -3903,6 +3906,11 @@ if (argument0 == true) {
                     GMUIP.GMUI_groupDrawingLast[Layer,Group] = id;
                 }
             }
+        }
+        
+        if (GMUIP.ControlLayerRedraw == id) {
+            GMUI_GridUpdateLayer(GMUIP,Layer);
+            GMUIP.ControlLayerRedraw = -1;
         }
         
         // Create surfaces for controls that use them first, and later draw to grid
@@ -5715,6 +5723,7 @@ PreviousSelectedControl = -1;
 
 // Request to update the layer region
 NeedsRegionsUpdate = false;
+ControlLayerRedraw = -1;
 
 // An offset change will trigger repositioning controls
 previousXOffset = 0;
@@ -9340,7 +9349,7 @@ if (_Ctrl.ControlItemList) {
             _offset = floor((ItemListOffsetY+(ItemListHeight/2))/ItemListHeight);
         else if (ControlHasScrollbar) {
             if (Scrollbar_dragging)
-                _offset = (Scrollbar_pos_y - Scrollbar_y) / Scrollbar_maxtop
+                _offset = (Scrollbar_pos_y - Scrollbar_y) / max(1,Scrollbar_maxtop)
                     * ((ItemListSize - floor(ItemListAreaHeight / ItemListHeight)) * ItemListHeight);
             else
                 _offset = ItemListOffsetY;
@@ -10363,9 +10372,7 @@ if (_isOpening) {
         GMUIP.GMUI_controlClickOff = id;
     }
     
-    GMUI_GridUpdateLayer(_Control.GMUIP,_Control.Layer);
-    
-    
+    _newSL.GMUIP.ControlLayerRedraw = _newSL;
 }
 else {
 
@@ -10382,7 +10389,7 @@ else {
 
 // Adjust the parent control value
 
-var _valType;
+var _valType,_ctrl;
 if (is_string(argument0))
     _valType = 0;
 else if (frac(argument0) == 0)
@@ -10393,9 +10400,18 @@ else
 GMUI_SetValue(ControlDropdownParent.valueName, argument0, _valType);
 ControlDropdownParent.valueString = ItemListName[argument0];
 
+// Reset scrollbar
+
+_ctrl = ds_map_find_value(GMUIP.GMUI_map,"DDSL|" + ControlDropdownParent.valueName);
+
+if (string(_ctrl) == "0")
+    return false;
+
+_ctrl.Scrollbar_pos_y = _ctrl.Scrollbar_y + _ctrl.Scrollbar_padding;
+
 // Hide the select list, disabling input
 
-GMUI_ControlHide("DDSL|" + ControlDropdownParent.valueName,true);
+GMUI_ControlHide(_ctrl,true);
 ///@}
 
 #define GMUI_GetAnchoredCellX
