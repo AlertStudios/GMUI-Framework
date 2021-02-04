@@ -74,7 +74,7 @@ if (_isOpening) {
         GMUIP.GMUI_controlClickOff = id;
     }
     
-    GMUI_GridUpdateLayer(_Control.GMUIP,_Control.Layer);
+    _newSL.GMUIP.ControlLayerRedraw = _newSL;
     
     
 }

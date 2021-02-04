@@ -94,7 +94,6 @@
           <file>GMUI_ControlSetSprite.gml</file>
           <file>GMUI_ControlSetSpriteExt.gml</file>
           <file>GMUI_ControlSetSpriteMap.gml</file>
-          <file>GMUI_ControlSetStretchToGrid.gml</file>
           <file>GMUI_ControlSetStyle.gml</file>
           <file>GMUI_ControlSetText.gml</file>
           <file>GMUI_ControlSetToggleSettings.gml</file>
@@ -115,7 +114,6 @@
           <file>GMUI_GetValue.gml</file>
           <file>GMUI_GetValueString.gml</file>
           <file>GMUI_GetWidth.gml</file>
-          <file>GMUI_GridSetNavigation.gml</file>
           <file>GMUI_GroupHide.gml</file>
           <file>GMUI_GroupHideOverflow.gml</file>
           <file>GMUI_GroupSetFadeOnHide.gml</file>
@@ -125,7 +123,6 @@
           <file>GMUI_GroupSetPositionActual.gml</file>
           <file>GMUI_GroupSetSize.gml</file>
           <file>GMUI_GroupSetSpriteMap.gml</file>
-          <file>GMUI_GroupSetStretchToGrid.gml</file>
           <file>GMUI_GroupStretchToGrid.gml</file>
           <file>GMUI_Init.gml</file>
           <file>GMUI_IsMenuOpen.gml</file>
@@ -149,9 +146,6 @@
           <file>GMUI_SetValue.gml</file>
           <file>GMUI_SwitchToLayer.gml</file>
           <file>GMUI_SwitchToMenu.gml</file>
-          <file>GMUI_TypeDecimal.gml</file>
-          <file>GMUI_TypeInt.gml</file>
-          <file>GMUI_TypeString.gml</file>
           <folders>
             <folder folderName="GMUI_DefaultActions">
               <file>GMUI_DefaultActionCancel.gml</file>
@@ -167,6 +161,7 @@
               <file>easeInBack.gml</file>
               <file>easeInOutBack.gml</file>
               <file>easeInOutSine.gml</file>
+              <file>easeLinear.gml</file>
               <file>easeOutBack.gml</file>
               <file>ease_CopyrightNotice.gml</file>
               <file>GMUI_ControlSetFade.gml</file>

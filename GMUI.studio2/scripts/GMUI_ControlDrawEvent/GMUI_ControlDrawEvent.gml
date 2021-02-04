@@ -344,6 +344,11 @@ if (argument0 == true) {
                 }
             }
         }
+		
+		if (GMUIP.ControlLayerRedraw == id) {
+            GMUI_GridUpdateLayer(GMUIP,Layer);
+            GMUIP.ControlLayerRedraw = -1;
+        }
         
         // Create surfaces for controls that use them first, and later draw to grid
         if (NeedsDrawUpdate > 0 || NeedsGroupUpdate > 0) {

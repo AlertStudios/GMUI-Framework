@@ -126,6 +126,7 @@ PreviousSelectedControl = -1;
 
 // Request to update the layer region
 NeedsRegionsUpdate = false;
+ControlLayerRedraw = -1;
 
 // An offset change will trigger repositioning controls
 previousXOffset = 0;
