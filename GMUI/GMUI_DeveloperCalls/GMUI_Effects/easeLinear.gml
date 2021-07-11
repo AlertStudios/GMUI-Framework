@@ -9,4 +9,3 @@ _d = argument3;
 
 return _b+_c*_t/_d;
 
-}

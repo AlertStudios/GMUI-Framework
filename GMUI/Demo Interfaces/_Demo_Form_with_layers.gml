@@ -5,6 +5,12 @@
 // Set optional grid settings
 GMUI_SetKeyNavigation(global.GMUIDirectionTypeVertical,vk_up,vk_down,vk_left,vk_right,true);
 
+//
+
+GMUI_UseSurfaces(true);
+
+
+
 // Set the layer to change settings on [This one is optional: Already defaults to layer 0]
 GMUI_SetOnLayer(0);
 

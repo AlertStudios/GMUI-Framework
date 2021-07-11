@@ -23,7 +23,7 @@ with (argument0) {
             }
             else if (GMUI_ControlIsInLayer(_ctrl,_Layer)) {
                 if (!_ctrl.Hidden)
-                    _ctrl.NeedsDrawUpdate = 1;
+                    _ctrl.NeedsDrawUpdate = 1;//GMUIRedrawSteps;
             }
         }
         
@@ -34,10 +34,10 @@ with (argument0) {
             if (GMUI_StudioCheckDefined(_g)) {
 //            if (sg > 0){
 //                if (GMUI_groupMasterControl[_Layer,_g] < sg)
-                (GMUI_groupMasterControl[_Layer,_g]).NeedsGroupUpdate = 1;
+                (GMUI_groupMasterControl[_Layer,_g]).NeedsGroupUpdate = 1;//GMUIRedrawSteps;
                 
 //                if (GMUI_groupDrawingControl[_Layer,_g] < sg)
-                (GMUI_groupDrawingControl[_Layer,_g]).NeedsGroupUpdate = 1;
+                (GMUI_groupDrawingControl[_Layer,_g]).NeedsGroupUpdate = 1;//GMUIRedrawSteps;
 //            }
             }
         }

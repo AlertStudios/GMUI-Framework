@@ -30,7 +30,7 @@ if (_Ctrl.ControlItemList) {
             _offset = floor((ItemListOffsetY+(ItemListHeight/2))/ItemListHeight);
         else if (ControlHasScrollbar) {
             if (Scrollbar_dragging)
-                _offset = (Scrollbar_pos_y - Scrollbar_y) / Scrollbar_maxtop
+                _offset = (Scrollbar_pos_y - Scrollbar_y) / max(1,Scrollbar_maxtop)
                     * ((ItemListSize - floor(ItemListAreaHeight / ItemListHeight)) * ItemListHeight);
             else
                 _offset = ItemListOffsetY;

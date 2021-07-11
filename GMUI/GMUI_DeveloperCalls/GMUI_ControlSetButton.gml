@@ -11,9 +11,9 @@ if (!GMUI_IsControl() && id != GMUII())
     ControlButtonText = string(argument0);
     
     if (sprite_exists(argument1))
-        ControlButtonGraphic = argument1;
+        ControlButtonIcon = argument1;
     else
-        ControlButtonGraphic = -1;
+        ControlButtonIcon = -1;
     
     // Uses same alignment as set in font style
     if (argument2 != -1)

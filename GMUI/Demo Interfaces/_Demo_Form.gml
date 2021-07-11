@@ -3,7 +3,11 @@
 // DEMO INTERFACE:
 
 // Set optional grid settings
-GMUI_SetKeyNavigation(global.GMUIDirectionTypeVertical,vk_up,vk_down,vk_left,vk_right,true);
+GMUI_SetKeyNavigation(global.GMUIDirectionTypeVertical,vk_up,vk_down,vk_left,vk_right,-1);
+
+GMUI_SetNavigation(true, true, true, global.GMUIDirectionTypeVertical);//global.GMUIDirectionTypeBoth);
+
+GMUI_SetGhosting(3);
 
 // Set the layer to change settings on [This one is optional: Already defaults to layer 0]
 GMUI_SetOnLayer(0);
@@ -230,7 +234,7 @@ with (GMUI_Add("LabelDesc", "label",  1, 14, 19, 4, global.GMUIAnchorTopLeft)) {
 
 with (GMUI_Add("LabelLong", "label",  1, 18, 36, 2, global.GMUIAnchorTopLeft)) {
     GMUI_ControlAddToGroup(3);
-    GMUI_ControlSetInitValue("The width for this label is waaaaaaaay too long for this group's width!");
+    GMUI_ControlSetInitValue("The width for this label is waaaaaaaay too long and won't wrap to the group!");
 }
 
 with (GMUI_Add("LabelWrap", "label",  1, 22, 19, 4, global.GMUIAnchorTopLeft)) {
@@ -330,6 +334,7 @@ with (GMUI_Add("TestDropDown", "dropdown",               2,10,    10,2,   global
 
 with (GMUI_Add("TestDropdown2", "dropdown",             2,20,   10,2,   global.GMUIAnchorTopLeft)) {
     GMUI_AddItem(2,10,"2-One","",-1);
+    GMUI_AddItem(4,40,"4-Two","",-1);
     GMUI_ControlSetInitValue(2);
     
     GMUI_ControlAddToGroup(5);
@@ -353,6 +358,7 @@ with (GMUI_Add("BtnDisable1", "button",         3,6,   6,3,    global.GMUIAnchor
     GMUI_ControlAddToGroup(6);
     GMUI_ControlSetButtonAction1(_Disable_Button,1);
     GMUI_ControlSetButton("Disable 1",-1,-1,-1);
+    GMUI_ControlSetDisabledDraw(_Disable_Code);
 }
 
 with (GMUI_Add("BtnDisable2", "button",         11,6,   6,3,    global.GMUIAnchorTopLeft)) {

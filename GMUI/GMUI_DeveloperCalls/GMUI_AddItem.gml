@@ -24,9 +24,9 @@ if (ControlItemList || ControlType == "dropdown") {
             ItemListSprite[_id] = -1;
             
         // Recalculate the height of the selectable scrollbar based on the number of items
-        _OF = max(CellHigh,ItemListSize);
+        _OF = max(CellHigh,(ItemListSize-1)*1.25+(ItemListSize>CellHigh)*1.25);
         if (ControlHasScrollbar) {
-            Scrollbar_height = max(GMUIP.cellsize_h, CellHigh / _OF * Scrollbar_max) - Scrollbar_padding*2 + 2;
+            Scrollbar_height = max(GMUIP.cellsize_h, CellHigh / _OF * Scrollbar_max) - Scrollbar_padding*2;
             Scrollbar_maxtop = Scrollbar_max - Scrollbar_height;
         }
         

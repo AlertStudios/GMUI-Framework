@@ -1,17 +1,18 @@
 ///GMUI_GroupTransitionToActual(Layer Number, Group Id, Grid X, Grid Y, Transition Script, Time)
 function GMUI_GroupTransitionToActual(argument0,argument1,argument2,argument3,argument4,argument5) {
 
-var _SCRIPT, _ctrl, _iid, _LayerNumber,  _GridX, _GridY;
+var _SCRIPT, _ctrl, _iid, _LayerNumber,  _GridX, _GridY, _Transition;
 _SCRIPT = GMUI_GroupTransitionToActual;
 _iid = GMUII();
 _LayerNumber = argument0;
 _GroupNumber = argument1;
 _GridX = argument2;
 _GridY = argument3;
+_Transition = argument4;
 
 // Check that the transition script is valid
-if (!GMUI_IsScript(argument4))
-    return false;
+if (!GMUI_IsScript(_Transition))
+    _Transition = easeLinear;
     
 (_iid).GMUI_groupTransitioning[_LayerNumber,_GroupNumber] = true;
 
@@ -47,7 +48,7 @@ for(i=0;i<ds_list_size((_iid).GMUI_groupControlList[_LayerNumber,_GroupNumber]);
         
         (_ctrl).TransitioningGroup = true;
         
-        GMUI_ControlTransitionToActual((_ctrl).valueName,_GridX+_relX,_GridY+_relY,argument4,argument5);
+        GMUI_ControlTransitionToActual((_ctrl).valueName,_GridX+_relX,_GridY+_relY,_Transition,argument5);
     }
     
 }

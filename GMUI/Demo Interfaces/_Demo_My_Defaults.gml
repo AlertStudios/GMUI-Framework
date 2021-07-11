@@ -25,9 +25,6 @@ GMUI_ControlSetAttributes(0,0,0,999);
 ControlHasGroupStyle = false;
 
 
-GMUI_UseSurfaces(true);
-
-
 
 // Specific control initializations //
 
@@ -37,7 +34,10 @@ GMUI_ControlSetPicker(
     sprite_get_width(GMUIspr_arrow) + 4,sprite_get_height(GMUIspr_arrow) + 4,
     global.GMUIDirectionTypeSideVertical,GMUIspr_arrowup,GMUIspr_arrow,
     );
-// Direction types: global.GMUIDirectionTypeHorizontal: 0, global.GMUIDirectionTypeVertical: 1, global.GMUIDirectionTypeSideVertical: 2
+// Direction types: 
+//      global.GMUIDirectionTypeHorizontal: 0,
+//      global.GMUIDirectionTypeVertical: 1,
+//      global.GMUIDirectionTypeSideVertical: 2
 
 
 // Text Button control (Text or "", graphic in button or -1, button image sprite or -1, text alignment, hover color or -1)

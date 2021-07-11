@@ -6,6 +6,7 @@
         <folder folderName="Demo Actions">
           <file>_Debug_Button.gml</file>
           <file>_Disable_Button.gml</file>
+          <file>_Disable_Code.gml</file>
           <file>_Disable_Slider_Button.gml</file>
           <file>_Enlarge_Button.gml</file>
           <file>_Exit_Button.gml</file>
@@ -81,6 +82,7 @@
           <file>GMUI_ControlSetButtonAction.gml</file>
           <file>GMUI_ControlSetButtonAction1.gml</file>
           <file>GMUI_ControlSetCheckboxSettings.gml</file>
+          <file>GMUI_ControlSetDisabledDraw.gml</file>
           <file>GMUI_ControlSetFadeOnHide.gml</file>
           <file>GMUI_ControlSetFontStyle.gml</file>
           <file>GMUI_ControlSetHoverAction.gml</file>
@@ -202,8 +204,14 @@
           </folders>
         </folder>
         <folder folderName="GMUI_DeveloperConfigs">
+          <file>GMUI_DisableTabbing.gml</file>
+          <file>GMUI_EnableAutoInputSwitch.gml</file>
+          <file>GMUI_GamepadMapButton.gml</file>
           <file>GMUI_SetControlDefaults.gml</file>
+          <file>GMUI_SetGamepadDefaults.gml</file>
+          <file>GMUI_SetGhosting.gml</file>
           <file>GMUI_SetLayerDepths.gml</file>
+          <file>GMUI_SetNavigation.gml</file>
           <file>GMUI_Settings.gml</file>
           <folders />
         </folder>
@@ -213,6 +221,7 @@
           <file>GMUI_AddItemDefaults.gml</file>
           <file>GMUI_CellGetActualX.gml</file>
           <file>GMUI_CellGetActualY.gml</file>
+          <file>GMUI_CheckControllerNav.gml</file>
           <file>GMUI_ControlActionScript.gml</file>
           <file>GMUI_ControlDefaultsInit.gml</file>
           <file>GMUI_ControlDrawGroup.gml</file>
@@ -257,6 +266,9 @@
           <file>GMUI_GetDataType.gml</file>
           <file>GMUI_GridAdjust.gml</file>
           <file>GMUI_GridAdjustLayer.gml</file>
+          <file>GMUI_GridCheckForControls.gml</file>
+          <file>GMUI_GridCheckLine.gml</file>
+          <file>GMUI_GridCheckSelectable.gml</file>
           <file>GMUI_GridDrawGroups.gml</file>
           <file>GMUI_GridEnabled.gml</file>
           <file>GMUI_GridGetCellX.gml</file>
@@ -289,6 +301,7 @@
           <file>GMUI_GroupSetScrollbar.gml</file>
           <file>GMUI_GroupSetScrollbarX.gml</file>
           <file>GMUI_GroupSetStyle.gml</file>
+          <file>GMUI_InitStudio.gml</file>
           <file>GMUI_IsControl.gml</file>
           <file>GMUI_IsControlID.gml</file>
           <file>GMUI_IsScript.gml</file>
@@ -310,6 +323,8 @@
           <file>GMUI_ShowMenuId.gml</file>
           <file>GMUI_ShowPopup.gml</file>
           <file>GMUI_ShowPopupId.gml</file>
+          <file>GMUI_StudioCheckDefined.gml</file>
+          <file>GMUI_StudioGamepad.gml</file>
           <file>GMUI_SurfaceResize.gml</file>
           <file>GMUI_ThrowError.gml</file>
           <file>GMUI_ThrowErrorDetailed.gml</file>

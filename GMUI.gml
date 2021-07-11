@@ -19,6 +19,12 @@ else {
     GMUI_ControlDisable("BtnDisable1",false);
 }
 
+#define _Disable_Code
+
+
+draw_set_color(c_maroon);
+draw_set_alpha(0.67);
+
 #define _Disable_Slider_Button
 
 
@@ -631,6 +637,12 @@ GMUI_PopupSetHidePosition("Test Popup", -14, 0, easeExpOut, room_speed/4);
 // Set optional grid settings
 GMUI_SetKeyNavigation(global.GMUIDirectionTypeVertical,vk_up,vk_down,vk_left,vk_right,true);
 
+//
+
+GMUI_UseSurfaces(true);
+
+
+
 // Set the layer to change settings on [This one is optional: Already defaults to layer 0]
 GMUI_SetOnLayer(0);
 
@@ -1175,7 +1187,11 @@ GMUI_PopupSetHidePosition("Test Popup", -14, 0, easeExpOut, room_speed/4);
 // DEMO INTERFACE:
 
 // Set optional grid settings
-GMUI_SetKeyNavigation(global.GMUIDirectionTypeVertical,vk_up,vk_down,vk_left,vk_right,true);
+GMUI_SetKeyNavigation(global.GMUIDirectionTypeVertical,vk_up,vk_down,vk_left,vk_right,-1);
+
+GMUI_SetNavigation(true, true, true, global.GMUIDirectionTypeVertical);//global.GMUIDirectionTypeBoth);
+
+GMUI_SetGhosting(3);
 
 // Set the layer to change settings on [This one is optional: Already defaults to layer 0]
 GMUI_SetOnLayer(0);
@@ -1402,7 +1418,7 @@ with (GMUI_Add("LabelDesc", "label",  1, 14, 19, 4, global.GMUIAnchorTopLeft)) {
 
 with (GMUI_Add("LabelLong", "label",  1, 18, 36, 2, global.GMUIAnchorTopLeft)) {
     GMUI_ControlAddToGroup(3);
-    GMUI_ControlSetInitValue("The width for this label is waaaaaaaay too long for this group's width!");
+    GMUI_ControlSetInitValue("The width for this label is waaaaaaaay too long and won't wrap to the group!");
 }
 
 with (GMUI_Add("LabelWrap", "label",  1, 22, 19, 4, global.GMUIAnchorTopLeft)) {
@@ -1526,6 +1542,7 @@ with (GMUI_Add("BtnDisable1", "button",         3,6,   6,3,    global.GMUIAnchor
     GMUI_ControlAddToGroup(6);
     GMUI_ControlSetButtonAction1(_Disable_Button,1);
     GMUI_ControlSetButton("Disable 1",-1,-1,-1);
+    GMUI_ControlSetDisabledDraw(_Disable_Code);
 }
 
 with (GMUI_Add("BtnDisable2", "button",         11,6,   6,3,    global.GMUIAnchorTopLeft)) {
@@ -1849,9 +1866,6 @@ GMUI_ControlSetAttributes(0,0,0,999);
 ControlHasGroupStyle = false;
 
 
-GMUI_UseSurfaces(true);
-
-
 
 // Specific control initializations //
 
@@ -1861,7 +1875,10 @@ GMUI_ControlSetPicker(
     sprite_get_width(GMUIspr_arrow) + 4,sprite_get_height(GMUIspr_arrow) + 4,
     global.GMUIDirectionTypeSideVertical,GMUIspr_arrowup,GMUIspr_arrow,
     );
-// Direction types: global.GMUIDirectionTypeHorizontal: 0, global.GMUIDirectionTypeVertical: 1, global.GMUIDirectionTypeSideVertical: 2
+// Direction types: 
+//      global.GMUIDirectionTypeHorizontal: 0,
+//      global.GMUIDirectionTypeVertical: 1,
+//      global.GMUIDirectionTypeSideVertical: 2
 
 
 // Text Button control (Text or "", graphic in button or -1, button image sprite or -1, text alignment, hover color or -1)
@@ -1872,6 +1889,24 @@ GMUI_ControlSetButton("", -1, -1, -1);
 ///GMUI_DisableNavigation()
 ///Disable the ability to tab or navigate controls
 ///@function GMUI_DisableNavigation() {
+
+if (global.GMUIii > 0) {
+
+    GMUIEnableMouseNav = false;
+    GMUIEnableControllerNav = false;
+}
+else {
+
+    global.GMUIEnableMouseNav = false;
+    global.GMUIEnableControllerNav = false;
+}
+    
+///@}
+
+#define GMUI_DisableTabbing
+///GMUI_DisableTabbing()
+///Disable the ability to tab to the next control
+///@function GMUI_DisableTabbing() {
 var _set;
 
 if (global.GMUIii > 0)
@@ -1880,12 +1915,43 @@ else
     global.GMUIEnableTabbing = false;
 ///@}
 
+#define GMUI_EnableAutoInputSwitch
+///GMUI_EnableAutoInputSwitch()
+///Disable the ability to tab or navigate controls
+///@function GMUI_EnableAutoInputSwitch() {
+
+if (global.GMUIii > 0) {
+
+    GMUIEnableAutoControllerSwitch = true;
+}
+else {
+
+    global.GMUIEnableAutoControllerSwitch = true;
+}
+
+///@}
+
+#define GMUI_GamepadMapButton
+///GMUI_GamepadMapButton(gamepad number, key type index, gamepad button)
+///Map a key index to a controller button for the indicated gamepad
+///@function GMUI_GamepadMapButton(argument0, argument1, argument2) {
+
+var _controller;
+
+_controller = GMUIminmax(argument0,1,2);
+
+GMUIGamepadButtons[_controller,argument1] = argument2;
+
+
+///@}
+
 #define GMUI_Init
 ///GMUI_Init(Controls Object) Call this initialization script before creating any GMUI interfaces
 //
-// !WARNING! MODIFYING THE GMUI SCRIPTS CAN BREAK FUNCTIONALITY AND CAUSE ERRORS! TRY TO EDIT THE OBJECTS INSTEAD!
+// !WARNING! MODIFYING THE GMUI SCRIPTS CAN BREAK FUNCTIONALITY AND CAUSE ERRORS!
+//          ONLY MODIFY OBJECTS AND CALL GMUI SCRIPTS WHERE POSSIBLE TO CHANGE VALUES!
 //
-// Copyright 2017-2020 Alert Studios (Mark Palnau). Initially designed by Alert Studios and released as Open-Source.
+// Copyright 2017-2021 Alert Studios (Mark Palnau). Initially designed by Alert Studios and released as Open-Source.
 //
 // If you would like to help make GMUI better, please submit a ticket or pull request on the project on GitHub!
 // https://github.com/AlertStudios/GMUI-Framework
@@ -1897,6 +1963,7 @@ else
 global.GMUIii = 0;
 
 // CALL DEFAULT SCRIPTS:
+// CALL THESE
 // EACH SHOULD CHECK FOR iid > 0. If 0, set global value otherwise set local
 GMUI_SetConfirmKey(vk_enter);
 GMUI_SetControlObject(argument0);
@@ -2070,18 +2137,22 @@ else
 ///@}
 
 #define GMUI_SetKeyNavigation
-///GMUI_SetKeyNavigation(direction that navigates, back key, forward key, alternate back key [or -1], alternate forward key [or -1], allow tab key)
+///GMUI_SetKeyNavigation(direction that navigates, back key, forward key, alternate back key [or -1], alternate forward key [or -1], tab key [or -1 for tab])
 ///Set the controls that can navigate through the list
 // Called by the GMUI instance in the form or otherwise
 ///@function GMUI_SetKeyNavigation(argument0, argument1, argument2, argument3, argument4, argument5) {
 
-var _navdir, _back, _forward, _backalt, _forwardalt, _allowtab;
+var _navdir, _back, _forward, _backalt, _forwardalt, _tab;
 _navdir = GMUIminmax(argument0,0,2); // 3 and 2 count as the same
 _back = argument1;
 _forward = argument2;
 _backalt = argument3;
 _forwardalt = argument4;
-_allowtab = argument5;
+
+if (argument5 <= 1)
+    _tab = vk_tab;
+else
+    _tab = argument5;
 
 if (global.GMUIii > 0) {
     GMUIEnableTabbing = true;
@@ -2090,7 +2161,7 @@ if (global.GMUIii > 0) {
     GMUI_forwardKey = _forward;
     GMUI_backAltKey = _backalt;
     GMUI_forwardAltKey = _forwardalt;
-    GMUI_enableTab = _allowtab;
+    GMUI_tabbingKey = _tab;
 }
 else {
     global.GMUIEnableTabbing = true;
@@ -2099,9 +2170,48 @@ else {
     global.GMUI_forwardKey = _forward;
     global.GMUI_backAltKey = _backalt;
     global.GMUI_forwardAltKey = _forwardalt;
-    global.GMUI_enableTab = _allowtab;
+    global.GMUI_tabbingKey = _tab;
 }
 
+///@}
+
+#define GMUI_SetGamepadDefaults
+///GMUI_SetGamepadDefaults(1 or 2 controllers to set, if available)
+///Set the default mapping for gamepad inputs
+// Called by the GMUI instance in the form or otherwise
+///@function GMUI_SetGamepadDefaults(argument0) {
+
+var _controllers,_i;
+_controllers = floor(GMUIminmax(argument0,1,2));
+
+// Setup controller defaults for GMS and GM8
+GMUI_StudioGamepad();
+
+GMUIGamepadMode = false;
+GMUIGamepads = _controllers;
+GMUIGamepadButtons[0,0] = 0;
+
+for (_i = 1; _i <= _controllers; _i+=1) {
+
+    GMUIGamepadButtons[_i,gmuigp_up] = gmuigp_up;
+    GMUIGamepadButtons[_i,gmuigp_right] = gmuigp_right;
+    GMUIGamepadButtons[_i,gmuigp_down] = gmuigp_down;
+    GMUIGamepadButtons[_i,gmuigp_left] = gmuigp_left;
+    GMUIGamepadButtons[_i,gmuigp_accept] = gmuigp_accept;
+    GMUIGamepadButtons[_i,gmuigp_cancel] = gmuigp_cancel;
+    
+}
+
+///@}
+
+#define GMUI_SetGhosting
+///GMUI_SetGhosting(steps)
+///default: 1
+
+///@function GMUI_SetGhosting(argument0) {
+
+if (is_real(argument0))
+    GMUIRedrawSteps = max(1,ceil(argument0));
 ///@}
 
 #define GMUI_SetLayerDepths
@@ -2126,6 +2236,46 @@ layerDepth_menus = layerDepth_messages - 1;
 
 // Pop-ups show over menus, windows, messages, and layers (each menu may have tooltips or other objects)
 // Warnings are for anything from menus to popups or anything
+
+
+
+///@}
+
+#define GMUI_SetNavigation
+///GMUI_SetNavigation(use keyboard[bool], use gamepad[bool], autoswitch [bool], nav direction [GMUIDirection])
+///
+///
+
+///@function GMUI_SetNavigation(argument0,argument1,argument2,argument3) {
+
+var _set;
+
+if (global.GMUIii > 0)
+    _set = id;
+else
+    _set = global;
+    
+if (argument0 > 0)
+    (_set).GMUIEnableMouseNav = true;
+else
+    (_set).GMUIEnableMouseNav = false;
+    
+if (argument1 > 0)
+    (_set).GMUIEnableControllerNav = true;
+else
+    (_set).GMUIEnableControllerNav = false;
+    
+if (argument2 > 0)
+    (_set).GMUIEnableAutoControllerSwitch = true;
+else
+    (_set).GMUIEnableAutoControllerSwitch = false;
+    
+if (argument3 > global.GMUIDirectionTypeBoth)
+    (_set).GMUI_navigateDirection = global.GMUIDirectionTypeBoth;
+else if (argument3 < global.GMUIDirectionTypeNone)
+    (_set).GMUI_navigateDirection = global.GMUIDirectionTypeNone;
+else
+    (_set).GMUI_navigateDirection = argument3;
 
 
 
@@ -2163,23 +2313,35 @@ else {
 ///Called from the initialization of each GMUI interface.
 ///@function GMUI_Settings() {
 
+// DO NOT MODIFY VALUES HERE! CALL GMUI CONFIG SCRIPTS BEFORE OR IN CONTROL DEFAULTS //
+
+
 // Required: Flexibility to add graphical effects settings to the controls:
 // (currently unused)
 var basic, good, best; basic = 0; good = 1; best = 2;
 graphicsSetting = best;
 
-// Required: Other specific functionality settings that can be turned off if unwanted
-GMUIRemoveExtraDecimalZeros = true;     // Trim extra zeroes in decimal-type controls
-GMUIEnableTabbing = true;               // Tab key will advance to the next control             
+// Ghosting redraw: Number of extra redraw steps to avoid ghosting with surfaces
+GMUIRedrawSteps = 1;
 
-// Required: Show a pop-up of the GMUI error message when it happens (default: false)
+// Navigation Options
+GMUIEnableMouseNav = true;
+GMUIEnableControllerNav = true;
+GMUIEnableAutoControllerSwitch = false;
+
+// Tab key will advance to the next control
+GMUIEnableTabbing = true;
+
+// Default input trim of extra zeros in decimal-type controls
+GMUIRemoveExtraDecimalZeros = true;
+
+// Show a pop-up of the GMUI error message when it happens (default: false)
 PopUpGMUIError = false;
 
-// Required: Clear mouse actions when interacting with GMUI instances (default: false)
+// Clear mouse actions when interacting with GMUI instances (default: false)
 CaptureMouseEvents = false;
 
-
-// Required: Allow setting debug data for testing
+// Allow setting debug data for testing
 DebugData = false;
 
 ///@}
@@ -2395,7 +2557,7 @@ return (-_c)/2 * (cos(pi*_t/_d) - 1) + _b;
 ///easeLinear(t,b,c,d) where t is current time, b is start value, c is change in value, and d is duration
 ///@function easeLinear(argument0,argument1,argument2,argument3) {
 
-var _t,_tt,_b,_c,_d, _p,_s;
+var _t,_b,_c,_d;
 _t = argument0;
 _b = argument1;
 _c = argument2;
@@ -3990,6 +4152,7 @@ if (argument0 == true) {
         
         
     // Draw the control based on the type and user-defined settings
+    repeat(GMUIP.GMUIRedrawSteps) {
     if (NeedsDrawUpdate > 0) {
         var padx;
         padx = ControlPaddingX;
@@ -4146,7 +4309,7 @@ if (argument0 == true) {
         
         
         // Draw the text inside of the keyboard string or value
-        var Text, dtx, midHeight;
+        var Text, dtx, dtxi, midHeight;
         if (ControlInput) {
             if (Selected)
                 Text = keyboard_string;
@@ -4189,21 +4352,43 @@ if (argument0 == true) {
         else
             GMUIcolor_alpha(ControlFontColor,_FontAlpha);
             
-        // TEMPORARY SOLUTION FOR DISABLED CONTROLS! :
-        if (Disabled)
-            draw_set_alpha(_FontAlpha / 2);
+        // Default visual if control is disabled
+        if (Disabled) {
+            if (DisableActionScript = -1)
+                draw_set_alpha(_FontAlpha / 2);
+            else
+                script_execute(DisableActionScript);
+        }
             
         // Button with graphic inside
         if (ControlDataType == global.GMUIDataTypeButton) {
-            if (sprite_exists(ControlButtonGraphic)) {
-                draw_sprite_ext(ControlButtonGraphic,0,dtx, RoomY + midHeight,1,1,0,c_white,_SpriteAlpha);
-                dtx += sprite_get_width(ControlButtonGraphic) + padx;
+            if (sprite_exists(ControlButtonIcon)) {
+                if (Text != "") {
+                    if (ControlFontAlign == fa_center)
+                        dtxi = dtx - padx/2 - string_width(Text)/2 - sprite_get_width(ControlButtonIcon)/2 + sprite_get_xoffset(ControlButtonIcon);
+                    else if (ControlFontAlign == fa_right)
+                        dtxi = dtx - padx - string_width(Text) - sprite_get_width(ControlButtonIcon) + sprite_get_xoffset(ControlButtonIcon);
+                    else
+                        dtxi = dtx + sprite_get_xoffset(ControlButtonIcon);
+
+                }
+                
+                draw_sprite_ext(ControlButtonIcon,0,
+                dtxi,
+                RoomY + midHeight,
+                1,1,0,c_white,_SpriteAlpha);
+                
+                if (ControlFontAlign == fa_center)
+                    dtx += sprite_get_width(ControlButtonIcon)/2 + padx/2;
+                else if (ControlFontAlign == fa_left)
+                    dtx += sprite_get_width(ControlButtonIcon) + padx;
             }
         }
         
         // Draw value string or button text
         if (Text != "") {
             if (ControlShowValue) {
+            
                 if (ControlInteraction && ControlInput && ControlShowCursor && Selected && !DoubleSelected)
                     Text = Text + "|";
                     
@@ -4277,14 +4462,19 @@ if (argument0 == true) {
             
             draw_rectangle(cx1 + 1,cy3 + 1,cx1+_sbw - 1,cy3+_sbc.Scrollbar_height - 1, 0);
         }
+        
+    }    
     }
     
     // Reset the surface if using one, draw the group if needed
     if (GMUIP.UIEnableSurfaces) {
         GMUIsurface_reset();
+        var testt,m,ff,ffo; testt = false;ff=0;
         if (Group > 0 && GMUIP.GMUI_groupDrawingControl[Layer,Group] == id && (NeedsDrawUpdate > 0 || NeedsGroupUpdate > 0)) {
             if (surface_exists(GMUIP.GMUI_groupSurface[Layer,Group])) {
+                
                 GMUIP.GMUI_gridSurface[Layer] = GMUIsurface_target(GMUIP.GMUI_gridSurface[Layer], GMUIP.UIgridwidth, GMUIP.UIgridheight);
+                
                 draw_surface(GMUIP.GMUI_groupSurface[Layer,Group],
                     //0,global.showsurface,surface_get_width(GMUIP.GMUI_groupSurface[Layer,Group]),surface_get_height(GMUIP.GMUI_groupSurface[Layer,Group])-50+global.showsurface,
                     GMUIP.GMUI_groupActualX[Layer,Group],GMUIP.GMUI_groupActualY[Layer,Group]);
@@ -4639,9 +4829,9 @@ if (!GMUI_IsControl() && id != GMUII())
     ControlButtonText = string(argument0);
     
     if (sprite_exists(argument1))
-        ControlButtonGraphic = argument1;
+        ControlButtonIcon = argument1;
     else
-        ControlButtonGraphic = -1;
+        ControlButtonIcon = -1;
     
     // Uses same alignment as set in font style
     if (argument2 != -1)
@@ -4772,6 +4962,27 @@ if (argument5 >= 0)
     
 
 return true;
+///@}
+
+#define GMUI_ControlSetDisabledDraw
+///GMUI_ControlSetDisabledDraw(Action Script)
+///When disabling, execute script
+///@function GMUI_ControlSetDisabledDraw(argument0) {
+if (!GMUI_IsControl() && id != GMUII())
+{
+    GMUI_ThrowErrorDetailed("Invalid control", GMUI_ControlSetDisabledDraw);
+    return false;
+}
+
+if (script_exists(argument0)) {
+    DisableActionScript = argument0;
+    return true;
+}
+else {
+    GMUI_ThrowErrorDetailed("Invalid script argument", GMUI_ControlSetDisabledDraw);
+}
+
+return false;
 ///@}
 
 #define GMUI_ControlSetFadeOnHide
@@ -5598,7 +5809,7 @@ with (instance_create(0,0,argument0)) {
 ///GMUI_CreateEvent(Form Script, Cell Width, Cell Height)
 ///Called from creation of new GMUI instance for the grid interfaces and variables
 ///@function GMUI_CreateEvent(argument0,argument1,argument2) {
-// // Create grid variables
+
 // Is this already using a GMUI? Assign the instance number as long as its not
 var isOk,G;
 isOk = true;
@@ -5611,10 +5822,8 @@ for (G=1;G<=global.GMUIii;G+=1) {
     
 if (!isOk)
     return 0;
-else {
-    // New ID
+else
     global.GMUIii += 1;
-}
 
 // Define the instance & number running GMUI
 global.GMUIi_id[global.GMUIii] = id;
@@ -5651,6 +5860,9 @@ GMUI_UseSurfaces(global.UIEnableSurfaces);
 
 // Set the default layering depths
 GMUI_SetLayerDepths();
+
+// Set gamepad defaults
+GMUI_SetGamepadDefaults(2);
 
 // Previous values of the mouse to determine if it has moved or not
 mouse_px = 0;
@@ -5701,7 +5913,7 @@ GMUI_backKey = -1;
 GMUI_forwardKey = -1;
 GMUI_backAltKey = -1;
 GMUI_forwardAltKey = -1;
-GMUI_enableTab = true;
+GMUI_tabbingKey = vk_tab;
 
 
 // Map setup for control name keys to instances
@@ -6094,15 +6306,30 @@ if (GMUI_GridEnabled())
     //do grid stuff:
     
     // Assign mouse values here to easily switch out later if needed
-    var MX, MY, GX, inRegion, onDirection, ctrlObject, clickOffEvent, mouseEvent;
+    var MX, MY, GX, inRegion, onDirection, ctrlObject, clickOffEvent, mouseEvent, gamepadButton;
     MX = mouse_x;
     MY = mouse_y;
     GX = 0;
     inRegion = false;
     mouseEvent = true;
+    gamepadButton = GMUI_CheckControllerNav();
     
     // Check if the mouse has moved before checking for any changed selections
-    if (MX != mouse_px || MY != mouse_py) {
+    if (MX != mouse_px || MY != mouse_py || gamepadButton > -1) {
+    
+        // Check a controller/mouse switch
+        if (GMUIEnableAutoControllerSwitch) {
+        
+            if (gamepadButton > -1) {
+                
+                if (!GMUIGamepadMode)
+                    GMUIGamepadMode = true;
+            }
+            else if (GMUIGamepadMode)
+                GMUIGamepadMode = false;
+        }
+    
+    
         // Find if there is a control at that position on the current layer
         ctrlObject = GMUI_GetControlAtPosition(id,MX,MY);
         
@@ -6296,7 +6523,7 @@ if (GMUI_GridEnabled())
                                     _MPos = MY - ctrlObject.ActualY;
                                     _SPos = ctrlObject.Scrollbar_pos_y - ctrlObject.Scrollbar_y + GMUI_grid_y[ctrlObject.Layer] + GMUI_GridViewOffsetY(id)*UIEnableSurfaces;
                                     ctrlObject.Scrollbar_dragging = true;
-                                    draw_text(0,80,string(_MPos) +"-"+string(_SPos));
+                                    //draw_text(0,80,string(_MPos) +"-"+string(_SPos));
                                     if (_MPos >= _SPos && _MPos < _SPos + ctrlObject.Scrollbar_height)
                                         ctrlObject.Scrollbar_drag_y = _MPos - _SPos;
                                     else
@@ -6380,11 +6607,11 @@ if (GMUI_GridEnabled())
     // Any key event will trigger a set value on a selected control in GMUI_ControlDraw; navigate to next...
     if (SelectedControl != -1) {
         if (GMUI_NavigateNextControl(true)) {
-            GMUI_GridNextControl(true);
+            GMUI_GridNextControl(true,true);
             GMUI_GridUpdateLayer(id,GMUI_GetCurrentLayer());
         }
         else if (GMUI_NavigateNextControl(false)) {
-            GMUI_GridNextControl(false);
+            GMUI_GridNextControl(false,true);
             GMUI_GridUpdateLayer(id,GMUI_GetCurrentLayer());
         }
         else if (keyboard_check_pressed(vk_enter)) {
@@ -8164,6 +8391,50 @@ return argument0 * ((GMUII()).cellsize);
 return argument0 * ((GMUII()).cellsize_h);
 ///@}
 
+#define GMUI_CheckControllerNav
+///GMUI_CheckControllerNav
+
+///@function GMUI_CheckControllerNav() {
+
+if (!GMUIEnableControllerNav)
+    return -1;
+else {
+
+    // Check for any input, using the controller mappings
+    var _i, _pov;
+    
+    for (_i = 1; _i <= GMUIGamepads; _i+=1) {
+        
+        if (!joystick_exists(_i))
+            break;
+
+        if (joystick_check_button(_i,GMUIGamepadButtons[_i,gmuigp_accept]))
+            return gmuigp_accept;
+        else if (joystick_check_button(_i,GMUIGamepadButtons[_i,gmuigp_cancel]))
+            return gmuigp_cancel;
+        else {
+        
+            _pov = joystick_pov(_i);
+            
+            if (_pov == 0)
+                return gmuigp_up;
+            else if (_pov == 90)
+                return gmuigp_right;
+            else if (_pov == 180)
+                return gmuigp_down;
+            else if (_pov == 270)
+                return gmuigp_left;
+        }
+            
+    }
+    
+    return -1;
+
+}
+
+
+///@}
+
 #define GMUI_ControlActionScript
 ///GMUI_ControlActionScript(control object) Runs the script assigned to the control, if there is one
 ///@function GMUI_ControlActionScript(argument0) {
@@ -9106,6 +9377,7 @@ i.HoverActionScript = -1;
 i.HoverOffActionScript = -1;
 i.SelectingActionScript = -1;
 i.DeselectActionScript = -1;
+i.DisableActionScript = -1;
 i.ValueChangedActionScript = -1;
 
 // All of these values are set when added ::
@@ -9508,7 +9780,7 @@ with (argument0)
 {
     GMUI_ControlSetButton(
     (GMUII()).ControlButtonText,
-    (GMUII()).ControlButtonGraphic,
+    (GMUII()).ControlButtonIcon,
     (GMUII()).ControlFontAlign,
     (GMUII()).ControlButtonTextHoverColor
     );
@@ -10692,6 +10964,230 @@ GMUI_GridSetRegionsLayer(_Layer);
 return true;
 ///@}
 
+#define GMUI_GridCheckForControls
+///GMUI_GridCheckControls(Direction, CheckForward[bool], CellStart, CellEnd, CurrentSelectedControl[or -1])
+///Look for the next available control with the given direction
+///@function GMUI_GridCheckControls(argument0,argument1,argument2,argument3,argument4) {
+
+var _Dir,_CellFrom,_CellTo,_SelectedControl,_i,_ctrl,_ccell,_fcell;
+_Dir = argument0;
+_Forward = argument1;
+_CellFrom = argument2;
+_CellTo = argument3;
+_SelectedControl = argument4;
+_ctrl = -1;
+_ccell = -1;
+_fcell = -1;
+
+if (_Dir == global.GMUIDirectionTypeHorizontal) {
+    
+    if (_Forward) {
+    
+        if (_SelectedControl > -1) {
+        
+            _ccell = (_SelectedControl).CellX;
+            _fcell = (_SelectedControl).CellY;
+        }
+        
+    
+        for (_i=_CellFrom; _i<=_CellTo; _i+=1;) {
+        
+            _ctrl = GMUI_GridCheckLine(global.GMUIDirectionTypeVertical,_i,_fcell,-1);
+
+            if (_ctrl > -1) {
+        
+                if (GMUI_GridCheckSelectable(_ctrl,global.GMUIDirectionTypeHorizontal,_ccell,-1))
+                    break;
+                else
+                    _ctrl = -1;
+            }
+        }
+    }
+    else {
+    
+        if (_SelectedControl > -1) {
+        
+            _ccell = (_SelectedControl).CellX;
+            _fcell = (_SelectedControl).CellY;
+        }
+    
+        for (_i=_CellFrom; _i>=_CellTo; _i-=1;) {
+    
+            _ctrl = GMUI_GridCheckLine(global.GMUIDirectionTypeVertical,_i,_fcell,-1);
+        
+            if (_ctrl > -1) {
+                    
+                if (GMUI_GridCheckSelectable(_ctrl,global.GMUIDirectionTypeHorizontal,_ccell,-1))
+                    break;
+                else
+                    _ctrl = -1;
+            }
+        }
+    }
+}
+else if (_Dir == global.GMUIDirectionTypeVertical) {
+
+    if (_Forward) {
+    
+        if (_SelectedControl > -1) {
+        
+            _ccell = (_SelectedControl).CellY;
+            _fcell = (_SelectedControl).CellX;
+        }
+    
+        for (_i=_CellFrom; _i<=_CellTo; _i+=1;) {
+        
+            _ctrl = GMUI_GridCheckLine(global.GMUIDirectionTypeHorizontal,_i,_fcell,-1);
+            
+            if (_ctrl > -1) {
+            
+                if (_SelectedControl > -1)
+                    _ccell = (_SelectedControl).CellY;
+                    
+                if (GMUI_GridCheckSelectable(_ctrl,global.GMUIDirectionTypeVertical,_ccell,-1))
+                    break;
+                else
+                    _ctrl = -1;
+            }
+        }
+    }
+    else {
+    
+        if (_SelectedControl > -1) {
+        
+            _ccell = (_SelectedControl).CellY;
+            _fcell = (_SelectedControl).CellX;
+        }
+    
+        for (_i=_CellFrom; _i>=_CellTo; _i-=1;) {
+        
+            _ctrl = GMUI_GridCheckLine(global.GMUIDirectionTypeHorizontal,_i,_fcell,-1);
+            
+            if (_ctrl > -1) {
+            
+                if (_SelectedControl > -1)
+                    _ccell = (_SelectedControl).CellY;
+            
+                if (GMUI_GridCheckSelectable(_ctrl,global.GMUIDirectionTypeVertical,_ccell,-1))
+                    break;
+                else
+                    _ctrl = -1;
+            }
+        }
+    }
+}
+else {
+//currently unused
+}
+//show_message('final for DIR' +string(_Dir) +' line ' + string(_CellFrom) + ': ' + string(_ctrl));
+return _ctrl;
+
+
+///@}
+
+#define GMUI_GridCheckLine
+///GMUI_GridCheckLine(Direction, CellsLine, CellFrom, CellsOut[or -1 for end of grid])
+///Returns the first object found in the line from cell to cell
+///@function GMUI_GridCheckLine(argument0,argument1,argument2,argument3) {
+
+
+var _ctrlObject, _GMUII, _startCell, _i, _endCell, _outCell, _horz;
+_GMUII = GMUII();
+_startCell = max(0,argument2);
+_outCell = argument3;
+
+switch (argument0) {
+
+    case global.GMUIDirectionTypeHorizontal:
+        
+        _endCell = (_GMUII).GMUI_grid_w[(_GMUII).UILayer];
+        _horz = true;
+        
+        break;
+        
+    case global.GMUIDirectionTypeSideVertical:
+    case global.GMUIDirectionTypeVertical:
+    
+        _endCell = (_GMUII).GMUI_grid_h[(_GMUII).UILayer];
+        _horz = false;
+        
+        break;
+        
+    default:
+        return -1;
+    
+}
+
+if (_outCell < 0)
+    _outCell = max(_startCell,abs(_endCell - _startCell));
+    
+for (_i=0; _i <= _outCell; _i+= 1) {
+
+    if (_startCell + _i <= _endCell) {
+    
+        if (_horz)
+            _ctrlObject = ds_grid_get((_GMUII).GMUI_grid[(_GMUII).UILayer],_startCell + _i,argument1);
+        else
+            _ctrlObject = ds_grid_get((_GMUII).GMUI_grid[(_GMUII).UILayer],argument1, _startCell + _i);
+    }
+    
+    if (is_real(_ctrlObject))
+        if (_ctrlObject != 0)
+            if (instance_exists(_ctrlObject))
+                return _ctrlObject;
+    
+    if (_i != 0 && _startCell - _i >= 0) {
+    
+        if (_horz)
+            _ctrlObject = ds_grid_get((_GMUII).GMUI_grid[(_GMUII).UILayer],_startCell - _i,argument1);
+        else
+            _ctrlObject = ds_grid_get((_GMUII).GMUI_grid[(_GMUII).UILayer],argument1, _startCell - _i);
+    }
+    
+    if (is_real(_ctrlObject))
+        if (_ctrlObject != 0)
+            if (instance_exists(_ctrlObject))
+                return _ctrlObject;
+
+}
+
+return -1;
+
+
+///@}
+
+#define GMUI_GridCheckSelectable
+///GMUI_GridCheckSelectable(Control, Direction, Ignore Cell [or -1], Ignore Cell Max [or -1])
+///Returns true if the control is selectable and not within the ignore range
+///@function GMUI_GridCheckSelectable(argument0,argument1,argument2,argument3) {
+
+var _ctrl; _ctrl = argument0;
+
+if (_ctrl > -1 && (_ctrl.GMUIP).SelectedControl != _ctrl) {
+
+    if (_ctrl.Disabled || _ctrl.NonClickable || _ctrl.Hidden)
+        return false;
+        
+    else if (argument2 <= -1)
+        return true;
+        
+    else if (argument1 == global.GMUIDirectionTypeHorizontal && 
+        (_ctrl.CellX == argument2 || (argument3 >= 0 && _ctrl.CellX > argument2 && _ctrl.CellX <= argument3)))
+        return false;
+        
+    else if (argument1 == global.GMUIDirectionTypeVertical && 
+        (_ctrl.CellY == argument2 || (argument3 >= 0 && _ctrl.CellY > argument2 && _ctrl.CellY <= argument3)))
+        return false;
+        
+    else
+        return true;
+
+}
+else
+    return false;
+
+///@}
+
 #define GMUI_GridDrawGroups
 ///GMUI_GridDrawGroups(GMUI instance)
 ///Draws the groups if set to do so
@@ -10912,58 +11408,210 @@ return ds_grid_width((argument0).GMUI_grid[argument1]);
 ///@}
 
 #define GMUI_GridNextControl
-///GMUI_GridNextControl(next control /or previous: false)
+///GMUI_GridNextControl(next control /or previous: false, WrapAroundLayer[bool])
 ///Changes the selected control to the next control in the list by ID
-///@function GMUI_GridNextControl(argument0) {
+///@function GMUI_GridNextControl(argument0,argument1) {
 
 // Select the first control if none are selected, otherwise pull the next ID
-var ctrlIndex,ctrl,i;
-if ((GMUII()).SelectedControl != -1) {
-    ctrlIndex = ds_list_find_index((GMUII()).GMUI_controlList,(GMUII()).SelectedControl);
-    if (ctrlIndex < 0)
-        ctrlIndex = 0;
-}
-else
-    ctrlIndex = 0;
+var _GMUII,_ctrlIndex,_ctrl,_i,_forward,_CellFrom,_CellTo;
+_GMUII = GMUII();
+_ctrl = -1;
+_ctrlIndex = -1;
+_forward = argument0;
+_CellFrom = -1;
+    
 
-GMUI_ResetControlStatus("Selected",GMUII());
-if (argument0) {
-    if (ctrlIndex == ds_list_size((GMUII()).GMUI_controlList)) {
-        ctrlIndex = 0;
+if ((_GMUII).GMUI_navigateDirection != global.GMUIDirectionTypeNone) {
+    
+    if ((_GMUII).GMUI_navigateDirection == global.GMUIDirectionTypeHorizontal) {
+        
+        _CellTo = (_GMUII).GMUI_grid_w[(_GMUII).UILayer];
+        _CellFrom = min(((_GMUII).SelectedControl).CellX+1,_CellTo);
+    }
+    else if ((_GMUII).GMUI_navigateDirection == global.GMUIDirectionTypeVertical) {
+        
+        _CellTo = (_GMUII).GMUI_grid_h[(_GMUII).UILayer];
+        _CellFrom = min(((_GMUII).SelectedControl).CellY+1,_CellTo);
+    }
+
+    if (_CellFrom > -1) {
+        
+        if (_forward)
+            _ctrl = GMUI_GridCheckForControls((_GMUII).GMUI_navigateDirection,true,_CellFrom,_CellTo,(_GMUII).SelectedControl);
+        else
+            _ctrl = GMUI_GridCheckForControls((_GMUII).GMUI_navigateDirection,false,_CellFrom,0,(_GMUII).SelectedControl);
+        
+        if (_ctrl == -1 && argument1) {
+        
+            if (_forward)
+                _ctrl = GMUI_GridCheckForControls((_GMUII).GMUI_navigateDirection,true,0,max(0,_CellFrom-1),(_GMUII).SelectedControl);
+            else
+                _ctrl = GMUI_GridCheckForControls((_GMUII).GMUI_navigateDirection,false,_CellTo,max(0,_CellFrom-1),(_GMUII).SelectedControl);
+        }
     }
     else {
-        ctrlIndex += 1;
+        // Both directions - Switch between horizontal and vertical
+        var _CellMin,_CellMax,_Ignore; 
+        
+        if (_forward) {
+        
+            _CellMin = min(min(((_GMUII).SelectedControl).CellX+1,(_GMUII).GMUI_grid_w[(_GMUII).UILayer]),min(((_GMUII).SelectedControl).CellY+1,(_GMUII).GMUI_grid_h[(_GMUII).UILayer]));
+            _CellMax = max((_GMUII).GMUI_grid_w[(_GMUII).UILayer],(_GMUII).GMUI_grid_h[(_GMUII).UILayer]);
+        
+            for (_i=_CellMin; _i<=_CellMax; _i+=1;) {
+            
+                _CellTo = (_GMUII).GMUI_grid_w[(_GMUII).UILayer];
+            
+                if (_i <= _CellTo && _i >= min(((_GMUII).SelectedControl).CellX+1,_CellTo))                
+                    _ctrl = GMUI_GridCheckForControls(global.GMUIDirectionTypeHorizontal,true,_i,_i,-1);
+                
+                if (_ctrl > -1)
+                    break;
+                
+                _CellTo = (_GMUII).GMUI_grid_h[(_GMUII).UILayer];
+                    
+                if (_i <= _CellTo && _i >= min(((_GMUII).SelectedControl).CellY+1,_CellTo))
+                    _ctrl = GMUI_GridCheckForControls(global.GMUIDirectionTypeVertical,true,_i,_i,-1);
+                
+                if (_ctrl > -1)
+                    break;
+            }
+            
+            if (_ctrl == -1 && argument1) {
+            
+                _CellMax = max(min(((_GMUII).SelectedControl).CellX+1,(_GMUII).GMUI_grid_w[(_GMUII).UILayer]),min(((_GMUII).SelectedControl).CellY+1,(_GMUII).GMUI_grid_h[(_GMUII).UILayer]));
+                
+                for (_i=0; _i<=_CellMax; _i+=1;) {
+                
+                    _CellTo = min(((_GMUII).SelectedControl).CellX+1,(_GMUII).GMUI_grid_w[(_GMUII).UILayer]);
+                
+                    if (_i <= _CellTo)                
+                        _ctrl = GMUI_GridCheckForControls(global.GMUIDirectionTypeHorizontal,true,_i,_i,-1);
+                    
+                    if (_ctrl > -1)
+                        break;
+                    
+                    _CellTo = min(((_GMUII).SelectedControl).CellY+1,(_GMUII).GMUI_grid_h[(_GMUII).UILayer]);
+                        
+                    if (_i <= _CellTo)
+                        _ctrl = GMUI_GridCheckForControls(global.GMUIDirectionTypeVertical,true,_i,_i,-1);
+                    
+                    if (_ctrl > -1)
+                        break;
+                }
+            }
+        }
+        else {
+        
+            _CellMax = max(min(((_GMUII).SelectedControl).CellX+1,(_GMUII).GMUI_grid_w[(_GMUII).UILayer]),min(((_GMUII).SelectedControl).CellY+1,(_GMUII).GMUI_grid_h[(_GMUII).UILayer]));
+            //_CellMax = max((_GMUII).GMUI_grid_w[(_GMUII).UILayer],(_GMUII).GMUI_grid_h[(_GMUII).UILayer]);
+        
+            for (_i=_CellMax; _i>= 0; _i-=1;) {
+            
+                _CellTo = min(((_GMUII).SelectedControl).CellX+1,(_GMUII).GMUI_grid_w[(_GMUII).UILayer]);
+            
+                if (_i <= _CellTo && _i >= 0)              
+                    _ctrl = GMUI_GridCheckForControls(global.GMUIDirectionTypeHorizontal,true,_i,_i,-1);
+                
+                if (_ctrl > -1)
+                    break;
+                
+                _CellTo = min(((_GMUII).SelectedControl).CellY+1,(_GMUII).GMUI_grid_h[(_GMUII).UILayer]);
+                    
+                if (_i <= _CellTo && _i >= 0)
+                    _ctrl = GMUI_GridCheckForControls(global.GMUIDirectionTypeVertical,true,_i,_i,-1);
+                
+                if (_ctrl > -1)
+                    break;
+            }
+            
+            if (_ctrl == -1 && argument1) {
+            
+                _CellMin = min(min(((_GMUII).SelectedControl).CellX+1,(_GMUII).GMUI_grid_w[(_GMUII).UILayer]),min(((_GMUII).SelectedControl).CellY+1,(_GMUII).GMUI_grid_h[(_GMUII).UILayer]));
+                _CellMax = max((_GMUII).GMUI_grid_w[(_GMUII).UILayer],(_GMUII).GMUI_grid_h[(_GMUII).UILayer]);
+                
+                for (_i=_CellMax; _i>=_CellMin; _i-=1;) {
+                
+                    _CellTo = (_GMUII).GMUI_grid_w[(_GMUII).UILayer];
+                
+                    if (_i <= _CellTo && _i >= min(((_GMUII).SelectedControl).CellX+1,_CellTo))                
+                        _ctrl = GMUI_GridCheckForControls(global.GMUIDirectionTypeHorizontal,true,_i,_i,-1);
+                    
+                    if (_ctrl > -1)
+                        break;
+                    
+                    _CellTo = (_GMUII).GMUI_grid_h[(_GMUII).UILayer];
+                        
+                    if (_i <= _CellTo && _i >= min(((_GMUII).SelectedControl).CellY+1,_CellTo))
+                        _ctrl = GMUI_GridCheckForControls(global.GMUIDirectionTypeVertical,true,_i,_i,-1);
+                    
+                    if (_ctrl > -1)
+                        break;
+                }
+            }
+        }
     }
+    
+    
+    if (_ctrl > -1) {
+
+        GMUI_ResetControlStatus("Selected",_GMUII);
+        GMUI_GridSelect(_ctrl);
+        return true;
+    }
+
 }
 else {
-    if (ctrlIndex == 0)
-        ctrlIndex = ds_list_size((GMUII()).GMUI_controlList);
-    else
-        ctrlIndex -= 1;
-}
 
-i=0;
-while (i < ds_list_size((GMUII()).GMUI_controlList)) {
-    ctrl = ds_list_find_value((GMUII()).GMUI_controlList,ctrlIndex);
-    if (ctrl > 0 && instance_exists(ctrl)) {
-        if ((!ctrl.Disabled) && (!ctrl.NonClickable) && (!ctrl.Hidden)) {
-            GMUI_GridSelect(ctrl);
-            return true;
-        }
+    if ((_GMUII).SelectedControl != -1) {
+        _ctrlIndex = ds_list_find_index((_GMUII).GMUI_controlList,(_GMUII).SelectedControl);
+        if (_ctrlIndex < 0)
+            _ctrlIndex = 0;
     }
+    else
+        _ctrlIndex = 0;
+    
+    GMUI_ResetControlStatus("Selected",_GMUII);
+    
     if (argument0) {
-        ctrlIndex += 1;
-        if (ctrlIndex > ds_list_size((GMUII()).GMUI_controlList)) {
-            ctrlIndex = -1;
+        if (_ctrlIndex == ds_list_size((_GMUII).GMUI_controlList)) {
+            _ctrlIndex = 0;
+        }
+        else {
+            _ctrlIndex += 1;
         }
     }
     else {
-        ctrlIndex -= 1;
-        if (ctrlIndex < 0) {
-            ctrlIndex = ds_list_size((GMUII()).GMUI_controlList);
-        }
+        if (_ctrlIndex == 0)
+            _ctrlIndex = ds_list_size((_GMUII).GMUI_controlList);
+        else
+            _ctrlIndex -= 1;
     }
-    i += 1;
+    
+    i=0;
+    while (i < ds_list_size((_GMUII).GMUI_controlList)) {
+        _ctrl = ds_list_find_value((_GMUII).GMUI_controlList,_ctrlIndex);
+        if (_ctrl > 0 && instance_exists(_ctrl)) {
+            if ((!_ctrl.Disabled) && (!_ctrl.NonClickable) && (!_ctrl.Hidden)) {
+                GMUI_GridSelect(_ctrl);
+                return true;
+            }
+        }
+        if (argument0) {
+            _ctrlIndex += 1;
+            if (_ctrlIndex > ds_list_size((_GMUII).GMUI_controlList)) {
+                _ctrlIndex = -1;
+            }
+        }
+        else {
+            _ctrlIndex -= 1;
+            if (_ctrlIndex < 0) {
+                _ctrlIndex = ds_list_size((_GMUII).GMUI_controlList);
+            }
+        }
+        i += 1;
+    }
+    
 }
 
 
@@ -11238,7 +11886,7 @@ with (argument0) {
             }
             else if (GMUI_ControlIsInLayer(_ctrl,_Layer)) {
                 if (!_ctrl.Hidden)
-                    _ctrl.NeedsDrawUpdate = 1;
+                    _ctrl.NeedsDrawUpdate = 1;//GMUIRedrawSteps;
             }
         }
         
@@ -11249,10 +11897,10 @@ with (argument0) {
             if (GMUI_StudioCheckDefined(_g)) {
 //            if (sg > 0){
 //                if (GMUI_groupMasterControl[_Layer,_g] < sg)
-                (GMUI_groupMasterControl[_Layer,_g]).NeedsGroupUpdate = 1;
+                (GMUI_groupMasterControl[_Layer,_g]).NeedsGroupUpdate = 1;//GMUIRedrawSteps;
                 
 //                if (GMUI_groupDrawingControl[_Layer,_g] < sg)
-                (GMUI_groupDrawingControl[_Layer,_g]).NeedsGroupUpdate = 1;
+                (GMUI_groupDrawingControl[_Layer,_g]).NeedsGroupUpdate = 1;//GMUIRedrawSteps;
 //            }
             }
         }
@@ -11648,7 +12296,7 @@ return false;
 //
 
 // THIS SCRIPT ONLY RUNS IN GM:STUDIO:
-/*
+/*@@@
 ///@function GMUI_InitStudio() {
 global.GMUIGameMaker8 = false;
 
@@ -11689,10 +12337,12 @@ enum GMUIAnchor {
 }
 
 enum GMUIDirection {
+    None = -1, //global.GMUIDirectionTypeNone
     Horizontal = 0, //global.GMUIDirectionTypeHorizontal
     Vertical = 1, //global.GMUIDirectionTypeVertical
     SideVertical = 2, //global.GMUIDirectionTypeSideVertical
     Both = 3 //global.GMUIDirectionTypeBoth
+    
 }
 
 enum GMUIPopup {
@@ -11724,8 +12374,9 @@ enum GMUIOverflow {
     Resize = 1, //global.GMUIOverflowResize
     Scroll = 2 //global.GMUIOverflowScroll
 }
+
 ///@}
-*/
+@@@*/
 
 
 #define GMUI_IsControl
@@ -11933,14 +12584,40 @@ return global.GMUIHoveringDirection_None;
 
 #define GMUI_NavigateNextControl
 ///GMUI_NavigateNextControl(check for next control [true] or previous [false])
-///Check for the keys to change control selection
+///Check for the keys or controller to change control selection
 ///@function GMUI_NavigateNextControl(argument0) {
 
-if (keyboard_check_pressed(vk_anykey)) {
-    // Next control
-    if (argument0 >= 1) {
-        if (GMUI_enableTab) {
-            if (keyboard_check_pressed(vk_tab))
+if (GMUIGamepadMode) {
+    
+    var _button;
+    
+    _button = GMUI_CheckControllerNav();
+    
+    if (_button > -1 && GMUI_navigateDirection > global.GMUIDirectionTypeNone) {
+    
+        if (GMUI_navigateDirection > global.GMUIDirectionTypeHorizontal) {
+        
+            if (argument0 && _button == gmuigp_down)
+                return true;
+            else if (!argument0 && _button == gmuigp_up)
+                return true;
+        }
+        else {
+            
+            if (argument0 && _button == gmuigp_right)
+                return true;
+            else if (!argument0 && _button == gmuigp_left)
+                return true;
+        }
+    }
+
+}
+else if (keyboard_check_pressed(vk_anykey)) {
+    
+    if (argument0) {
+        // Next control
+        if (GMUIEnableTabbing) {
+            if (keyboard_check_pressed(GMUI_tabbingKey))
                 return true;
         }
         
@@ -11954,7 +12631,7 @@ if (keyboard_check_pressed(vk_anykey)) {
         }
     }
     else {
-    // Previous control
+        // Previous control
         if (GMUI_backKey != -1) {
             if (keyboard_check_pressed(GMUI_backKey))
                 return true;
@@ -12100,6 +12777,69 @@ if (global.GMUIGameMaker8)
 
 ///@}
 
+#define GMUI_StudioGamepad
+///GMUI_StudioGamepad()
+///Set the default variables for gamepad inputs, overriding with studio constants if using studio
+///@function GMUI_StudioGamepad() {
+
+gmuigp_up_pressed = false;
+gmuigp_up = 0;
+gmuigp_down_pressed = false;
+gmuigp_down = 180;
+gmuigp_right_pressed = false;
+gmuigp_right = 90;
+gmuigp_left_pressed = false;
+gmuigp_left = 270;
+gmuigp_nodirection = -1;
+
+gmuigp_accept_pressed = false;
+gmuigp_accept = 4; // A
+gmuigp_cancel_pressed = false;
+gmuigp_cancel = 2; // B
+
+
+
+/*@@@
+
+gmuigp_up = gp_padu;
+gmuigp_down = gp_padd;
+gmuigp_right = gp_padr;
+gmuigp_left = gp_padl;
+
+gmuigp_accept = gp_face4;
+gmuigp_cancel = gp_face2;
+
+
+@@@*/
+
+///@}
+
+/*@@@
+/// Compatibility functions
+
+///@function joystick_check_button(controller, button) {
+
+    return gamepad_button_check(controller, button);
+    
+///@}
+
+///@function joystick_pov(controller) {
+
+    if (gamepad_button_check(controller, gmuigp_up))
+        return 0;
+    else if (gamepad_button_check(controller, gmuigp_right))
+        return 90;
+    else if (gamepad_button_check(controller, gmuigp_down))
+        return 180;
+    else if (gamepad_button_check(controller, gmuigp_left))
+        return 270;
+    else
+        	return -1;
+
+}
+
+@@@*/
+
 #define GMUI_SurfaceResize
 ///GMUI_SurfaceResize(GMUI instance, Surface target, Width, Height)
 ///Resizes the surface only after the UI is set. Return is only for reference if needed.
@@ -12176,6 +12916,10 @@ for(i=0;i<ds_list_size((_GMUII).GMUI_groupControlList[_LayerNumber,_MenuNumber])
 
 (GMUII()).GMUI_ErrorNumber += 1;
 (GMUII()).GMUI_Error[(GMUII()).GMUI_ErrorNumber] = string(argument0);
+
+/*@@@
+show_debug_message("GMUI: " + GMUI_LastError());
+@@@*/
 
 if ((GMUII()).PopUpGMUIError) {
     show_message(GMUI_LastError());

@@ -345,6 +345,11 @@ if (argument0 == true) {
             }
         }
         
+        if (GMUIP.ControlLayerRedraw == id) {
+            GMUI_GridUpdateLayer(GMUIP,Layer);
+            GMUIP.ControlLayerRedraw = -1;
+        }
+        
         // Create surfaces for controls that use them first, and later draw to grid
         if (NeedsDrawUpdate > 0 || NeedsGroupUpdate > 0) {
             if (ControlType == "selectlist") {
@@ -422,6 +427,7 @@ if (argument0 == true) {
         
         
     // Draw the control based on the type and user-defined settings
+    repeat(GMUIP.GMUIRedrawSteps) {
     if (NeedsDrawUpdate > 0) {
         var padx;
         padx = ControlPaddingX;
@@ -578,7 +584,7 @@ if (argument0 == true) {
         
         
         // Draw the text inside of the keyboard string or value
-        var Text, dtx, midHeight;
+        var Text, dtx, dtxi, midHeight;
         if (ControlInput) {
             if (Selected)
                 Text = keyboard_string;
@@ -621,21 +627,43 @@ if (argument0 == true) {
         else
             GMUIcolor_alpha(ControlFontColor,_FontAlpha);
             
-        // TEMPORARY SOLUTION FOR DISABLED CONTROLS! :
-        if (Disabled)
-            draw_set_alpha(_FontAlpha / 2);
+        // Default visual if control is disabled
+        if (Disabled) {
+            if (DisableActionScript = -1)
+                draw_set_alpha(_FontAlpha / 2);
+            else
+                script_execute(DisableActionScript);
+        }
             
         // Button with graphic inside
         if (ControlDataType == global.GMUIDataTypeButton) {
-            if (sprite_exists(ControlButtonGraphic)) {
-                draw_sprite_ext(ControlButtonGraphic,0,dtx, RoomY + midHeight,1,1,0,c_white,_SpriteAlpha);
-                dtx += sprite_get_width(ControlButtonGraphic) + padx;
+            if (sprite_exists(ControlButtonIcon)) {
+                if (Text != "") {
+                    if (ControlFontAlign == fa_center)
+                        dtxi = dtx - padx/2 - string_width(Text)/2 - sprite_get_width(ControlButtonIcon)/2 + sprite_get_xoffset(ControlButtonIcon);
+                    else if (ControlFontAlign == fa_right)
+                        dtxi = dtx - padx - string_width(Text) - sprite_get_width(ControlButtonIcon) + sprite_get_xoffset(ControlButtonIcon);
+                    else
+                        dtxi = dtx + sprite_get_xoffset(ControlButtonIcon);
+
+                }
+                
+                draw_sprite_ext(ControlButtonIcon,0,
+                dtxi,
+                RoomY + midHeight,
+                1,1,0,c_white,_SpriteAlpha);
+                
+                if (ControlFontAlign == fa_center)
+                    dtx += sprite_get_width(ControlButtonIcon)/2 + padx/2;
+                else if (ControlFontAlign == fa_left)
+                    dtx += sprite_get_width(ControlButtonIcon) + padx;
             }
         }
         
         // Draw value string or button text
         if (Text != "") {
             if (ControlShowValue) {
+            
                 if (ControlInteraction && ControlInput && ControlShowCursor && Selected && !DoubleSelected)
                     Text = Text + "|";
                     
@@ -709,14 +737,19 @@ if (argument0 == true) {
             
             draw_rectangle(cx1 + 1,cy3 + 1,cx1+_sbw - 1,cy3+_sbc.Scrollbar_height - 1, 0);
         }
+        
+    }    
     }
     
     // Reset the surface if using one, draw the group if needed
     if (GMUIP.UIEnableSurfaces) {
         GMUIsurface_reset();
+        var testt,m,ff,ffo; testt = false;ff=0;
         if (Group > 0 && GMUIP.GMUI_groupDrawingControl[Layer,Group] == id && (NeedsDrawUpdate > 0 || NeedsGroupUpdate > 0)) {
             if (surface_exists(GMUIP.GMUI_groupSurface[Layer,Group])) {
+                
                 GMUIP.GMUI_gridSurface[Layer] = GMUIsurface_target(GMUIP.GMUI_gridSurface[Layer], GMUIP.UIgridwidth, GMUIP.UIgridheight);
+                
                 draw_surface(GMUIP.GMUI_groupSurface[Layer,Group],
                     //0,global.showsurface,surface_get_width(GMUIP.GMUI_groupSurface[Layer,Group]),surface_get_height(GMUIP.GMUI_groupSurface[Layer,Group])-50+global.showsurface,
                     GMUIP.GMUI_groupActualX[Layer,Group],GMUIP.GMUI_groupActualY[Layer,Group]);

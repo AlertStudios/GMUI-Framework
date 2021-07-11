@@ -10,6 +10,7 @@
 //
 
 // THIS SCRIPT ONLY RUNS IN GM:STUDIO:
+
 function GMUI_InitStudio() {
 global.GMUIGameMaker8 = false;
 
@@ -50,10 +51,12 @@ enum GMUIAnchor {
 }
 
 enum GMUIDirection {
+    None = -1, //global.GMUIDirectionTypeNone
     Horizontal = 0, //global.GMUIDirectionTypeHorizontal
     Vertical = 1, //global.GMUIDirectionTypeVertical
     SideVertical = 2, //global.GMUIDirectionTypeSideVertical
     Both = 3 //global.GMUIDirectionTypeBoth
+    
 }
 
 enum GMUIPopup {
@@ -85,6 +88,8 @@ enum GMUIOverflow {
     Resize = 1, //global.GMUIOverflowResize
     Scroll = 2 //global.GMUIOverflowScroll
 }
+
 }
+
 
 
