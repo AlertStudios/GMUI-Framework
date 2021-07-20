@@ -12,7 +12,7 @@ with (argument0)
 {
     GMUI_ControlSetButton(
     (GMUII()).ControlButtonText,
-    (GMUII()).ControlButtonGraphic,
+    (GMUII()).ControlButtonIcon,
     (GMUII()).ControlFontAlign,
     (GMUII()).ControlButtonTextHoverColor
     );

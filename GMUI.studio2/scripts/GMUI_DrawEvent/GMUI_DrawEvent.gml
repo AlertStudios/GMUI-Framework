@@ -8,15 +8,30 @@ if (GMUI_GridEnabled())
     //do grid stuff:
     
     // Assign mouse values here to easily switch out later if needed
-    var MX, MY, GX, inRegion, onDirection, ctrlObject, clickOffEvent, mouseEvent;
+    var MX, MY, GX, inRegion, onDirection, ctrlObject, clickOffEvent, mouseEvent, gamepadButton;
     MX = mouse_x;
     MY = mouse_y;
     GX = 0;
     inRegion = false;
     mouseEvent = true;
+    gamepadButton = GMUI_CheckControllerNav();
     
     // Check if the mouse has moved before checking for any changed selections
-    if (MX != mouse_px || MY != mouse_py) {
+    if (MX != mouse_px || MY != mouse_py || gamepadButton > -1) {
+    
+        // Check a controller/mouse switch
+        if (GMUIEnableAutoControllerSwitch) {
+        
+            if (gamepadButton > -1) {
+                
+                if (!GMUIGamepadMode)
+                    GMUIGamepadMode = true;
+            }
+            else if (GMUIGamepadMode)
+                GMUIGamepadMode = false;
+        }
+    
+    
         // Find if there is a control at that position on the current layer
         ctrlObject = GMUI_GetControlAtPosition(id,MX,MY);
         
@@ -210,7 +225,7 @@ if (GMUI_GridEnabled())
                                     _MPos = MY - ctrlObject.ActualY;
                                     _SPos = ctrlObject.Scrollbar_pos_y - ctrlObject.Scrollbar_y + GMUI_grid_y[ctrlObject.Layer] + GMUI_GridViewOffsetY(id)*UIEnableSurfaces;
                                     ctrlObject.Scrollbar_dragging = true;
-                                    draw_text(0,80,string(_MPos) +"-"+string(_SPos));
+                                    //draw_text(0,80,string(_MPos) +"-"+string(_SPos));
                                     if (_MPos >= _SPos && _MPos < _SPos + ctrlObject.Scrollbar_height)
                                         ctrlObject.Scrollbar_drag_y = _MPos - _SPos;
                                     else
@@ -294,11 +309,11 @@ if (GMUI_GridEnabled())
     // Any key event will trigger a set value on a selected control in GMUI_ControlDraw; navigate to next...
     if (SelectedControl != -1) {
         if (GMUI_NavigateNextControl(true)) {
-            GMUI_GridNextControl(true);
+            GMUI_GridNextControl(true,true);
             GMUI_GridUpdateLayer(id,GMUI_GetCurrentLayer());
         }
         else if (GMUI_NavigateNextControl(false)) {
-            GMUI_GridNextControl(false);
+            GMUI_GridNextControl(false,true);
             GMUI_GridUpdateLayer(id,GMUI_GetCurrentLayer());
         }
         else if (keyboard_check_pressed(vk_enter)) {

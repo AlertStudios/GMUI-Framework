@@ -75,8 +75,6 @@ if (_isOpening) {
     }
     
     _newSL.GMUIP.ControlLayerRedraw = _newSL;
-    
-    
 }
 else {
 

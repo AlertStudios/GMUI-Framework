@@ -1,8 +1,9 @@
 ///GMUI_Init(Controls Object) Call this initialization script before creating any GMUI interfaces
 //
-// !WARNING! MODIFYING THE GMUI SCRIPTS CAN BREAK FUNCTIONALITY AND CAUSE ERRORS! TRY TO EDIT THE OBJECTS INSTEAD!
+// !WARNING! MODIFYING THE GMUI SCRIPTS CAN BREAK FUNCTIONALITY AND CAUSE ERRORS!
+//          ONLY MODIFY OBJECTS AND CALL GMUI SCRIPTS WHERE POSSIBLE TO CHANGE VALUES!
 //
-// Copyright 2017-2020 Alert Studios (Mark Palnau). Initially designed by Alert Studios and released as Open-Source.
+// Copyright 2017-2021 Alert Studios (Mark Palnau). Initially designed by Alert Studios and released as Open-Source.
 //
 // If you would like to help make GMUI better, please submit a ticket or pull request on the project on GitHub!
 // https://github.com/AlertStudios/GMUI-Framework
@@ -14,6 +15,7 @@ function GMUI_Init(argument0) {
 global.GMUIii = 0;
 
 // CALL DEFAULT SCRIPTS:
+// CALL THESE
 // EACH SHOULD CHECK FOR iid > 0. If 0, set global value otherwise set local
 GMUI_SetConfirmKey(vk_enter);
 GMUI_SetControlObject(argument0);

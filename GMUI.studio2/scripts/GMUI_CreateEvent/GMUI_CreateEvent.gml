@@ -1,7 +1,7 @@
 ///GMUI_CreateEvent(Form Script, Cell Width, Cell Height)
 ///Called from creation of new GMUI instance for the grid interfaces and variables
 function GMUI_CreateEvent(argument0,argument1,argument2) {
-// // Create grid variables
+
 // Is this already using a GMUI? Assign the instance number as long as its not
 var isOk,G;
 isOk = true;
@@ -14,10 +14,8 @@ for (G=1;G<=global.GMUIii;G+=1) {
     
 if (!isOk)
     return 0;
-else {
-    // New ID
+else
     global.GMUIii += 1;
-}
 
 // Define the instance & number running GMUI
 global.GMUIi_id[global.GMUIii] = id;
@@ -54,6 +52,9 @@ GMUI_UseSurfaces(global.UIEnableSurfaces);
 
 // Set the default layering depths
 GMUI_SetLayerDepths();
+
+// Set gamepad defaults
+GMUI_SetGamepadDefaults(2);
 
 // Previous values of the mouse to determine if it has moved or not
 mouse_px = 0;
@@ -104,7 +105,7 @@ GMUI_backKey = -1;
 GMUI_forwardKey = -1;
 GMUI_backAltKey = -1;
 GMUI_forwardAltKey = -1;
-GMUI_enableTab = true;
+GMUI_tabbingKey = vk_tab;
 
 
 // Map setup for control name keys to instances

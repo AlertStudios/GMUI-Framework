@@ -68,6 +68,7 @@ i.HoverActionScript = -1;
 i.HoverOffActionScript = -1;
 i.SelectingActionScript = -1;
 i.DeselectActionScript = -1;
+i.DisableActionScript = -1;
 i.ValueChangedActionScript = -1;
 
 // All of these values are set when added ::

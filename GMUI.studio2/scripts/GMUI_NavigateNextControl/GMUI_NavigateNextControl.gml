@@ -1,12 +1,38 @@
 ///GMUI_NavigateNextControl(check for next control [true] or previous [false])
-///Check for the keys to change control selection
+///Check for the keys or controller to change control selection
 function GMUI_NavigateNextControl(argument0) {
 
-if (keyboard_check_pressed(vk_anykey)) {
-    // Next control
-    if (argument0 >= 1) {
-        if (GMUI_enableTab) {
-            if (keyboard_check_pressed(vk_tab))
+if (GMUIGamepadMode) {
+    
+    var _button;
+    
+    _button = GMUI_CheckControllerNav();
+    
+    if (_button > -1 && GMUI_navigateDirection > global.GMUIDirectionTypeNone) {
+    
+        if (GMUI_navigateDirection > global.GMUIDirectionTypeHorizontal) {
+        
+            if (argument0 && _button == gmuigp_down)
+                return true;
+            else if (!argument0 && _button == gmuigp_up)
+                return true;
+        }
+        else {
+            
+            if (argument0 && _button == gmuigp_right)
+                return true;
+            else if (!argument0 && _button == gmuigp_left)
+                return true;
+        }
+    }
+
+}
+else if (keyboard_check_pressed(vk_anykey)) {
+    
+    if (argument0) {
+        // Next control
+        if (GMUIEnableTabbing) {
+            if (keyboard_check_pressed(GMUI_tabbingKey))
                 return true;
         }
         
@@ -20,7 +46,7 @@ if (keyboard_check_pressed(vk_anykey)) {
         }
     }
     else {
-    // Previous control
+        // Previous control
         if (GMUI_backKey != -1) {
             if (keyboard_check_pressed(GMUI_backKey))
                 return true;
